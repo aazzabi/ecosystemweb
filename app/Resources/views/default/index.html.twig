@@ -9,23 +9,25 @@
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
             </ol>
             <div class="carousel-inner" role="listbox">
-                <!-- Slide One - Set the background image for this slide in the line below -->
-                <div class="carousel-item active" style="background-image: url('{{ asset('assets/img/imgNovio/bg/04.png') }}')">
-                        <h1>Title</h1>
-                        <h2>Title</h2>
-                </div>
-                <!-- Slide Two - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('{{ asset('assets/img/imgNovio/bg/03.png') }}')">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>Second Slide</h3>
-                        <p>This is a description for the second slide.</p>
+                <div class="carousel-item active " style="background-image: url('{{ asset('assets/img/imgNovio/bg/04.png') }}')">
+                    <div class="hero">
+                            <h1>Faites vos annonces</h1>
+                            <h3>Get start your next awesome project</h3>
+                        <button class="btn btn-hero btn-lg" role="button">See all features</button>
                     </div>
                 </div>
-                <!-- Slide Three - Set the background image for this slide in the line below -->
+                <div class="carousel-item" style="background-image: url('{{ asset('assets/img/imgNovio/bg/03.png') }}')">
+                    <div class="hero">
+                        <h1>Vous avez besoin d'aide d'un réparateur ? </h1>
+                        <h3>Get start your next awesome project</h3>
+                        <button class="btn btn-hero btn-lg" role="button">See all features</button>
+                    </div>
+                </div>
                 <div class="carousel-item" style="background-image: url('{{ asset('assets/img/imgNovio/bg/04.png') }}')">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>Third Slide</h3>
-                        <p>This is a description for the third slide.</p>
+                    <div class="hero">
+                        <h1>Animer vos événements !</h1>
+                        <h3>Get start your next awesome project</h3>
+                        <button class="btn btn-hero btn-lg" role="button">See all features</button>
                     </div>
                 </div>
             </div>
@@ -40,11 +42,11 @@
         </div>
     </header>
     <section style="height: 500px">
-
     </section>
+    
     <section style="min-height:500px; background-size: 100% 500px;background-image: url('{{ asset('assets/img/imgNovio/bg/01.png') }}')" >
-
     </section>
+
     <footer></footer>
 {% endblock %}
 
@@ -57,6 +59,42 @@
             -moz-background-size: cover;
             -o-background-size: cover;
             background-size: 100% 500px;
+        }
+
+        .hero {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            color: #fff;
+            text-align: center;
+            text-shadow: 1px 1px 0 rgba(0,0,0,.75);
+            -webkit-transform: translate3d(-50%,-50%,0);
+            -moz-transform: translate3d(-50%,-50%,0);
+            -ms-transform: translate3d(-50%,-50%,0);
+            -o-transform: translate3d(-50%,-50%,0);
+            transform: translate3d(-50%,-50%,0);
+        }
+        .hero h1 {
+            color: #fff;
+            font-family: 'Titilium-SemiBold';
+            font-size: 6em;
+            font-weight: bold;
+            margin: 0;
+            line-height: 0.9;
+            padding: 10px;
+        }
+        .hero .btn-hero {
+            background: #e2e659 !important;
+            padding: 15px 25px;
+            border-radius: 5px;
+            font-family: 'Titillium Web', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: capitalize;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
         }
     </style>
 {% endblock %}

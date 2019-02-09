@@ -1,0 +1,3 @@
+eco_homepage:
+    path:     /
+    defaults: { _controller: EcoBundle:Default:index }

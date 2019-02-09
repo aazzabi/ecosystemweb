@@ -1,7 +1,6 @@
 eco:
-    resource: '@EcoBundle/Controller/'
-    type: annotation
-    prefix: /
+    resource: "@EcoBundle/Resources/config/routing.yml"
+    prefix:   /
 
 app:
     resource: '@AppBundle/Controller/'

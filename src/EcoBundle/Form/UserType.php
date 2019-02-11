@@ -20,22 +20,22 @@ class UserType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'required'=>true,
-                'label' => 'entity.user.nom',
+                'label' => 'Nom',
             ],'first')
             ->add('prenom', TextType::class, [
                 'required'=>true,
-                'label' => 'entity.user.prenom'
+                'label' => 'Prenom'
             ])
             ->add('email', EmailType::class, [
-                'label' => 'entity.user.email',
+                'label' => 'Email',
                 'required'=>true,
             ])
             ->add('username', TextType::class, [
-                'label' => 'entity.user.username',
+                'label' => 'Pseudo',
                 'required'=>true,
             ])
             ->add('roles', ChoiceType::class, array(
-                'label' => 'entity.user.roles',
+                'label' => 'Roles',
                 'choices'   => array(
                     'Examinateur'   => 'ROLE_EXAMIN',
                     'Admin'   => 'ROLE_ADMIN',
@@ -46,7 +46,7 @@ class UserType extends AbstractType
                 'multiple'  => true
             ))
             ->add('group', EntityType::class, array(
-                'label' => 'entity.user.group',
+                'label' => 'Groupe',
                 'class' => Group::class,
                 'multiple'=>false,
                 'required'=>true,

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Ajout d'utilisateur
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="offset-md-1 col-md-10">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><b>Ajout d'utilisateur </b></h1>
+                </div>
+                <div class="col-md-6 text-right">
+                    <br>
+                    <button type="submit" class="btn btn-success" value="Create">
+                        <i class="fa fa-check" aria-hidden="true"></i> Confirmer
+                    </button>
+                    <a href="{{ path('users_index') }}" class="btn btn-secondary">
+                        <i class="fa fa-undo" aria-hidden="true"></i>  Retour à la liste</a>
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                    {{ form_widget(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

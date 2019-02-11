@@ -350,13 +350,12 @@ body.menu-pin .overlay .overlay-brand {
   /* Side-bar header */
   display: block;
   height: 60px;
-  line-height: 60px;
+  line-height: 55px;
   background-color: #2d2d32;
   border-bottom: 1px solid #29292d;
   color: #fff;
   width: 100%;
-  padding: 0 20px;
-  padding-left: 30px;
+  padding-left: 7px;
   clear: both;
   z-index: 10;
   position: relative;

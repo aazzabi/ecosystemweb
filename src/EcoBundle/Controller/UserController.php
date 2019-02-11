@@ -74,12 +74,12 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
-        }
+//        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+//            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+//        }
         $deleteForm = $this->createDeleteForm($user);
 
-        return $this->render('user/show.html.twig', array(
+        return $this->render('@Eco/User/show.html.twig', array(
             'user' => $user,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -93,9 +93,9 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
-        }
+//        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+//            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+//        }
         $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('EcoBundle\Form\UserType', $user);
         $editForm->handleRequest($request);
@@ -105,7 +105,7 @@ class UserController extends Controller
             return $this->redirectToRoute('users_edit', array('id' => $user->getId()));
         }
 
-        return $this->render('user/edit.html.twig', array(
+        return $this->render('@Eco/User/edit.html.twig', array(
             'user' => $user,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

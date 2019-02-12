@@ -34,25 +34,6 @@ class UserType extends AbstractType
                 'label' => 'Pseudo',
                 'required'=>true,
             ])
-            ->add('roles', ChoiceType::class, array(
-                'label' => 'Roles',
-                'choices'   => array(
-                    'Admin'   => 'ROLE_ADMIN',
-                    'Réparateur'   =>'ROLE_REPARATEUR',
-                    'Réparateur PRO'   =>'ROLE_REPARATEUR_PRO',
-                    'Livreur'   =>'ROLE_LIVREUR',
-                    'Rep. Association'   =>'ROLE_REPRESENTANT_ASSOC',
-                    'Rep. Société'   =>'ROLE_REPRESENTANT_SOCIETE',
-                ),
-                'required'=>true,
-                'multiple'  => true
-            ))
-            ->add('Group', EntityType::class, array(
-                'label' => 'Groupe',
-                'class' => Group::class,
-                'multiple'=>false,
-                'required'=>false,
-            ))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'required'=>false,

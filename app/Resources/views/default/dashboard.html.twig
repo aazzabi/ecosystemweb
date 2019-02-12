@@ -95,45 +95,51 @@
 
         {#{{ dump(currentPath) }}#}
         <ul class="menu-items">
-            <li class="m-t-30 ">
+            <li class="" style="padding: 10px 5px;">
                 <a href="#" class="detailed">
-                    <span class="title">Postes</span>
+                    <span class="title">Annonces</span>
                 </a>
-                {#<span class="{% if path('poste_index') == currentPath %}bg-success{% endif %} icon-thumbnail"><i class="pg-home"></i></span>#}
+                <span class="
+                {#{% if path('poste_index') == currentPath %}bg-success{% endif %}#}
+                 icon-thumbnail">Ano</span>
             </li>
-            <li class="">
+            <li class="" style="padding: 10px 5px;">
                 <a href="#" class="detailed">
-                    <span class="title">Profils</span>
+                    <span class="title">Réparation</span>
                 </a>
-                {#<span class="{% if path('profile_index') == currentPath %}bg-success{% endif %} icon-thumbnail">Pr</span>#}
+                <span class="
+                {#{% if path('poste_index') == currentPath %}bg-success{% endif %}#}
+                 icon-thumbnail">Rép</span>
             </li>
-            <li class="">
+            <li class="" style="padding: 10px 5px;">
                 <a href="#" class="detailed">
-                    <span class="title">Candidatures</span>
+                    <span class="title">Recyclages</span>
                 </a>
-                {#<span class="{% if path('candidature_index') == currentPath %}bg-success{% endif %} icon-thumbnail">C</span>#}
+                <span class="
+                {#{% if path('poste_index') == currentPath %}bg-success{% endif %}#}
+                 icon-thumbnail">Recy</span>
             </li>
 
-            {#{% if is_granted('ROLE_ADMIN') %}    #}
-                <li class="">
-                    <a href="#">
-                        <span class="title">Etats</span>
-                    </a>
-                    {#<span class="{% if path('etape_index') == currentPath %}bg-success{% endif %} icon-thumbnail">Etp</span>#}
-                </li>
-                <li class="">
-                    <a href="#">
-                        <span class="title">Sociétés</span>
-                    </a>
-                    <span class=" icon-thumbnail">Ste</span>
-                </li>
-                <li class="">
-                    <a href="#">
-                        <span class="title">Utilisateur</span>
-                    </a>
-                    <span class=" icon-thumbnail">User</span>
-                </li>
-            {#{% endif %}#}
+            <li class="" style="padding: 10px 5px;">
+                <a href="#">
+                    <span class="title">Evénements</span>
+                </a>
+                <span class="
+                {#{% if path('poste_index') == currentPath %}bg-success{% endif %}#}
+                 icon-thumbnail">Evt</span>
+            </li>
+            <li class="" style="padding: 10px 5px;">
+                <a href="{{ path('group_index') }}">
+                    <span class="title" style="width: 95%;">Groupes / Sociétés</span>
+                </a>
+                <span class="  {% if path('group_index') == currentPath %}bg-success{% endif %}  icon-thumbnail">Grp</span>
+            </li>
+            <li class="" style="padding: 10px 5px;">
+                <a href="{{ path('users_index') }}">
+                    <span class="title">Utilisateur</span>
+                </a>
+                <span class=" {% if path('users_index') == currentPath %}bg-success{% endif %}  icon-thumbnail">User</span>
+            </li>
         </ul>
         <div class="clearfix"></div>
     </div>
@@ -142,9 +148,9 @@
 <!-- END SIDEBAR -->
 <!-- END SIDEBPANEL-->
 <!-- START PAGE-CONTAINER -->
-<div class="page-container ">
+<div class="page-container " style="padding-right: 25px;">
     <!-- START HEADER -->
-    <div class="header" style=" background-color: #9a9da1;">
+    <div class="header" style=" background-color: #9a9da1;padding-right: 25px;">
         <!-- START MOBILE SIDEBAR TOGGLE -->
         <a href="#" class="btn-link toggle-sidebar hidden-lg-up" data-toggle="sidebar">
             <i class="fa fa-bars"></i>
@@ -305,7 +311,8 @@
         <!-- START PAGE CONTENT -->
         <div class="content sm-gutter">
             <!-- START CONTAINER FLUID -->
-
+            {% block body %}
+            {% endblock %}
             <!-- END CONTAINER FLUID -->
         </div>
         <!-- END PAGE CONTENT -->

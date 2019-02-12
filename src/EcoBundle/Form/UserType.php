@@ -45,7 +45,7 @@ class UserType extends AbstractType
                 'required'=>true,
                 'multiple'  => true
             ))
-            ->add('group', EntityType::class, array(
+            ->add('Group', EntityType::class, array(
                 'label' => 'Groupe',
                 'class' => Group::class,
                 'multiple'=>false,

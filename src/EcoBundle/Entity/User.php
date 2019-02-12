@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EcoBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
 class User extends BaseUser
@@ -64,7 +65,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get group
+     * Get Group
      *
      * @return mixed
      */
@@ -144,7 +145,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set group
+     * Set Group
      *
      * @param \EcoBundle\Entity\Group $group
      *

@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EcoBundle\Repository\GroupRepository")
  * @ORM\Table(name="groupe")
  */
 class Group extends BaseGroup
@@ -26,7 +27,7 @@ class Group extends BaseGroup
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="User", mappedBy="group")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="Group")
      *
      */
     private $users;
@@ -36,6 +37,14 @@ class Group extends BaseGroup
      * @Assert\NotBlank()
      */
     protected $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=150, nullable=true)
+     */
+    private $type;
+
 //
 //    /**
 //     * @Vich\UploadableField(mapping="logo_file", fileNameProperty="logo")
@@ -214,21 +223,21 @@ class Group extends BaseGroup
 //    {
 //        return $this->logoUpdatedAt;
 //    }
-//
-//    /**
-//     * @return string
-//     */
-//    public function getType()
-//    {
-//        return $this->type;
-//    }
-//
-//    /**
-//     * @param string $type
-//     */
-//    public function setType($type)
-//    {
-//        $this->type = $type;
-//    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
 
 }

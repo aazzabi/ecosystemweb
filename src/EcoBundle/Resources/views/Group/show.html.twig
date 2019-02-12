@@ -1,0 +1,141 @@
+{% extends './Default/dashboard.html.twig' %}
+
+{% block stylesheets %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+{% endblock %}
+
+{% block title %}
+    Société :{{ group.name }}
+{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    <style>
+        @media print {
+            .img-circle {
+                width: 45px;
+                height: 45px;
+            }
+
+            .card {
+                margin-left: 150px;
+                width: 1000px;
+                height: 1000px;
+            }
+        }
+
+    </style>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        function imprimer_page() {
+            window.print();
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card" align="center" style="width: 700px;height: auto;">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-2 col-md-offset-1">
+                            <a>
+                                {#{% if group.logo != '' %}#}
+                                    {#<img alt="User Pic" src="{{ asset('uploads/logo/' ~ group.logo) }}"#}
+                                         {#id="profile-image1" class="img-logo-societe-show img-responsive">#}
+                                {#{% else %}#}
+                                    <img alt="User Pic" src="{{ asset('assets/img/NA.png') }}"
+                                         id="profile-image1" class="img-logo-societe-show img-responsive">
+                                {#{% endif %}#}
+                            </a>
+                        </div>
+                        <div class="col-md-7">
+                            <h1>{{ group.name }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="card-block"><br>
+                    <table style="width: 100%;" align="center">
+                        {% if group.type %}
+                            <tr>
+                                <td class="col-sm-4 tital ">
+                                    {{ 'entity.groupe.type' | trans }}
+                                </td>
+                                <td class="col-sm-8">
+                                    {{ group.type }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                    <br>
+                </div>
+            </div>
+            <br>
+            <div class="row but">
+                <div class="col-md-3">
+                    {#<button id="impression" value="Imprimer la page" name="impression" type="submit" id="impression" name="impression" onclick="imprimer_page()" class="btn btn-primary pull-right"><i class="fa fa-download">#}
+                    {#Download</i></button>#}
+                    <button onclick="imprimer_page()" type="button"
+                            class="btn btn-primary btn-cons btn-animated from-top fa fa-arrow-down">
+                        <span><i class="fa fa-download"></i> Imprimer</span>
+                    </button>
+
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ path('group_index') }}"
+                       class="btn btn-secondary ">
+                        <i class="fa fa-undo " aria-hidden="true"></i>
+                        Retour au liste
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ path('group_edit', { 'id': group.id }) }}"
+                       class="btn btn-secondary ">
+                        <i class="fa fa-pencil-square-o"></i>
+                        Editer
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-danger btn_lg" data-toggle="modal" data-target="#myModal">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer
+                    </button>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+    {{ form_start(delete_form) }}
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> {{ 'entity.common.supprimer' | trans }}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Voulez-vous vraiement supprimer ce groupe ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-secondary" data-dismiss="modal"> Annuler
+                    </button>
+
+                    <input class="btn btn-danger btn_lg" type="submit" value="Supprimer">
+                    {{ form_end(delete_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

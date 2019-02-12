@@ -1646,6 +1646,7 @@ body.menu-pin .overlay .overlay-brand {
 .page-container .page-content-wrapper .content {
   /* Content holder */
   z-index: 10;
+  padding-left: 100px;
   padding-top: 60px;
   padding-bottom: 69px;
   min-height: 100%;

@@ -50,21 +50,7 @@
         <div class="brand inline no-border hidden-xs-down">
             <img src="{{ asset('assets/img/logofinalev2.png') }}" alt="logo" style="width: 200px !important; height: 60px;">
         </div>
-        <!-- START NOTIFICATION LIST -->
-        {#<ul class="hidden-md-down notification-list no-margin hidden-sm-down b-grey b-l b-r no-style p-l-30 p-r-20">#}
-        {#<li class="p-r-10 inline">#}
-
-        {#</li>#}
-        {#<li class="p-r-10 inline">#}
-        {#<a href="#" class="header-icon pg pg-link"></a>#}
-        {#</li>#}
-        {#<li class="p-r-10 inline">#}
-        {#<a href="#" class="header-icon pg pg-thumbs"></a>#}
-        {#</li>#}
-        {#</ul>#}
-        <!-- END NOTIFICATIONS LIST -->
         <div class="d-flex align-items-center">
-            <!-- START User Info-->
             {% if app.user %}
                 <div class="pull-left p-r-10 fs-14 font-heading hidden-md-down text-white">
                     <span class="semi-bold">{{ app.user.prenom}}</span> <span class="">{{ app.user.nom | upper }}</span>
@@ -204,8 +190,11 @@
                     <!-- END Notification Dropdown -->
                 </div>
             {% else %}
+                <a href="{{ path('users_new') }}">
+                    <button class="btn btn-default btn-cons  btn-sm">S'inscrire</button>
+                </a>
                 <a href="{{ path('fos_user_security_login') }}">
-                    <button class="btn btn-primary btn-cons">Se Connecter</button>
+                    <button class="btn btn-primary btn-cons  btn-sm">Se Connecter</button>
                 </a>
             {% endif %}
 
@@ -239,9 +228,15 @@
                     <li>
                         <a href="charts.html"><span class="title">Forum</span></a>
                     </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li>
+                        <a href="{{ path('dashboard') }}"><span class="title">Dashboard</span></a>
+                    </li>
+                    {% else %}
                     <li>
                         <a href="charts.html"><span class="title">Contactez-nous</span></a>
                     </li>
+                    {% endif %}
 
                 </ul>
             </div>

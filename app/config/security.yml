@@ -6,7 +6,12 @@ security:
 
     role_hierarchy:
         ROLE_USER:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_ADMIN: ROLE_ADMIN
+        ROLE_REPARATEUR: ROLE_REPARATEUR
+        ROLE_REPARATEUR_PRO: ROLE_REPARATEUR_PRO
+        ROLE_LIVREUR: ROLE_LIVREUR
+        ROLE_REPRESENTANT_ASSOC: ROLE_REPRESENTANT_ASSOC
+        ROLE_REPRESENTANT_SOCIETE: ROLE_REPRESENTANT_SOCIETE
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:

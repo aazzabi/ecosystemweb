@@ -9,14 +9,30 @@
     </script>
 </head>
 
-<body class="fixed-header ">
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
+{#<body class="fixed-header ">#}
+{#{% if error %}#}
+    {#<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+{#{% endif %}#}
+<div class="fixed-header pgn-wrapper" data-position="top">
+    {% if error %}
+    <div class="pgn push-on-sidebar-open pgn-bar">
+        <div class="alert alert-danger">
+            <div class="container">
+                <span>
+                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                </span>
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span
+                            class="sr-only">Close</span></button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
 <div class="login-wrapper ">
     <div class="bg-pic" style="background-color: #0f6046;">
         <img src="{{ asset('assets/img/logofinalev2.png') }}"
-             style="width: 900px;"
+             style="width: 900px;height: 500px;"
              class="lazy">
     </div>
 

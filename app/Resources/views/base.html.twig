@@ -204,7 +204,9 @@
                     <!-- END Notification Dropdown -->
                 </div>
             {% else %}
-                # user is not logged in
+                <a href="{{ path('fos_user_security_login') }}">
+                    <button class="btn btn-primary btn-cons">Se Connecter</button>
+                </a>
             {% endif %}
 
         </div>

@@ -7,9 +7,15 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+
 /**
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({
+ *     "user" = "User",
+ *     "reparateur" = "Reparateur"
+ * })
  */
 class User extends BaseUser
 {

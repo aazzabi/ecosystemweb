@@ -62,10 +62,14 @@ doctrine:
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'
+    encryption: '%mailer_encryption%'
+    auth_mode:  '%mailer_auth_mode%'
+    port: 465
     host: '%mailer_host%'
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
 fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
@@ -73,5 +77,14 @@ fos_user:
     service:                               # this lines
         mailer: fos_user.mailer.twig_swift # this lines
     from_email:
-        address: "arafet.azzabi@gmail.com"
+        address: "arafet.azzabi@esprit.tn"
         sender_name: "Arafet Azzabi"
+    registration:
+        confirmation:
+            enabled: true
+            template:   '@FOSUser/Registration/email.txt.twig'
+    resetting:
+        email:
+            from_email:
+                address:        resetting@example.com
+                sender_name:    Demo Resetting

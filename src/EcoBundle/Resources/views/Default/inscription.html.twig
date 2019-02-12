@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <br>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card card-borderless">
+                <ul class="nav nav-tabs nav-tabs-simple hidden-sm-down" role="tablist"
+                    data-init-reponsive-tabs="dropdownfx">
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" role="tab" data-target="#user" class=""
+                           aria-expanded="false">user</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="active" data-toggle="tab" role="tab" data-target="#reparateur" href="#"
+                           aria-expanded="true">reparateur</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="" data-toggle="tab" role="tab" data-target="#repAssoc" href="#"
+                           aria-expanded="true">Représentant d'association</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="" data-toggle="tab" role="tab" data-target="#repSoc" href="#"
+                           aria-expanded="true">Représentant d'association</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane" id="user" aria-expanded="false">
+                        {{ form_start(formUser) }}
+                        {% form_theme formUser 'bootstrap_3_layout.html.twig' %}
+                        {{ form_widget(formUser) }}
+                        {{ form_end(formUser) }}
+                    </div>
+                    <div class="tab-pane active" id="reparateur" aria-expanded="true">
+                        {{ form_start(formRep) }}
+                        {% form_theme formRep 'bootstrap_3_layout.html.twig' %}
+                        {{ form_widget(formRep) }}
+                        {{ form_end(formRep) }}
+                    </div>
+                    <div class="tab-pane active" id="repAssoc" aria-expanded="true">
+                        aaaaaaaaaaaaa
+                    </div>
+                    <div class="tab-pane active" id="repSoc" aria-expanded="true">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

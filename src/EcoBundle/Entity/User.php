@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="EcoBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
 class User extends BaseUser

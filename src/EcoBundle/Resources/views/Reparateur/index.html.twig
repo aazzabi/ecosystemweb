@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Reparateurs list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Specialite</th>
+                <th>Horaire</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reparateur in reparateurs %}
+            <tr>
+                <td><a href="{{ path('reparateur_show', { 'id': reparateur.id }) }}">{{ reparateur.id }}</a></td>
+                <td>{{ reparateur.specialite }}</td>
+                <td>{{ reparateur.horaire }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('reparateur_show', { 'id': reparateur.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('reparateur_edit', { 'id': reparateur.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('reparateur_new') }}">Create a new reparateur</a>
+        </li>
+    </ul>
+{% endblock %}

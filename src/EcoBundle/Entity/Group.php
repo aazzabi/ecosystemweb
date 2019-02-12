@@ -41,6 +41,13 @@ class Group extends BaseGroup
     /**
      * @var string
      *
+     * @ORM\Column(name="description", type="string", length=150, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="type", type="string", length=150, nullable=true)
      */
     private $type;
@@ -223,6 +230,22 @@ class Group extends BaseGroup
 //    {
 //        return $this->logoUpdatedAt;
 //    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 
     /**
      * @return string

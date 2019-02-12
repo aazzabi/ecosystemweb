@@ -1,141 +1,180 @@
-{% extends './Default/dashboard.html.twig' %}
-
-{% block stylesheets %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-{% endblock %}
-
-{% block title %}
-    Société :{{ group.name }}
-{% endblock %}
-
-{% block stylesheet %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
-    <style>
-        @media print {
-            .img-circle {
-                width: 45px;
-                height: 45px;
-            }
-
-            .card {
-                margin-left: 150px;
-                width: 1000px;
-                height: 1000px;
-            }
-        }
-
-    </style>
-{% endblock %}
-{% block javascripts %}
-    <script type="text/javascript">
-        function imprimer_page() {
-            window.print();
-        }
-    </script>
-{% endblock %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="container">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card" align="center" style="width: 700px;height: auto;">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-2 col-md-offset-1">
-                            <a>
-                                {#{% if group.logo != '' %}#}
-                                    {#<img alt="User Pic" src="{{ asset('uploads/logo/' ~ group.logo) }}"#}
-                                         {#id="profile-image1" class="img-logo-societe-show img-responsive">#}
-                                {#{% else %}#}
-                                    <img alt="User Pic" src="{{ asset('assets/img/NA.png') }}"
-                                         id="profile-image1" class="img-logo-societe-show img-responsive">
-                                {#{% endif %}#}
-                            </a>
-                        </div>
-                        <div class="col-md-7">
-                            <h1>{{ group.name }}</h1>
+        <div class="col-md-6">
+            <h1><b>{{ group.name }}</b></h1>
+        </div>
+        <div class="col-md-6 text-right">
+            <br>
+            {% if is_granted('ROLE_CONSULT')== false %}    
+                <a class="btn btn-secondary" href="{{ path('group_edit', { 'id': group.id }) }}">
+                    <i class="fa fa-pencil-square-o"></i> Edit</a>
+                <button type="button" class="btn btn-danger btn_lg" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-times" aria-hidden="true"></i>Supprimer
+                </button>
+            {% endif %}
+            <a class="btn btn-secondary" href="{{ path('group_index') }}">
+                <i class="fa fa-undo" aria-hidden="true"></i> Retour à la liste
+            </a>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="" >
+                <div class="">
+                    <div class="" >
+                        <h4>
+                            À propos ce groupe :
+                        </h4>
+                    </div>
+                    <div class="" >
+                        <div class="">
+                            {% if group.name  %}
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        Nom :
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{  group.name  }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if group.description %}
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        Description :
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{  group.description  }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if group.type %}
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        Group :
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{ group.type }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <hr>
-                <div class="card-block"><br>
-                    <table style="width: 100%;" align="center">
-                        {% if group.type %}
-                            <tr>
-                                <td class="col-sm-4 tital ">
-                                    {{ 'entity.groupe.type' | trans }}
-                                </td>
-                                <td class="col-sm-8">
-                                    {{ group.type }}
-                                </td>
-                            </tr>
-                        {% endif %}
-                    </table>
-                    <br>
-                </div>
-            </div>
-            <br>
-            <div class="row but">
-                <div class="col-md-3">
-                    {#<button id="impression" value="Imprimer la page" name="impression" type="submit" id="impression" name="impression" onclick="imprimer_page()" class="btn btn-primary pull-right"><i class="fa fa-download">#}
-                    {#Download</i></button>#}
-                    <button onclick="imprimer_page()" type="button"
-                            class="btn btn-primary btn-cons btn-animated from-top fa fa-arrow-down">
-                        <span><i class="fa fa-download"></i> Imprimer</span>
-                    </button>
 
-                </div>
-                <div class="col-md-3">
-                    <a href="{{ path('group_index') }}"
-                       class="btn btn-secondary ">
-                        <i class="fa fa-undo " aria-hidden="true"></i>
-                        Retour au liste
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="{{ path('group_edit', { 'id': group.id }) }}"
-                       class="btn btn-secondary ">
-                        <i class="fa fa-pencil-square-o"></i>
-                        Editer
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-danger btn_lg" data-toggle="modal" data-target="#myModal">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer
-                    </button>
-                </div>
+                {#<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">#}
+                    {#<div class="panel panel-default">#}
+                        {#<div class="panel-heading" role="tab" id="headingTwo">#}
+                            {#<h4 class="panel-title">#}
+                                {#<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"#}
+                                   {#aria-expanded="true"#}
+                                   {#aria-controls="collapseTwo" class="">#}
+                                    {#Les utilisateurs appartenant à ce groupe :#}
+                                {#</a>#}
+                            {#</h4>#}
+                        {#</div>#}
+                        {#<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel"#}
+                             {#aria-labelledby="headingTwo"#}
+                             {#aria-expanded="true">#}
+                            {#<div class="panel-body">#}
+                                {#<table id="example" class="table table-striped table-bordered display">#}
+                                    {#<thead>#}
+                                    {#<tr>#}
+                                        {#<th>{{ 'entity.candidat.photo' | trans }}</th>#}
+                                        {#<th>{{ 'entity.candidat.nom' | trans }}</th>#}
+                                        {#<th>{{ 'entity.candidat.prenom' | trans }}</th>#}
+                                        {#<th>{{ 'entity.candidat.email' | trans }}</th>#}
+                                        {#<th>{{ 'entity.candidat.etapecourante' | trans }}</th>#}
+                                        {#{% if is_granted('ROLE_CONSULT')== false %}    #}
+                                            {#<th>{{ 'entity.candidat.actions' | trans }}</th>#}
+                                        {#{% endif %}#}
+                                    {#</tr>#}
+                                    {#</thead>#}
+                                    {#<tbody>#}
+                                    {#{% for candidature in poste.candidatures %}#}
+                                        {#<tr>#}
+                                            {#<td><a>#}
+                                                    {#<div id="profile-image1"#}
+                                                         {#class="img-circle img-responsive text-center">#}
+                                                        {#{% if candidature.profile.photo != '' %}#}
+                                                            {#<a href="{{ path('profile_show', { 'id': candidature.profile.id }) }}">#}
+                                                                {#<img#}
+                                                                        {#alt="User Pic"#}
+                                                                        {#src="{{ asset('uploads/photo/' ~ candidature.profile.photo) }}"#}
+                                                                        {#class="img-circle img-responsive"></a>#}
+                                                        {#{% else %}#}
+                                                            {#<img alt="User Pic"#}
+                                                                 {#src="{{ asset('assets/img/profile.png') }}"#}
+                                                                 {#id="profile-image1"#}
+                                                                 {#class="img-circle img-responsive">#}
+                                                        {#{% endif %}#}
+
+                                                    {#</div>#}
+                                                {#</a>#}
+                                            {#</td>#}
+                                            {#<td>{{ candidature.profile.nom }}</td>#}
+                                            {#<td>{{ candidature.profile.prenom }}</td>#}
+                                            {#<td>{{ candidature.profile.email }}</td>#}
+                                            {#<td>{{ candidature.currentEtape }}</td>#}
+                                            {#{% if is_granted('ROLE_CONSULT')== false %}    #}
+                                                {#<td>#}
+                                                    {#<div class="btn-group btn-group-sm btn-group-vertical">#}
+                                                        {#<a class="btn btn-secondary"#}
+                                                           {#href="{{ path('candidature_edit', { 'id': candidature.id }) }} "#}
+                                                           {#data-toggle="tooltip" title="Editer le profile">#}
+                                                            {#<i class="fa fa-pencil-square-o"></i>#}
+                                                        {#</a>#}
+                                                    {#</div>#}
+                                                {#</td>#}
+                                            {#{% endif %}#}
+                                        {#</tr>#}
+                                        {#{% endif %}#}
+                                    {#{% endfor %}#}
+                                    {#</tbody>#}
+                                {#</table>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
             </div>
-            <br>
         </div>
     </div>
-    {{ form_start(delete_form) }}
+</div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    {{ form_start(delete_form) }}
+    <!--Début du modal-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> {{ 'entity.common.supprimer' | trans }}
+                    <h5 class="modal-title"
+                        id="exampleModalLabel"> Supprimer
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Voulez-vous vraiement supprimer ce groupe ?
+                    Voulez-vous vraiement supprimer ce profile ?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-secondary" data-dismiss="modal"> Annuler
+                    <button type="button" class="btn btn-default btn-secondary"
+                            data-dismiss="modal"> Annuler
                     </button>
-
-                    <input class="btn btn-danger btn_lg" type="submit" value="Supprimer">
+                    <input type="submit" class="btn btn-danger btn_lg" value="Supprimer">
                     {{ form_end(delete_form) }}
+
                 </div>
             </div>
         </div>
     </div>
-
-
-
+    <!--fin du modal-->
 {% endblock %}

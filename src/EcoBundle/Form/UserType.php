@@ -37,10 +37,12 @@ class UserType extends AbstractType
             ->add('roles', ChoiceType::class, array(
                 'label' => 'Roles',
                 'choices'   => array(
-                    'Examinateur'   => 'ROLE_EXAMIN',
                     'Admin'   => 'ROLE_ADMIN',
-                    'Consultant'   => 'ROLE_CONSULT',
-                    'Saisie'   => 'ROLE_SAISIE',
+                    'Réparateur'   =>'ROLE_REPARATEUR',
+                    'Réparateur PRO'   =>'ROLE_REPARATEUR_PRO',
+                    'Livreur'   =>'ROLE_LIVREUR',
+                    'Rep. Association'   =>'ROLE_REPRESENTANT_ASSOC',
+                    'Rep. Société'   =>'ROLE_REPRESENTANT_SOCIETE',
                 ),
                 'required'=>true,
                 'multiple'  => true
@@ -49,7 +51,7 @@ class UserType extends AbstractType
                 'label' => 'Groupe',
                 'class' => Group::class,
                 'multiple'=>false,
-                'required'=>true,
+                'required'=>false,
             ))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,

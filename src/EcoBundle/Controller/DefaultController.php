@@ -21,7 +21,9 @@ class DefaultController extends Controller
         ]);
     }
 
-
+    /**
+     * @Route("/dashboard", name="dashboard")
+     */
     public function dashboardAction(Request $request)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {

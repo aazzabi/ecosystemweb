@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Inscription
+{% endblock %}
 {% block body %}
     <br>
     <div class="row">
@@ -14,14 +17,6 @@
                     <li class="nav-item">
                         <a data-toggle="tab" role="tab" data-target="#reparateur" href="#" class=""
                            aria-expanded="true">reparateur</a>
-                    </li>
-                    <li class="nav-item">
-                        <a data-toggle="tab" role="tab" data-target="#repAssoc" href="#" class=""
-                           aria-expanded="true">Représentant d'association</a>
-                    </li>
-                    <li class="nav-item">
-                        <a data-toggle="tab" role="tab" data-target="#repSoc" href="#" class=""
-                           aria-expanded="true">Représentant de société</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -42,12 +37,6 @@
                             <i class="fa fa-check" aria-hidden="true"></i> Confirmer
                         </button>
                         {{ form_end(formRep) }}
-                    </div>
-                    <div class="tab-pane" id="repAssoc" aria-expanded="true">
-                        aaaaaaaaaaaaa
-                    </div>
-                    <div class="tab-pane" id="repSoc" aria-expanded="true">
-                        cccc ccc
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
@@ -28,6 +29,7 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     public $id;
+
     /**
      * @var string
      *
@@ -36,11 +38,11 @@ class User extends BaseUser
     private $nom;
 
     /**
-     * @Vich\UploadableField(mapping="photo_file", fileNameProperty="photo")
+     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="photo")
      *
      * @var File
      */
-    private $photoFile;
+    private $userPhoto;
 
     /**
      * @ORM\Column(name="photo", type="string", length=255, nullable=true)
@@ -75,6 +77,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
+        $this->photoUpdatedAt = new \DateTime('now');
     }
 
     /**
@@ -186,4 +189,54 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * @return File
+     */
+    public function getUserPhoto()
+    {
+        return $this->userPhoto;
+    }
+
+    /**
+     * @param File $userPhoto
+     */
+    public function setUserPhoto($userPhoto)
+    {
+        $this->userPhoto = $userPhoto;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param string $photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPhotoUpdatedAt()
+    {
+        return $this->photoUpdatedAt;
+    }
+
+    /**
+     * @param \DateTime $photoUpdatedAt
+     */
+    public function setPhotoUpdatedAt($photoUpdatedAt)
+    {
+        $this->photoUpdatedAt = $photoUpdatedAt;
+    }
+
+
 }

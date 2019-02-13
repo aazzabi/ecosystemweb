@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class UserType extends AbstractType
 {
@@ -29,6 +30,11 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'required'=>true,
+            ])
+            ->add('userPhoto', VichFileType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'download_link' => true
             ])
             ->add('username', TextType::class, [
                 'label' => 'Pseudo',

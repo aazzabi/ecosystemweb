@@ -6,9 +6,21 @@
 
 {% block body %}
     <h1>User</h1>
-
+    <div class="col-md-2 col-md-offset-1">
+        <a>
+            {% if user.photo != '' %}
+                <img alt="User Pic"
+                     src="{{ asset('uploads/user/photo/' ~ user.photo) }}"
+                     class="img-circle img-responsive">
+            {% else %}
+                <img alt="User Pic" src="{{ asset('assets/img/profile.png') }}"
+                     id="profile-image1" class="img-circle img-responsive">
+            {% endif %}
+        </a>
+    </div>
     <table>
         <tbody>
+
             <tr>
                 <th>Id</th>
                 <td>{{ user.id }}</td>

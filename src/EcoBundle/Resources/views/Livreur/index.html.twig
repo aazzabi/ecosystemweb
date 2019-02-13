@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Livreurs list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Zone</th>
+                <th>Disponibilite</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for livreur in livreurs %}
+            <tr>
+                <td><a href="{{ path('livreur_show', { 'id': livreur.id }) }}">{{ livreur.zone }}</a></td>
+                <td>{{ livreur.disponibilite }}</td>
+                <td>{{ livreur.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('livreur_show', { 'id': livreur.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('livreur_edit', { 'id': livreur.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('livreur_new') }}">Create a new livreur</a>
+        </li>
+    </ul>
+{% endblock %}

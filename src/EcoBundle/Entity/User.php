@@ -6,15 +6,18 @@ namespace EcoBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 /**
  * @ORM\Entity
+ * @Vich\Uploadable
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
  *     "user" = "User",
- *     "reparateur" = "Reparateur"
+ *     "reparateur" = "Reparateur",
+ *     "livreur" = "Livreur"
  * })
  */
 class User extends BaseUser
@@ -31,6 +34,27 @@ class User extends BaseUser
      * @ORM\Column(name="nom", type="string", length=150, nullable=false)
      */
     private $nom;
+
+    /**
+     * @Vich\UploadableField(mapping="photo_file", fileNameProperty="photo")
+     *
+     * @var File
+     */
+    private $photoFile;
+
+    /**
+     * @ORM\Column(name="photo", type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $photo;
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $photoUpdatedAt;
 
     /**
      * @var string

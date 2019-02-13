@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Respassociations list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Cin</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for respAssociation in respAssociations %}
+            <tr>
+                <td><a href="{{ path('respassociation_show', { 'id': respAssociation.id }) }}">{{ respAssociation.cin }}</a></td>
+                <td>{{ respAssociation.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('respassociation_show', { 'id': respAssociation.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('respassociation_edit', { 'id': respAssociation.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('respassociation_new') }}">Create a new respAssociation</a>
+        </li>
+    </ul>
+{% endblock %}

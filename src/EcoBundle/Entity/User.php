@@ -18,7 +18,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\DiscriminatorMap({
  *     "user" = "User",
  *     "reparateur" = "Reparateur",
- *     "livreur" = "Livreur"
+ *     "livreur" = "Livreur",
+ *     "respassociation" = "RespAssociation"
  * })
  */
 class User extends BaseUser

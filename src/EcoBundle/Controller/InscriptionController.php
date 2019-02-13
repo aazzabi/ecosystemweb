@@ -42,7 +42,7 @@ class InscriptionController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('reparateur_show', array('id' => $reparateur->getId()));
+            return $this->redirectToRoute('users_show', array('id' => $user->getId()));
         }
 
         if ($formRep->isSubmitted() && $formRep->isValid()) {

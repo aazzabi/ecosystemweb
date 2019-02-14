@@ -138,13 +138,13 @@
                     <a href="{{ path('da_groups_index') }}">
                         <span class="title" style="width: 95%;">Groupes / Sociétés</span>
                     </a>
-                    <span class="  {% if path('group_index') == currentPath %}bg-success{% endif %}  icon-thumbnail">Grp</span>
+                    <span class=" {% if path('da_groups_index') == currentPath %}bg-success{% endif %}  icon-thumbnail">Grp</span>
                 </li>
                 <li class="" style="padding: 10px 5px;">
                     <a href="{{ path('da_users_index') }}">
                         <span class="title">Utilisateur</span>
                     </a>
-                    <span class=" {% if path('users_index') == currentPath %}bg-success{% endif %}  icon-thumbnail">User</span>
+                    <span class=" {% if path('da_users_index') == currentPath %}bg-success{% endif %}  icon-thumbnail">User</span>
                 </li>
             {% endif %}
         </ul>

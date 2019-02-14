@@ -5,13 +5,12 @@ use FOS\UserBundle\Model\Group as BaseGroup;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-//use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
-//Add  * @Vich\Uploadable
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
  * @ORM\Entity
+ * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="EcoBundle\Repository\GroupRepository")
  * @ORM\Table(name="groupe")
  */
@@ -25,10 +24,11 @@ class Group extends BaseGroup
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var User
      *
      * @ORM\OneToMany(targetEntity="User", mappedBy="Group")
-     *
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      */
     private $users;
 
@@ -37,6 +37,27 @@ class Group extends BaseGroup
      * @Assert\NotBlank()
      */
     protected $name;
+
+    /**
+     * @Vich\UploadableField(mapping="group_logo", fileNameProperty="logo")
+     *
+     * @var File
+     */
+    private $groupPhoto;
+
+    /**
+     * @ORM\Column(name="logo", type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $logo;
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $logoUpdatedAt;
 
     /**
      * @var string
@@ -52,41 +73,13 @@ class Group extends BaseGroup
      */
     private $type;
 
-//
-//    /**
-//     * @Vich\UploadableField(mapping="logo_file", fileNameProperty="logo")
-//     *
-//     * @var File
-//     */
-//    private $logoFile;
-//
-//    /**
-//     * @ORM\Column(name="logo", type="string", length=255, nullable=true)
-//     *
-//     * @var string
-//     */
-//    private $logo;
-//
-//    /**
-//     * @ORM\Column(type="datetime",nullable=true)
-//     *
-//     * @var \DateTime
-//     */
-//    private $logoUpdatedAt;
-//
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="type", type="string", length=150, nullable=true)
-//     */
-//    private $type;
-
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->logoUpdatedAt = new \DateTime('now');
     }
 
 
@@ -163,73 +156,6 @@ class Group extends BaseGroup
         return $this->getName();
     }
 
-//    /**
-//     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
-//     *
-//     * @return Group
-//     */
-//    public function setLogoFile(File $logoFile = null)
-//    {
-//        $this->logoFile = $logoFile;
-//
-//        if ($logoFile) {
-//            $this->logoUpdatedAt = new \DateTimeImmutable();
-//        }
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * @return File|null
-//     */
-//    public function getLogoFile()
-//    {
-//        return $this->logoFile;
-//    }
-//
-//    /**
-//     * @param string $logo
-//     *
-//     * @return Group
-//     */
-//    public function setLogo($logo)
-//    {
-//        $this->logo = $logo;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * @return string|null
-//     */
-//    public function getLogo()
-//    {
-//        return $this->logo;
-//    }
-//
-//    /**
-//     * Set logoUpdatedAt
-//     *
-//     * @param \DateTime $logoUpdatedAt
-//     *
-//     * @return Group
-//     */
-//    public function setLogoUpdatedAt($logoUpdatedAt)
-//    {
-//        $this->logoUpdatedAt = $logoUpdatedAt;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get logoUpdatedAt
-//     *
-//     * @return \DateTime
-//     */
-//    public function getLogoUpdatedAt()
-//    {
-//        return $this->logoUpdatedAt;
-//    }
 
     /**
      * @return string
@@ -263,4 +189,51 @@ class Group extends BaseGroup
         $this->type = $type;
     }
 
+    /**
+     * @return File
+     */
+    public function getGroupPhoto()
+    {
+        return $this->groupPhoto;
+    }
+
+    /**
+     * @param File $groupPhoto
+     */
+    public function setGroupPhoto($groupPhoto)
+    {
+        $this->groupPhoto = $groupPhoto;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * @param string $logo
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLogoUpdatedAt()
+    {
+        return $this->logoUpdatedAt;
+    }
+
+    /**
+     * @param \DateTime $logoUpdatedAt
+     */
+    public function setLogoUpdatedAt($logoUpdatedAt)
+    {
+        $this->logoUpdatedAt = $logoUpdatedAt;
+    }
 }

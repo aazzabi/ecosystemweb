@@ -2,6 +2,7 @@
 
 namespace EcoBundle\Controller\DashboardAdmin;
 
+use EcoBundle\Entity\Group;
 use EcoBundle\Entity\Livreur;
 use EcoBundle\Entity\Reparateur;
 use EcoBundle\Entity\RespAsso;
@@ -21,8 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DAGroupController extends Controller
 {
     /**
-     *
-     * @Route("/group", name="da_users_index")
+     * @Route("/group", name="da_groups_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -30,24 +30,22 @@ class DAGroupController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
+        $em = $this->getDoctrine()->getManager();
 
-        $allGroups = $this->getDoctrine()->getManager()->getRepository('EcoBundle:User')->findAll();
+        $association = $em->getRepository('EcoBundle:Group')->findAllAssociation();
+//        var_dump($association[0]->getUsers());die;
+        $societes = $em->getRepository('EcoBundle:Group')->findAllSociete();
 
-        foreach ($allGroups as $group) {
-            if ($group->hasRole("ROLE_USER")) {
-                $users[] = $group;
-            }
-        }
-
-        return $this->render('@Eco/DashboardAdmin/User/index.html.twig', array(
-            'users' => $users,
+        return $this->render('@Eco/DashboardAdmin/Group/index.html.twig', array(
+            'associations' => $association,
+            'societes' => $societes,
         ));
     }
 
     /**
      * Creates a new user entity.
      *
-     * @Route("/group/new", name="da_users_new")
+     * @Route("/group/new", name="da_groups_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -55,84 +53,40 @@ class DAGroupController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
+        $group = new Group();
+        $form = $this->createForm('EcoBundle\Form\GroupType', $group);
+        $form->handleRequest($request);
 
-        $reparateur = new Reparateur();
-        $user = new User();
-        $livreur = new Livreur();
-        $respSoc = new RespSoc();
-        $respAsso = new RespAsso();
-
-        $formUser = $this->createForm('EcoBundle\Form\UserType', $user);
-        $formRep = $this->createForm('EcoBundle\Form\ReparateurType', $reparateur);
-        $formLiv = $this->createForm('EcoBundle\Form\LivreurType', $livreur);
-        $formRespSoc = $this->createForm('EcoBundle\Form\RespSocType', $respSoc);
-        $formRespAsso = $this->createForm('EcoBundle\Form\RespAssoType', $respAsso);
-
-        $formUser->handleRequest($request);
-        $formRep->handleRequest($request);
-        $formLiv->handleRequest($request);
-        $formRespSoc->handleRequest($request);
-        $formRespAsso->handleRequest($request);
-
-        if ($formUser->isSubmitted() && $formUser->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
+            $em->persist($group);
             $em->flush();
-            return $this->redirectToRoute('da_users_index');
+
+            return $this->redirectToRoute('da_groups_show', array('id' => $group->getId()));
         }
 
-        if ($formRep->isSubmitted() && $formRep->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($reparateur);
-            $em->flush();
-            return $this->redirectToRoute('da_users_index');
-        }
-
-        if ($formLiv->isSubmitted() && $formLiv->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($livreur);
-            $em->flush();
-            return $this->redirectToRoute('da_users_index');
-        }
-
-        if ($formRespSoc->isSubmitted() && $formRespSoc->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($respSoc);
-            $em->flush();
-            return $this->redirectToRoute('da_users_index');
-        }
-
-        if ($formRespAsso->isSubmitted() && $formRespAsso->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($respAsso);
-            $em->flush();
-            return $this->redirectToRoute('da_users_index');
-        }
-
-        return $this->render('@Eco/DashboardAdmin/User/new.html.twig', array(
-            'user' => $user,
-            'formUser' => $formUser->createView(),
-            'formRep' => $formRep->createView(),
-            'formLiv' => $formLiv->createView(),
-            'formRespAsso' => $formRespAsso->createView(),
-            'formRespSoc' => $formRespSoc->createView(),
+        return $this->render('@Eco/DashboardAdmin/Group/new.html.twig', array(
+            'group' => $group,
+            'form' => $form->createView(),
         ));
     }
     /**
      * Finds and displays a user entity.
      *
-     * @Route("/group/{id}", name="da_users_show")
+     * @Route("/group/{id}", name="da_groups_show")
      * @Method("GET")
      */
-    public function showAction(User $user)
+    public function showAction(Group $group)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $deleteForm = $this->createDeleteForm($user);
+        $users= $group->getUsers();
+        $deleteForm = $this->createDeleteForm($group);
 
-        return $this->render('@Eco/DashboardAdmin/User/show.html.twig', array(
-            'user' => $user,
+        return $this->render('@Eco/DashboardAdmin/Group/show.html.twig', array(
+            'users' => $users,
+            'group' => $group,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -140,25 +94,25 @@ class DAGroupController extends Controller
     /**
      * Displays a form to edit an existing user entity.
      *
-     * @Route("/group/{id}/edit", name="da_users_edit")
+     * @Route("/group/{id}/edit", name="da_groups_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, User $user)
+    public function editAction(Request $request, Group $group)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('EcoBundle\Form\UserType', $user);
+        $deleteForm = $this->createDeleteForm($group);
+        $editForm = $this->createForm('EcoBundle\Form\UserType', $group);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('da_users_edit', array('id' => $user->getId()));
+            return $this->redirectToRoute('da_groups_edit', array('id' => $group->getId()));
         }
 
-        return $this->render('@Eco/DashboardAdmin/User/edit.html.twig', array(
-            'user' => $user,
+        return $this->render('@Eco/DashboardAdmin/Group/edit.html.twig', array(
+            'user' => $group,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -167,37 +121,37 @@ class DAGroupController extends Controller
     /**
      * Deletes a user entity.
      *
-     * @Route("/user/{id}", name="da_users_delete")
+     * @Route("/user/{id}", name="da_groups_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, User $user)
+    public function deleteAction(Request $request, Group $group)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $form = $this->createDeleteForm($user);
+        $form = $this->createDeleteForm($group);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
+            $em->remove($group);
             $em->flush();
         }
 
-        return $this->redirectToRoute('da_users_index');
+        return $this->redirectToRoute('da_groups_index');
     }
 
     /**
      * Creates a form to delete a user entity.
      *
-     * @param User $user The user entity
+     * @param User $group The user entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(User $user)
+    private function createDeleteForm(Group $group)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('da_users_delete', array('id' => $user->getId())))
+            ->setAction($this->generateUrl('da_groups_delete', array('id' => $group->getId())))
             ->setMethod('DELETE')
             ->getForm()
             ;

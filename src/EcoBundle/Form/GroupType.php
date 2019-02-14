@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class GroupType extends AbstractType
 {
@@ -26,6 +27,12 @@ class GroupType extends AbstractType
                 ],
                 'label' => 'Type : ',
                 'required' => false,
+            ])
+            ->add('groupPhoto', VichFileType::class, [
+                'label' => '',
+                'required' => false,
+                'allow_delete' => true,
+                'download_link' => true
             ]);
     }
 

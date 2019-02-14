@@ -72,11 +72,14 @@ class User extends BaseUser
     private $prenom;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Group
      *
      * @ORM\ManyToOne(targetEntity="Group", inversedBy="users")
-     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
      */
+
     private $group;
 
 

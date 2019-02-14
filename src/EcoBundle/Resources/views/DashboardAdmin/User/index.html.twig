@@ -9,30 +9,49 @@
 {% block javascripts %}
     <script>
         $(document).ready(function () {
-            var table = $('#profiles').DataTable({
+            var users = $('#usersTab').DataTable({
                 "paging": true,
-                "scrollX": true,
                 "stateSave": true,
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
                 }
             });
-
-            table.columns().every(function (index) {
-                var visible = this.visible();
-                $('.toggle-vis').eq(index).prop('checked', visible);
+            var reparateurs = $('#reparateursTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
             });
-
-            $('.toggle-vis').on('change', function (e) {
-                e.preventDefault();
-                // Get the column API object
-                var column = table.column($(this).attr('data-column'));
-                // Toggle the visibility
-                column.visible(!column.visible());
+            var reparateursPro = $('#reparateursProTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
             });
-
+            var livreurs = $('#livreursTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+            var respsSoc = $('#respsSocTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+            var respsAssoc = $('#respsAssocTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
         });
-
     </script>
 {% endblock %}
 
@@ -87,9 +106,9 @@
                            aria-expanded="false">Resp. assoc</a>
                     </li>
                 </ul>
-            <div class="tab-content">
+            <div class="tab-content" >
                 <div class="tab-pane active" id="users" aria-expanded="true">
-                    <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <table id="usersTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>image</th>
@@ -153,7 +172,7 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="reparateurs" aria-expanded="false">
-                    <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <table id="reparateursTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>photo</th>
@@ -202,7 +221,7 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="reparateursPro" aria-expanded="false">
-                    <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <table id="reparateursProTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>Photo</th>
@@ -251,7 +270,7 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="livreurs" aria-expanded="false">
-                    <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <table id="livreursTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>Photo</th>
@@ -298,7 +317,7 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="respsSoc" aria-expanded="false">
-                    <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <table id="respsSocTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>Photo</th>
@@ -342,7 +361,7 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="respsAssoc" aria-expanded="false">
-                    <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <table id="respsAssocTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>Photo</th>

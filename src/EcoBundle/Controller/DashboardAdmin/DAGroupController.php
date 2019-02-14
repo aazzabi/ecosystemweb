@@ -18,11 +18,11 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Route("da")
  */
-class DAUserController extends Controller
+class DAGroupController extends Controller
 {
     /**
      *
-     * @Route("/user", name="da_users_index")
+     * @Route("/group", name="da_users_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -30,50 +30,24 @@ class DAUserController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $users = array();
-        $reparateurs = array();
-        $reparateursPro = array();
-        $livreurs = array();
-        $respsSoc = array();
-        $respsAsso = array();
 
-        $allUsers = $this->getDoctrine()->getManager()->getRepository('EcoBundle:User')->findAll();
+        $allGroups = $this->getDoctrine()->getManager()->getRepository('EcoBundle:User')->findAll();
 
-        foreach ($allUsers as $user) {
-            if ($user->hasRole("ROLE_USER")) {
-                $users[] = $user;
-            }
-            if ($user->hasRole("ROLE_REPARATEUR")) {
-                $reparateurs[] = $user;
-            }
-            if ($user->hasRole("ROLE_REPARATEUR_PRO")) {
-                $reparateursPro[] = $user;
-            }
-            if ($user->hasRole("ROLE_LIVREUR")) {
-                $livreurs[] = $user;
-            }
-            if ($user->hasRole("ROLE_REPRESENTANT_ASSOC")) {
-                $respsAsso[] = $user;
-            }
-            if ($user->hasRole("ROLE_REPRESENTANT_SOCIETE")) {
-                $respsSoc[] = $user;
+        foreach ($allGroups as $group) {
+            if ($group->hasRole("ROLE_USER")) {
+                $users[] = $group;
             }
         }
 
         return $this->render('@Eco/DashboardAdmin/User/index.html.twig', array(
             'users' => $users,
-            'reparateurs' => $reparateurs,
-            'reparateursPro' => $reparateursPro,
-            'livreurs' => $livreurs,
-            'respsSoc' => $respsSoc,
-            'respsAsso' => $respsAsso,
         ));
     }
 
     /**
      * Creates a new user entity.
      *
-     * @Route("/user/new", name="da_users_new")
+     * @Route("/group/new", name="da_users_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -147,7 +121,7 @@ class DAUserController extends Controller
     /**
      * Finds and displays a user entity.
      *
-     * @Route("/user/{id}", name="da_users_show")
+     * @Route("/group/{id}", name="da_users_show")
      * @Method("GET")
      */
     public function showAction(User $user)
@@ -166,7 +140,7 @@ class DAUserController extends Controller
     /**
      * Displays a form to edit an existing user entity.
      *
-     * @Route("/user/{id}/edit", name="da_users_edit")
+     * @Route("/group/{id}/edit", name="da_users_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, User $user)

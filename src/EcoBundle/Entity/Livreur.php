@@ -29,6 +29,12 @@ class Livreur extends User
     private $disponibilite;
 
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->roles = array('ROLE_LIVREUR');
+    }
+
     /**
      * Set zone
      *

@@ -73,8 +73,22 @@
                                     {{ form_end(formLiv) }}
                                 </div>
                                 <div class="tab-pane" id="respsSoc" aria-expanded="false">
+                                    {{ form_start(formRespSoc) }}
+                                    {% form_theme formRespSoc 'bootstrap_3_layout.html.twig' %}
+                                    {{ form_widget(formRespSoc) }}
+                                    <button type="submit" class="btn btn-success" value="Create">
+                                        <i class="fa fa-check" aria-hidden="true"></i> Confirmer
+                                    </button>
+                                    {{ form_end(formRespSoc) }}
                                 </div>
                                 <div class="tab-pane" id="respsAssoc" aria-expanded="false">
+                                    {{ form_start(formRespAsso) }}
+                                    {% form_theme formRespAsso 'bootstrap_3_layout.html.twig' %}
+                                    {{ form_widget(formRespAsso) }}
+                                    <button type="submit" class="btn btn-success" value="Create">
+                                        <i class="fa fa-check" aria-hidden="true"></i> Confirmer
+                                    </button>
+                                    {{ form_end(formRespAsso) }}
                                 </div>
                             </div>
                         </div>

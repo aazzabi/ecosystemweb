@@ -1,5 +1,4 @@
 <?php
-// src/EcoBundle/Entity/User.php
 
 namespace EcoBundle\Entity;
 
@@ -18,7 +17,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\DiscriminatorMap({
  *     "user" = "User",
  *     "reparateur" = "Reparateur",
- *     "livreur" = "Livreur"
+ *     "livreur" = "Livreur",
+ *     "respAsso" = "RespAsso",
+ *     "respSoc" = "RespSoc"
  * })
  */
 class User extends BaseUser

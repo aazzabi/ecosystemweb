@@ -33,7 +33,6 @@ class DAGroupController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $association = $em->getRepository('EcoBundle:Group')->findAllAssociation();
-//        var_dump($association[0]->getUsers());die;
         $societes = $em->getRepository('EcoBundle:Group')->findAllSociete();
 
         return $this->render('@Eco/DashboardAdmin/Group/index.html.twig', array(

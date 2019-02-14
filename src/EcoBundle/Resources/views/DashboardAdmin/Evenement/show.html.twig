@@ -1,0 +1,42 @@
+{% extends './Default/dashboard.html.twig' %}
+
+{% block title %}
+    Affichage d'une catégorie
+{% endblock %}
+
+{% block body %}
+    <h1>Catégorie Event</h1>
+
+    <table>
+        <tbody>
+
+        <tr>
+            <th>Id</th>
+            <td>{{ CategorieEvts.id }}</td>
+        </tr>
+        <tr>
+            <th>Libelle</th>
+            <td>{{ CategorieEvts.libelle }}</td>
+        </tr>
+        <tr>
+            <th>But</th>
+            <td>{{ CategorieEvts.but }}</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('da_evenements_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('da_evenements_edit', { 'id': CategorieEvts.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

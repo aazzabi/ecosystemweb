@@ -1,0 +1,150 @@
+{% extends './Default/dashboard.html.twig' %}
+{% block title %}
+    Liste des Categories d'event
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            var users = $('#usersTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+            var reparateurs = $('#reparateursTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+            var reparateursPro = $('#reparateursProTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+            var livreurs = $('#livreursTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+            var respsSoc = $('#respsSocTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+            var respsAssoc = $('#respsAssocTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><b>Liste des Categories d'events</b></h1>
+                </div>
+                <div class="col-md-6 text-right">
+                    <br>
+                    <a href="{{ path('da_evenements_new') }}" class="btn btn-success">
+                        <i class="icon-plus">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            &nbsp;Ajouter une catégorie d'évènement
+                        </i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-borderless">
+                <ul class="nav nav-tabs nav-tabs-simple hidden-sm-down" role="tablist"
+                    data-init-reponsive-tabs="dropdownfx">
+                    <li class="nav-item">
+                        <a class="active" data-toggle="tab" role="tab" data-target="#users" href="#"
+                           aria-expanded="true">Utilisateurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" role="tab" data-target="#reparateurs" class=""
+                           aria-expanded="false">Reparateurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" role="tab" data-target="#reparateursPro" class=""
+                           aria-expanded="false">Reparateurs Pro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" role="tab" data-target="#livreurs" class=""
+                           aria-expanded="false">Livreurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" role="tab" data-target="#respsSoc" class=""
+                           aria-expanded="false">Resp. Societe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" role="tab" data-target="#respsAssoc" class=""
+                           aria-expanded="false">Resp. assoc</a>
+                    </li>
+                </ul>
+                <div class="tab-content" >
+                    <div class="tab-pane active" id="users" aria-expanded="true">
+                        <table id="usersTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Libelle</th>
+                                <th>But</th>
+
+                            </tr>
+                            </thead>
+                            <thead>
+                            <tbody>
+                            {% for categoriesEvt in categoriesEvts %}
+                                <tr>
+
+                                    <td>{{ categoriesEvt.libelle }}  </td>
+                                    <td>{{ categoriesEvt.but }}</td>
+
+
+                                    <td>
+                                        <div class="btn-group btn-group-sm btn-group-horizontal">
+                                            <a class="btn btn-secondary"
+                                               href="{{ path('da_evenements_edit', { 'id': categoriesEvt.id }) }}"
+                                               data-toggle="tooltip" title="Editer l'utilisateur">
+                                                <i class="fa fa-pencil-square-o"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+{% endblock %}

@@ -32,10 +32,6 @@
                                        aria-expanded="false">Reparateurs</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" data-toggle="tab" role="tab" data-target="#reparateursPro" class=""
-                                       aria-expanded="false">Reparateurs Pro</a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="#" data-toggle="tab" role="tab" data-target="#livreurs" class=""
                                        aria-expanded="false">Livreurs</a>
                                 </li>
@@ -67,7 +63,7 @@
                                     </button>
                                     {{ form_end(formRep) }}
                                 </div>
-                                <div class="tab-pane" id="reparateursPro" aria-expanded="false">
+                                <div class="tab-pane" id="livreurs" aria-expanded="false">
                                     {{ form_start(formLiv) }}
                                     {% form_theme formLiv 'bootstrap_3_layout.html.twig' %}
                                     {{ form_widget(formLiv) }}
@@ -75,8 +71,6 @@
                                         <i class="fa fa-check" aria-hidden="true"></i> Confirmer
                                     </button>
                                     {{ form_end(formLiv) }}
-                                </div>
-                                <div class="tab-pane" id="livreurs" aria-expanded="false">
                                 </div>
                                 <div class="tab-pane" id="respsSoc" aria-expanded="false">
                                 </div>

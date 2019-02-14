@@ -92,6 +92,7 @@
                     <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
+                            <th>image</th>
                             <th>Nom - Prenom</th>
                             <th>Username</th>
                             <th>Email</th>
@@ -104,6 +105,16 @@
                         <tbody>
                         {% for user in users %}
                             <tr>
+                                <td style="width: 55px; padding:0px; text-align: center">
+                                    {% if user.photo != '' %}
+                                        <img alt="User Pic" style="width:50px;"
+                                             src="{{ asset('uploads/user/photo/' ~ user.photo) }}"
+                                             class="img-circle img-responsive">
+                                    {% else %}
+                                        <img alt="User Pic" style="width:50px;" src="{{ asset('assets/img/profile.png') }}"
+                                             id="profile-image1" class="img-circle img-responsive">
+                                    {% endif %}
+                                </td>
                                 <td>{{ user.nom|upper }} {{ user.prenom }} </td>
                                 <td>{{ user.username }}</td>
                                 <td>{{ user.email }}</td>
@@ -145,7 +156,7 @@
                     <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th></th>
+                            <th>photo</th>
                             <th>Nom - Prenom</th>
                             <th>Username</th>
                             <th>Email</th>
@@ -159,7 +170,16 @@
                         <tbody>
                         {% for reparateur in reparateurs %}
                             <tr>
-                                <td> checkbox</td>
+                                <td style="width: 55px; padding:0px; text-align: center">
+                                    {% if reparateur.photo != '' %}
+                                        <img alt="User Pic" style="width:50px;"
+                                             src="{{ asset('uploads/user/photo/' ~ reparateur.photo) }}"
+                                             class="img-circle img-responsive">
+                                    {% else %}
+                                        <img alt="User Pic" style="width:50px;" src="{{ asset('assets/img/profile.png') }}"
+                                             id="profile-image1" class="img-circle img-responsive">
+                                    {% endif %}
+                                </td>
                                 <td>{{ reparateur.nom|upper }} {{ reparateur.prenom }} </td>
                                 <td>{{ reparateur.username }}</td>
                                 <td>{{ reparateur.email }}</td>
@@ -185,6 +205,7 @@
                     <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
+                            <th>Photo</th>
                             <th>Nom - Prenom</th>
                             <th>Username</th>
                             <th>Email</th>
@@ -197,7 +218,17 @@
                         <tbody>
                         {% for reparateurp in reparateursPro %}
                             <tr>
-                                <td> checkbox</td>
+
+                                <td style="width: 55px; padding:0px; text-align: center">
+                                    {% if reparateurp.photo != '' %}
+                                        <img alt="User Pic" style="width:50px;"
+                                             src="{{ asset('uploads/user/photo/' ~ reparateurp.photo) }}"
+                                             class="img-circle img-responsive">
+                                    {% else %}
+                                        <img alt="User Pic" style="width:50px;" src="{{ asset('assets/img/profile.png') }}"
+                                             id="profile-image1" class="img-circle img-responsive">
+                                    {% endif %}
+                                </td>
                                 <td>{{ reparateurp.nom|upper }} {{ reparateur.prenom }} </td>
                                 <td>{{ reparateurp.username }}</td>
                                 <td>{{ reparateurp.email }}</td>
@@ -223,7 +254,7 @@
                     <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th>checkbox</th>
+                            <th>Photo</th>
                             <th>Nom - Prenom</th>
                             <th>Username</th>
                             <th>Email</th>
@@ -236,7 +267,17 @@
                         <tbody>
                         {% for liv in livreurs %}
                             <tr>
-                                <td></td>
+
+                                <td style="width: 55px; padding:0px; text-align: center">
+                                    {% if liv.photo != '' %}
+                                        <img alt="User Pic" style="width:50px;"
+                                             src="{{ asset('uploads/user/photo/' ~ liv.photo) }}"
+                                             class="img-circle img-responsive">
+                                    {% else %}
+                                        <img alt="User Pic" style="width:50px;" src="{{ asset('assets/img/profile.png') }}"
+                                             id="profile-image1" class="img-circle img-responsive">
+                                    {% endif %}
+                                </td>
                                 <td>{{ liv.nom|upper }} {{ liv.prenom }} </td>
                                 <td>{{ liv.username }}</td>
                                 <td>{{ liv.email }}</td>
@@ -260,6 +301,7 @@
                     <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
+                            <th>Photo</th>
                             <th>Nom - Prenom</th>
                             <th>Username</th>
                             <th>Email</th>
@@ -271,6 +313,16 @@
                         <tbody>
                         {% for respS in respsSoc %}
                             <tr>
+                                <td style="width: 55px; padding:0px; text-align: center">
+                                    {% if respS.photo != '' %}
+                                        <img alt="User Pic" style="width:50px;"
+                                             src="{{ asset('uploads/user/photo/' ~ respS.photo) }}"
+                                             class="img-circle img-responsive">
+                                    {% else %}
+                                        <img alt="User Pic" style="width:50px;" src="{{ asset('assets/img/profile.png') }}"
+                                             id="profile-image1" class="img-circle img-responsive">
+                                    {% endif %}
+                                </td>
                                 <td>{{ respS.nom|upper }} {{ respS.prenom }} </td>
                                 <td>{{ respS.username }}</td>
                                 <td>{{ respS.email }} </td>
@@ -293,6 +345,7 @@
                     <table id="users" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
+                            <th>Photo</th>
                             <th>Nom - Prenom</th>
                             <th>Username</th>
                             <th>Email</th>
@@ -304,6 +357,16 @@
                         <tbody>
                         {% for respA in respsAssoc %}
                             <tr>
+                                <td style="width: 55px; padding:0px; text-align: center">
+                                    {% if respA.photo != '' %}
+                                        <img alt="User Pic" style="width:50px;"
+                                             src="{{ asset('uploads/user/photo/' ~ respA.photo) }}"
+                                             class="img-circle img-responsive">
+                                    {% else %}
+                                        <img alt="User Pic" style="width:50px;" src="{{ asset('assets/img/profile.png') }}"
+                                             id="profile-image1" class="img-circle img-responsive">
+                                    {% endif %}
+                                </td>
                                 <td>{{ respA.nom|upper }} {{ respA.prenom }} </td>
                                 <td>{{ respA.username }}</td>
                                 <td>{{ respA.email }} </td>

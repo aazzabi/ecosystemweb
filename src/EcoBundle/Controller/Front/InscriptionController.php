@@ -6,7 +6,7 @@
  * Time: 20:44
  */
 
-namespace EcoBundle\Controller;
+namespace EcoBundle\Controller\Front;
 
 
 use EcoBundle\Entity\Reparateur;

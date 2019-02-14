@@ -38,6 +38,11 @@ class User extends BaseUser
     private $nom;
 
     /**
+     * @var array
+     */
+    protected $roles;
+
+    /**
      * @Vich\UploadableField(mapping="user_photo", fileNameProperty="photo")
      *
      * @var File
@@ -78,6 +83,8 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->photoUpdatedAt = new \DateTime('now');
+        $this->enabled = true;
+        $this->roles = array();
     }
 
     /**
@@ -238,5 +245,48 @@ class User extends BaseUser
         $this->photoUpdatedAt = $photoUpdatedAt;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function addRole($role)
+    {
+        $role = strtoupper($role);
+        if ($role === static::ROLE_DEFAULT) {
+            return $this;
+        }
+
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeRole($role)
+    {
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setRoles(array $roles)
+    {
+        $this->roles = array();
+
+        foreach ($roles as $role) {
+            $this->addRole($role);
+        }
+
+        return $this;
+    }
 
 }

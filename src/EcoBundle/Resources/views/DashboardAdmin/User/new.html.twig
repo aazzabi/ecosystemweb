@@ -1,0 +1,92 @@
+{% extends './Default/dashboard.html.twig' %}
+
+{% block title %}
+    Ajout d'utilisateur
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><b>Ajout d'utilisateur </b></h1>
+                </div>
+                <div class="col-md-6 text-right">
+                    <br>
+                    <a href="{{ path('da_users_index') }}" class="btn btn-secondary">
+                        <i class="fa fa-undo" aria-hidden="true"></i>  Retour à la liste</a>
+                    <br>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-borderless">
+                            <ul class="nav nav-tabs nav-tabs-simple hidden-sm-down" role="tablist"
+                                data-init-reponsive-tabs="dropdownfx">
+                                <li class="nav-item">
+                                    <a class="active" data-toggle="tab" role="tab" data-target="#users" href="#"
+                                       aria-expanded="true">Utilisateurs</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" data-toggle="tab" role="tab" data-target="#reparateurs" class=""
+                                       aria-expanded="false">Reparateurs</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" data-toggle="tab" role="tab" data-target="#reparateursPro" class=""
+                                       aria-expanded="false">Reparateurs Pro</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" data-toggle="tab" role="tab" data-target="#livreurs" class=""
+                                       aria-expanded="false">Livreurs</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" data-toggle="tab" role="tab" data-target="#respsSoc" class=""
+                                       aria-expanded="false">Resp. Societe</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" data-toggle="tab" role="tab" data-target="#respsAssoc" class=""
+                                       aria-expanded="false">Resp. assoc</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="users" aria-expanded="true">
+                                    {{ form_start(formUser) }}
+                                    {% form_theme formUser 'bootstrap_3_layout.html.twig' %}
+                                    {{ form_widget(formUser) }}
+                                    <button type="submit" class="btn btn-success" value="Create">
+                                        <i class="fa fa-check" aria-hidden="true"></i> Confirmer
+                                    </button>
+                                    {{ form_end(formUser) }}
+                                </div>
+                                <div class="tab-pane" id="reparateurs" aria-expanded="false">
+                                    {{ form_start(formRep) }}
+                                    {% form_theme formRep 'bootstrap_3_layout.html.twig' %}
+                                    {{ form_widget(formRep) }}
+                                    <button type="submit" class="btn btn-success" value="Create">
+                                        <i class="fa fa-check" aria-hidden="true"></i> Confirmer
+                                    </button>
+                                    {{ form_end(formRep) }}
+                                </div>
+                                <div class="tab-pane" id="reparateursPro" aria-expanded="false">
+                                    {{ form_start(formLiv) }}
+                                    {% form_theme formLiv 'bootstrap_3_layout.html.twig' %}
+                                    {{ form_widget(formLiv) }}
+                                    <button type="submit" class="btn btn-success" value="Create">
+                                        <i class="fa fa-check" aria-hidden="true"></i> Confirmer
+                                    </button>
+                                    {{ form_end(formLiv) }}
+                                </div>
+                                <div class="tab-pane" id="livreurs" aria-expanded="false">
+                                </div>
+                                <div class="tab-pane" id="respsSoc" aria-expanded="false">
+                                </div>
+                                <div class="tab-pane" id="respsAssoc" aria-expanded="false">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,7 +1,12 @@
-eco:
-    resource: '@EcoBundle/Controller/'
+ecoDashboardAdmin:
+    resource: '@EcoBundle/Controller/DashboardAdmin'
     type: annotation
     prefix: /
+ecoDashboardUser:
+    resource: '@EcoBundle/Controller/DashboardUser'
+    type: annotation
+    prefix: /
+
 #    resource: "@EcoBundle/Resources/config/routing.yml"
 #    prefix:   /
 

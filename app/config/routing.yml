@@ -6,6 +6,10 @@ ecoDashboardUser:
     resource: '@EcoBundle/Controller/DashboardUser'
     type: annotation
     prefix: /
+ecoFront:
+    resource: '@EcoBundle/Controller/Front'
+    type: annotation
+    prefix: /
 
 #    resource: "@EcoBundle/Resources/config/routing.yml"
 #    prefix:   /

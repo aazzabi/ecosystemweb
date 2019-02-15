@@ -120,7 +120,7 @@ class DAEvenementsController extends Controller
 
         return $this->render('@Eco/DashboardAdmin/Evenement/edit.html.twig', array(
             'CategorieEvts' => $categorieEvts,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -142,6 +142,43 @@ class DAEvenementsController extends Controller
             'CategorieEvts' => $categorieEvts,
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+
+    /**
+     * Deletes a Reparateur entity.
+     *
+     * @Route("/evenement/{id}", name="da_evenements_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, CategorieEvts $categorieEvts)
+    {
+        $form = $this->createDeleteForm($categorieEvts);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($categorieEvts);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('da_evenements_index');
+    }
+
+    /**
+     * Creates a form to delete a Reparateur entity.
+     *
+     * @param Reparateur $categorieEvts The Reparateur entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(CategorieEvts $categorieEvts)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('da_evenements_delete', array('id' => $categorieEvts->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
     }
 
 }

@@ -96,13 +96,13 @@
                                     <td>{{ categorie.domaine }}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm btn-group-horizontal">
-                                            <a class="btn btn-secondary" href="{{ path('da_categorie_pub_show', { 'id': categorie.id }) }}"
-                                               data-toggle="tooltip" title="Afficher le profile">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                            <a class="btn btn-secondary" href="{{ path('da_categorie_pub_edit', { 'id': categorie.id }) }}"
-                                               data-toggle="tooltip" title="Editer le profile">
+                                            <a class="btn btn-secondary" href="{{ path('da_forum_edit', { 'id': categorie.id }) }}"
+                                               data-toggle="tooltip" title="Editer cette categorie">
                                                 <i class="fa fa-pencil-square-o"></i>
+                                            </a>
+                                            <a class="btn btn-secondary" href="{{ path('da_categ_delete', { 'id': categorie.id }) }}"
+                                               data-toggle="tooltip" title="Supprimer cette categorie">
+                                                <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
                                     </td>

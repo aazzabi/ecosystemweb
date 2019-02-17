@@ -66,4 +66,42 @@ class DAForumController extends Controller
             'formCategorie' => $formCategorie->createView(),
         ));
     }
+
+    /**
+     * Displays a form to edit an existing user entity.
+     *
+     * @Route("/forum/categorie/{id}/edit", name="da_forum_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, CategoriePub $categoriePub)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+        }
+        $editForm = $this->createForm('EcoBundle\Form\CategoriePubType', $categoriePub);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('da_forum_edit', array('id' => $categoriePub->getId()));
+        }
+
+        return $this->render('@Eco/DashboardAdmin/Forum/edit.html.twig', array(
+            'categorie' => $categoriePub,
+            'edit_form' => $editForm->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/forum/delete/{id}", name="da_categ_delete")
+     * @Method({"GET", "DELETE"})
+     */
+    public function deleteCategorieAction(Request $request, $id)
+    {
+        $categorie = $this->getDoctrine()->getRepository('EcoBundle:CategoriePub')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($categorie);
+        $em->flush();
+        return $this->redirectToRoute('da_forum_index');
+    }
 }

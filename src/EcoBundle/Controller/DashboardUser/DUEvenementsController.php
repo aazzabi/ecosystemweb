@@ -172,20 +172,20 @@ class DUEvenementsController extends Controller
      * @Route("/evenement/{id}", name="du_evenements_delete")
      * @Method("DELETE")
      */
- /*   public function deleteAction(Request $request, CategorieEvts $categorieEvts)
-    {
-        $form = $this->createDeleteForm($categorieEvts);
-        $form->handleRequest($request);
+   public function deleteAction(Request $request, Evenement $evenement)
+   {
+       $form = $this->createDeleteForm($evenement);
+       $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($categorieEvts);
-            $em->flush();
-        }
+       if ($form->isSubmitted() && $form->isValid()) {
+           $em = $this->getDoctrine()->getManager();
+           $em->remove($evenement);
+           $em->flush();
+       }
 
-        return $this->redirectToRoute('du_evenements_index');
-    }
-*/
+       return $this->redirectToRoute('du_evenements_index');
+   }
+
     /**
      * Creates a form to delete a Reparateur entity.
      *
@@ -193,7 +193,7 @@ class DUEvenementsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-   private function createDeleteForm(Evenement $evenement)
+  private function createDeleteForm(Evenement $evenement)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('du_evenements_delete', array('id' => $evenement->getId())))

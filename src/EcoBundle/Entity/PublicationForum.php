@@ -2,6 +2,7 @@
 
 namespace EcoBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -67,11 +68,20 @@ class PublicationForum
      */
     private $publicationCreatedAt;
 
+    /**
+     *
+     * var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CommentairePublication", mappedBy="publication")
+     *
+     */
+    private $commentaires;
 
     public function __construct()
     {
         $this->publicationCreatedAt = new \DateTime('now');
         $this->etat= "publié";
+        $this->commentaires = new ArrayCollection();
     }
 
 
@@ -204,5 +214,46 @@ class PublicationForum
     {
         $this->categorie = $categorie;
     }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
+
+    /**
+     * @param mixed $commentaires
+     */
+    public function setCommentaires($commentaires)
+    {
+        $this->commentaires = $commentaires;
+    }
+
+    /**
+     * Add competence
+     *
+     * @param \EcoBundle\Entity\CommentairePublication $commentaire
+     *
+     * @return PublicationForum
+     */
+    public function addCompetence(CommentairePublication $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove competence
+     *
+     * @param \EcoBundle\Entity\CommentairePublication $commentaire
+     */
+    public function removeCompetence(CommentairePublication $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
 }
 

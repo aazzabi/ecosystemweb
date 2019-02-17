@@ -79,9 +79,16 @@ class User extends BaseUser
      *   @ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
-
     private $group;
 
+    /**
+     *
+     * var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="PublicationForum", mappedBy="publicationCreatedBy")
+     *
+     */
+    private $publicationsForum;
 
     public function __construct()
     {
@@ -89,6 +96,7 @@ class User extends BaseUser
         $this->photoUpdatedAt = new \DateTime('now');
         $this->enabled = true;
         $this->roles = array();
+        $this->publicationsForum = new ArrayCollection();
     }
 
     /**
@@ -293,4 +301,19 @@ class User extends BaseUser
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPublicationsForum()
+    {
+        return $this->publicationsForum;
+    }
+
+    /**
+     * @param mixed $publicationsForum
+     */
+    public function setPublicationsForum($publicationsForum)
+    {
+        $this->publicationsForum = $publicationsForum;
+    }
 }

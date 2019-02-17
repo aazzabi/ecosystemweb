@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
+
 /**
  * @ORM\Entity
  * @Vich\Uploadable
@@ -90,6 +91,61 @@ class User extends BaseUser
         $this->enabled = true;
         $this->roles = array();
     }
+
+    /**
+     *
+     * var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="createdBy")
+     *
+     */
+    private $eventsCrees;
+
+
+
+    public function __constructEventsCrees()
+    {
+        parent::__construct();
+        $this->eventsCrees = new ArrayCollection();
+    }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Evenement", mappedBy="participants")
+     */
+    private $eventsParticipes;
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function __constructEventsParticipes()
+    {
+        parent::__construct();
+        $this->eventsParticipes = new ArrayCollection();
+    }
+
+    public function getEventsParticipes()
+    {
+        return $this->eventsParticipes;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+
+    /**
+     * Get profiles
+     *
+     * @return ArrayCollection|eventsCrees[]
+     */
+    public function getEventsCrees()
+    {
+        return $this->eventsCrees;
+    }
+
 
     /**
      * @return mixed

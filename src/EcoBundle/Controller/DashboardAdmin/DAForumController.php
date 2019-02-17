@@ -4,6 +4,7 @@ namespace EcoBundle\Controller\DashboardAdmin;
 
 use EcoBundle\Entity\CategoriePub;
 use EcoBundle\Entity\Livreur;
+use EcoBundle\Entity\PublicationForum;
 use EcoBundle\Entity\Reparateur;
 use EcoBundle\Entity\RespAsso;
 use EcoBundle\Entity\RespSoc;
@@ -33,9 +34,11 @@ class DAForumController extends Controller
         }
 
         $categoriesPub = $this->getDoctrine()->getManager()->getRepository('EcoBundle:CategoriePub')->findAll();
+        $publications = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findAll();
 
         return $this->render('@Eco/DashboardAdmin/Forum/index.html.twig', array(
             'categories' => $categoriesPub,
+            'publications' => $publications,
         ));
     }
 
@@ -93,7 +96,23 @@ class DAForumController extends Controller
     }
 
     /**
-     * @Route("/forum/delete/{id}", name="da_categ_delete")
+     * Finds and displays a user entity.
+     *
+     * @Route("/forum/publication/{id}", name="da_forum_publication_show")
+     * @Method("GET")
+     */
+    public function showAction(PublicationForum $publicationForum)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+        }
+
+        return $this->render('@Eco/DashboardAdmin/Forum/show.html.twig', array(
+            'publication' => $publicationForum,
+        ));
+    }
+    /**
+     * @Route("/forum/categorie/delete/{id}", name="da_categ_delete")
      * @Method({"GET", "DELETE"})
      */
     public function deleteCategorieAction(Request $request, $id)
@@ -101,6 +120,18 @@ class DAForumController extends Controller
         $categorie = $this->getDoctrine()->getRepository('EcoBundle:CategoriePub')->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($categorie);
+        $em->flush();
+        return $this->redirectToRoute('da_forum_index');
+    }
+    /**
+     * @Route("/forum/publication/delete/{id}", name="da_forum_publication_delete")
+     * @Method({"GET", "DELETE"})
+     */
+    public function deletePublicationAction(Request $request, $id)
+    {
+        $publication = $this->getDoctrine()->getRepository('EcoBundle:PublicationForum')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($publication);
         $em->flush();
         return $this->redirectToRoute('da_forum_index');
     }

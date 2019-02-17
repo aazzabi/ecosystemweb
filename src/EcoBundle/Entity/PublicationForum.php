@@ -43,13 +43,37 @@ class PublicationForum
     private $etat;
 
     /**
+     * @var CategoriePub
+     *
+     * @ORM\ManyToOne(targetEntity="CategoriePub")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     */
+    private $categorie;
+
+    /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="publicationsForum")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=true)
      *
      */
     private $publicationCreatedBy;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="pub_created_at", type="datetime", nullable=true)
+     */
+    private $publicationCreatedAt;
+
+
+    public function __construct()
+    {
+        $this->publicationCreatedAt = new \DateTime('now');
+        $this->etat= "publié";
+    }
+
 
     /**
      * Get id
@@ -147,6 +171,38 @@ class PublicationForum
     public function setPublicationCreatedBy($publicationCreatedBy)
     {
         $this->publicationCreatedBy = $publicationCreatedBy;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPublicationCreatedAt()
+    {
+        return $this->publicationCreatedAt;
+    }
+
+    /**
+     * @param \DateTime $publicationCreatedAt
+     */
+    public function setPublicationCreatedAt($publicationCreatedAt)
+    {
+        $this->publicationCreatedAt = $publicationCreatedAt;
+    }
+
+    /**
+     * @return CategoriePub
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+    /**
+     * @param CategoriePub $categorie
+     */
+    public function setCategorie($categorie)
+    {
+        $this->categorie = $categorie;
     }
 }
 

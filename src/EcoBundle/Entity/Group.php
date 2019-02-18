@@ -4,6 +4,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\Group as BaseGroup;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -203,6 +204,9 @@ class Group extends BaseGroup
     public function setGroupPhoto($groupPhoto)
     {
         $this->groupPhoto = $groupPhoto;
+        if ($groupPhoto instanceof UploadedFile) {
+            $this->setLogoUpdatedAt(new \DateTime());
+        }
     }
 
     /**

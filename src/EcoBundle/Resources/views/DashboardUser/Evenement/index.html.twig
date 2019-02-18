@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <br>
-
+                    <a href="{{ path('du_evenements_new') }}" class="btn btn-success">
                         <i class="icon-plus">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             &nbsp;Ajouter un évènement
@@ -50,7 +50,7 @@
                     <th>Description</th>
                     <th>Categorie</th>
                     <th>Lieu</th>
-
+                    <th>Date</th>
                     <th>Cree Par</th>
                     <th>Action</th>
                 </tr>
@@ -66,12 +66,19 @@
                         <td>{{ evenements.description }}</td>
                         <td>{{ evenements.categorie.libelle }}</td>
                         <td>{{ evenements.lieu }}</td>
-
+                        <td>{{ evenements.date |date }}</td>
                         <td>{{ evenements.createdBy }}</td>
 
                         <td>
-
+                            <div class="btn-group btn-group-sm btn-group-horizontal">
+                                <a class="btn btn-secondary"
+                                   href="{{ path('du_evenement_edit', { 'id': evenements.id }) }}"
+                                   data-toggle="tooltip" title="Editer l'utilisateur">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </a>
+                            </div>
                         </td>
+
                     </tr>
                 {% endfor %}
                 </tbody>

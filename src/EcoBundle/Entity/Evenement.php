@@ -5,10 +5,12 @@ namespace EcoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 /*use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;*/
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Evenement
- *
+ * @Vich\Uploadable
  * @ORM\Table(name="evenement")
  * @ORM\Entity(repositoryClass="EcoBundle\Repository\EvenementRepository")
  */
@@ -86,6 +88,28 @@ class Evenement
 
     private $participants;
 
+
+    /**
+     * @Vich\UploadableField(mapping="evt_cover", fileNameProperty="cover")
+     *
+     * @var File
+     */
+    private $evtCover;
+
+    /**
+     * @ORM\Column(name="cover", type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $cover;
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $coverUpdatedAt;
+
     /**
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -97,6 +121,30 @@ class Evenement
     public function getParticipants()
     {
         return $this->participants;
+    }
+
+    /**
+     * Add profile
+     *
+     * @param \AppBundle\Entity\User $p
+     *
+     * @return Competence
+     */
+    public function addProfile(User $p)
+    {
+        $this->participants[] = $p;
+
+        return $this;
+    }
+
+    /**
+     * Remove profile
+     *
+     * @param \AppBundle\Entity\User $p
+     */
+    public function removeProfile(User $p)
+    {
+        $this->participants->removeElement($p);
     }
 
 
@@ -221,6 +269,56 @@ class Evenement
     public function setCategorie($categorie)
     {
         $this->categorie = $categorie;
+    }
+
+    /**
+     * @return File
+     */
+    public function getEvtCover()
+    {
+        return $this->evtCover;
+    }
+
+
+    public function setEvtCover($evtCover)
+    {
+        $this->evtCover = $evtCover;
+        if ($evtCover instanceof UploadedFile)
+        {
+            $this->setCoverUpdatedAt(new \DateTime());
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getCover()
+    {
+        return $this->cover;
+    }
+
+    /**
+     * @param string $cover
+     */
+    public function setCover($cover)
+    {
+        $this->cover = $cover;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCoverUpdatedAt()
+    {
+        return $this->coverUpdatedAt;
+    }
+
+    /**
+     * @param \DateTime $coverUpdatedAt
+     */
+    public function setCoverUpdatedAt($coverUpdatedAt)
+    {
+        $this->coverUpdatedAt = $coverUpdatedAt;
     }
 
 }

@@ -64,8 +64,7 @@ class DUEvenementsController extends Controller
                 }
             }*/
         }
-
-       // $categoriesEvts = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
+//       $categoriesEvts = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
 //        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
 
         return $this->render('@Eco/DashboardUser/Evenement/index.html.twig', array(
@@ -75,93 +74,79 @@ class DUEvenementsController extends Controller
     }
 
     /**
-     * Creates a new user entity.
      *
      * @Route("/evenement/new", name="du_evenements_new")
      * @Method({"GET", "POST"})
      */
-  /*  public function newAction(Request $request)
+    public function newAction(Request $request)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
-        }
-        $user = $this->get('security.token_storage')->getToken()->getUser();
         $evenement = new Evenement();
-//        tasna3 les autres entités li aand'hom 3ala9a bel module mta3ek
-
-        $formEvt = $this->createForm('EcoBundle\Form\EvenementType', $evenement);
-//        tasna3 les autres formulaire li aand'hom 3ala9a bel module mta3ek
-
-        //tforci le createur de l'evenement
-        $evenement->setCreateur($user);
-
-
-        //$formEvt->handleRequest($request);
-        $formCateg->handleRequest($request);
-//       tu handleRequesti :p les autres formulaire li aand'hom 3ala9a bel module mta3ek
-
-
-
-        if ($formEvt->isSubmitted() && $formEvt->isValid()) {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $form = $this->createForm('EcoBundle\Form\EvenementType', $evenement);
+        $form->handleRequest($request);
+        $evenement->setCreatedBy($user);
+        $user->addEventsCrees($evenement);
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($evenement);
             $em->flush();
-            return $this->redirectToRoute('da_evenements_index');
+            return $this->redirectToRoute('du_evenements_index');
         }
-//        lahna tu persiste l'entité selon le formulaire adéquat mta3ha ( Exple pour $formEvt tu persiste $evenement )
-//        w tab9a t3awed fihom 3la 3dad les entités que tu gére
-
-        return $this->render('@Eco/DashboardAdmin/Evenement/new.html.twig', array(
-            'formEvt' => $formEvt->createView(),
+        return $this->render('@Eco/DashboardUser/Evenement/new.html.twig', array(
+            'form' => $form->createView(),
         ));
-    }*/
+    }
 
     /**
      * Displays a form to edit an existing user entity.
      *
-     * @Route("/evenement/{id}/edit", name="du_evenements_edit")
+     * @Route("/evenement/{id}/edit", name="du_evenement_edit")
      * @Method({"GET", "POST"})
      */
-  /*  public function editAction(Request $request, CategorieEvts $categorieEvts)
+    public function editAction(Request $request,Evenement $evenement)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if ($evenement->getCreatedBy()!= $user)
+        {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $deleteForm = $this->createDeleteForm($categorieEvts);
-        $editForm = $this->createForm('EcoBundle\Form\CategorieEvtsType', $categorieEvts);
+
+        $deleteForm = $this->createDeleteForm($evenement);
+
+        $editForm = $this->createForm('EcoBundle\Form\EvenementType', $evenement);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('da_evenements_edit', array('id' => $categorieEvts->getId()));
+            return $this->redirectToRoute('du_evenements_index', array('id' => $evenement->getId()));
         }
 
-        return $this->render('@Eco/DashboardAdmin/Evenement/edit.html.twig', array(
-            'CategorieEvts' => $categorieEvts,
+        return $this->render('@Eco/DashboardUser/Evenement/edit.html.twig', array(
+            '$evenement' => $evenement,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
-    }*/
+    }
+
 
     /**
-     * Finds and displays a user entity.
-     *
      * @Route("/evenement/{id}", name="du_evenements_show")
      * @Method("GET")
      */
-   public function showAction(Evenement $evenement)
+    public function showAction(Evenement $evenement)
     {
-
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        if ($evenement->getCreatedBy()== $user)
+        if ($evenement->getCreatedBy()!= $user)
         {
+            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+        }
         $deleteForm = $this->createDeleteForm($evenement);
 
         return $this->render('@Eco/DashboardUser/Evenement/show.html.twig', array(
-            'Evenement' => $evenement,
+            'evenement' => $evenement,
             'delete_form' => $deleteForm->createView(),
-        )); }
+        ));
     }
 
 
@@ -172,20 +157,18 @@ class DUEvenementsController extends Controller
      * @Route("/evenement/{id}", name="du_evenements_delete")
      * @Method("DELETE")
      */
-   public function deleteAction(Request $request, Evenement $evenement)
-   {
-       $form = $this->createDeleteForm($evenement);
-       $form->handleRequest($request);
+    public function deleteAction(Request $request, Evenement $evenement)
+    {
+        $form = $this->createDeleteForm($evenement);
+        $form->handleRequest($request);
 
-       if ($form->isSubmitted() && $form->isValid()) {
-           $em = $this->getDoctrine()->getManager();
-           $em->remove($evenement);
-           $em->flush();
-       }
-
-       return $this->redirectToRoute('du_evenements_index');
-   }
-
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($evenement);
+            $em->flush();
+        }
+        return $this->redirectToRoute('du_evenements_index');
+    }
     /**
      * Creates a form to delete a Reparateur entity.
      *
@@ -193,7 +176,7 @@ class DUEvenementsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-  private function createDeleteForm(Evenement $evenement)
+    private function createDeleteForm(Evenement $evenement)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('du_evenements_delete', array('id' => $evenement->getId())))

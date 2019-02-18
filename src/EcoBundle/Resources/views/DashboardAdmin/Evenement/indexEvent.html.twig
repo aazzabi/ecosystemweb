@@ -42,7 +42,7 @@
                     <th>Description</th>
                     <th>Categorie</th>
                     <th>Lieu</th>
-
+                    <th>Date</th>
                     <th>Cree Par</th>
                     <th>Action</th>
                 </tr>
@@ -58,7 +58,7 @@
                         <td>{{ evenement.description }}</td>
                         <td>{{ evenement.categorie.libelle }}</td>
                         <td>{{ evenement.lieu }}</td>
-
+                        <td>{{ evenement.date |date }}</td>
                         <td>{{ evenement.createdBy }}</td>
 
                         <td>

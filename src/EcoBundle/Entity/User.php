@@ -146,6 +146,30 @@ class User extends BaseUser
         return $this->eventsCrees;
     }
 
+    /**
+     * Add profile
+     *
+     * @param \AppBundle\Entity\Evenement $e
+     *
+     * @return User
+     */
+    public function addEventsCrees(Evenement $e)
+    {
+        $this->eventsCrees[] = $e;
+
+        return $this;
+    }
+
+    /**
+     * Remove profile
+     *
+     * @param \AppBundle\Entity\Evenement $eventsCrees
+     */
+    public function removeEventsCrees(Evenement $e)
+    {
+        $this->eventsCrees->removeElement($e);
+    }
+
 
     /**
      * @return mixed

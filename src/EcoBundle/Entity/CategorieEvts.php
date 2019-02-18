@@ -93,5 +93,10 @@ class CategorieEvts
     {
         return $this->but;
     }
+
+    function __toString()
+    {
+        return $this->getLibelle();
+    }
 }
 

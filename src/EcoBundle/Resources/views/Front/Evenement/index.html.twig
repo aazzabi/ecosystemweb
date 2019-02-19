@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="{{ asset ('assets/css/raniaEvt.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-6 text-right">
+        <br>
+        <a href="{{ path('du_evenements_new') }}" class="btn btn-success">
+            <i class="icon-plus">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                &nbsp;Ajouter un évènement
+            </i>
+        </a>
+    </div>
+    {% for  evenement in evenements %}
+            <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
+                <ul class="event-list">
+                    <li>
+                        {% if evenement.cover != '' %}
+                        <time  datetime="2014-07-31 1600">
+                        {% else %}
+                            <time  datetime="2014-07-31 1600">
+                        {% endif %}
+                            <span class="day">{{ evenement.date |date ("d") }}</span>
+                            <span class="month">{{ evenement.date |date ("M") }}</span>
+                            <span class="year">{{ evenement.date |date ("Y") }}</span>
+                            <span class="time">4:00 PM</span>
+                        </time>
+                            {% if evenement.cover != '' %}
+                            <time style="filter: blur(01px); background-size: 120px 120px; background-image:url('{{ asset('uploads/evt/cover/' ~ evenement.cover) }}');" datetime="2014-07-31 1600">
+                                {% else %}
+                                <time style="filter: blur(1px);background-size: 120px 120px; background-image:url('{{ asset('assets/img/profile.png') }}')" datetime="2014-07-31 1600">
+                                    {% endif %}
+                           </time>
+                        <div class="info">
+                            <h2 class="title"></h2>
+                            <p class="desc">  <a href="{{ path('front_evenements_show', { 'id': evenement.id }) }}">{{ evenement.titre }} </a> </p>
+                            <h2 class="descr"></h2>
+                            <p class="desc"> {{ evenement.description }}  </p>
+                            <ul>
+                                <li style="width:34%;">{{ evenement.lieu }} <span class="fa fa-map-marker"></span></li>
+
+                                <li style="width:34%;">{{ evenement.categorie.libelle }} <span class="fas fa-calendar"></span></li>
+                                <li style="width:34%;">{{ evenement.createdBy }} <span class="fas fa-user"></span></li>
+                            </ul>
+                        </div>
+                        <div class="social">
+                            <ul>
+                                <li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+                                <li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+                                <li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        {% endfor %}
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}{% endblock %}

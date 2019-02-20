@@ -14,6 +14,7 @@ use EcoBundle\Entity\Reparateur;
 use EcoBundle\Entity\RespAsso;
 use EcoBundle\Entity\RespSoc;
 use EcoBundle\Entity\User;
+use EcoBundle\Form\FilterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -23,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 use EcoBundle\Entity\Evenement;
 /**
  *
- * @Route("front")
+ * @Route("/front")
  */
 
 class EvenementController extends Controller
@@ -81,6 +82,35 @@ class EvenementController extends Controller
         }
         return $this->redirectToRoute('front_evenements_index');
     }
+
+    /**
+     * @Route("/evenementfilter", name="front_evenements_filter")
+     * @Method("GET")
+     */
+
+    public function filterEventsAction()
+    {
+        var_dump("hey");
+
+        $em = $this->getDoctrine()->getManager();
+        $evenement = new Evenement();
+        $form=$this->createForm(FilterType::class ,$evenement);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted()) {
+            $evenements = $em->getRepository(Evenement::class)->filterEvts($evenement->getLieu());
+        } else {
+            $evenements = $em->getRepository(Evenement::class)->findAll();
+        }
+
+        return $this->render('@Eco/Front/Evenement/filterEvts.html.twig',array(
+            'formSearch'=>$form->createView(),
+            "evenements"=>$evenements
+        ));
+    }
+
+
     /**
      * Creates a form to delete a Reparateur entity.
      *
@@ -96,4 +126,7 @@ class EvenementController extends Controller
             ->getForm()
             ;
     }
+
+
+
 }

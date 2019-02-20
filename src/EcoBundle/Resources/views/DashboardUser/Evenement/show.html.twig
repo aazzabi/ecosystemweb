@@ -48,34 +48,25 @@
                                style="width: 100% !important;">
                             <tbody>
                             <tr>
-                            <tr>
-                                <th>Id</th>
-                                <td>{{ evenement.id }}</td>
-                            </tr>
-                            <tr>
-                                <th>Titre</th>
-                                <td>{{ evenement.titre }} </td>
-                            </tr>
-                            <tr>
-                                <th>Description</th>
+                                <th><i class="fas fa-info-circle" aria-hidden=true"></i></th>
                                 <td>{{ evenement.description }}</td>
                             </tr>
+
                             <tr>
-                                <th>Categorie</th>
-                                <td>{{ evenement.categorie.libelle }}</td>
-                            </tr>
-                            <tr>
-                                <th>Lieu</th>
+                                <th> <i class="fa fa-map-marker" aria-hidden="true"></i></th>
                                 <td>{{ evenement.lieu }}</td>
                             </tr>
                             <tr>
-                                <th>Date</th>
+                                <th><i class="fa fa-calendar" aria-hidden="true"></i></th>
                                 <td>{{ evenement.date |date }}</td>
                             </tr>
                             <tr>
-                                <th>Créateur</th>
+                                <th><i class="fa fa-user" aria-hidden="true"></i></th>
                                 <td>{{ evenement.createdBy }}</td>
                             </tr>
+
+
+                                </a>
                             <div class="btn-group btn-group-sm btn-group-horizontal">
                                 <a class="btn btn-secondary" href="{{ path ('du_evenements_index') }}"
                                    data-toggle="tooltip" title="Back to the list">

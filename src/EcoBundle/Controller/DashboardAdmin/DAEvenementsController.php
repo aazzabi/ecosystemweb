@@ -9,6 +9,7 @@
 namespace EcoBundle\Controller\DashboardAdmin;
 
 use EcoBundle\Entity\CategorieEvts;
+use EcoBundle\Entity\Evenement;
 use EcoBundle\Entity\Group;
 use EcoBundle\Entity\Livreur;
 use EcoBundle\Entity\Reparateur;
@@ -203,5 +204,25 @@ class DAEvenementsController extends Controller
             'evenement' => $evenement,
         ));
     }
+
+    /**
+     * Deletes a Reparateur entity.
+     *
+     * @Route("/evenement/{id}", name="da_evenement_delete")
+     * @Method("DELETE")
+     */
+
+    public function deleteEventAction($id)
+    {
+        $m=$this->getDoctrine()->getManager();
+        $event=$m->getRepository(Evenement::class)->find($id);
+        $m->remove($event);
+        $m->flush();
+
+        return$this->redirectToRoute('da_evenements_index');
+    }
+
+
+
 
 }

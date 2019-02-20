@@ -10,4 +10,13 @@ namespace EcoBundle\Repository;
  */
 class EvenementRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function filterEvts($lieu)
+    {
+        $query=$this->getEntityManager()
+            ->createQuery("SELECT e from EcoBundle:Evenement e WHERE e.lieu=:lieu ")
+            ->setParameter('lieu',$lieu)
+           ;
+        return $query->getResult();
+    }
 }

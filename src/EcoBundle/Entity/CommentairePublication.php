@@ -31,21 +31,31 @@ class CommentairePublication
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="User", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id", onDelete="CASCADE")
      *
      */
     private $commentedBy;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="commented_at", type="datetime", nullable=true)
+     */
+    private $commentedAt;
+
+    /**
      * @var PublicationForum
      *
-     * @ORM\ManyToOne(targetEntity="PublicationForum")
+     * @ORM\ManyToOne(targetEntity="PublicationForum", cascade={"remove"})
      * @ORM\JoinColumn(nullable=true)
-     *
      */
     private $publication;
 
+    public function __construct()
+    {
+        $this->commentedAt = new \DateTime('now');
+    }
 
     /**
      * Get id
@@ -105,5 +115,20 @@ class CommentairePublication
         $this->publication = $publication;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCommentedAt()
+    {
+        return $this->commentedAt;
+    }
+
+    /**
+     * @param \DateTime $commentedAt
+     */
+    public function setCommentedAt($commentedAt)
+    {
+        $this->commentedAt = $commentedAt;
+    }
 }
 

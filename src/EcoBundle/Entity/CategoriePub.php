@@ -107,5 +107,9 @@ class CategoriePub
     {
         $this->domaine = $domaine;
     }
+    function __toString()
+    {
+        return $this->getLibelle() . " " . $this->getDescription() . "" ;
+    }
 }
 

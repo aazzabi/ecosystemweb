@@ -47,7 +47,7 @@ class PublicationForum
      * @var CategoriePub
      *
      * @ORM\ManyToOne(targetEntity="CategoriePub")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id", onDelete="CASCADE")
      *
      */
     private $categorie;
@@ -56,7 +56,7 @@ class PublicationForum
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id", onDelete="CASCADE")
      *
      */
     private $publicationCreatedBy;

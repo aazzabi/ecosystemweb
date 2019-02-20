@@ -72,7 +72,7 @@ class PublicationForum
      *
      * var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="CommentairePublication", mappedBy="publication")
+     * @ORM\OneToMany(targetEntity="CommentairePublication", mappedBy="publication", cascade={"remove"})
      *
      */
     private $commentaires;

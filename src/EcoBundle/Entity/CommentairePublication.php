@@ -31,8 +31,8 @@ class CommentairePublication
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User", cascade={"remove"})
-     * @ORM\JoinColumn(nullable=true, referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id", onDelete="SET NULL")
      *
      */
     private $commentedBy;
@@ -47,8 +47,8 @@ class CommentairePublication
     /**
      * @var PublicationForum
      *
-     * @ORM\ManyToOne(targetEntity="PublicationForum", cascade={"remove"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="PublicationForum")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $publication;
 

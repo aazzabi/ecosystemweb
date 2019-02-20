@@ -111,6 +111,21 @@ class DAForumController extends Controller
             'publication' => $publicationForum,
         ));
     }
+
+    /**
+     * @Route("/foruum/archiverPublication/{id}", name="da_forum_publication_archive")
+     */
+    public function archvierPublicationAction(PublicationForum $publicationForum)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $publicationForum->setEtat("archivé");
+        $em->flush();
+        return $this->redirectToRoute('da_forum_index');
+
+    }
     /**
      * @Route("/forum/categorie/delete/{id}", name="da_categ_delete")
      * @Method({"GET", "DELETE"})
@@ -132,6 +147,18 @@ class DAForumController extends Controller
         $publication = $this->getDoctrine()->getRepository('EcoBundle:PublicationForum')->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($publication);
+        $em->flush();
+        return $this->redirectToRoute('da_forum_index');
+    }
+    /**
+     * @Route("/forum/commentaire/delete/{id}", name="da_commentaire_delete")
+     * @Method({"GET", "DELETE"})
+     */
+    public function deleteCommentaireAction(Request $request, $id)
+    {
+        $commentaire = $this->getDoctrine()->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($commentaire);
         $em->flush();
         return $this->redirectToRoute('da_forum_index');
     }

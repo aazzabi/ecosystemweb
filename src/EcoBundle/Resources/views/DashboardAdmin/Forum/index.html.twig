@@ -17,6 +17,9 @@
         tr td{
             padding: 2px 3px !important;
         }
+        #publcationsTab .archived td{
+            background-color: rgba(255,165,0,0.37) !important;
+        }
     </style>
 {% endblock %}
 
@@ -83,7 +86,7 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="publications" aria-expanded="true">
-                        <table id="publcationsTab" class="table table-striped table-bordered" style="width: 100% !important;">
+                        <table id="publcationsTab" class="table table-bordered" style="width: 100% !important;">
                             <thead>
                             <tr>
                                 <th>Id</th>
@@ -92,28 +95,36 @@
                                 <th>Description</th>
                                 <th>Etat</th>
                                 <th>Crée par</th>
+                                <th>Nbr de oommentaires</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for publication in publications %}
-                                <tr>
+                                {% if publication.etat == "archivé" %}
+                                    <tr class="archived" >
+                                {% else %}
+                                    <tr>
+                                {% endif %}
                                     <td>{{ publication.id }}</td>
                                     <td>{{ publication.publicationCreatedAt | date }}</td>
                                     <td>{{ publication.titre }}</td>
                                     <td>{{ publication.description }}</td>
                                     <td>{{ publication.etat }}</td>
                                     <td>{{ publication.publicationCreatedBy }}</td>
+                                    <td>{{ publication.commentaires | length }}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm btn-group-horizontal">
                                             <a class="btn btn-secondary" href="{{ path('da_forum_publication_show', { 'id': publication.id }) }}"
                                                data-toggle="tooltip" title="Consuler">
-                                                <i class="fa fa-pencil-square-o"></i>
+                                                <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="btn btn-secondary" href="{{ path('da_forum_publication_delete', { 'id': publication.id }) }}"
-                                               data-toggle="tooltip" title="Supprimer">
-                                                <i class="fa fa-trash"></i>
+                                               data-toggle="tooltip" title="Supprimer"><i class="fa fa-trash"></i>
                                             </a>
+                                            {% if publication.etat != "archivé" %}
+                                                <a class="btn btn-success" href="{{ path('da_forum_publication_archive', { 'id': publication.id }) }}"> Archiver </a>
+                                            {% endif %}
                                         </div>
                                     </td>
                                 </tr>

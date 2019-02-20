@@ -155,11 +155,9 @@ class DAUserController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $deleteForm = $this->createDeleteForm($user);
 
         return $this->render('@Eco/DashboardAdmin/User/show.html.twig', array(
             'user' => $user,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -174,7 +172,6 @@ class DAUserController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('EcoBundle\Form\UserType', $user);
         $editForm->handleRequest($request);
 
@@ -186,46 +183,18 @@ class DAUserController extends Controller
         return $this->render('@Eco/DashboardAdmin/User/edit.html.twig', array(
             'user' => $user,
             'form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
-
     /**
-     * Deletes a user entity.
-     *
-     * @Route("/user/{id}", name="da_users_delete")
-     * @Method("DELETE")
+     * @Route("/user/delete/{id}", name="da_users_delete")
+     * @Method({"GET", "DELETE"})
      */
-    public function deleteAction(Request $request, User $user)
+    public function deleteUserAction(Request $request, $id)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
-        }
-        $form = $this->createDeleteForm($user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
-            $em->flush();
-        }
-
+        $user = $this->getDoctrine()->getRepository('EcoBundle:User')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
         return $this->redirectToRoute('da_users_index');
-    }
-
-    /**
-     * Creates a form to delete a user entity.
-     *
-     * @param User $user The user entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(User $user)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('da_users_delete', array('id' => $user->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-            ;
     }
 }

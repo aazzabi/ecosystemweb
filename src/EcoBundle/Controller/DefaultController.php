@@ -17,7 +17,7 @@ class DefaultController extends Controller
     {
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
         ]);
     }
 
@@ -33,4 +33,44 @@ class DefaultController extends Controller
         return $this->render('default/dashboard.html.twig');
     }
 
+
+    /**
+     * @Route("/recyclage", name="recyclage")
+     */
+    public function recyclageAction(Request $request)
+    {
+
+        // replace this example code with whatever you need
+        return $this->render('@Eco/recyclage/recyclage.html.twig');
+    }
+
+    /**
+     * @Route("/missions", name="missions")
+     */
+    public function missionsAction(Request $request)
+    {
+
+        // replace this example code with whatever you need
+        return $this->render('@Eco/recyclage/missions.html.twig');
+    }
+
+    /**
+     * @Route("/appareilrc", name="appareilrc")
+     */
+    public function appareilrcAction(Request $request)
+    {
+
+        // replace this example code with whatever you need
+        return $this->render('@Eco/recyclage/appareilrc.html.twig');
+    }
+
+    /**
+     * @Route("/pointrc", name="pointrc")
+     */
+    public function pointrcAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('@Eco/recyclage/pointrc.html.twig');
+    }
 }
+

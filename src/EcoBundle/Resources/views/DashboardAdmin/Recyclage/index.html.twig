@@ -1,0 +1,172 @@
+{% extends './Default/dashboard.html.twig' %}
+
+{% block title %}
+    Liste des sociétés
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    <style>
+        #group-img {
+            width: 55px !important;
+            padding: 0;
+        }
+
+        #group-img img {
+            width: 55px !important;
+        }
+
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            var tableS = $('#societesTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+        });
+        $(document).ready(function () {
+            var tableS = $('#associationsTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+        });
+
+    </script>
+    <script>
+
+    </script>
+
+
+{% endblock %}
+
+{% block body %}
+
+    {#Profiles liste et buttons#}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6 text-right">
+                    <br>
+                    <a href="{{ path('da_groups_new') }}" class="btn btn-success">
+                        <i class="icon-plus">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            &nbsp;Ajouter
+                        </i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="clearfix">
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-borderless">
+                <ul class="nav nav-tabs nav-tabs-simple hidden-sm-down" role="tablist"
+                    data-init-reponsive-tabs="dropdownfx">
+                    <li class="nav-item">
+                        <a class="active" data-toggle="tab" role="tab" data-target="#societe" href="#"
+                           aria-expanded="true">Collectes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" role="tab" data-target="#association" class=""
+                           aria-expanded="false">Missions</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="societe" aria-expanded="true">
+                        <table id="societesTab" class="table table-striped table-bordered"
+                               style="width: 100% !important;">
+                            <thead>
+                            <tr>
+                                <th>Libelle</th>
+                                <th> localisation</th>
+                                <th>type</th>
+                                <th>responsable</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for collecte in recys %}
+                                <tr>
+
+                                    <td>{{ collecte.libelle }}</td>
+                                    <td>{{ collecte.localisation }}</td>
+                                    <td>{{ collecte.type }}</td>
+                                    <td>{{ collecte.responsable.nom }}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm btn-group-horizontal">
+                                            <a class="btn btn-secondary"
+                                               href="{{ path('da_groups_show', { 'id': collecte.id }) }}"
+                                               data-toggle="tooltip" title="Afficher le profile">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="btn btn-secondary"
+                                               href="{{ path('da_groups_edit', { 'id': collecte.id }) }}"
+                                               data-toggle="tooltip" title="Editer le profile">
+                                                <i class="fa fa-pencil-square-o"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="association" aria-expanded="false">
+                        <table id="associationsTab" class="table table-striped table-bordered"
+                               style="width: 100% !important;">
+                            <thead>
+                            <tr>
+                                <th>Objectif</th>
+                                <th> matscollectes</th>
+                                <th>dateLimite</th>
+                                <th>recompense</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for mission in missions %}
+                                <tr>
+
+                                    <td>{{ mission.objectif }}</td>
+                                    <td>{{ mission.matscollectes }}</td>
+                                    <td>{{ mission.dateLimite|date('Y-m-d') }}</td>
+                                    <td>{{ mission.recompense }}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm btn-group-horizontal">
+                                            <a class="btn btn-secondary"
+                                               href="{{ path('da_groups_show', { 'id': mission.id }) }}"
+                                               data-toggle="tooltip" title="Afficher le profile">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="btn btn-secondary"
+                                               href="{{ path('da_groups_edit', { 'id': mission.id }) }}"
+                                               data-toggle="tooltip" title="Editer le profile">
+                                                <i class="fa fa-pencil-square-o"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{{ form(formSearch) }}
+
+<table border="4">
+    <tr>
+        <td>Nom</td>
+        <td>Etat</td>
+        <td>Prix</td>
+
+
+    </tr>
+
+
+    {% for evenement in evenements %}
+    <tr>
+        <td>{{ evenement.titre }}</td>
+        <td> {{ evenement.categorie }}</td>
+        <td> {{ evenement.createdBy }}</td>
+
+
+    </tr>
+
+
+{%  endfor %}
+</table>

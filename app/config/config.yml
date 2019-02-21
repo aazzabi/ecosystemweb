@@ -109,4 +109,10 @@ vich_uploader:
             namer:              vich_uploader.namer_uniqid
             inject_on_load:     false
             delete_on_update:   true
+        evt_cover:
+            uri_prefix:         /uploads/evt/cover
+            upload_destination: %kernel.root_dir%/../web/uploads/evt/cover
+            namer:              vich_uploader.namer_uniqid
+            inject_on_load:     false
+            delete_on_update:   false
             delete_on_remove:   true

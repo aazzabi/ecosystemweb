@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
+
 /**
  * @ORM\Entity
  * @Vich\Uploadable
@@ -90,6 +91,85 @@ class User extends BaseUser
         $this->enabled = true;
         $this->roles = array();
     }
+
+    /**
+     *
+     * var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="createdBy")
+     *
+     */
+    private $eventsCrees;
+
+
+
+    public function __constructEventsCrees()
+    {
+        parent::__construct();
+        $this->eventsCrees = new ArrayCollection();
+    }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Evenement", mappedBy="participants")
+     */
+    private $eventsParticipes;
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function __constructEventsParticipes()
+    {
+        parent::__construct();
+        $this->eventsParticipes = new ArrayCollection();
+    }
+
+    public function getEventsParticipes()
+    {
+        return $this->eventsParticipes;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+
+    /**
+     * Get profiles
+     *
+     * @return ArrayCollection|eventsCrees[]
+     */
+    public function getEventsCrees()
+    {
+        return $this->eventsCrees;
+    }
+
+    /**
+     * Add profile
+     *
+     * @param \AppBundle\Entity\Evenement $e
+     *
+     * @return User
+     */
+    public function addEventsCrees(Evenement $e)
+    {
+        $this->eventsCrees[] = $e;
+
+        return $this;
+    }
+
+    /**
+     * Remove profile
+     *
+     * @param \AppBundle\Entity\Evenement $eventsCrees
+     */
+    public function removeEventsCrees(Evenement $e)
+    {
+        $this->eventsCrees->removeElement($e);
+    }
+
 
     /**
      * @return mixed

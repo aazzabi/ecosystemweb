@@ -83,15 +83,6 @@ class User extends BaseUser
      */
     private $group;
 
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->photoUpdatedAt = new \DateTime('now');
-        $this->enabled = true;
-        $this->roles = array();
-    }
-
     /**
      *
      * var \Doctrine\Common\Collections\Collection
@@ -101,14 +92,6 @@ class User extends BaseUser
      */
     private $eventsCrees;
 
-
-
-    public function __constructEventsCrees()
-    {
-        parent::__construct();
-        $this->eventsCrees = new ArrayCollection();
-    }
-
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
@@ -116,60 +99,15 @@ class User extends BaseUser
      */
     private $eventsParticipes;
 
-    /**
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function __constructEventsParticipes()
+    public function __construct()
     {
         parent::__construct();
+        $this->photoUpdatedAt = new \DateTime('now');
+        $this->enabled = true;
+        $this->roles = array();
+        $this->eventsCrees = new ArrayCollection();
         $this->eventsParticipes = new ArrayCollection();
     }
-
-    public function getEventsParticipes()
-    {
-        return $this->eventsParticipes;
-    }
-
-
-
-    /**
-     * @return mixed
-     */
-
-    /**
-     * Get profiles
-     *
-     * @return ArrayCollection|eventsCrees[]
-     */
-    public function getEventsCrees()
-    {
-        return $this->eventsCrees;
-    }
-
-    /**
-     * Add profile
-     *
-     * @param \AppBundle\Entity\Evenement $e
-     *
-     * @return User
-     */
-    public function addEventsCrees(Evenement $e)
-    {
-        $this->eventsCrees[] = $e;
-
-        return $this;
-    }
-
-    /**
-     * Remove profile
-     *
-     * @param \AppBundle\Entity\Evenement $eventsCrees
-     */
-    public function removeEventsCrees(Evenement $e)
-    {
-        $this->eventsCrees->removeElement($e);
-    }
-
 
     /**
      * @return mixed
@@ -371,5 +309,60 @@ class User extends BaseUser
         }
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEventsCrees()
+    {
+        return $this->eventsCrees;
+    }
+
+    /**
+     * @param mixed $eventsCrees
+     */
+    public function setEventsCrees($eventsCrees)
+    {
+        $this->eventsCrees = $eventsCrees;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventsParticipes()
+    {
+        return $this->eventsParticipes;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\Collection $eventsParticipes
+     */
+    public function setEventsParticipes($eventsParticipes)
+    {
+        $this->eventsParticipes = $eventsParticipes;
+    }
+
+
+    /**
+     *
+     * @param \EcoBundle\Entity\Evenement $e
+     *
+     * @return User
+     */
+    public function addEventsCrees(Evenement $e)
+    {
+        $this->eventsCrees[] = $e;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param \EcoBundle\Entity\Evenement $eventsCrees
+     */
+    public function removeEventsCrees(Evenement $e)
+    {
+        $this->eventsCrees->removeElement($e);
     }
 }

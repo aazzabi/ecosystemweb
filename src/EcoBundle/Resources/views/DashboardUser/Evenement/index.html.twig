@@ -57,28 +57,34 @@
                 </thead>
                 <thead>
                 <tbody>
-                {% for evenements in evenements %}
+                {% for evenement in evenements %}
                     <tr>
 
-                        <td>{{ evenements.titre }}</td>
-                        <td>{{ evenements.description }}</td>
-                        <td>{{ evenements.categorie.libelle }}</td>
-                        <td>{{ evenements.lieu }}</td>
-                        <td>{{ evenements.date |date }}</td>
-                        <td>{{ evenements.createdBy }}</td>
+                        <td>{{ evenement.titre }}</td>
+                        <td>{{ evenement.description }}</td>
+                        <td>{{ evenement.categorie.libelle }}</td>
+                        <td>{{ evenement.lieu }}</td>
+                        <td>{{ evenement.date |date }}</td>
+                        <td>{{ evenement.createdBy }}</td>
 
                         <td>
                             <div class="btn-group btn-group-sm btn-group-horizontal">
                                 <a class="btn btn-secondary"
-                                   href="{{ path('du_evenement_edit', { 'id': evenements.id }) }}"
+                                   href="{{ path('du_evenement_edit', { 'id': evenement.id }) }}"
                                    data-toggle="tooltip" title="Editer l'utilisateur">
                                     <i class="fa fa-pencil-square-o"></i>
                                 </a>
                             </div>
 
                             <div class="btn-group btn-group-sm btn-group-horizontal">
-                                <a href="{{ path('du_evenements_show', { 'id': evenements.id }) }}" class="btn btn-default"
+                                <a href="{{ path('du_evenements_delete', { 'id': evenement.id }) }}" class="btn btn-danger"
+                                   data-toggle="tooltip" title="Supprimer">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </div>
 
+                            <div class="btn-group btn-group-sm btn-group-horizontal">
+                                <a href="{{ path('du_evenements_show', { 'id': evenement.id }) }}" class="btn btn-default"
                                    data-toggle="tooltip" title="Voir">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </a>

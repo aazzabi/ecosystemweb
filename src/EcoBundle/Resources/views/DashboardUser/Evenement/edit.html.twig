@@ -30,7 +30,6 @@
     {{ form_widget(form) }}
     {{ form_end(form) }}
 
-    {{ form_start(delete_form) }}
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -46,9 +45,9 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default btn-secondary" data-dismiss="modal"> Annuler
                     </button>
-
-                    <input class="btn btn-danger btn_lg" type="submit" value="Supprimer">
-                    {{ form_end(delete_form) }}
+                    <a href="{{ path('du_evenements_delete', { 'id': evenement.id }) }}">
+                        <input class="btn btn-danger btn_lg" type="submit" value="Supprimer">
+                    </a>
                 </div>
             </div>
         </div>

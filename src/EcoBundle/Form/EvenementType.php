@@ -18,6 +18,7 @@ class EvenementType extends AbstractType
             ->add('lieu')
             ->add('date')
             ->add('evtCover', VichFileType::class, [
+                'required' =>false,
                 'allow_delete' => true,
                 'download_link' => true
             ])

@@ -66,7 +66,7 @@ class Evenement
 
     /**
      * @ORM\ManyToOne(targetEntity="CategorieEvts")
-     * @ORM\JoinColumn(name="categorie",referencedColumnName="id")
+     * @ORM\JoinColumn(name="categorie",referencedColumnName="id",onDelete="CASCADE")
 
      */
     private $categorie;

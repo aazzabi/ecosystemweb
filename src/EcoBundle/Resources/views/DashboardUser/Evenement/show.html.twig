@@ -75,8 +75,6 @@
                                 </a>
 
                                 <li>
-                                    {{ form_start(delete_form) }}
-
                                     <button type="button" class="btn btn-danger btn_lg" data-toggle="modal"
                                             data-target="#myModal">
                                         <i class="fa fa-times" aria-hidden="true"></i> Supprimer
@@ -91,16 +89,16 @@
                                                     </h5>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Voulez-vous vraiement supprimer cette categorie?
+                                                    Voulez-vous vraiement supprimer cet évènement?
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default btn-secondary"
                                                             data-dismiss="modal"> Annuler
                                                     </button>
 
-                                                    <input class="btn btn-danger btn_lg" type="submit"
-                                                           value="Supprimer">
-                                                    {{ form_end(delete_form) }}
+                                                    <a href="{{ path('du_evenements_delete', { 'id': evenement.id }) }}">
+                                                        <input class="btn btn-danger btn_lg" type="submit" value="Supprimer">
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

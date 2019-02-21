@@ -111,8 +111,6 @@ class DUEvenementsController extends Controller
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
 
-        $deleteForm = $this->createDeleteForm($evenement);
-
         $editForm = $this->createForm('EcoBundle\Form\EvenementType', $evenement);
         $editForm->handleRequest($request);
 
@@ -123,9 +121,8 @@ class DUEvenementsController extends Controller
         }
 
         return $this->render('@Eco/DashboardUser/Evenement/edit.html.twig', array(
-            '$evenement' => $evenement,
+            'evenement' => $evenement,
             'form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -141,48 +138,26 @@ class DUEvenementsController extends Controller
         {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $deleteForm = $this->createDeleteForm($evenement);
 
         return $this->render('@Eco/DashboardUser/Evenement/show.html.twig', array(
             'evenement' => $evenement,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
-
-
 
     /**
      * Deletes a Reparateur entity.
      *
-     * @Route("/evenement/{id}", name="du_evenements_delete")
-     * @Method("DELETE")
+     * @Route("/evenement/delete/{id}", name="du_evenements_delete")
      */
-    public function deleteAction(Request $request, Evenement $evenement)
+    public function deleteEventAction($id)
     {
-        $form = $this->createDeleteForm($evenement);
-        $form->handleRequest($request);
+        $m=$this->getDoctrine()->getManager();
+        $evenement = $m->getRepository(Evenement::class)->find($id);
+        $m->remove($evenement);
+        $m->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($evenement);
-            $em->flush();
-        }
-        return $this->redirectToRoute('du_evenements_index');
+        return$this->redirectToRoute('du_evenements_index');
     }
-    /**
-     * Creates a form to delete a Reparateur entity.
-     *
-     * @param Reparateur $categorieEvts The Reparateur entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Evenement $evenement)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('du_evenements_delete', array('id' => $evenement->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-            ;
-    }
+
 
 }

@@ -108,7 +108,6 @@ class DAEvenementsController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $deleteForm = $this->createDeleteForm($categorieEvts);
         $editForm = $this->createForm('EcoBundle\Form\CategorieEvtsType', $categorieEvts);
         $editForm->handleRequest($request);
 
@@ -121,7 +120,6 @@ class DAEvenementsController extends Controller
         return $this->render('@Eco/DashboardAdmin/Evenement/edit.html.twig', array(
             'CategorieEvts' => $categorieEvts,
             'form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -136,50 +134,13 @@ class DAEvenementsController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $deleteForm = $this->createDeleteForm($categorieEvts);
 
         return $this->render('@Eco/DashboardAdmin/Evenement/show.html.twig', array(
             'CategorieEvts' => $categorieEvts,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
 
-    /**
-     * Deletes a Reparateur entity.
-     *
-     * @Route("/categorie/{id}", name="da_categorie_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, CategorieEvts $categorieEvts)
-    {
-        $form = $this->createDeleteForm($categorieEvts);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($categorieEvts);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('da_categorie_index');
-    }
-
-    /**
-     * Creates a form to delete a Reparateur entity.
-     *
-     * @param Reparateur $categorieEvts The Reparateur entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(CategorieEvts $categorieEvts)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('da_categorie_delete', array('id' => $categorieEvts->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-            ;
-    }
 
     /**
      * @Route("/evenement", name="da_evenements_index")
@@ -188,13 +149,10 @@ class DAEvenementsController extends Controller
 
     public function indexEventAction()
     {
-
           if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
               throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
           }
-
         $em = $this->getDoctrine()->getManager();
-
         //$evenements = $em->getRepository('EcoBundle:Evenements')->findAll();
 
 //        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
@@ -205,24 +163,21 @@ class DAEvenementsController extends Controller
         ));
     }
 
+
     /**
      * Deletes a Reparateur entity.
      *
-     * @Route("/evenement/{id}", name="da_evenement_delete")
-     * @Method("DELETE")
+     * @Route("/evenement/delete/{id}", name="da_evenements_delete")
      */
-
     public function deleteEventAction($id)
     {
         $m=$this->getDoctrine()->getManager();
-        $event=$m->getRepository(Evenement::class)->find($id);
-        $m->remove($event);
+        $evenement = $m->getRepository(Evenement::class)->find($id);
+        $m->remove($evenement);
         $m->flush();
 
         return$this->redirectToRoute('da_evenements_index');
     }
-
-
 
 
 }

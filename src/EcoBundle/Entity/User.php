@@ -6,6 +6,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
@@ -79,7 +80,6 @@ class User extends BaseUser
      *   @ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
-
     private $group;
 
 
@@ -209,14 +209,14 @@ class User extends BaseUser
         return $this->userPhoto;
     }
 
-    /**
-     * @param File $userPhoto
-     */
     public function setUserPhoto($userPhoto)
     {
         $this->userPhoto = $userPhoto;
-    }
 
+        if ($userPhoto instanceof UploadedFile) {
+            $this->setPhotoUpdatedAt(new \DateTime());
+        }
+    }
     /**
      * @return string
      */
@@ -292,5 +292,4 @@ class User extends BaseUser
 
         return $this;
     }
-
 }

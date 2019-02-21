@@ -175,9 +175,10 @@ class DUForumController extends Controller
      * @Route("/forum/commentaire/delete/{id}", name="du_commentaire_delete")
      * @Method({"GET", "DELETE"})
      */
-    public function deleteCommentaireAction(Request $request,PublicationForum $publicationForum, $id)
+    public function deleteCommentaireAction(Request $request, $id)
     {
         $commentaire = $this->getDoctrine()->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $publicationForum = $commentaire->getPublication();
         $em = $this->getDoctrine()->getManager();
         $em->remove($commentaire);
         $em->flush();

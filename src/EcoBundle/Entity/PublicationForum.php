@@ -232,13 +232,12 @@ class PublicationForum
     }
 
     /**
-     * Add competence
      *
      * @param \EcoBundle\Entity\CommentairePublication $commentaire
      *
      * @return PublicationForum
      */
-    public function addCompetence(CommentairePublication $commentaire)
+    public function addCommentaire(CommentairePublication $commentaire)
     {
         $this->commentaires[] = $commentaire;
 
@@ -246,11 +245,10 @@ class PublicationForum
     }
 
     /**
-     * Remove competence
      *
      * @param \EcoBundle\Entity\CommentairePublication $commentaire
      */
-    public function removeCompetence(CommentairePublication $commentaire)
+    public function removeCommentaire(CommentairePublication $commentaire)
     {
         $this->commentaires->removeElement($commentaire);
     }

@@ -157,9 +157,10 @@ class DAForumController extends Controller
     public function deleteCommentaireAction(Request $request, $id)
     {
         $commentaire = $this->getDoctrine()->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $publicationForum = $commentaire->getPublication();
         $em = $this->getDoctrine()->getManager();
         $em->remove($commentaire);
         $em->flush();
-        return $this->redirectToRoute('da_forum_index');
+        return $this->redirectToRoute('da_forum_publication_show', array('id' => $publicationForum->getId()));
     }
 }

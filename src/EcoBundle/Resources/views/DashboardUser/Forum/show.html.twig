@@ -1,22 +1,87 @@
 {% extends './Default/dashboard.html.twig' %}
+{% block javascripts %}
+    <script>
+        // $(document).ready(function () {
+            function showMyImage(fileInput) {
+                var files = fileInput.files;
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    var imageType = /image.*/;
+                    if (!file.type.match(imageType)) {
+                        continue;
+                    }
+                    var img=document.getElementById("thumbnil");
+                    img.file = file;
+                    var reader = new FileReader();
+                    reader.onload = (function(aImg) {
+                        return function(e) {
+                            aImg.src = e.target.result;
+                        };
+                    })(img);
+                    reader.readAsDataURL(file);
+                }
+                alert("hey");
+
+            }
+            // alert($('#ecobundle_commentairepublication_commentairePhoto_file').val());
+
+        // });
+    </script>
+    {#<script>#}
+        {#$(document).ready(function () {#}
+            {#function readURL(input) {#}
+            {#}#}
+            {#if (input.files && input.files[0]) {#}
+                {#var reader = new FileReader();#}
+
+                {#reader.onload = function (e) {#}
+                    {#$('#blah').attr('src', e.target.result);#}
+                {#}#}
+                {#reader.readAsDataURL(input.files[0]);#}
+            {#}#}
+        {#}#}
+
+        {#$("#imgInp").change(function () {#}
+            {#readURL(this);#}
+        {#});#}
+    {#</script>#}
+{% endblock %}
 {% block stylesheets %}
-<style>
-    .jumbotron {
-        margin-top: 20px;
-        width: 100%;
-        padding: 25px 50px 30px;
-        position: relative;
-        overflow: hidden;
-        display: block;
-        background-color: #e8e9ea;
-    }
-</style>
+    <style>
+        .jumbotron {
+            margin-top: 20px;
+            width: 100%;
+            padding: 25px 50px 30px;
+            position: relative;
+            overflow: hidden;
+            display: block;
+            background-color: #e8e9ea;
+        }
+
+        textarea.form-control {
+            padding: 13px;
+            margin-top: 6px;
+            height: 200px;
+            width: 98%;
+        }
+        #ecobundle_commentairepublication_commentairePhoto_file {
+            /*visibility: hidden;*/
+        }
+
+        #preview_ie {
+            FILTER: progid: DXImageTransform . Microsoft . AlphaImageLoader(sizingMethod = scale)
+        }
+    </style>
+    <link href="{{ asset ('assets/css/commentPage.css') }}" rel="stylesheet" type="text/css"/>
+
 {% endblock %}
 
 {% block body %}
     <ol class="breadcrumb breadcrumb-alt" style="background-color: white ;margin: 0px -30px; padding-left: 40px;">
         <li class="breadcrumb-item"><a href="#">Publication Forum</a></li>
-        <li class="breadcrumb-item active">{{ publication.categorie }}</li>
+        {% if  publication.categorie != '' %}
+            <li class="breadcrumb-item active">{{ publication.categorie }}</li>
+        {% endif %}
     </ol>
 
     <div class="container">
@@ -28,9 +93,19 @@
                 <button type="button" class="btn btn-danger btn_lg" data-toggle="modal" data-target="#myModal">
                     <i class="fa fa-times" aria-hidden="true"></i> Supprimer
                 </button>
-                <a class="btn btn-success" href="{{ path('da_forum_publication_archive', { 'id': publication.id }) }}">
-                    <i class="fa fa-archive" aria-hidden="true"></i> Archiver </a>
-                <a class="btn btn-secondary" href="{{ path('da_forum_index') }}">
+                {% if  publication.etat != 'archivé' %}
+                    <a class="btn btn-success"
+                       href="{{ path('du_forum_publication_archive', { 'id': publication.id }) }}">
+                        <i class="fa fa-archive" aria-hidden="true"></i> Archiver </a>
+                {% else %}
+                    <a class="btn btn-success"
+                       href="{{ path('du_forum_publication_desarchive', { 'id': publication.id }) }}">
+                        <i class="fa fa-archive" aria-hidden="true"></i> Désarchiver </a>
+                {% endif %}
+                <a class="btn btn-primary" href="{{ path('du_forum_edit', {'id' : publication.id }) }}">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editer
+                </a>
+                <a class="btn btn-secondary" href="{{ path('du_forum_index') }}">
                     <i class="fa fa-undo" aria-hidden="true"></i> Retour à la liste
                 </a>
             </div>
@@ -55,12 +130,6 @@
             <div class="row">
                 <b>Date de création :</b> &nbsp;{{ publication.publicationCreatedAt | date }}
             </div>
-            <div class="row">
-                <b>Auteur :</b> &nbsp;{{ publication.publicationCreatedBy }}
-            </div>
-            <div class="row">
-                <b>Nbr. de commentaires :</b> &nbsp;{{ publication.commentaires | length }}
-            </div>
         </div>
         {% for commentaire in publication.commentaires %}
             <div class="card card-transparent">
@@ -71,7 +140,7 @@
                             </div>
                             <div class="card-controls">
                                 <ul>
-                                    <li><a href="{{ path('da_commentaire_delete', { 'id': commentaire.id }) }}">
+                                    <li><a href="{{ path('du_commentaire_delete', { 'id': commentaire.id }) }}">
                                             <i class="fa fa-trash"></i> Effacer</a>
                                     </li>
                                     <li><a href="#" class="card-refresh" data-toggle="refresh">
@@ -81,17 +150,20 @@
                             </div>
                         </div>
                         <div class="card-block">
-                            <h3></h3>
                             <p>{{ commentaire.description }}</p>
+
+                            {% if  commentaire.photo != '' %}
+                                <img alt="User Pic" style="height: 100% !important;width: 300px !important;"
+                                     src="{{ asset('uploads/publication/commentaire/pieceJointe/' ~ commentaire.photo) }}"
+                                     class="img-circle img-responsive">
+                            {% endif %}
                             <br>
-                            <div>
-                                {% if commentaire.commentedBy  %}
+                            <div class="text-right">
+                                {% if commentaire.commentedBy %}
                                     <div class="profile-img-wrapper m-t-5 inline">
                                         {% if commentaire.commentedBy.photo != '' %}
                                             <img alt="User Pic"
-                                                 src="{{ asset('uploads/user/photo/' ~ commentaire.commentedBy.photo) }}"
-                                                 class="img-circle img-responsive">
-
+                                                 src="{{ asset('uploads/user/photo/' ~ commentaire.commentedBy.photo) }}">
                                         {% endif %}
                                         <div class="chat-status available">
                                         </div>
@@ -120,6 +192,12 @@
             </div>
         {% endfor %}
 
+
+        {{ form_start(commentaireForm) }}
+        {% include '@Eco/DashboardUser/Forum/newCommentaire.html.twig' %}<br>
+
+        {{ form_end(commentaireForm) }}
+
     </div>
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -143,7 +221,7 @@
                             data-dismiss="modal"> Annuler
                     </button>
                     <a class="btn btn-danger"
-                       href="{{ path('da_forum_publication_delete', { 'id': publication.id }) }}"> Supprimer</a>
+                       href="{{ path('du_forum_publication_delete', { 'id': publication.id }) }}"> Supprimer</a>
                 </div>
             </div>
         </div>

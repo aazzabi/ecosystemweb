@@ -3,10 +3,13 @@
 namespace EcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * CommentairePublication
- *
+ * @Vich\Uploadable
  * @ORM\Table(name="commentaire_publication")
  * @ORM\Entity(repositoryClass="EcoBundle\Repository\CommentairePublicationRepository")
  */
@@ -24,7 +27,7 @@ class CommentairePublication
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(nullable= true, name="description", type="string", length=255)
      */
     private $description;
 
@@ -51,6 +54,28 @@ class CommentairePublication
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $publication;
+
+
+    /**
+     * @Vich\UploadableField(mapping="commentaire_photo", fileNameProperty="photo")
+     *
+     * @var File
+     */
+    private $commentairePhoto;
+
+    /**
+     * @ORM\Column(name="photo", type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $photo;
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $photoUpdatedAt;
 
     public function __construct()
     {
@@ -97,6 +122,7 @@ class CommentairePublication
     public function setCommentedBy($commentedBy)
     {
         $this->commentedBy = $commentedBy;
+        $this->photoUpdatedAt = new \DateTime('now');
     }
 
     /**
@@ -130,5 +156,57 @@ class CommentairePublication
     {
         $this->commentedAt = $commentedAt;
     }
+
+    /**
+     * @return File
+     */
+    public function getCommentairePhoto()
+    {
+        return $this->commentairePhoto;
+    }
+
+    /**
+     * @param File $commentairePhoto
+     */
+    public function setCommentairePhoto($commentairePhoto)
+    {
+        $this->commentairePhoto = $commentairePhoto;
+        if ($commentairePhoto instanceof UploadedFile) {
+            $this->setPhotoUpdatedAt(new \DateTime());
+        } }
+
+    /**
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param string $photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPhotoUpdatedAt()
+    {
+        return $this->photoUpdatedAt;
+    }
+
+    /**
+     * @param \DateTime $photoUpdatedAt
+     */
+    public function setPhotoUpdatedAt($photoUpdatedAt)
+    {
+        $this->photoUpdatedAt = $photoUpdatedAt;
+    }
+
+
 }
 

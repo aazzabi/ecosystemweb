@@ -1,7 +1,7 @@
 {% extends './Default/dashboard.html.twig' %}
 
 {% block title %}
-    Dashboard Admin Forum
+    My dashboard | Forum
 {% endblock %}
 
 {% block stylesheets %}
@@ -26,13 +26,6 @@
 {% block javascripts %}
     <script>
         $(document).ready(function () {
-            var tableC = $('#categoriesTab').DataTable({
-                "paging": true,
-                "stateSave": true,
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
-                }
-            });
             var tableP = $('#publcationsTab').DataTable({
                 "paging": true,
                 "stateSave": true,
@@ -56,10 +49,10 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <br>
-                    <a href="{{ path('da_forum_new') }}" class="btn btn-success">
+                    <a href="{{ path('du_forum_new') }}" class="btn btn-success">
                         <i class="icon-plus">
                             <i class="fa fa-plus" aria-hidden="true"></i>
-                            &nbsp;Ajouter catégorie
+                            &nbsp;Nouvelle publication
                         </i>
                     </a>
                 </div>
@@ -77,11 +70,7 @@
                     data-init-reponsive-tabs="dropdownfx">
                     <li class="nav-item">
                         <a class="active" data-toggle="tab" role="tab" data-target="#publications" href="#"
-                           aria-expanded="true">Publications</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#categories" class=""
-                           aria-expanded="false">Categories</a>
+                           aria-expanded="true">Mes publications</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -115,51 +104,16 @@
                                     <td>{{ publication.commentaires | length }}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm btn-group-horizontal">
-                                            <a class="btn btn-secondary" href="{{ path('da_forum_publication_show', { 'id': publication.id }) }}"
+                                            <a class="btn btn-secondary" href="{{ path('du_forum_publication_show', { 'id': publication.id }) }}"
                                                data-toggle="tooltip" title="Consuler">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a class="btn btn-secondary" href="{{ path('da_forum_publication_delete', { 'id': publication.id }) }}"
+                                            <a class="btn btn-secondary" href="{{ path('du_forum_publication_delete', { 'id': publication.id }) }}"
                                                data-toggle="tooltip" title="Supprimer"><i class="fa fa-trash"></i>
                                             </a>
                                             {% if publication.etat != "archivé" %}
-                                                <a class="btn btn-success" href="{{ path('da_forum_publication_archive', { 'id': publication.id }) }}"> Archiver </a>
+                                                <a class="btn btn-success" href="{{ path('du_forum_publication_archive', { 'id': publication.id }) }}"> Archiver </a>
                                             {% endif %}
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane" id="categories" aria-expanded="false">
-                        <table id="categoriesTab" class="table table-striped table-bordered" style="width: 100% !important;">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Libellé</th>
-                                <th>Description</th>
-                                <th>Domaine</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for categorie in categories %}
-                                <tr>
-                                    <td>{{ categorie.id }}</td>
-                                    <td>{{ categorie.libelle }}</td>
-                                    <td>{{ categorie.description }}</td>
-                                    <td>{{ categorie.domaine }}</td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm btn-group-horizontal">
-                                            <a class="btn btn-secondary" href="{{ path('da_forum_edit', { 'id': categorie.id }) }}"
-                                               data-toggle="tooltip" title="Editer cette categorie">
-                                                <i class="fa fa-pencil-square-o"></i>
-                                            </a>
-                                            <a class="btn btn-secondary" href="{{ path('da_categ_delete', { 'id': categorie.id }) }}"
-                                               data-toggle="tooltip" title="Supprimer cette categorie">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
                                         </div>
                                     </td>
                                 </tr>

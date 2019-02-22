@@ -22,6 +22,8 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use EcoBundle\Entity\Evenement;
+use EcoBunde\Form\rechercheEventType;
+
 /**
  *
  * @Route("/front")
@@ -43,9 +45,11 @@ class EvenementController extends Controller
 
 //        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
         $evenements = $em->getRepository('EcoBundle:Evenement')->findAll();
+        $categories = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
+        //$form = $this->container->get('form.factory')->create(new rechercheEventType());
         return $this->render('@Eco/Front/Evenement/index.html.twig', array(
             //'evenements' => $evenements,
-            'evenements' => $evenements,
+            'evenements' => $evenements,'categories'=> $categories,
         ));
     }
 
@@ -55,6 +59,10 @@ class EvenementController extends Controller
      */
     public function showAction(Evenement $evenement)
     {
+
+        $evenement->setNbVues($evenement->getNbVues()+1);
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
         $deleteForm = $this->createDeleteForm($evenement);
 
         return $this->render('@Eco/Front/Evenement/show.html.twig', array(
@@ -85,10 +93,10 @@ class EvenementController extends Controller
 
     /**
      * @Route("/evenementfilter", name="front_evenements_filter")
-     * @Method("GET")
+     * @Method("POST")
      */
 
-    public function filterEventsAction()
+    public function filterEventsAction(Request $request)
     {
         var_dump("hey");
 
@@ -126,6 +134,90 @@ class EvenementController extends Controller
             ->getForm()
             ;
     }
+
+    /**
+     * @Route("/evenement/categorie/{cat}", name="front_evenements_recherche")
+     * @Method("GET")
+     */
+    public function RecherchTestAction(Request $request,$cat)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
+        $evenement = new Evenement();
+        $evenement = $em->getRepository('EcoBundle:Evenement')->findByCategorie($cat);
+
+        return $this->render('@Eco/Front/Evenement/index.html.twig', array(
+            "evenements"=>$evenement,'categories'=> $categories,
+
+        ));
+    }
+
+    /**
+     * @Route("/evenement/recherche", name="front_evenements_recherche")
+     * @Method("GET")
+     */
+
+   /* public function rechercherLieuAction(Request $request)
+    {
+        $event= new Evenement();
+        $form= $this->createForm(rechercheEventType::class ,$event);
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            $events= $this->getDoctrine()->getRepository(Evenement::class)
+                ->findBy(array('lieu'=>$event->getLieu()));
+        }
+        else{
+            $events= $this->getDoctrine()->getRepository(Evenement::class)
+                ->findAll();
+        }
+        return $this->render('@Eco/Front/Evenement/rechercheEvent.html.twig',array("form"=>$form->createView(),'events'=>$events));
+
+    }*/
+
+    /**
+     * @Route("/evenement/rechercheajax", name="front_evenements_rechercheajax")
+     * @Method("POST")
+     */
+  /*  public function rechercherAjaxAction()
+    {
+        $request = $this->container->get('request');
+
+        if($request->isXmlHttpRequest())
+        {
+            $motcle = '';
+            $motcle = $request->request->get('motcle');
+
+            $em = $this->container->get('doctrine')->getEntityManager();
+
+            if($motcle != '')
+            {
+                $qb = $em->createQueryBuilder();
+
+                $qb->select('a')
+                    ->from('EcoBundle:Evenement', 'a')
+                    ->where("a.lieu LIKE :motcle ")
+                    ->orderBy('a.lieu', 'ASC')
+                    ->setParameter('motcle', '%'.$motcle.'%');
+
+                $query = $qb->getQuery();
+                $events = $query->getResult();
+            }
+            else {
+                $events = $em->getRepository('EcoBundle:Evenement')->findAll();
+            }
+
+            return $this->container->get('templating')->renderResponse('EcoBundle:Evenement:index.html.twig', array(
+                'events' => $events
+            ));
+        }
+        else {
+            return $this->listerAction();
+        }
+    }*/
+
+
+
 
 
 

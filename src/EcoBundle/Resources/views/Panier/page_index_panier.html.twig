@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% block Panier %}
+
+    <div class="dropdown">
+        <a href="{{ path('panier_show') }}">
+            <i class="fa fa-shopping-cart" aria-hidden="true">
+            </i>
+            <span class="bubble">
+                        {{ liste|length }}
+                    </span>
+        </a>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="tab-content" >
+        <div class="tab-pane active" id="users" aria-expanded="true">
+            {% if liste|length >0  %}
+                <table id="usersTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Photo </th>
+                        <th>Titre de l'annonce </th>
+                        <th>Description </th>
+                        <th>Region </th>
+                        <th>Prix </th>
+                        <th>Action </th>
+                    </tr>
+                    <tbody>
+                    {% for value in liste %}
+                        <tr>
+                            <td></td>
+                            <td>{{ value.titre }}</td>
+                            <td>{{ value.description }}</td>
+                            <td>{{ value.region }}</td>
+                            <td>{{ value.prix }}</td>
+                            <td> <a href="{{ path('supprimer_ligne',{ 'id': value.id  }) }}"> <button class="btn btn-info float-right btn-sm">Supprimer Annonce </button></a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{{ path('vider_panier') }}"> <button class="btn btn-info float-right btn-sm"> Vider Panier  </button></a>
+                <table id="usersTab" class="table table-striped table-bordered" cellspacing="0" >
+
+                    <tr>
+                        <th>Prix Total :  {{ tab.somme }}  DT </th>
+
+                    </tr>
+                </table>
+
+                <a > <button class="btn btn-info float-right btn-sm"> Passer Commande </button></a>
+
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -35,6 +35,13 @@ class Evenement
     /**
      * @var string
      *
+     * @ORM\Column(name="nbvues", type="integer")
+     */
+    private $nbVues;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="titre", type="string", length=255)
      */
     private $titre;
@@ -87,6 +94,8 @@ class Evenement
      */
 
     private $participants;
+
+
 
 
     /**
@@ -320,6 +329,23 @@ class Evenement
     {
         $this->coverUpdatedAt = $coverUpdatedAt;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNbVues()
+    {
+        return $this->nbVues;
+    }
+
+    /**
+     * @param mixed $nbVues
+     */
+    public function setNbVues($nbVues)
+    {
+        $this->nbVues = $nbVues;
+    }
+
 
 }
 

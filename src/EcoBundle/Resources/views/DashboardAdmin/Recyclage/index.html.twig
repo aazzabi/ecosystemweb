@@ -1,7 +1,7 @@
 {% extends './Default/dashboard.html.twig' %}
 
 {% block title %}
-    Liste des sociétés
+    Liste des Points de Collectes
 {% endblock %}
 
 {% block stylesheets %}
@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <br>
-                    <a href="{{ path('da_groups_new') }}" class="btn btn-success">
+                    <a href="{{ path('da_recyclage_new') }}" class="btn btn-success">
                         <i class="icon-plus">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             &nbsp;Ajouter
@@ -110,12 +110,12 @@
                                     <td>
                                         <div class="btn-group btn-group-sm btn-group-horizontal">
                                             <a class="btn btn-secondary"
-                                               href="{{ path('da_groups_show', { 'id': collecte.id }) }}"
+                                               href="{{ path('da_recyclage_show', { 'id': collecte.id }) }}"
                                                data-toggle="tooltip" title="Afficher le profile">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="btn btn-secondary"
-                                               href="{{ path('da_groups_edit', { 'id': collecte.id }) }}"
+                                               href="{{ path('da_recyclage_edit', { 'id': collecte.id }) }}"
                                                data-toggle="tooltip" title="Editer le profile">
                                                 <i class="fa fa-pencil-square-o"></i>
                                             </a>
@@ -149,12 +149,12 @@
                                     <td>
                                         <div class="btn-group btn-group-sm btn-group-horizontal">
                                             <a class="btn btn-secondary"
-                                               href="{{ path('da_groups_show', { 'id': mission.id }) }}"
+                                               href="{{ path('da_recyclage_show', { 'id': mission.id }) }}"
                                                data-toggle="tooltip" title="Afficher le profile">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="btn btn-secondary"
-                                               href="{{ path('da_groups_edit', { 'id': mission.id }) }}"
+                                               href="{{ path('da_recyclage_edit', { 'id': mission.id }) }}"
                                                data-toggle="tooltip" title="Editer le profile">
                                                 <i class="fa fa-pencil-square-o"></i>
                                             </a>

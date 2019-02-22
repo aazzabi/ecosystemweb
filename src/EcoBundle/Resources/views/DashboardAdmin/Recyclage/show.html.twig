@@ -7,27 +7,27 @@
         </div>
         <div class="col-md-6 offset-md-6 text-right">
             <br>
-            <a class="btn btn-secondary" href="{{ path('da_groups_edit', { 'id': group.id }) }}">
+            <a class="btn btn-secondary" href="{{ path('da_recyclage_edit', { 'id': group.id }) }}">
                 <i class="fa fa-pencil-square-o"></i> Edit</a>
             <button type="button" class="btn btn-danger btn_lg" data-toggle="modal" data-target="#myModal">
                 <i class="fa fa-times" aria-hidden="true"></i>Supprimer
             </button>
-            <a class="btn btn-secondary" href="{{ path('da_groups_index') }}">
+            <a class="btn btn-secondary" href="{{ path('da_recyclage_index') }}">
                 <i class="fa fa-undo" aria-hidden="true"></i> Retour à la liste
             </a>
         </div>
     </div>
     <div class="row">
-        <h1><b>{{ group.name }}</b></h1>
+        <h1><b>{{ resp.name }}</b></h1>
     </div>
     <div class="row">
         <h4>
-            À propos ce groupe :
+            À propos de ce responsable :
         </h4>
     </div>
     <div class="row">
             <div class="col-md-3">
-                {% if group.logo != '' %}
+                {% if resp.logo != '' %}
                     <img alt="group-img" src="{{ asset('uploads/group/logo/' ~ group.logo) }}"
                          class="img-logo-societe img-responsive">
                 {% else %}

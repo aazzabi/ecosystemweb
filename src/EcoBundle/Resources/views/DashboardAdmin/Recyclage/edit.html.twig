@@ -1,7 +1,7 @@
 {% extends './Default/dashboard.html.twig' %}
 
 {% block title %}
-    Modification de la société {{ group.name }}
+    Modification point de collecte{{ group.name }}
 {% endblock %}
 
 
@@ -42,7 +42,7 @@
             <button type="submit" class="btn btn-secondary">
                 <i class="fa fa-check"></i> Confirmer
             </button>
-            <a href="{{ path('da_groups_index') }}" class="btn btn-secondary">
+            <a href="{{ path('da_recyclage_index') }}" class="btn btn-secondary">
                 <i class="fa fa-undo" aria-hidden="true"></i>
                 Retour à la liste</a>
 

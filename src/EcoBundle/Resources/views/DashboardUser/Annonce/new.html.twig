@@ -1,0 +1,68 @@
+{% extends './Default/dashboard.html.twig' %}
+
+{% block title %}
+    Ajout d'annonce ou Categorie
+{% endblock %}
+{% block javascripts %}
+   <script>
+       $("#ecobundle_annonce_annoncephoto_file").change(function() {
+
+    if (this.files && this.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+    $('#image').attr('src', e.target.result);
+    $('#image').css('display','inline-block');
+    }
+
+    reader.readAsDataURL(this.files[0]);
+    }
+
+    });
+   </script>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><b>Ajout d'annonce ou Categorie </b></h1>
+                </div>
+                <div class="col-md-6 text-right">
+                    <a href="{{ path('da_annonce_index') }}" class="btn btn-secondary">
+                        <i class="fa fa-undo" aria-hidden="true"></i>  Retour à la liste</a>
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-borderless">
+                        <ul class="nav nav-tabs nav-tabs-simple hidden-sm-down" role="tablist"
+                            data-init-reponsive-tabs="dropdownfx">
+                            <li class="nav-item">
+                                <a class="active" data-toggle="tab" role="tab" data-target="#annonce" href="#"
+                                   aria-expanded="true">Annonce</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="annonce" aria-expanded="true">
+                                {{ form_start(formAnnonce) }}
+                                {% form_theme formAnnonce 'bootstrap_3_layout.html.twig' %}
+                                {{ form_widget(formAnnonce) }}
+
+                                <div>
+                                    <img src="" id="image" style="display: none" width="100px"height="100px">
+                                </div>
+                                <button type="submit" class="btn btn-success" value="Create">
+                                    <i class="fa fa-check" aria-hidden="true"></i> Confirmer
+                                </button>
+                                {{ form_end(formAnnonce) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

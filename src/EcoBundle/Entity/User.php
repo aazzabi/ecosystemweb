@@ -81,6 +81,11 @@ class User extends BaseUser
      */
 
     private $group;
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="User")
+     */
+    private $myAnnonces;
 
 
     public function __construct()
@@ -89,6 +94,17 @@ class User extends BaseUser
         $this->photoUpdatedAt = new \DateTime('now');
         $this->enabled = true;
         $this->roles = array();
+        $this->myAnnonces = new ArrayCollection();
+    }
+    public function addMyAnnonce(Annonce $annonce)
+    {
+        $this->myAnnonces[] = $annonce;
+
+        return $this;
+    }
+    public function removeMyAnnonce(Annonce $annonce)
+    {
+        $this->myAnnonces->removeElement($annonce);
     }
 
     /**
@@ -292,5 +308,22 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMyAnnonces()
+    {
+        return $this->myAnnonces;
+    }
+
+    /**
+     * @param mixed $myAnnonces
+     */
+    public function setMyAnnonces($myAnnonces)
+    {
+        $this->myAnnonces = $myAnnonces;
+    }
+
 
 }

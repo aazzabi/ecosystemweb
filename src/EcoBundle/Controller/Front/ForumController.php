@@ -38,11 +38,13 @@ class ForumController extends Controller
     public function indexAction()
     {
         $categoriesPub = $this->getDoctrine()->getManager()->getRepository('EcoBundle:CategoriePub')->findAll();
-        $publications = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findAll();
+        $publicationsPubliee = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findPublicationByEtat('publié');
+        $publicationsArchivee = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findPublicationByEtat('archivé');
 
         return $this->render('@Eco/Front/Forum/index.html.twig', array(
             'categories' => $categoriesPub,
-            'publications' => $publications,
+            'publicationsPubliees' => $publicationsPubliee,
+            'publicationsArchivees' => $publicationsArchivee,
         ));
     }
 
@@ -137,6 +139,10 @@ class ForumController extends Controller
     public function deletePublicationAction(Request $request, $id)
     {
         $publication = $this->getDoctrine()->getRepository('EcoBundle:PublicationForum')->find($id);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if ($publication->getPublicationCreatedBy() != $user) {
+            throw new AccessDeniedException("Vous ne pouvez pas supprimer cette publication !", Response::HTTP_FORBIDDEN);
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($publication);
         $em->flush();
@@ -149,6 +155,10 @@ class ForumController extends Controller
     public function deleteCommentaireAction(Request $request, $id)
     {
         $commentaire = $this->getDoctrine()->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if ($commentaire->getCommentedBy() != $user) {
+            throw new AccessDeniedException("Vous ne pouvez pas supprimer ce commentaire !", Response::HTTP_FORBIDDEN);
+        }
         $publicationForum = $commentaire->getPublication();
         $em = $this->getDoctrine()->getManager();
         $em->remove($commentaire);
@@ -162,6 +172,10 @@ class ForumController extends Controller
      */
     public function archvierPublicationAction(PublicationForum $publicationForum)
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if ($publicationForum->getPublicationCreatedBy() != $user) {
+            throw new AccessDeniedException("Vous ne pouvez pas archiver cette publication !", Response::HTTP_FORBIDDEN);
+        }
         $em = $this->getDoctrine()->getManager();
         $publicationForum->setEtat("archivé");
         $em->flush();
@@ -172,6 +186,10 @@ class ForumController extends Controller
      */
     public function desarchvierPublicationAction(PublicationForum $publicationForum)
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if ($publicationForum->getPublicationCreatedBy() != $user) {
+            throw new AccessDeniedException("Vous ne pouvez pas désarchiver cette publication !", Response::HTTP_FORBIDDEN);
+        }
         $em = $this->getDoctrine()->getManager();
         $publicationForum->setEtat("publié");
         $em->flush();

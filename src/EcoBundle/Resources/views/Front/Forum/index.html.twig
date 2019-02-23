@@ -100,7 +100,7 @@
             <br>
             <div class="row">
                 <div class="col-lg-8 col-md-8">
-                    {% for publication in publications %}
+                    {% for publication in publicationsPubliees %}
                     <div class="post">
                         <div class="wrap-ut pull-left">
                             <div class="userinfo pull-left">
@@ -164,27 +164,13 @@
                     </div>
 
                     <div class="sidebarblock">
-                        <h3>My Active Threads</h3>
-                        <div class="divline"></div>
-                        <div class="blocktxt">
-                            <a href="#">This Dock Turns Your iPhone Into a Bedside Lamp</a>
-                        </div>
-                        <div class="divline"></div>
-                        <div class="blocktxt">
-                            <a href="#">Who Wins in the Battle for Power on the Internet?</a>
-                        </div>
-                        <div class="divline"></div>
-                        <div class="blocktxt">
-                            <a href="#">Sony QX10: A Funky, Overpriced Lens Camera for Your Smartphone</a>
-                        </div>
-                        <div class="divline"></div>
-                        <div class="blocktxt">
-                            <a href="#">FedEx Simplifies Shipping for Small Businesses</a>
-                        </div>
-                        <div class="divline"></div>
-                        <div class="blocktxt">
-                            <a href="#">Loud and Brave: Saudi Women Set to Protest Driving Ban</a>
-                        </div>
+                        <h3>Voir aussi : </h3>
+                        {% for publication in publicationsArchivees %}
+                            <div class="divline"></div>
+                            <div class="blocktxt">
+                                <a href="{{ path('front_forum_show', {'id' : publication.id }) }}">{{ publication.titre }}</a>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

@@ -10,4 +10,17 @@ namespace EcoBundle\Repository;
  */
 class PublicationForumRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findPublicationByEtat($etat)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $q  = $qb->select(array('p'))
+            ->from('EcoBundle:PublicationForum', 'p')
+            ->where('p.etat =:published')
+            ->orderBy('p.publicationCreatedAt', 'DESC')
+            ->setParameter('published', $etat)
+            ->getQuery();
+        return $q->getResult();
+    }
 }

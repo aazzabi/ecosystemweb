@@ -143,9 +143,12 @@
                                                  <i class="fa fa-trash"></i> Effacer</a>
                                             {% endif %}
                                         {% endif %}
-                                        <a class="dropdown-item" data-toggle="modal" data-target="#{{ commentaire.id }}">
-                                            <i class="fa fa-exclamation-triangle"></i> Signaler
-                                        </a>
+                                        {% if app.user != commentaire.commentedBy  %}
+                                            {#bech ma ysinialich haja 3malha#}
+                                            <a class="dropdown-item" data-toggle="modal" data-target="#{{ commentaire.id }}">
+                                                <i class="fa fa-exclamation-triangle"></i> Signaler
+                                            </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -171,22 +174,6 @@
                                             UNKNOWN
                                         </div>
                                     {% endif %}
-
-
-                                    {% if (app.user.id == publication.publicationCreatedBy.id) and (publication.etat == "archivé")  %}
-                                            <div class="checkbox check-primary checkbox-circle">
-                                                {#<a href="{{ path('front_forum_publication_desarchive', { 'id': publication.id }) }}">#}
-                                                    <input type="checkbox" checked="checked" value="1" id="checkbox9">
-                                                {#</a>#}
-                                            </div>
-                                    {% endif %}
-                                    {% if(app.user.id == publication.publicationCreatedBy.id) and (publication.etat == 'archivé')  %}
-                                            <div class="checkbox check-primary checkbox-circle">
-                                                {#<a href="{{ path('front_forum_publication_archive', { 'id': publication.id }) }}">#}
-                                                    <input type="checkbox" checked="checked" value="1" id="checkbox9">
-                                                {#</a>#}
-                                            </div>
-                                    {% endif %}
                                 </div>
                                 <div class="posttext pull-left">
                                     <p>{{ commentaire.description }}</p>
@@ -206,6 +193,11 @@
                                 </div>
 
                                 <div class="posted pull-left"><i class="fa fa-clock-o"></i> Commenté le : {{ commentaire.commentedAt | date("d/m/Y", "Europe/Paris") }}</div>
+                                <div class="posted pull-right text-right">
+                                    {% if (app.user.id == publication.publicationCreatedBy.id) and (publication.etat == "publié")  %}
+                                        <a href="{{ path('front_forum_publication_archive', { 'id': publication.id }) }}"> <h4>Résolu ?</h4></a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -241,10 +233,11 @@
             </div>
         {% endfor %}
 
-
-        {{ form_start(commentaireForm) }}
-        {% include '@Eco/Front/Forum/newCommentaire.html.twig' %}<br>
-        {{ form_end(commentaireForm) }}
+        {% if publication.etat == "publié" %}
+            {{ form_start(commentaireForm) }}
+            {% include '@Eco/Front/Forum/newCommentaire.html.twig' %}<br>
+            {{ form_end(commentaireForm) }}
+        {% endif %}
 
     </div>
 

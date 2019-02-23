@@ -32,7 +32,7 @@ class PublicationForum
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=555)
      */
     private $description;
 

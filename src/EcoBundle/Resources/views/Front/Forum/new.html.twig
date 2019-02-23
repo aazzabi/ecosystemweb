@@ -1,4 +1,4 @@
-{% extends './Default/dashboard.html.twig' %}
+{% extends 'base.html.twig' %}
 {% block title %}
     Ajout d'une nouvelle catégorie de publication
 {% endblock %}
@@ -13,6 +13,10 @@
         .card-title {
             margin-bottom: 0px;
         }
+        .publicationDescription {
+            width: 100%;
+            height: 200px;
+        }
     </style>
 {% endblock %}
 
@@ -26,16 +30,16 @@
     <br>
         {{ form_start(formPublication) }}
         <div class="row">
-            <div class="col-md-6">
-                <h1><b>Ajout d'une nouvelle publication</b></h1>
+            <div class="col-md-5 offset-md-2">
+                <h1><b>Nouvelle publication</b></h1>
             </div>
-            <div class="col-md-6 text-right">
+            <div class="col-md-3 text-right">
                 <br>
                 <button type="submit" class="btn btn-success" value="Create">
                     <i class="fa fa-check" aria-hidden="true"></i>
                     Confirmer
                 </button>
-                <a href="{{ path('du_forum_index') }}" class="btn btn-secondary">
+                <a href="{{ path('front_forum_index') }}" class="btn btn-secondary">
                     <i class="fa fa-undo" aria-hidden="true"></i>
                     Retour à la liste</a>
 
@@ -44,7 +48,7 @@
         </div>
     <hr>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8 offset-md-2">
             {% form_theme formPublication 'bootstrap_3_layout.html.twig' %}
             {{ form_widget(formPublication) }}
             {{ form_end(formPublication) }}

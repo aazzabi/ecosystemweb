@@ -1,11 +1,15 @@
-{% extends './Default/dashboard.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}
-    My dashboard | Forum
+    Forum
 {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forum/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forum/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forum/settings.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forum/sliderNormalize.css') }}">
     <style>
         #group-img {
             width: 55px !important;
@@ -20,10 +24,33 @@
         #publcationsTab .archived td{
             background-color: rgba(255,165,0,0.37) !important;
         }
+        /*background: #4a569d;*/
+        /*background: -moz-linear-gradient(left, #4a569d 1%, #dc2424 100%);*/
+        /*background: -webkit-linear-gradient(left, #4a569d 1%,#dc2424 100%);*/
+        /*background: linear-gradient(to right, #4a569d 1%,#dc2424 100%);*/
+        /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4a569d',*/
     </style>
 {% endblock %}
 
 {% block javascripts %}
+    <script type="text/javascript">
+
+        var revapi;
+
+        jQuery(document).ready(function() {
+            "use strict";
+            revapi = jQuery('.tp-banner').revolution(
+                {
+                    delay: 15000,
+                    startwidth: 1200,
+                    startheight: 278,
+                    hideThumbs: 10,
+                    fullWidth: "on"
+                });
+
+        });	//ready
+
+    </script>
     <script>
         $(document).ready(function () {
             var tableP = $('#publcationsTab').DataTable({
@@ -35,94 +62,131 @@
             });
         });
     </script>
+    <script src="{{ asset ('assets/js/forum/jquery.themepunch.plugin.min.js') }}"></script>
+    <script src="{{ asset ('assets/js/forum/jquery.themepunch.revolution.min.js') }}"></script>
+    <script src="{{ asset ('assets/js/forum/sliderParticles.js') }}"></script>
 
 
 {% endblock %}
 
 {% block body %}
 
-    {#Profiles liste et buttons#}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-6">
-                </div>
-                <div class="col-md-6 text-right">
-                    <br>
-                    <a href="{{ path('du_forum_new') }}" class="btn btn-success">
-                        <i class="icon-plus">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                            &nbsp;Nouvelle publication
-                        </i>
-                    </a>
-                </div>
+    <div class="container-fluid">
+        <div class="headernav" id="particles-js" style="height: 300px;" >
+            <div class="content row">
+                    <div class="col-lg-4 search hidden-xs hidden-sm col-md-3 offset-md-5">
+                        <div class="wrap">
+                            <form action="#" method="post" class="form">
+                                <div class="pull-left txt"><input type="text" class="form-control" placeholder="Search Topics"></div>
+                                <div class="pull-right"><button class="btn btn-default" type="button"><i class="fa fa-search"></i></button></div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <div class="stnt">
+                            <a href="{{ path('front_forum_new') }}" class="btn btn-success">
+                                <i class="icon-plus">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    &nbsp;Nouvelle publication
+                                </i>
+                            </a>
+                        </div>
+                    </div>
             </div>
         </div>
-    </div>
-    <hr>
-    <div class="clearfix">
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-borderless">
-                <ul class="nav nav-tabs nav-tabs-simple hidden-sm-down" role="tablist"
-                    data-init-reponsive-tabs="dropdownfx">
-                    <li class="nav-item">
-                        <a class="active" data-toggle="tab" role="tab" data-target="#publications" href="#"
-                           aria-expanded="true">Mes publications</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="publications" aria-expanded="true">
-                        <table id="publcationsTab" class="table table-bordered" style="width: 100% !important;">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Date</th>
-                                <th>Titre</th>
-                                <th>Description</th>
-                                <th>Etat</th>
-                                <th>Crée par</th>
-                                <th>Nbr de oommentaires</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for publication in publications %}
-                                {% if publication.etat == "archivé" %}
-                                    <tr class="archived" >
+
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    {% for publication in publications %}
+                    <div class="post">
+                        <div class="wrap-ut pull-left">
+                            <div class="userinfo pull-left">
+                                {% if publication.publicationCreatedBy.photo %}
+                                    <div class="avatar">
+                                        <img src="{{ asset('uploads/user/photo/' ~ publication.publicationCreatedBy.photo) }}"
+                                         width="55" height="55" alt="" />
+                                    </div>
                                 {% else %}
-                                    <tr>
+                                    <div class="avatar">
+                                        <img src="{{ asset('assets/img/profile.png') }}"
+                                         width="55" height="55" alt="" />
+                                    </div>
                                 {% endif %}
-                                    <td>{{ publication.id }}</td>
-                                    <td>{{ publication.publicationCreatedAt | date }}</td>
-                                    <td>{{ publication.titre }}</td>
-                                    <td>{{ publication.description }}</td>
-                                    <td>{{ publication.etat }}</td>
-                                    <td>{{ publication.publicationCreatedBy }}</td>
-                                    <td>{{ publication.commentaires | length }}</td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm btn-group-horizontal">
-                                            <a class="btn btn-secondary" href="{{ path('du_forum_publication_show', { 'id': publication.id }) }}"
-                                               data-toggle="tooltip" title="Consuler">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                            <a class="btn btn-secondary" href="{{ path('du_forum_publication_delete', { 'id': publication.id }) }}"
-                                               data-toggle="tooltip" title="Supprimer"><i class="fa fa-trash"></i>
-                                            </a>
-                                            {% if publication.etat != "archivé" %}
-                                                <a class="btn btn-success" href="{{ path('du_forum_publication_archive', { 'id': publication.id }) }}"> Archiver </a>
-                                            {% endif %}
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                {% if publication.etat == 'archivé' %}
+                                    <br>
+                                    <div class="icons" style="margin: 0 auto">
+                                        <i class="fa fa-check-circle fa-2x" style="color: green"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="posttext pull-left">
+                                <h2><a href="{{ path('front_forum_show', {'id' : publication.id }) }}">{{ publication.titre }}</a></h2>
+                                <p>{{ publication.description }}</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="postinfo pull-left">
+                            <div class="comments">
+                                <div class="commentbg">
+                                    {{ publication.commentaires | length }}
+                                    <div class="mark"></div>
+                                </div>
+                            </div>
+                            {% set difference = date(publication.publicationCreatedAt).diff(date())  %}
+
+                            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
+                            {% if difference.days == 0  %}
+                                <div class="time"><i class="fa fa-clock-o"></i> Aujourd'hui</div>
+                            {% elseif difference.days == 1 %}
+                                <div class="time"><i class="fa fa-clock-o"></i> Hier</div>
+                            {% else %}
+                            <div class="time"><i class="fa fa-clock-o"></i> Depuis {{ difference.days }} Jours</div>
+                            {% endif %}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="sidebarblock">
+                        <h3>Categories</h3>
+                        <div class="divline"></div>
+                        <div class="blocktxt">
+                            <ul class="cats">
+                                {% for categorie in categories %}
+                                    <li><a href="#">{{ categorie.libelle }}<span class="badge pull-right">{{ categorie.publicationsForum | length }}</span></a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="sidebarblock">
+                        <h3>My Active Threads</h3>
+                        <div class="divline"></div>
+                        <div class="blocktxt">
+                            <a href="#">This Dock Turns Your iPhone Into a Bedside Lamp</a>
+                        </div>
+                        <div class="divline"></div>
+                        <div class="blocktxt">
+                            <a href="#">Who Wins in the Battle for Power on the Internet?</a>
+                        </div>
+                        <div class="divline"></div>
+                        <div class="blocktxt">
+                            <a href="#">Sony QX10: A Funky, Overpriced Lens Camera for Your Smartphone</a>
+                        </div>
+                        <div class="divline"></div>
+                        <div class="blocktxt">
+                            <a href="#">FedEx Simplifies Shipping for Small Businesses</a>
+                        </div>
+                        <div class="divline"></div>
+                        <div class="blocktxt">
+                            <a href="#">Loud and Brave: Saudi Women Set to Protest Driving Ban</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 {% endblock %}

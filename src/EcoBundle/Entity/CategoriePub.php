@@ -41,6 +41,11 @@ class CategoriePub
      */
     private $domaine;
 
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="PublicationForum", mappedBy="categorie")
+     */
+    private $publicationsForum;
 
     /**
      * Get id
@@ -111,5 +116,22 @@ class CategoriePub
     {
         return $this->getLibelle() . " " . $this->getDescription() . "" ;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPublicationsForum()
+    {
+        return $this->publicationsForum;
+    }
+
+    /**
+     * @param mixed $publicationsForum
+     */
+    public function setPublicationsForum($publicationsForum)
+    {
+        $this->publicationsForum = $publicationsForum;
+    }
+
 }
 

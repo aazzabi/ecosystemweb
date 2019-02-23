@@ -41,7 +41,7 @@ class DefaultController extends Controller
     {
 
         // replace this example code with whatever you need
-        return $this->render('@Eco/recyclage/recyclage.html.twig');
+        return $this->render('@Eco/DashboardUser/Recyclage/recyclage.html.twig');
     }
 
     /**
@@ -51,7 +51,7 @@ class DefaultController extends Controller
     {
 
         // replace this example code with whatever you need
-        return $this->render('@Eco/recyclage/missions.html.twig');
+        return $this->render('@Eco/DashboardUser/Recyclage/missions.html.twig');
     }
 
     /**
@@ -61,7 +61,7 @@ class DefaultController extends Controller
     {
 
         // replace this example code with whatever you need
-        return $this->render('@Eco/recyclage/appareilrc.html.twig');
+        return $this->render('@Eco/DashboardUser/Recyclage/appareilrc.html.twig');
     }
 
     /**
@@ -70,7 +70,7 @@ class DefaultController extends Controller
     public function pointrcAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('@Eco/recyclage/pointrc.html.twig');
+        return $this->render('@Eco/DashboardUser/Recyclage/pointrc.html.twig');
     }
 }
 

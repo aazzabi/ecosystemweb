@@ -91,7 +91,23 @@ class DARecyclageController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+    /**
+     * @Route("/recyclage/mission", name="da_mission_index")
+     * @Method("GET")
+     */
+    public function indexAction2()
+    {
+        $em = $this->getDoctrine()->getManager();
 
+        $recys = $em->getRepository('EcoBundle:PtCollecte')->findAll();
+        $missions = $em->getRepository('EcoBundle:Mission')->findAll();
+
+        return $this->render('@Eco/DashboardUser/Recyclage/missions.html.twig', array(
+            'recys' => $recys,
+            'missions' => $missions
+
+        ));
+    }
     /**
      * Displays a form to edit an existing user entity.
      *

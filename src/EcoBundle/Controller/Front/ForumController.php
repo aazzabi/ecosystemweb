@@ -15,6 +15,7 @@ use EcoBundle\Entity\PublicationForum;
 use EcoBundle\Entity\Reparateur;
 use EcoBundle\Entity\RespAsso;
 use EcoBundle\Entity\RespSoc;
+use EcoBundle\Entity\Signalisation;
 use EcoBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -173,6 +174,29 @@ class ForumController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $publicationForum->setEtat("publié");
+        $em->flush();
+        return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
+    }
+
+    /**
+     * @Route("/signalerCommentaire/{id}", name="front_forum_signaler_commentaire")
+     * @Method({"GET", "POST"})
+     */
+    public function signalerCommentaireAction(Request $request, $id)
+    {
+        $signalisation = new Signalisation();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $commentaire = $this->getDoctrine()->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $publicationForum= $commentaire->getPublication();
+
+        $libRadio = $request->get('radioLib');
+        $signalisation->setLibelle($libRadio);
+        $signalisation->setSignaledBy($user);
+        $signalisation->setCommentaire($commentaire);
+
+        $em->persist($signalisation);
         $em->flush();
         return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
     }

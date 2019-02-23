@@ -55,6 +55,14 @@ class CommentairePublication
      */
     private $publication;
 
+    /**
+     *
+     * var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Signalisation", mappedBy="commentaire", cascade={"remove"})
+     *
+     */
+    private $signlaisations;
 
     /**
      * @Vich\UploadableField(mapping="commentaire_photo", fileNameProperty="photo")
@@ -207,6 +215,42 @@ class CommentairePublication
         $this->photoUpdatedAt = $photoUpdatedAt;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSignlaisations()
+    {
+        return $this->signlaisations;
+    }
 
+    /**
+     * @param mixed $signlaisations
+     */
+    public function setSignlaisations($signlaisations)
+    {
+        $this->signlaisations = $signlaisations;
+    }
+
+    /**
+     *
+     * @param \EcoBundle\Entity\Signalisation $signlaisation
+     *
+     * @return CommentairePublication
+     */
+    public function addCommentaire(Signalisation $signlaisation)
+    {
+        $this->signlaisations[] = $signlaisation;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param \EcoBundle\Entity\Signalisation $signlaisation
+     */
+    public function removeCommentaire(Signalisation $signlaisation)
+    {
+        $this->signlaisations->removeElement($signlaisation);
+    }
 }
 

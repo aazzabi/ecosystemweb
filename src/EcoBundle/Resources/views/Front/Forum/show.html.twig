@@ -113,7 +113,7 @@
             <br>
             <div class="postinfobot">
                 <div class="pull-left">
-                    <i class="fa fa-clock-o"></i> Posté le : {{ publication.publicationCreatedAt | date("m/d/Y", "Europe/Paris") }}
+                    <i class="fa fa-clock-o"></i> Posté le : {{ publication.publicationCreatedAt | date("d/M/y", "Europe/Paris") }}
                 </div>
                 <div class="next pull-right">
                     <a href="#"><i class="fa fa-share"></i></a>
@@ -143,12 +143,14 @@
                                                  <i class="fa fa-trash"></i> Effacer</a>
                                             {% endif %}
                                         {% endif %}
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fa fa-exclamation-triangle"></i> Signaler</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#{{ commentaire.id }}">
+                                            <i class="fa fa-exclamation-triangle"></i> Signaler
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="card-block">
                             <div class="topwrap">
                                 <div class="userinfo pull-left">
@@ -169,7 +171,6 @@
                                             UNKNOWN
                                         </div>
                                     {% endif %}
-
 
 
                                     {% if (app.user.id == publication.publicationCreatedBy.id) and (publication.etat == "archivé")  %}
@@ -204,8 +205,36 @@
                                     <a href="#" class="down"><i class="fa fa-thumbs-down"></i>12</a>
                                 </div>
 
-                                <div class="posted pull-left"><i class="fa fa-clock-o"></i> Posté le : {{ commentaire.commentedAt | date("m/d/Y", "Europe/Paris") }}</div>
+                                <div class="posted pull-left"><i class="fa fa-clock-o"></i> Commenté le : {{ commentaire.commentedAt | date("d/m/Y", "Europe/Paris") }}</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        {% for commentaire in publication.commentaires %}
+            <div class="modal fade" id="{{ commentaire.id }}" tabindex="-1"
+                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Signaler ce commentaire !! </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body"><br>
+                            <form action="{{ path('front_forum_signaler_commentaire', {'id': commentaire.id}) }}"
+                                  id="{{ commentaire.id }}" method="get" name="formulario_login">
+                                <input type="radio" value="violence" name="radioLib" id="violence"><label for="violence">Violence</label><br>
+                                <input type="radio" value="arnaque" name="radioLib" id="arnaque"><label for="arnaque">arnaque</label><br>
+                                <input type="radio" value="harcelement" name="radioLib" id="harcelement"><label for="harcelement">Harcelement</label><br>
+                                <input type="radio" value="haine" name="radioLib" id="haine"><label for="haine">Discour insitant à la haine</label><br>
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-success">Signaler</button>
+                            </form>
                         </div>
                     </div>
                 </div>

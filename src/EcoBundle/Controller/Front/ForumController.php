@@ -86,7 +86,10 @@ class ForumController extends Controller
     public function newAction(Request $request)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
-
+        if ($user) {
+            $this->addFlash('error', 'Vous devez se conecter d\'abord !');
+            return $this->redirectToRoute('fos_user_security_login');
+        }
         $publication = new PublicationForum();
         $formPublication = $this->createForm('EcoBundle\Form\PublicationForumType', $publication);
         $formPublication->handleRequest($request);

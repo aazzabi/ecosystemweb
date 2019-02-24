@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="{{ _charset }}" />
+        <meta name="robots" content="noindex,nofollow" />
+        <title>{% block title %}{% endblock %}</title>
+        <style>
+            body {
+                font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+                font-size: 14px;
+                line-height: 1.43;
+                color: #484848;
+                background-color: #f7f7f7;
+                -webkit-font-smoothing: antialiased;
+            }
+            .clear-fix:after {
+                content: "\0020";
+                display: block;
+                height: 0;
+                clear: both;
+                visibility: hidden;
+            }
+            .clear-fix {
+                display: inline-block;
+            }
+            * html .clear-fix {
+                height: 1%;
+            }
+            .clear-fix {
+                display: block;
+            }
+            .header {
+                padding: 30px 30px 20px 30px;
+            }
+            .header-logo {
+                float: left;
+            }
+            .search {
+                float: right;
+                padding-top: 20px;
+            }
+            .search label {
+                line-height: 28px;
+                vertical-align: middle;
+            }
+            .search input {
+                width: 195px;
+                font-size: 12px;
+                border: 1px solid #dadada;
+                background: #fff url(data:image/gif;base64,R0lGODlhAQAFAKIAAPX19e/v7/39/fr6+urq6gAAAAAAAAAAACH5BAAAAAAALAAAAAABAAUAAAMESAEjCQA7) repeat-x left top;
+                padding: 5px 6px;
+                color: #565656;
+            }
+            .search input[type="search"] {
+                -webkit-appearance: textfield;
+            }
+            #content {
+                width: 1100px;
+                margin: 0 auto;
+            }
+            #content pre {
+                white-space: normal;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+        </style>
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <div id="content">
+            <div class="header clear-fix">
+                <div class="header-logo">
+                    {{ include('@Twig/ecoZone.svg') }}
+                </div>
+            </div>
+
+            <div class="sf-reset">
+                {% block body %}{% endblock %}
+            </div>
+
+        </div>
+    </body>
+</html>

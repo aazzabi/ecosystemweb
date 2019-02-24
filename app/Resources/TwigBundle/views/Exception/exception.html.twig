@@ -1,0 +1,67 @@
+{% block head %}
+    <style>
+        .error_h1 {
+            font-size: 70px;
+            font-weight: 700;
+        }
+        .error_h2 {
+            font-size: 38px;
+            font-weight: normal;
+            font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        }
+        .error_h3 {
+            font-size: 22px;
+            font-weight: normal;
+            font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        }
+        .dinausaur {
+            vertical-align: top;
+            background-image: url({{ asset('assets/img/dinausaur.gif') }});
+            background-size: 350px;
+            height: 350px;
+            background-repeat: no-repeat;
+            background-position: top ;
+        }
+        ul {
+            padding-left: 0px;
+            list-style-type:none;
+        }
+    </style>
+    <link href="{{ asset ('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="error_h1">Oops !!</h1>
+            <h2 class="error_h2">{{ exception.message }} </h2>
+            <h3 class="error_h3">Error code: {{ status_code }} </h3><br>
+
+            <p>Voici quelques liens utiles à la place:</p>
+            <ul>
+                <li>
+                    <a href="{{ path('homepage') }}">Accueil</a>
+                </li>
+                <li>
+                    <a href="{{ path('front_evenements_index') }}">Evenements</a>
+                </li>
+                <li>
+                    <a href="{{ path('front_forum_index') }}">Forum</a>
+                </li>
+                {#{% if is_granted('ROLE_ADMIN') %}    #}
+                    {#<li>#}
+                        {#<a href="{{ path('etape_index') }}">Etapes</a>#}
+                    {#</li>#}
+                    {#<li>#}
+                        {#<a href="{{ path('group_index') }}">Groupes</a>#}
+                    {#</li>#}
+                    {#<li>#}
+                        {#<a href="{{ path('users_index') }}">Utilisateurs </a>#}
+                    {#</li>#}
+                {#{% endif %}#}
+            </ul>
+        </div>
+        <div class="col-md-4 dinausaur">
+
+        </div>
+    </div>
+{% endblock %}

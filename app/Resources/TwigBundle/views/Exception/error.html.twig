@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="{{ _charset }}" />
+        <title>An Error Occurred: {{ status_text }}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <style>
+            body {
+                font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+                font-size: 14px;
+                line-height: 1.43;
+                color: #484848;
+                background-color: #f7f7f7;
+                -webkit-font-smoothing: antialiased;
+            }
+            .error_h1 {
+                font-size: 70px;
+                font-weight: 700;
+            }
+            .error_h2 {
+                font-size: 38px;
+                font-weight: normal;
+                font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+            }
+            .error_h3 {
+                font-size: 22px;
+                font-weight: normal;
+                font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+            }
+            .dinausaur {
+                vertical-align: top;
+                background-image: url({{ asset('assets/img/dinausaur.gif') }});
+                background-size: 350px;
+                height: 350px;
+                background-repeat: no-repeat;
+                background-position: top ;
+            }
+            ul {
+                padding-left: 0px;
+                list-style-type:none;
+            }
+            #content {
+                 width: 1100px;
+                 margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+    <div id="content">
+        <div class="header clear-fix">
+            <div class="header-logo">
+                {{ include('@Twig/ecoZone.svg') }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                {#aaaa {{ dump(status_code) }}<br>#}
+                <h1 class="error_h1">Oops !!</h1>
+                <h2 class="error_h2">{{ exception.message }} </h2>
+                <h3 class="error_h3">Error code: {{ status_code }} </h3><br>
+
+                <p>Voici quelques liens utiles à la place:</p>
+                <ul>
+                    <li>
+                        <a href="{{ path('homepage') }}">Accueil</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('front_evenements_index') }}">Evenements</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('front_forum_index') }}">Forum</a>
+                    </li>
+                    {#{% if is_granted('ROLE_ADMIN') %}    #}
+                    {#<li>#}
+                    {#<a href="{{ path('etape_index') }}">Etapes</a>#}
+                    {#</li>#}
+                    {#<li>#}
+                    {#<a href="{{ path('group_index') }}">Groupes</a>#}
+                    {#</li>#}
+                    {#<li>#}
+                    {#<a href="{{ path('users_index') }}">Utilisateurs </a>#}
+                    {#</li>#}
+                    {#{% endif %}#}
+                </ul>
+            </div>
+            <div class="col-md-4 dinausaur">
+
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

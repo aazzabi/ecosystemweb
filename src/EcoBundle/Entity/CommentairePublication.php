@@ -85,9 +85,25 @@ class CommentairePublication
      */
     private $photoUpdatedAt;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="likes", type="integer")
+     */
+    private $likes;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="dislikes", type="integer")
+     */
+    private $dislikes;
+
     public function __construct()
     {
         $this->commentedAt = new \DateTime('now');
+        $this->dislikes = 0;
+        $this->likes = 0;
     }
 
     /**
@@ -251,6 +267,38 @@ class CommentairePublication
     public function removeCommentaire(Signalisation $signlaisation)
     {
         $this->signlaisations->removeElement($signlaisation);
+    }
+
+    /**
+     * @return int
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * @param int $likes
+     */
+    public function setLikes($likes)
+    {
+        $this->likes = $likes;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDislikes()
+    {
+        return $this->dislikes;
+    }
+
+    /**
+     * @param int $dislikes
+     */
+    public function setDislikes($dislikes)
+    {
+        $this->dislikes = $dislikes;
     }
 }
 

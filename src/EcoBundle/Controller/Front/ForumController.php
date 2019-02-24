@@ -21,6 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -216,6 +217,50 @@ class ForumController extends Controller
 
         $em->persist($signalisation);
         $em->flush();
+        return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
+    }
+
+    /**
+     *
+     * @Route("/like/new", name="front_forum_comment_like")
+     * @Method({"GET", "POST"})
+     */
+    public function commentLikeAction(Request $request)
+    {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $commentaire = $em->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $publicationForum = $commentaire->getPublication();
+        if (($request->isXmlHttpRequest()))
+        {
+            $commentaire->setLikes($commentaire->getLikes()+1);
+            $em->persist($commentaire);
+            $em->flush();
+            $arrData = ['likes' => $commentaire->getLikes()];
+            return new JsonResponse($arrData);
+        }
+        return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
+
+    }
+    /**
+     *
+     * @Route("/dislike/new", name="front_forum_comment_dislike")
+     * @Method({"GET", "POST"})
+     */
+    public function commentDislikeAction(Request $request)
+    {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $commentaire = $em->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $publicationForum = $commentaire->getPublication();
+        if (($request->isXmlHttpRequest()))
+        {
+            $commentaire->setDislikes($commentaire->getdislikes()+1);
+            $em->persist($commentaire);
+            $em->flush();
+            $arrData = ['dislikes' => $commentaire->getDislikes()];
+            return new JsonResponse($arrData);
+        }
         return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
     }
 }

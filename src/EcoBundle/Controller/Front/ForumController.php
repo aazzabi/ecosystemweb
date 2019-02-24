@@ -266,4 +266,27 @@ class ForumController extends Controller
         }
         return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
     }
+    /**
+     *
+     * @Route("/recherche", name="front_forum_recherche")
+     * @Method({"GET", "POST"})
+     */
+    public function rechercheAction(Request $request)
+    {
+        $keyWord = $request->get('keyWord');
+        $em = $this->getDoctrine()->getManager();
+
+        if (($request->isXmlHttpRequest()))
+        {
+            $publications = $em->getRepository('EcoBundle:PublicationForum')->findPublication($keyWord);
+            foreach ($publications as $pub){
+                $titles[] = $pub->getTitre();
+                $descriptions[] = $pub->getDescriptions();
+                $commentes[] = $pub->getComments();
+            }
+            $arrData = ['publications' => $publications];
+            return new JsonResponse($arrData);
+        }
+        return $this->redirectToRoute('front_forum_index');
+    }
 }

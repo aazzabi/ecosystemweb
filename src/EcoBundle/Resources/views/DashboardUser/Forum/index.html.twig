@@ -20,6 +20,14 @@
         #publcationsTab .archived td{
             background-color: rgba(255,165,0,0.37) !important;
         }
+        #publcationsTab{
+            table-layout: fixed;
+        }
+        #descriptionCell{
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
     </style>
 {% endblock %}
 
@@ -96,9 +104,9 @@
                                     <tr>
                                 {% endif %}
                                     <td>{{ publication.id }}</td>
-                                    <td>{{ publication.publicationCreatedAt | date }}</td>
+                                    <td>{{ publication.publicationCreatedAt | date('d/m/20y') }}</td>
                                     <td>{{ publication.titre }}</td>
-                                    <td>{{ publication.description }}</td>
+                                    <td id="descriptionCell">{{ publication.description }}</td>
                                     <td>{{ publication.etat }}</td>
                                     <td>{{ publication.publicationCreatedBy }}</td>
                                     <td>{{ publication.commentaires | length }}</td>

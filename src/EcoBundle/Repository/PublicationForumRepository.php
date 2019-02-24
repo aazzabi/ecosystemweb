@@ -23,4 +23,18 @@ class PublicationForumRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery();
         return $q->getResult();
     }
+    public function findPublication($keyWord)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $q  = $qb->select(array('p'))
+            ->from('EcoBundle:PublicationForum', 'p')
+            ->where('p.titre LIKE :motClee')
+            ->orWhere('p.description LIKE :motClee')
+            ->orderBy('p.publicationCreatedAt', 'DESC')
+            ->setParameter('motClee', '%'.$keyWord.'%')
+            ->getQuery();
+        return $q->getResult();
+    }
 }

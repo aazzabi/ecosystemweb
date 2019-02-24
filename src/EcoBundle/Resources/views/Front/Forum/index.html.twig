@@ -65,7 +65,32 @@
     <script src="{{ asset ('assets/js/forum/jquery.themepunch.plugin.min.js') }}"></script>
     <script src="{{ asset ('assets/js/forum/jquery.themepunch.revolution.min.js') }}"></script>
     <script src="{{ asset ('assets/js/forum/sliderParticles.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.js') }}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function(){
+            $(".keyWord").keyup(function () {
+                var keyWord = $(this).val();
+                var title = document.getElementById("title");
+                var description = document.getElementById("description");
+                $.ajax({
+                    dataType: "json",
+                    url: "{{ path("front_forum_recherche") }}",
+                    data: {
+                        "keyWord": keyWord
+                    },
+                    success: function(response){
+                        console.log(response.publications[1]);
+                        // JSON.parse(response);
+                        // console.log(response.object.publications.get(0));
+                        // console.log(response.publications.parsed.first());
+                        // $(".post").fadeOut(".post");
+                        // $(".post").fadeIn(".post");
 
+                    }});
+            });
+        });
+
+    </script>
 
 {% endblock %}
 
@@ -77,7 +102,7 @@
                     <div class="col-lg-4 search hidden-xs hidden-sm col-md-3 offset-md-5">
                         <div class="wrap">
                             <form action="#" method="post" class="form">
-                                <div class="pull-left txt"><input type="text" class="form-control" placeholder="Search Topics"></div>
+                                <div class="pull-left txt"><input id="keyWord" type="text" class="keyWord form-control" placeholder="Recherche publications"></div>
                                 <div class="pull-right"><button class="btn btn-default" type="button"><i class="fa fa-search"></i></button></div>
                             </form>
                         </div>
@@ -140,6 +165,7 @@
                 <div class="col-lg-8 col-md-8">
                     {% for publication in publicationsPubliees %}
                     <div class="post">
+                    {#<div class="post{{ publication.id }}">#}
                         <div class="wrap-ut pull-left">
                             <div class="userinfo pull-left">
                                 {% if publication.publicationCreatedBy.photo %}
@@ -161,8 +187,8 @@
                                 {% endif %}
                             </div>
                             <div class="posttext pull-left">
-                                <h2><a href="{{ path('front_forum_show', {'id' : publication.id }) }}">{{ publication.titre }}</a></h2>
-                                <p>{{ publication.description }}</p>
+                                <h2><a id="title" href="{{ path('front_forum_show', {'id' : publication.id }) }}">{{ publication.titre }}</a></h2>
+                                <p id="description">{{ publication.description }}</p>
                             </div>
                             <div class="clearfix"></div>
                         </div>

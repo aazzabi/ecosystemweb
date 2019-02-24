@@ -35,10 +35,13 @@ class DARecyclageController extends Controller
 
         $recys = $em->getRepository('EcoBundle:PtCollecte')->findAll();
         $missions = $em->getRepository('EcoBundle:Mission')->findAll();
+        $categoriesEvts = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
 
         return $this->render('@Eco/DashboardAdmin/Recyclage/index.html.twig', array(
             'recys' => $recys,
-            'missions' => $missions
+            'missions' => $missions,
+            'categoriesEvts' => $categoriesEvts
+
 
         ));
     }

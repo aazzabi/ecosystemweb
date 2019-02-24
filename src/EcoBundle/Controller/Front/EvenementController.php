@@ -36,23 +36,60 @@ class EvenementController extends Controller
      * @Method("GET")
      */
 
-    public function indexEventAction()
+    public function indexEventAction(Request $request)
     {
 
         $em = $this->getDoctrine()->getManager();
+        $search = [];
+        $evenements = array();
+        $search['categorie'] = $request->get('categorie', null);
+        $search['lieu'] = $request->get('lieu', null);
+        $search['date'] = $request->get('date', null);
+//        var_dump($search);die;
 
-        //$evenements = $em->getRepository('EcoBundle:Evenements')->findAll();
 
-//        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
+        if ($search['categorie']) {
+            $evenementsCat = $em->getRepository('EcoBundle:Evenement')->searchByCategorieEvt($search['categorie']);
+            if ($search['lieu']) {
+                foreach ($evenementsCat as $event) {
+                    if  ($event->getLieu() == $search['lieu']) {
+                        $evenements[] = $event;
+                    }
+                }
+            }else {
+                $evenements = $evenementsCat;
+            }
+        }
+
+//       $evenements =  $em->getRepository('EcoBundle:Evenement')->search($search);
+
+//      var_dump($evenements);die;
         $evenements = $em->getRepository('EcoBundle:Evenement')->findAll();
         $categories = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
-        //$form = $this->container->get('form.factory')->create(new rechercheEventType());
         return $this->render('@Eco/Front/Evenement/index.html.twig', array(
             //'evenements' => $evenements,
-            'evenements' => $evenements,'categories'=> $categories,
+            'evenements' => $evenements,
+            'categories'=> $categories,
         ));
     }
 
+    /**
+     * @Route("/evenement/categorie/{cat}", name="front_evenements_recherche")
+     * @Method("GET")
+     */
+    public function RecherchTestAction(Request $request,$cat)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
+        $evenement = new Evenement();
+        $evenement = $em->getRepository('EcoBundle:Evenement')->findByCategorie($cat);
+
+        return $this->render('@Eco/Front/Evenement/index.html.twig', array(
+            "evenements"=>$evenement,'categories'=> $categories,
+
+        ));
+    }
     /**
      * @Route("/evenement/{id}", name="front_evenements_show")
      * @Method("GET")
@@ -135,23 +172,6 @@ class EvenementController extends Controller
             ;
     }
 
-    /**
-     * @Route("/evenement/categorie/{cat}", name="front_evenements_recherche")
-     * @Method("GET")
-     */
-    public function RecherchTestAction(Request $request,$cat)
-    {
-
-        $em = $this->getDoctrine()->getManager();
-        $categories = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
-        $evenement = new Evenement();
-        $evenement = $em->getRepository('EcoBundle:Evenement')->findByCategorie($cat);
-
-        return $this->render('@Eco/Front/Evenement/index.html.twig', array(
-            "evenements"=>$evenement,'categories'=> $categories,
-
-        ));
-    }
 
     /**
      * @Route("/evenement/recherche", name="front_evenements_recherche")
@@ -216,8 +236,45 @@ class EvenementController extends Controller
         }
     }*/
 
+    /**
+     * @Route("/evenementP/{id}", name="front_evenements_participer")
+     * @Method("GET")
+     */
+   public function participerAction($id)
+   {
+       $em = $this->getDoctrine()->getManager();
+       $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
+       $user = $this->get('security.token_storage')->getToken()->getUser();
 
+       $evenement->addParticipant($user);
+       $user->addEventsParticipes($evenement);
 
+       $em->persist($evenement);
+       $em->persist($user);
+       $em->flush();
+       return $this->redirectToRoute('front_evenements_index');
+
+   }
+
+    /**
+     * @Route("/evenementNP/{id}", name="front_evenements_noparticiper")
+     * @Method("GET")
+     */
+    public function noParticiperAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $evenement->removeParticipants($user);
+        $user->removeEventsParticipes($evenement);
+
+       // $em->persist($evenement);
+     //   $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('front_evenements_index');
+
+    }
 
 
 

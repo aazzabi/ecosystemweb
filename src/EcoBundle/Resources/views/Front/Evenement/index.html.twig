@@ -34,108 +34,42 @@
                                     <div class="col-sm-2">
                                         <div class="form-group form-group-default">
                                             <label>Catégorie</label>
-                                            <select id="categorie"
+                                            <select name="categorie" id="categorie"
                                                     class="cs-select cs-skin-slide cs-transparent form-control"
-                                                    name="disponibilite"
                                                     data-init-plugin="cs-select">
                                                 <option value="0">Toutes</option>
-                                                <a href="{{ path('front_evenements_index') }}"></a>
                                                 {% for c in categories %}
-                                                    <option>
-                                                        <a href="{{ path('front_evenements_recherche', { 'cat': c.id }) }}">
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-
-
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                {{ c.libelle }}
-
-                                                            </li>
-
-                                                            {#<span class="badge badge-primary badge-pill">{{ c.annonces | length}}</span>#}
-                                                            </li>
-
-                                                        </a>
-
+                                                    <option {% if app.session.get('categorie') == c.id %} selected {% endif %}
+                                                            value="{{ c.id }}"> {{ c.libelle }}
                                                     </option>
-
                                                 {% endfor %}
-
-                                                {#   {% for evenement in evenements %}
-                                                       <option value="{{ evenement.titre }}"></option>
-                                                       #}{#{% if app.session.get('disponibilite') == disponibilite.id %} selected {% endif %} >#}{#
-                                                       #}{#{{ disponibilite.libelle }}</option>#}{#
-                                                   {% endfor %}#}
-
                                             </select>
                                         </div>
+
                                     </div>
                                     {#Experiences#}
                                     <div class="col-sm-2">
                                         <div class="form-group form-group-default">
                                             <label>Lieu </label>
-                                            <input type="text" class="form-control" name="experience" id="experience"
+                                            <input type="text" class="form-control" name="lieu" id="lieu"
                                                    value="{{ app.session.get('lieu') }}">
                                         </div>
                                     </div>
-                                    {#Contrat
-                                    <div class="col-sm-1">
-                                        <div class="form-group form-group-default">
-                                            <label>Contrat</label>
-                                            <select class="cs-select cs-skin-slide cs-transparent form-control" multiple="multiple"
-                                                    id="contrat" name="contrat" data-init-plugin="cs-select">
-                                                <option value="0">All</option>
-                                                <option value="SIVP1" {% if app.session.get('contrat') == 'SIVP1' %} selected {% endif %}>SIVP 1</option>
-                                                <option value="SIVP2" {% if app.session.get('contrat') == 'SIVP2' %} selected {% endif %}>SIVP 2</option>
-                                                <option value="CDI" {% if app.session.get('contrat') == 'CDI' %} selected {% endif %}>CDI</option>
-                                                <option value="CDD" {% if app.session.get('contrat') == 'CDD' %} selected {% endif %}>CDD</option>
-                                                <option value="Freelance" {% if app.session.get('contrat') == 'Freelance' %} selected {% endif %}>Freelance</option>
-                                            </select>
-                                        </div>
-                                    </div>#}
-                                    {#Compétence#}
                                     <div class="col-sm-3">
-                                        <div class="form-group form-group-default form-group-default-select2">
+                                        <div class="input-group date form-input-group form-group-default" data-provide="datepicker" >
                                             <label>Date</label>
-                                            <select class="full-width select2-hidden-accessible" multiple=""
-                                                    name="competences" id="competences" multiple="multiple"
-                                                    data-init-plugin="select2" tabindex="-1" aria-hidden="true">
-                                                <option value="0">Toutes</option>
-                                                {#{% for competence in competences %}#}
-                                                {#<option {% if app.session.get('competences') == competence.id %} selected {% endif %}#}
-                                                {#value="{{ competence.id }}"> {{ competence.libelle }}</option>#}
-                                                {#{% endfor %}#}
-                                            </select>
+                                            <input data-date-format="mm/dd/yyyy"
+                                                    class="form-control"
+                                                    name="date">
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
                                         </div>
                                     </div>
-                                    {#Ambition
-                                    <div class="col-sm-3">
-                                        <div class="form-group form-group-default">
-                                            <label>Ambition</label>
-                                            <select class="cs-select cs-skin-slide cs-transparent form-control"
-                                                    name="ambition" id="ambition" data-init-plugin="cs-select">
-                                                <option value="0">Indiff</option>
-                                                <option value="mission en france" {% if app.session.get('ambition') == 'mission en france' %} selected {% endif %}>
-                                                    Cherche une mission en France à l'étranger
-                                                </option>
-                                                <option value="travailler en france" {% if app.session.get('ambition') == 'travailler en france' %} selected {% endif %}>
-                                                    Veut être embauché en France à l'étranger
-                                                </option>
-                                                <option value="travailler en tunisie" {% if app.session.get('ambition') == 'travailler en tunisie' %} selected {% endif %}>
-                                                    Veut être embauché en Tunisie
-                                                </option>
-                                            </select>
-                                        </div>
+                                    <div class="col-sm-5 text-right">
+                                        <input class="btn btn-secondary" type="submit">
                                     </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group form-group-default">
-                                            <label>Interet</label>
-                                            <select class="cs-select cs-skin-slide cs-transparent form-control" multiple="multiple"
-                                                    id="interet" name="interet" data-init-plugin="cs-select">
-                                                <option value="0" {% if app.session.get('interet') == '0' %} selected {% endif %}>Indif</option>
-                                                <option value="1" {% if app.session.get('interet') == '1' %} selected {% endif %}>Oui</option>
-                                            </select>
-                                        </div>
-                                    </div> #}
+
                                 </div>
                             </div>
 
@@ -186,43 +120,6 @@
     {% endif %}
 
     <br>
-    {# <div class="col-md-6 ">
-         <div class="btn-group" style="width: 100%;height: 51px;">
-             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                 Catégories : <span class="caret"></span></button>
-             <ul class="dropdown-menu" role="menu">
-                 <li><a id="aaaa" href="{{ path('front_evenements_recherche', { 'id': CategorieEvts.id }) }}"> All </a>
-                 </li>
-
-             </ul>
-             {% for category in categorys %}
-                 <li>
-                     <a href="#"> # </a>
-                 </li>
-             {% endfor %}
-         </div>
-     </div>#}
-
-
-    <div class="card-body">
-        <ul class="list-group">
-            <a href="{{ path('front_evenements_index') }}">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    All
-                    {#<span class="badge badge-primary badge-pill">{{ c.annonces | length}}</span>#}
-                </li>
-            </a>
-            {% for c in categories %}
-                <a href="{{ path('front_evenements_recherche', { 'cat': c.id }) }}">
-                    {#{{ dump(c) }}#}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ c.libelle }}
-                        {#<span class="badge badge-primary badge-pill">{{ c.annonces | length}}</span>#}
-                    </li>
-                </a>
-            {% endfor %}
-        </ul>
-    </div>
 
 
     <div class="row">
@@ -253,14 +150,16 @@
                                             <h3 style="font-size: 1vw; line-height: normal;"><a
                                                         href="{{ path('front_evenements_show', { 'id': evenement.id }) }}">{{ evenement.titre }}
                                                 </a>
+
                                                 <p>
                                         <span class="location semi-bold"> <i
-                                                    class="fa fa-eye"></i>  </span>{{ evenement.nbvues }}
+                                                    class="fa fa-eye"></i>  </span>{{ evenement.nbvues }} <span>  </span><span class="location semi-bold"> <i
+                                                                class="fa fa-users"></i>  </span> {{ evenement.participants|length}}
                                                 </p>
                                             </h3>
                                         </div>
                                         <div class="col-md-2">
-                                            <p><a href="#">{{ evenement.categorie }}</a></p>
+                                            <p><a href="#">#{{ evenement.categorie }}</a></p>
                                         </div>
                                     </div>
                                     {#<div class="row">#}
@@ -275,12 +174,26 @@
                                         </div>
                                         {% if app.user %}
                                             <div class="col-sm-3">
-                                                <a href="{{ path('du_evenements_new') }}" class="btn btn-sm btn-info">
+                                                <a href="{{ path('front_evenements_participer' ,{ 'id' : evenement.id }) }}"
+                                                            class="btn btn-sm btn-info" id="yes">
                                                     <i class="fa fa-smile-o" aria-hidden="true"></i>&nbsp;Je
-                                                    participe! </i>
+                                                    participe!
                                                 </a>
+                                                <a href="{{ path('front_evenements_noparticiper' ,{ 'id' : evenement.id }) }}"
+                                                   class="btn btn-xs btn-info" id="no">
+                                                    Je
+                                                    participe plus
+                                                </a>
+
                                             </div>
+
+
+
+
+
                                         {% endif %}
+
+
 
                                     </div>
 
@@ -353,4 +266,10 @@
 {% endblock %}
 
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function () {
+            $('#datePicker').datetimepicker();
+        });
+    </script>
+{% endblock %}

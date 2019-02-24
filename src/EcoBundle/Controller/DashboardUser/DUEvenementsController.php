@@ -85,6 +85,7 @@ class DUEvenementsController extends Controller
         $form = $this->createForm('EcoBundle\Form\EvenementType', $evenement);
         $form->handleRequest($request);
         $evenement->setCreatedBy($user);
+        $evenement->setNbVues(0);
         $user->addEventsCrees($evenement);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();

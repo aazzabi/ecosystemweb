@@ -28,7 +28,7 @@
                     <tbody>
                     {% for value in liste %}
                         <tr>
-                            <td></td>
+                            <td> <img src="C:\wamp\www\ecosystemweb\web\assets\img\{{ value.photo }}"></td>
                             <td>{{ value.titre }}</td>
                             <td>{{ value.description }}</td>
                             <td>{{ value.region }}</td>
@@ -47,7 +47,7 @@
                     </tr>
                 </table>
 
-                <a > <button class="btn btn-info float-right btn-sm"> Passer Commande </button></a>
+                <a href="{{ path('ajout_commande',{ 'id_u': app.user.id ,'prix_total' :tab.somme}) }}"> <button class="btn btn-info float-right btn-sm"> Passer Commande </button></a>
 
             {% else %}
             {% endif %}

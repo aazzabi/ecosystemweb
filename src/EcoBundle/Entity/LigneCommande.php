@@ -19,21 +19,21 @@ class LigneCommande
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    public $id;
 
     /**
      * @var int
      *
      * @ORM\Column(name="id_commande", type="integer")
      */
-    private $idCommande;
+    public $idCommande;
 
     /**
      * @var int
      *
      * @ORM\Column(name="id_annonce", type="integer")
      */
-    private $idAnnonce;
+    public $idAnnonce;
 
     /**
      * @var int
@@ -41,14 +41,14 @@ class LigneCommande
      * @ORM\Column(name="id_utilisateur", type="integer")
      */
 
-    private $id_utilisateur;
+    public $id_utilisateur;
 
     /**
      * @var float
      *
      * @ORM\Column(name="prix_annonce", type="float")
      */
-    private $prixAnnonce;
+    public $prixAnnonce;
 
     /**
      * @return int

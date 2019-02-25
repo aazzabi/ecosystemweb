@@ -146,6 +146,18 @@
                     </a>
                     <span class=" {% if path('da_users_index') == currentPath %}bg-success{% endif %}  icon-thumbnail">User</span>
                 </li>
+                <li class="" style="padding: 10px 5px;">
+                    <a href="{{ path('da_show_commande') }}">
+                        <span class="title" >Commandes</span>
+                    </a>
+                    <span class="icon-thumbnail">Cmd</span>
+                </li>
+                <li class="" style="padding: 10px 5px;">
+                    <a href="">
+                        <span class="title">Livraisons</span>
+                    </a>
+                    <span class="icon-thumbnail">Lvr</span>
+                </li>
             {% endif %}
         </ul>
         <div class="clearfix"></div>

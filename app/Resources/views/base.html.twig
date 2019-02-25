@@ -232,6 +232,9 @@
                     <li>
                         <a href="charts.html"><span class="title">Forum</span></a>
                     </li>
+                    <li>
+                        <a href="{{ path('show_commande') }}"><span class="title">Commandes</span></a>
+                    </li>
                     {% if is_granted('ROLE_ADMIN') %}
                     <li>
                         <a href="{{ path('dashboard') }}"><span class="title">Dashboard</span></a>

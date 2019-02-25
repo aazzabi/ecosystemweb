@@ -79,13 +79,28 @@ class PanierController extends Controller
      * @Route("/new/{id_c}/{id_a}", name="ajout_annonce")
      * @Method("GET")
      */
-
-
     public function newAction($id_c,$id_a)
     {
         $em =$this->getDoctrine()->getManager();
-        try {
+        $lignes = $em->getRepository('EcoBundle:LigneCommande')->findAll();
+        foreach ($lignes as $value)
+        {
+            if($value->getIdAnnonce()==$id_a)
+            {
+                echo "<script language=\"javascript\">alert(\"Vous ne pouvez pas Ajouter une annonce déja passé en commande \");</script>";
 
+                $em = $this->getDoctrine()->getManager();
+                $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
+                $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
+                $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
+
+                return $this->render('@Eco/Panier/annonce.html.twig', array(
+                    "annonces"=>$annnonce,'categories'=> $categories,'liste'=> $liste,
+                ));
+
+            }
+        }
+        try{
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
             $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
             $a = $em->getRepository('EcoBundle:Annonce')->find($id_a);
@@ -108,13 +123,13 @@ class PanierController extends Controller
 
             $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
 
-              return $this->render('@Eco/Panier/annonce.html.twig', array(
-                  "annonces"=>$annnonce,'categories'=> $categories,'liste'=> $liste,
-                ));
+            return $this->render('@Eco/Panier/annonce.html.twig', array(
+                "annonces"=>$annnonce,'categories'=> $categories,'liste'=> $liste,
+            ));
 
         }
-        catch (UniqueConstraintViolationException $e) {
-
+        catch (UniqueConstraintViolationException $e)
+        {
             echo "<script language=\"javascript\">alert(\"Annonce Déja Ajouté au Panier \");</script>";
 
             $em = $this->getDoctrine()->getManager();
@@ -129,10 +144,7 @@ class PanierController extends Controller
         }
 
     }
-    public function deleteAction()
-    {
 
-    }
 
     /**
      * @Route("/show3", name="annonce_show3")

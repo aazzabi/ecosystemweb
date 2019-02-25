@@ -140,6 +140,19 @@
     <br>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="row">
 
 
@@ -158,8 +171,12 @@
     {{ dump(cardnb) }}
 </pre>
                 <div class="card">
+
+
+
                     <input type="checkbox" id={{ evenement.id }}, class="more" aria-hidden="true">
                     <div class="content">
+
                         {% if evenement.cover != '' %}
                             <div class="front" style=" background-image:url('{{ asset('uploads/evt/cover/' ~ evenement.cover) }}');">
                         {% else %}
@@ -168,49 +185,85 @@
                         <div class="inner">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <h3 style="font-size: 1vw; line-height: normal;"><a
+                                        <h3 style="font-size: 2.5vw; line-height: normal;"><a
                                                     href="{{ path('front_evenements_show', { 'id': evenement.id }) }}">{{ evenement.titre }}
                                             </a>
                                             <p>
                                         <span class="location semi-bold"> <i
-                                                    class="fa fa-eye"></i>  </span>{{ evenement.nbvues }}
+                                                    class="fa fa-eye"></i>  </span>Nombre de vues : {{ evenement.nbvues }}
                                             </p>
                                         </h3>
                                     </div>
+                              <div class="col-md-5">
+                   <div class="via">via {{ evenement.createdBy }}</div>
+               </div>
+
+
+
+
                                 </div>
 
-                                <div class="rating">
+                             {#ratting to do
+                             <div class="rating">
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
                                     <i class="far fa-star"></i>
-                                </div>
+                                </div>#}
+                                  {% if app.user  and  not( app.user in  evenement.participants ) %}
+
+                   <div class="col-sm-5">
+                       <a href="{{ path('front_evenements_participer' ,{ 'id' : evenement.id }) }}"
+                       class="btn btn-sm btn-info"   id="yes">
+                           <i class="fa fa-recycle" aria-hidden="true"></i>&nbsp;
+                         PARTICIPER
+                       </a>
+                       </div>
+
+
+
+               {% endif %}
+
+               {% if app.user  and  ( app.user in  evenement.participants ) %}
+                   <div class="col-sm-5">
+
+                       <a href="{{ path('front_evenements_noparticiper' ,{ 'id' : evenement.id }) }}"
+                          class="btn btn-xs btn-info"   id="no">
+                           <i class="fa fa-remove" aria-hidden="true"></i>&nbsp;
+                          ANNULER PARTICIPATION
+                       </a>
+
+                   </div>
+
+               {% endif %}
                                 <label for={{ evenement.id }}, class="button" aria-hidden="true">
-                                    Détails :
+                                <a style="font-size: 1.5vw; line-height: normal;">
+                                      <p>Détails :</p>
+                                    </a>
                                 </label>
                             </div>
                         </div>
                         <div class="back">
                             <div class="inner">
                                 <div class="info">
-                                    <span>5</span>
+                                    <span>{{ evenement.participants|length}}</span>
                                     <div class="icon">
                                         <i class="fas fa-users"></i>
                                         <span>Participants</span>
                                     </div>
                                 </div>
                                 <div class="info">
-                                    <span>4</span>
+                                    <span>{{ evenement.objectif}}</span>
                                     <div class="icon">
-                                        <i class="fas fa-door-open"></i>
+                                        <i class="fas fa-object-group"></i>
                                         <span>Objectif</span>
                                     </div>
                                 </div>
                                 <div class="info">
-                                    <span>3</span>
+                                    <span>{{ evenement.atteint }}</span>
                                     <div class="icon">
-                                        <i class="fas fa-bed"></i>
+                                        <i class="fas fa-object-ungroup"></i>
                                         <span>Atteint</span>
                                     </div>
                                 </div>
@@ -224,28 +277,39 @@
                                         <span class="time">4:00 PM</span>
                                     </time></div></span>
                                     <div class="icon">
-                                        <i class="fas fa-bath"></i>
+                                        <i class="fas fa-calendar-times-o"></i>
                                         <span>Date limite</span>
                                     </div>
                                 </div>
                                 <div class="description">
                                     <p>Categorie : <a href="#">{{ evenement.categorie }}</a></p>
+                                      <a style="font-size: 1.5vw; line-height: normal;">
+                                     <p>Description :</p>
+                                    </a>
 
-                                    <p>Description :</p>
                                     <br>
 
                                     {{ evenement.description }}
                                 </div>
                                 <div class="location">
                                     <p>Lieu : <a href="#">{{ evenement.lieu }}</a></p>
+                                    <div class="icon">
+                                        <i class="fas fa-location-arrow"></i>
+
+                                    </div>
                                 </div>
-                                <div class="icon">
+
+                                <div class="date">
                                     <time datetime="2014-07-31 1600">
                                         <span class="day">{{ evenement.date |date ("d") }}</span>
                                         <span class="month">{{ evenement.date |date ("M") }}</span>
                                         <span class="year">{{ evenement.date |date ("Y") }}</span>
                                         <span class="time">4:00 PM</span>
                                     </time></div>
+                                     <div class="icon">
+                                        <i class="fas fa-calendar"></i>
+
+                                    </div>
 
                                 <label for={{ evenement.id }},   class="button return" aria-hidden="true">
                                     <i class="fas fa-arrow-left"></i>
@@ -338,36 +402,9 @@
                                                     class="fa fa-map-marker"></i> {{ evenement.lieu }}</span>
                                     </p>
                                     {#</div>#}
-            {#<div class="row">
-               <div class="col-md-5">
-                   <div class="via">via {{ evenement.createdBy }}</div>
-               </div>
-               {% if app.user %}
-                   <div class="col-sm-3">
-                       <a href="{{ path('front_evenements_participer' ,{ 'id' : evenement.id }) }}"
-                                   class="btn btn-sm btn-info" id="yes">
-                           <i class="fa fa-smile-o" aria-hidden="true"></i>&nbsp;Je
-                           participe!
-                       </a>
-                       <a href="{{ path('front_evenements_noparticiper' ,{ 'id' : evenement.id }) }}"
-                          class="btn btn-xs btn-info" id="no">
-                           Je
-                           participe plus
-                       </a>
-
-                   </div>
 
 
-
-
-
-               {% endif %}
-
-
-
-           </div>
-
-       </div>#}
+       {#</div>#}
                             {#</div>#}
                             {#<h2 class="title">#}
                             {#<a href="{{ path('front_evenements_show', { 'id': evenement.id }) }}">#}

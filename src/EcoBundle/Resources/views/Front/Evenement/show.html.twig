@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Affichage d'un Event
+    Détails d'une mission selectionné
 {% endblock %}
 {% block stylesheets %}
     <style>
@@ -27,9 +27,9 @@
         <div class=" container    container-fixed-lg sm-p-l-0 sm-p-r-0">
             <div class="inner" style="transform: translateY(0px); opacity: 1;">
                 <div class="pull-bottom bottom-left m-b-40 sm-p-l-15">
-                    <h5 class="text-white no-margin">Venez découvrir...</h5>
+                    <h5 class="text-white no-margin">Détails sur la mission </h5>
                     <h1 class="text-white no-margin"><span class="semi-bold">{{ evenement.titre }}</span> </h1>
-                    <h5 class="text-white no-margin">un évènement de <span> {{ evenement.categorie.libelle }}</span></h5>
+                    <h5 class="text-white no-margin">une Mission de <span> {{ evenement.categorie.libelle }}</span></h5>
 
 
                     <div class="row">
@@ -41,20 +41,36 @@
                                         <h3 class="title mb-3"></h3>
 
                                         <dl class="item-property">
-                                            <dt>Description</dt>
+                                            <dt>Description : </dt>
                                             <dd><p> {{ evenement.description }}</p></dd>
                                         </dl>
                                         <dl class="param param-feature">
-                                            <dt>Lieu</dt>
+                                            <dt>Lieu : </dt>
                                             <dd>{{ evenement.lieu }}</dd>
                                         </dl>  <!-- item-property-hor .// -->
+                                        <dl class="param param-feature">
+                                            <dt>Objectif à atteindre : </dt>
+                                            <dd>{{ evenement.objectif }}</dd>
+                                        </dl>
+                                        <dl class="param param-feature">
+                                            <dt>Materiaux collectés : </dt>
+                                            <dd>{{ evenement.atteint }}</dd>
+                                        </dl>
                                         <dl class="param param-feature">
                                             <dt>Date</dt>
                                             <dd>{{ evenement.date |date }}</dd>
                                         </dl>  <!-- item-property-hor .// -->
                                         <dl class="param param-feature">
+                                            <dt>Date Limite : </dt>
+                                            <dd>{{ evenement.dateLimite |date }}</dd>
+                                        </dl>  <!-- item-property-hor .// -->
+                                        <dl class="param param-feature">
                                             <dt>Crée Par:</dt>
                                             <dd> {{ evenement.createdBy }}</dd>
+                                        </dl>
+                                        <dl class="param param-feature">
+                                            <dt>Nombre de participants:</dt>
+                                            <dd> {{ evenement.participants |length }}</dd>
                                         </dl>
                                         <dl class="param param-feature">
                                             <dt>Participants</dt>

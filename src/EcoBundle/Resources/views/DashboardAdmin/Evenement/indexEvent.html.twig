@@ -1,6 +1,6 @@
 {% extends './Default/dashboard.html.twig' %}
 {% block title %}
-    Liste des events
+    Liste des Missions
 {% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
@@ -41,7 +41,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6">
-                    <h1><b>Liste des events</b></h1>
+                    <h1><b>Liste des Missions</b></h1>
                 </div>
 
                 <div class="col-md-6 text-right">
@@ -68,6 +68,9 @@
                     <th>Categorie</th>
                     <th>Lieu</th>
                     <th>Date</th>
+                    <th>Date Limite</th>
+                    <th>Objectif</th>
+                    <th>Atteint</th>
                     <th>Cree Par</th>
                     <th>Action</th>
                 </tr>
@@ -77,13 +80,15 @@
                 {% for evenement in evenement %}
                     <tr class="event">
 
-                        <td>
-                           {{ evenement.titre }}
-                        </td>
+
+                        <td>{{ evenement.titre }}</td>
                         <td>{{ evenement.description }}</td>
                         <td>{{ evenement.categorie.libelle }}</td>
                         <td>{{ evenement.lieu }}</td>
                         <td>{{ evenement.date |date }}</td>
+                        <td>{{ evenement.dateLimite |date }}</td>
+                        <td>{{ evenement.objectif}}</td>
+                        <td>{{ evenement.atteint}}</td>
                         <td>{{ evenement.createdBy }}</td>
 
                         <td>
@@ -107,6 +112,7 @@
                                 <a  class="btn btn-default"
 
                                    data-toggle="tooltip" title="Archiver">
+
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </a>
                             </div>

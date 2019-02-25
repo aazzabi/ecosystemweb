@@ -246,13 +246,14 @@ class EvenementController extends Controller
        $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
        $user = $this->get('security.token_storage')->getToken()->getUser();
 
-       $evenement->addParticipant($user);
+       $evenement->addProfile($user);
        $user->addEventsParticipes($evenement);
 
        $em->persist($evenement);
        $em->persist($user);
        $em->flush();
        return $this->redirectToRoute('front_evenements_index');
+       $this->addFlash("success", "Vous avez participer avec succés  ! ");
 
    }
 
@@ -262,17 +263,19 @@ class EvenementController extends Controller
      */
     public function noParticiperAction($id)
     {
+
         $em = $this->getDoctrine()->getManager();
         $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $evenement->removeParticipants($user);
+        $evenement->removeProfile($user);
         $user->removeEventsParticipes($evenement);
 
        // $em->persist($evenement);
      //   $em->persist($user);
         $em->flush();
         return $this->redirectToRoute('front_evenements_index');
+        $this->addFlash("warning", "Vous avez annuler votre participation ! ");
 
     }
 

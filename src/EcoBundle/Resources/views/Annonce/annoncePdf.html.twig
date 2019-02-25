@@ -1,9 +1,8 @@
-{% extends 'base.html.twig' %}
-
 {% block title %}
-    Affichage Annonce
+     Annonce
 {% endblock %}
  {% block stylesheets %}
+     <link rel="stylesheet" href={{ app.request.schemeAndHttpHost ~ asset('css/style.css')}}>
      <style>
          .img-big-wrap img {
              height: 450px;
@@ -12,20 +11,8 @@
          }
      </style>
  {% endblock %}
-{% block javascripts %}
-    <script src="{{ asset('assets/js/jquery.js') }}" type="text/javascript"></script>
-
-{% endblock %}
 {% block body %}
     <div class="container">
-        <div class="row">
-            <div class="col-md-4 offset-8 text-right">
-                <br>
-                <a href="{{ path('f_annonce_index') }}" class="btn btn-success">
-                    <i class="fa fa-undo" aria-hidden="true"></i> Retourner à la page d'annonce
-                </a>
-            </div>
-        </div>
         <div class="row">
             <div class="card">
                 <div class="row">
@@ -34,10 +21,10 @@
                             <div>
                                 {% if annonce.photo != '' %}
                                     <img alt="annonce Pic"
-                                         src="{{ asset('uploads/Annonce/photo/' ~ annonce.photo) }}"
+                                         src="{{  app.request.schemeAndHttpHost ~ asset('uploads/Annonce/photo/' ~ annonce.photo) }}"
                                          class="img-circle img-responsive">
                                 {% else %}
-                                    <img alt="annonce_Pic" src="{{ asset('assets/img/annonces.png') }}"
+                                    <img alt="annonce_Pic" src="{{ app.request.schemeAndHttpHost ~ asset('assets/img/annonces.png') }}"
                                          id="profile-image1" class="img-circle img-responsive">
                                 {% endif %}
                             </div>
@@ -64,10 +51,6 @@
                                 <dt>Viwes</dt>
                                 <dd>{{ annonce.views }}</dd>
                             </dl>  <!-- item-property-hor .// -->
-                            <hr>
-                            {{ socialButtons( {'googleplus':false, 'facebook':false, 'linkedin':false} ) }}
-                            <a href="{{ path('pdf',{ 'id ': annonce.id }) }}" class="btn btn-lg btn-outline-primary text-uppercase"> <i
-                                        class="fas fa-shopping-cart"></i> Add to cart </a>
                         </article> <!-- card-body.// -->
                     </aside> <!-- col.// -->
                 </div> <!-- row.// -->

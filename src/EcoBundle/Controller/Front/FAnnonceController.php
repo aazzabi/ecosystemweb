@@ -144,4 +144,37 @@ class FAnnonceController extends Controller
         }
 
     }
+
+
+
+
+    /**
+     * @Route("/pdf/{id}", name="pdf")
+     */
+
+    public function pdfAction(Request $request)
+    {
+        $val = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $annonce = $em->getRepository('EcoBundle:Annonce')->find($val);
+
+        $snappy = $this->get('knp_snappy.pdf');
+
+        $html = $this->renderView('@Eco/Annonce/annoncePdf.html.twig', array(
+            'annonce' => $annonce,
+        ));
+
+        $filename = 'Annonce';
+
+        return new Response(
+            $snappy->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
+            )
+        );
+    }
+
+
 }

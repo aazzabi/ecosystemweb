@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new EcoBundle\EcoBundle(),
             new Ob\HighchartsBundle\ObHighchartsBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new Nomaya\SocialBundle\NomayaSocialBundle(),
 
         ];
 

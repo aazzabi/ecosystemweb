@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
@@ -72,5 +73,38 @@ class DefaultController extends Controller
         // replace this example code with whatever you need
         return $this->render('@Eco/recyclage/pointrc.html.twig');
     }
+
+    /**
+     * @Route("/pdf", name="pdf")
+     */
+    public function pdfAction(Request $request)
+    {
+
+        $snappy = $this->get('knp_snappy.pdf');
+
+        $html = $this->renderView('@Eco/Annonce/annoncePdf.html.twig', array(
+            'title' => 'Hello World !'
+        ));
+
+        $filename = 'myFirstSnappyPDF';
+
+        return new Response(
+            $snappy->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
+            )
+        );
+    }
+
+
+
+
+
+
+
+
+
 }
 

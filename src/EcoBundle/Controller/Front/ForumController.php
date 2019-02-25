@@ -38,24 +38,36 @@ class ForumController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $categoriesPub = $this->getDoctrine()->getManager()->getRepository('EcoBundle:CategoriePub')->findAll();
-        $publicationsPubliee = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findAll();
-        $publicationsArchivee = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findFivePublicationArchivee();
+        $categoriesPub        = $this->getDoctrine()->getManager()->getRepository('EcoBundle:CategoriePub')->findAll();
+        $publicationsPubliee  = $this->getDoctrine()
+                                     ->getManager()
+                                     ->getRepository('EcoBundle:PublicationForum')
+                                     ->findAll()
+        ;
+        $publicationsArchivee = $this->getDoctrine()
+                                     ->getManager()
+                                     ->getRepository('EcoBundle:PublicationForum')
+                                     ->findFivePublicationArchivee()
+        ;
 
         /**
          * @var $paginator \Knp\Component\Pager\Paginator
          */
-        $paginator = $this->get('knp_paginator');
+        $paginator    = $this->get('knp_paginator');
         $publications = $paginator->paginate(
             $publicationsPubliee,
-            $request->query->getInt('page',1),
-            $request->query->getInt('limit',7)
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 7)
         );
-        return $this->render('@Eco/Front/Forum/index.html.twig', array(
-            'categories' => $categoriesPub,
-            'publications' => $publications,
-            'publicationsArchivees' => $publicationsArchivee,
-        ));
+
+        return $this->render(
+            '@Eco/Front/Forum/index.html.twig',
+            [
+                'categories'            => $categoriesPub,
+                'publications'          => $publications,
+                'publicationsArchivees' => $publicationsArchivee,
+            ]
+        );
     }
 
     /**
@@ -66,8 +78,8 @@ class ForumController extends Controller
      */
     public function showAction(Request $request, PublicationForum $publicationForum)
     {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $commentaire = new CommentairePublication();
+        $user            = $this->get('security.token_storage')->getToken()->getUser();
+        $commentaire     = new CommentairePublication();
         $commentaireForm = $this->createForm('EcoBundle\Form\CommentairePublicationType', $commentaire);
         $commentaireForm->handleRequest($request);
 
@@ -79,12 +91,16 @@ class ForumController extends Controller
             $em->persist($commentaire);
             $em->flush();
 
-            return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
+            return $this->redirectToRoute('front_forum_show', ['id' => $publicationForum->getId()]);
         }
-        return $this->render('@Eco/Front/Forum/show.html.twig', array(
-            'commentaireForm' => $commentaireForm->createView(),
-            'publication' => $publicationForum,
-        ));
+
+        return $this->render(
+            '@Eco/Front/Forum/show.html.twig',
+            [
+                'commentaireForm' => $commentaireForm->createView(),
+                'publication'     => $publicationForum,
+            ]
+        );
     }
 
     /**
@@ -96,9 +112,12 @@ class ForumController extends Controller
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+            throw new AccessDeniedException(
+                "Vous n'êtes pas autorisés à accéder à cette page!",
+                Response::HTTP_FORBIDDEN
+            );
         }
-        $publication = new PublicationForum();
+        $publication     = new PublicationForum();
         $formPublication = $this->createForm('EcoBundle\Form\PublicationForumType', $publication);
         $formPublication->handleRequest($request);
 
@@ -113,11 +132,15 @@ class ForumController extends Controller
             return $this->redirectToRoute('front_forum_index');
         }
 
-        return $this->render('@Eco/Front/Forum/new.html.twig', array(
-            'publication' => $publication,
-            'formPublication' => $formPublication->createView(),
-        ));
+        return $this->render(
+            '@Eco/Front/Forum/new.html.twig',
+            [
+                'publication'     => $publication,
+                'formPublication' => $formPublication->createView(),
+            ]
+        );
     }
+
     /**
      * Displays a form to edit an existing user entity.
      *
@@ -128,20 +151,26 @@ class ForumController extends Controller
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if ($publication->getPublicationCreatedBy() != $user) {
-            throw new AccessDeniedException("Vous ne pouvez pas modifier cette publication !", Response::HTTP_FORBIDDEN);
+            throw new AccessDeniedException(
+                "Vous ne pouvez pas modifier cette publication !", Response::HTTP_FORBIDDEN
+            );
         }
         $editForm = $this->createForm('EcoBundle\Form\PublicationForumType', $publication);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('du_forum_edit', array('id' => $publication->getId()));
+
+            return $this->redirectToRoute('du_forum_edit', ['id' => $publication->getId()]);
         }
 
-        return $this->render('@Eco/Front/Forum/edit.html.twig', array(
-            'publication' => $publication,
-            'edit_form' => $editForm->createView(),
-        ));
+        return $this->render(
+            '@Eco/Front/Forum/edit.html.twig',
+            [
+                'publication' => $publication,
+                'edit_form'   => $editForm->createView(),
+            ]
+        );
     }
 
     /**
@@ -151,15 +180,19 @@ class ForumController extends Controller
     public function deletePublicationAction(Request $request, $id)
     {
         $publication = $this->getDoctrine()->getRepository('EcoBundle:PublicationForum')->find($id);
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user        = $this->get('security.token_storage')->getToken()->getUser();
         if ($publication->getPublicationCreatedBy() != $user) {
-            throw new AccessDeniedException("Vous ne pouvez pas supprimer cette publication !", Response::HTTP_FORBIDDEN);
+            throw new AccessDeniedException(
+                "Vous ne pouvez pas supprimer cette publication !", Response::HTTP_FORBIDDEN
+            );
         }
         $em = $this->getDoctrine()->getManager();
         $em->remove($publication);
         $em->flush();
+
         return $this->redirectToRoute('front_forum_index');
     }
+
     /**
      * @Route("/commentaire/delete/{id}", name="front_forum_commentaire_delete")
      * @Method({"GET", "DELETE"})
@@ -167,17 +200,17 @@ class ForumController extends Controller
     public function deleteCommentaireAction(Request $request, $id)
     {
         $commentaire = $this->getDoctrine()->getRepository('EcoBundle:CommentairePublication')->find($id);
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user        = $this->get('security.token_storage')->getToken()->getUser();
         if ($commentaire->getCommentedBy() != $user) {
             throw new AccessDeniedException("Vous ne pouvez pas supprimer ce commentaire !", Response::HTTP_FORBIDDEN);
         }
         $publicationForum = $commentaire->getPublication();
-        $em = $this->getDoctrine()->getManager();
+        $em               = $this->getDoctrine()->getManager();
         $em->remove($commentaire);
         $em->flush();
-        return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
-    }
 
+        return $this->redirectToRoute('front_forum_show', ['id' => $publicationForum->getId()]);
+    }
 
     /**
      * @Route("/archiverPublication/{id}", name="front_forum_publication_archive")
@@ -186,13 +219,17 @@ class ForumController extends Controller
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if ($publicationForum->getPublicationCreatedBy() != $user) {
-            throw new AccessDeniedException("Vous ne pouvez pas archiver cette publication !", Response::HTTP_FORBIDDEN);
+            throw new AccessDeniedException(
+                "Vous ne pouvez pas archiver cette publication !", Response::HTTP_FORBIDDEN
+            );
         }
         $em = $this->getDoctrine()->getManager();
         $publicationForum->setEtat("archivé");
         $em->flush();
-        return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
+
+        return $this->redirectToRoute('front_forum_show', ['id' => $publicationForum->getId()]);
     }
+
     /**
      * @Route("/desarchiverPublication/{id}", name="front_forum_publication_desarchive")
      */
@@ -200,12 +237,16 @@ class ForumController extends Controller
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if ($publicationForum->getPublicationCreatedBy() != $user) {
-            throw new AccessDeniedException("Vous ne pouvez pas désarchiver cette publication !", Response::HTTP_FORBIDDEN);
+            throw new AccessDeniedException(
+                "Vous ne pouvez pas désarchiver cette publication !",
+                Response::HTTP_FORBIDDEN
+            );
         }
         $em = $this->getDoctrine()->getManager();
         $publicationForum->setEtat("publié");
         $em->flush();
-        return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
+
+        return $this->redirectToRoute('front_forum_show', ['id' => $publicationForum->getId()]);
     }
 
     /**
@@ -215,11 +256,11 @@ class ForumController extends Controller
     public function signalerCommentaireAction(Request $request, $id)
     {
         $signalisation = new Signalisation();
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
+        $user          = $this->get('security.token_storage')->getToken()->getUser();
+        $em            = $this->getDoctrine()->getManager();
 
-        $commentaire = $this->getDoctrine()->getRepository('EcoBundle:CommentairePublication')->find($id);
-        $publicationForum= $commentaire->getPublication();
+        $commentaire      = $this->getDoctrine()->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $publicationForum = $commentaire->getPublication();
 
         $libRadio = $request->get('radioLib');
         $signalisation->setLibelle($libRadio);
@@ -228,7 +269,8 @@ class ForumController extends Controller
 
         $em->persist($signalisation);
         $em->flush();
-        return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
+
+        return $this->redirectToRoute('front_forum_show', ['id' => $publicationForum->getId()]);
     }
 
     /**
@@ -238,21 +280,22 @@ class ForumController extends Controller
      */
     public function commentLikeAction(Request $request)
     {
-        $id = $request->get('id');
-        $em = $this->getDoctrine()->getManager();
-        $commentaire = $em->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $id               = $request->get('id');
+        $em               = $this->getDoctrine()->getManager();
+        $commentaire      = $em->getRepository('EcoBundle:CommentairePublication')->find($id);
         $publicationForum = $commentaire->getPublication();
-        if (($request->isXmlHttpRequest()))
-        {
-            $commentaire->setLikes($commentaire->getLikes()+1);
+        if (($request->isXmlHttpRequest())) {
+            $commentaire->setLikes($commentaire->getLikes() + 1);
             $em->persist($commentaire);
             $em->flush();
             $arrData = ['likes' => $commentaire->getLikes()];
+
             return new JsonResponse($arrData);
         }
-        return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
 
+        return $this->redirectToRoute('front_forum_show', ['id' => $publicationForum->getId()]);
     }
+
     /**
      *
      * @Route("/dislike/new", name="front_forum_comment_dislike")
@@ -260,20 +303,22 @@ class ForumController extends Controller
      */
     public function commentDislikeAction(Request $request)
     {
-        $id = $request->get('id');
-        $em = $this->getDoctrine()->getManager();
-        $commentaire = $em->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $id               = $request->get('id');
+        $em               = $this->getDoctrine()->getManager();
+        $commentaire      = $em->getRepository('EcoBundle:CommentairePublication')->find($id);
         $publicationForum = $commentaire->getPublication();
-        if (($request->isXmlHttpRequest()))
-        {
-            $commentaire->setDislikes($commentaire->getdislikes()+1);
+        if (($request->isXmlHttpRequest())) {
+            $commentaire->setDislikes($commentaire->getdislikes() + 1);
             $em->persist($commentaire);
             $em->flush();
             $arrData = ['dislikes' => $commentaire->getDislikes()];
+
             return new JsonResponse($arrData);
         }
-        return $this->redirectToRoute('front_forum_show', array('id' => $publicationForum->getId()));
+
+        return $this->redirectToRoute('front_forum_show', ['id' => $publicationForum->getId()]);
     }
+
     /**
      *
      * @Route("/recherche", name="front_forum_recherche")
@@ -281,18 +326,23 @@ class ForumController extends Controller
      */
     public function rechercheAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em      = $this->getDoctrine()->getManager();
         $keyWord = $request->get('keyWord');
 
         $publications = $em->getRepository('EcoBundle:PublicationForum')->findPublication($keyWord);
 
-        $template = $this->render('@Eco/Front/Forum/publication.html.twig', array(
-            'publications' => $publications,
-        ))->getContent();
+        $template = $this->render(
+            '@Eco/Front/Forum/publication.html.twig',
+            [
+                'publications' => $publications,
+            ]
+        )->getContent()
+        ;
 
-        $json = json_encode($template);
+        $json     = json_encode($template);
         $response = new Response($json, 200);
         $response->headers->set('Content-Type', 'application/json');
+
         return $response;
     }
 }

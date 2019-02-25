@@ -10,6 +10,7 @@ namespace EcoBundle\Controller\DashboardUser;
 
 use EcoBundle\Entity\CategorieEvts;
 use EcoBundle\Entity\Evenement;
+
 use EcoBundle\Entity\Group;
 use EcoBundle\Entity\Livreur;
 use EcoBundle\Entity\Reparateur;
@@ -36,10 +37,12 @@ class DUEvenementsController extends Controller
      */
     public function indexAction()
     {
-      /*  $evenements = array();
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
-        }*/
+        //$this->addFlash("success", "Votre missions et challenges personnels !");
+
+        /*  $evenements = array();
+          if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+              throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+          }*/
 //        eli 7ajetna bihom mellaa5er
         $events = array();
 
@@ -80,6 +83,8 @@ class DUEvenementsController extends Controller
      */
     public function newAction(Request $request)
     {
+
+
         $evenement = new Evenement();
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $form = $this->createForm('EcoBundle\Form\EvenementType', $evenement);
@@ -90,6 +95,7 @@ class DUEvenementsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($evenement);
+            $this->addFlash("success", "Votre mission a été ajoutée avec succés ! ");
             $em->flush();
             return $this->redirectToRoute('du_evenements_index');
         }

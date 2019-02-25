@@ -1,6 +1,6 @@
 {% extends './Default/dashboard.html.twig' %}
 {% block title %}
-    Liste de vos events
+    Vos missions et challenges
 {% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
@@ -77,21 +77,21 @@
                             <div class="btn-group btn-group-sm btn-group-horizontal">
                                 <a class="btn btn-secondary"
                                    href="{{ path('du_evenement_edit', { 'id': evenement.id }) }}"
-                                   data-toggle="tooltip" title="Editer l'utilisateur">
+                                   data-toggle="tooltip" title="Editer la mission">
                                     <i class="fa fa-pencil-square-o"></i>
                                 </a>
                             </div>
 
                             <div class="btn-group btn-group-sm btn-group-horizontal">
                                 <a href="{{ path('du_evenements_delete', { 'id': evenement.id }) }}" class="btn btn-danger"
-                                   data-toggle="tooltip" title="Supprimer">
+                                   data-toggle="tooltip" title="Supprimer la mission">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </div>
 
                             <div class="btn-group btn-group-sm btn-group-horizontal">
                                 <a href="{{ path('du_evenements_show', { 'id': evenement.id }) }}" class="btn btn-default"
-                                   data-toggle="tooltip" title="Voir">
+                                   data-toggle="tooltip" title="Voir les détails de la mission">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </a>
                             </div>

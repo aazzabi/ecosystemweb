@@ -15,8 +15,12 @@ class EvenementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('titre')
             ->add('lieu')
+            ->add('objectif')
+            ->add('description')
             ->add('date')
+            ->add('dateLimite')
             ->add('evtCover', VichFileType::class, [
                 'required' =>false,
                 'allow_delete' => true,
@@ -26,9 +30,8 @@ class EvenementType extends AbstractType
                 'class'=>'EcoBundle\Entity\CategorieEvts',
                 'choice_label'=>'libelle',
                 'multiple'=>false
-            ))
-            ->add('titre')
-            ->add('description');
+            ));
+
     }/**
      * {@inheritdoc}
      */

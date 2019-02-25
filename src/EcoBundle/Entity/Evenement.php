@@ -33,11 +33,27 @@ class Evenement
     private $lieu;
 
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Column(name="nbvues", type="integer")
      */
     private $nbVues;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="objectif", type="integer")
+     */
+
+    private $objectif;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="atteint", type="integer")
+     */
+
+    private $atteint;
 
     /**
      * @var string
@@ -60,6 +76,13 @@ class Evenement
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateLimite", type="datetime")
+     */
+    private $dateLimite;
 
     /**
      * @var User
@@ -96,6 +119,8 @@ class Evenement
     private $participants;
 
 
+
+
     /**
      * @Vich\UploadableField(mapping="evt_cover", fileNameProperty="cover")
      *
@@ -118,6 +143,57 @@ class Evenement
     private $coverUpdatedAt;
 
     /**
+     * @return int
+     */
+    public function getObjectif()
+    {
+        return $this->objectif;
+    }
+
+    /**
+     * @param int $objectif
+     */
+    public function setObjectif($objectif)
+    {
+        $this->objectif = $objectif;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAtteint()
+    {
+        return $this->atteint;
+    }
+
+    /**
+     * @param int $atteint
+     */
+    public function setAtteint($atteint)
+    {
+        $this->atteint = $atteint;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateLimite()
+    {
+        return $this->dateLimite;
+    }
+
+    /**
+     * @param \DateTime $dateLimite
+     */
+    public function setDateLimite($dateLimite)
+    {
+        $this->dateLimite = $dateLimite;
+    }
+
+
+
+
+    /**
      * @return \Doctrine\Common\Collections\Collection
      */
     public function __constructParticipants()
@@ -137,7 +213,7 @@ class Evenement
      *
      * @return Competence
      */
-    public function addPartcipants(User $p)
+    public function addProfile(User $p)
     {
         $this->participants[] = $p;
 
@@ -149,7 +225,7 @@ class Evenement
      *
      * @param \AppBundle\Entity\User $p
      */
-    public function removeParticipants(User $p)
+    public function removeProfile(User $p)
     {
         $this->participants->removeElement($p);
     }
@@ -344,15 +420,6 @@ class Evenement
         $this->nbVues = $nbVues;
     }
 
-    /**
-     * @param \EcoBundle\Entity\User $user
-     */
-    public function addParticipant(User $user)
-    {
-        $this->participants[] = $user;
-
-        return $this;
-    }
 
 }
 

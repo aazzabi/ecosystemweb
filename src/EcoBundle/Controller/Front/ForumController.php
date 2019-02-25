@@ -36,15 +36,24 @@ class ForumController extends Controller
      * @Route("/", name="front_forum_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $categoriesPub = $this->getDoctrine()->getManager()->getRepository('EcoBundle:CategoriePub')->findAll();
-        $publicationsPubliee = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findPublicationByEtat('publié');
-        $publicationsArchivee = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findPublicationByEtat('archivé');
+        $publicationsPubliee = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findAll();
+        $publicationsArchivee = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findFivePublicationArchivee();
 
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $publications = $paginator->paginate(
+            $publicationsPubliee,
+            $request->query->getInt('page',1),
+            $request->query->getInt('limit',7)
+        );
         return $this->render('@Eco/Front/Forum/index.html.twig', array(
             'categories' => $categoriesPub,
-            'publicationsPubliees' => $publicationsPubliee,
+            'publications' => $publications,
             'publicationsArchivees' => $publicationsArchivee,
         ));
     }
@@ -86,9 +95,8 @@ class ForumController extends Controller
     public function newAction(Request $request)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        if ($user) {
-            $this->addFlash('error', 'Vous devez se conecter d\'abord !');
-            return $this->redirectToRoute('fos_user_security_login');
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
         $publication = new PublicationForum();
         $formPublication = $this->createForm('EcoBundle\Form\PublicationForumType', $publication);
@@ -273,20 +281,18 @@ class ForumController extends Controller
      */
     public function rechercheAction(Request $request)
     {
-        $keyWord = $request->get('keyWord');
         $em = $this->getDoctrine()->getManager();
+        $keyWord = $request->get('keyWord');
 
-        if (($request->isXmlHttpRequest()))
-        {
-            $publications = $em->getRepository('EcoBundle:PublicationForum')->findPublication($keyWord);
-            foreach ($publications as $pub){
-                $titles[] = $pub->getTitre();
-                $descriptions[] = $pub->getDescriptions();
-                $commentes[] = $pub->getComments();
-            }
-            $arrData = ['publications' => $publications];
-            return new JsonResponse($arrData);
-        }
-        return $this->redirectToRoute('front_forum_index');
+        $publications = $em->getRepository('EcoBundle:PublicationForum')->findPublication($keyWord);
+
+        $template = $this->render('@Eco/Front/Forum/publication.html.twig', array(
+            'publications' => $publications,
+        ))->getContent();
+
+        $json = json_encode($template);
+        $response = new Response($json, 200);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }

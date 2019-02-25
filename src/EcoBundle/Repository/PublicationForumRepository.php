@@ -23,6 +23,20 @@ class PublicationForumRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery();
         return $q->getResult();
     }
+    public function findFivePublicationArchivee()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder()->setMaxResults( 5 );;
+
+        $q  = $qb->select(array('p'))
+            ->from('EcoBundle:PublicationForum', 'p')
+            ->where('p.etat =:published')
+            ->orderBy('p.publicationCreatedAt', 'DESC')
+            ->setParameter('published', 'archivé')
+            ->getQuery();
+        return $q->getResult();
+    }
+
     public function findPublication($keyWord)
     {
         $em = $this->getEntityManager();
@@ -37,4 +51,5 @@ class PublicationForumRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery();
         return $q->getResult();
     }
+
 }

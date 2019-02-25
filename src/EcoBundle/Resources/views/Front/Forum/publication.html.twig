@@ -1,0 +1,48 @@
+{% for publication in publications %}
+    <div class="post">
+        <div class="wrap-ut pull-left">
+            <div class="userinfo pull-left">
+                {% if publication.publicationCreatedBy.photo %}
+                    <div class="avatar">
+                        <img src="{{ asset('uploads/user/photo/' ~ publication.publicationCreatedBy.photo) }}"
+                             width="55" height="55" alt="" />
+                    </div>
+                {% else %}
+                    <div class="avatar">
+                        <img src="{{ asset('assets/img/profile.png') }}"
+                             width="55" height="55" alt="" />
+                    </div>
+                {% endif %}
+                {% if publication.etat == 'archivé' %}
+                    <br>
+                    <div class="icons" style="margin: 0 auto">
+                        <i class="fa fa-check-circle fa-2x" style="color: green"></i>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="posttext pull-left">
+                <h2><a href="{{ path('front_forum_show', {'id' : publication.id }) }}"><b class="title" >{{ publication.titre }}</b></a></h2>
+                <p id="description">{{ publication.description }}</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="postinfo pull-left">
+            <div class="comments">
+                <div class="commentbg">
+                    {{ publication.commentaires | length }}
+                    <div class="mark"></div>
+                </div>
+            </div>
+            {% set difference = date(publication.publicationCreatedAt).diff(date())  %}
+
+            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
+            {% if difference.days == 0  %}
+                <div class="time"><i class="fa fa-clock-o"></i> Aujourd'hui</div>
+            {% elseif difference.days == 1 %}
+                <div class="time"><i class="fa fa-clock-o"></i> Hier</div>
+            {% else %}
+                <div class="time"><i class="fa fa-clock-o"></i> Depuis {{ difference.days }} Jours</div>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

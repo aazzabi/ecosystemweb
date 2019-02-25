@@ -10,12 +10,46 @@ namespace EcoBundle\Repository;
  */
 class AnnonceRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function trier()
+    public function trierPrixElv()
+    {
+
+        $query = $this->getEntityManager()
+
+            ->createQuery("SELECT v from EcoBundle:Annonce v ORDER BY v.prix DESC ");
+        return $query->getResult();
+
+    }
+    public function trierPrixBas()
     {
         $query = $this->getEntityManager()
-            ->createQuery("SELECT v from EcoBundle:Annonce v ORDER BY v.prix DESC ");
-
+            ->createQuery("SELECT v from EcoBundle:Annonce v ORDER BY v.prix ASC ");
         return $query->getResult();
+
+    }
+    public function trierPlusRecent()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT v from EcoBundle:Annonce v ORDER BY v.dateCreation DESC ");
+        return $query->getResult();
+
+    }
+    public function likeAnnonce()
+    {
+        $query = $this->createQueryBuilder('p')
+            ->orderBy('p.likes', 'DESC')
+            ->getQuery();
+
+        return $query->setMaxResults(4)->getResult();
+
+    }
+    public function RechercheTitreAnnonce($val)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->andWhere('p.titre like :titre')
+            ->setParameter('titre', $val)
+            ->getQuery();
+
+        return $query->setMaxResults(4)->getResult();
 
     }
 }

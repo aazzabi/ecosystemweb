@@ -4,11 +4,13 @@ namespace EcoBundle\Controller\Front;
 
 use EcoBundle\Entity\Annonce;
 use EcoBundle\Entity\MentionAnnonce;
+use EcoBundle\Entity\SignalAnnonce;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -19,19 +21,21 @@ class FAnnonceController extends Controller
 {
     /**
      * @Route("/annonce", name="f_annonce_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function indexTestAction()
+    public function indexAction(Request $request)
     {
+
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
-        $mention = $em->getRepository('EcoBundle:MentionAnnonce')->findAll();
-
+        $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
+        $signal = $em->getRepository('EcoBundle:SignalAnnonce')->findAll();
         return $this->render('@Eco/Annonce/annonce.html.twig', array(
-            "annonces"=>$annnonce,'categories'=> $categories,'mentions' =>$mention,
+            "annonces" => $annnonce, 'categories' => $categories, 'likes' => $likes, 'signal' => $signal,
         ));
     }
+
     /**
      * Finds and displays a user entity.
      *
@@ -41,15 +45,19 @@ class FAnnonceController extends Controller
     public function showAction(Annonce $annonce)
     {
 
+        $annonce->setViews($annonce->getViews() + 1);
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
         return $this->render('@Eco/Annonce/show.html.twig', array(
             'annonce' => $annonce,
         ));
     }
+
     /**
      * @Route("/annonce/categorie/{cat}", name="f_recherch_Categorie")
      * @Method("GET")
      */
-    public function RecherchTestAction(Request $request,$cat)
+    public function RecherchCategorieAction(Request $request, $cat)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -58,10 +66,11 @@ class FAnnonceController extends Controller
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findByCategorie($cat);
 
         return $this->render('@Eco/Annonce/annonce.html.twig', array(
-            "annonces"=>$annnonce,'categories'=> $categories,
+            "annonces" => $annnonce, 'categories' => $categories,
 
         ));
     }
+
     /**
      * Creates a new Categorie et annonce entity.
      *
@@ -70,47 +79,69 @@ class FAnnonceController extends Controller
      */
     public function newJaimeAction(Request $request)
     {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $mention = new MentionAnnonce();
 
-        if (($request->isXmlHttpRequest()))
-        {
-
+        if (($request->isXmlHttpRequest())) {
             $id = $request->get('Id');
             $em = $this->getDoctrine()->getManager();
-
             $annonce = $em->getRepository('EcoBundle:Annonce')->find($id);
-            $mention->setAnnonce($annonce);
-            $mention->setUser($user);
-            $em->persist($mention);
+            $annonce->setLikes($annonce->getLikes() + 1);
             $em->flush();
             return $this->redirectToRoute('du_annonce_index');
         }
     }
+
     /**
-     * @Route("/annonce/aa", name="test")
-     * @Method("POST")
+     * @Route("/trier/{val}", name="f_annonce_trier")
+     * @Method("GET")
      */
     public function TrierAction(Request $request)
     {
 
-        $em = $this->getDoctrine()->getManager();
-        $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
+        $val = $request->get('val');
+        if ($val == 'PR') {
+            $em = $this->getDoctrine()->getManager();
+            $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
+            $annonces = $em->getRepository('EcoBundle:Annonce')->trierPlusRecent();
+            $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
+
+        } elseif ($val = 'PE') {
+            $em = $this->getDoctrine()->getManager();
+            $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
+            $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixElv();
+            $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
+
+
+        } else {
+            $em = $this->getDoctrine()->getManager();
+            $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
+            $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixBas();
+            $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
+
+        }
+        return $this->render('@Eco/Annonce/annonce.html.twig', array(
+            "annonces" => $annonces, 'categories' => $categories, 'likes' => $likes,
+        ));
+    }
+
+    /**
+     * @Route("/annonce/recherche)", name="f_recherch")
+     * @Method("GET")
+     */
+    public function RecherchAction(Request $request)
+    {
 
         if (($request->isXmlHttpRequest())) {
-
-            $val = $request->get('valeur');
-
-            $serializer = new Serializer(array(new ObjectNormalizer()));
-            $annonces = $em->getRepository('EcoBundle:Annonce')->trier();
-            var_dump($annonces);die;
-            $data = $serializer->normalize($annonces);
-            return new JsonResponse($data);
+            $val = $request->get('val');
+            dump($val);exit();
+            $em = $this->getDoctrine()->getManager();
+            $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
+            $annnonce = $em->getRepository('EcoBundle:Annonce')->RechercheTitreAnnonce($val);
+            $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
+            $signal = $em->getRepository('EcoBundle:SignalAnnonce')->findAll();
+            return $this->render('@Eco/Annonce/Recherche.html.twig', array(
+                "annonces" => $annnonce, 'categories' => $categories, 'likes' => $likes, 'signal' => $signal,
+            ));
         }
-
-        return $this->render('@EspritParc/Voiture/recherche.html.twig', array(
-            'categories'=>$categories));
-
 
     }
 }

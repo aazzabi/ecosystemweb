@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new AppBundle\AppBundle(),
             new EcoBundle\EcoBundle(),
+            new Ob\HighchartsBundle\ObHighchartsBundle(),
+
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

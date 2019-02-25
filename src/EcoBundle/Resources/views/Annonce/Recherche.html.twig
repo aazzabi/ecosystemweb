@@ -60,17 +60,37 @@
                     }
                 });
             });
-            $(".chercher").click(function(){
-                var val = $(".search").val();
-                $.ajax({
-                    dataType: "json",
-                    url : "{{ path('f_recherch') }}",
-                    data: {
-                        "Id": val
-                    },
-                });
-            });
         });
+    </script>
+    <script>
+
+        $(".chercher").click(function(){
+
+            $.ajax({
+                url : '{{ path('f_recherch') }}',
+                type : 'POST',
+                dataType: "json",
+                data: {
+                    type: $( ".search" ).val(),
+                    valeur: $( "#search0" ).val()
+                },
+                success :     function(reponse) {
+                    $( "#result" ).html( reponse );
+                    alert($( "#search0" ).val());
+                },
+
+                error : function(resultat, statut, erreur){
+
+                },
+
+                complete : function(resultat, statut){
+
+                }
+
+            });
+
+        });
+
     </script>
 {% endblock %}
 {% block body %}
@@ -217,7 +237,7 @@
             </div>
             <hr>
             <h1>Tous les Annonce</h1>
-            <div class="result row" id="aa" style="margin-right:30px; margin-left: 30px;">
+            <div class="row" id="aa" style="margin-right:30px; margin-left: 30px;">
                 {% for a in annonces %}
                     <div class="col-md-3">
                         <figure class="card card-product">

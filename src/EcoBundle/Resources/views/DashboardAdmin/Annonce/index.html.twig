@@ -36,12 +36,17 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <br>
+                    <a href="{{ path('da_annonce_stat') }}" class="btn btn-info btn-cons m-b-10">
+                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                        Statistique sur les Annonce
+                    </a>
                     <a href="{{ path('da_annonce_new') }}" class="btn btn-success">
                         <i class="icon-plus">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             &nbsp;Ajouter une Annonce ou une categorie
                         </i>
                     </a>
+
                 </div>
             </div>
         </div>
@@ -118,6 +123,13 @@
                                                href="{{ path('da_annonce_delete', { 'id': annonce.id }) }}"
                                                data-toggle="tooltip" title="Supprimer Annonce">
                                                 <i class="fa  fa-trash"></i>
+                                            </a>
+                                        </div>
+                                        <div class="btn-group btn-group-sm btn-group-horizontal">
+                                            <a class="btn btn-secondary"
+                                               href="{{ path('da_annonce_show', { 'id': annonce.id }) }}"
+                                               data-toggle="tooltip" title="Supprimer Categorie">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
                                         </div>
                                     </td>

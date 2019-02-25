@@ -79,13 +79,6 @@ class Annonce
     private $user;
 
     /**
-     * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="MentionAnnonce", mappedBy="annonce")
-     * @ORM\JoinColumn(name="menAnnonce_id", referencedColumnName="id")
-     */
-    private $mylikesA;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="etat", type="string", length=255)
@@ -112,6 +105,18 @@ class Annonce
      * @var \DateTime
      */
     private $photoUpdatedAt;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="views", type="integer")
+     */
+    private $views;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="likes", type="integer")
+     */
+    private $likes;
 
     /**
      * Annonce constructor.
@@ -301,6 +306,7 @@ class Annonce
     {
         return $this->etat;
     }
+
     /**
      * @return mixed
      */
@@ -380,5 +386,40 @@ class Annonce
     {
         $this->photoUpdatedAt = $photoUpdatedAt;
     }
+
+    /**
+     * @return int
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * @param int $likes
+     */
+    public function setLikes($likes)
+    {
+        $this->likes = $likes;
+    }
+
+    /**
+     * @return int
+     */
+    public function getViews()
+    {
+        return $this->views;
+    }
+
+    /**
+     * @param int $views
+     */
+    public function setViews($views)
+    {
+        $this->views = $views;
+    }
+
+
+
 }
 

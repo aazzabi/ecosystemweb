@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends './Default/dashboard.html.twig' %}
 
 {% block title %}
     Affichage Annonce
@@ -12,16 +12,12 @@
          }
      </style>
  {% endblock %}
-{% block javascripts %}
-    <script src="{{ asset('assets/js/jquery.js') }}" type="text/javascript"></script>
-
-{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-8 text-right">
                 <br>
-                <a href="{{ path('f_annonce_index') }}" class="btn btn-success">
+                <a href="{{ path('du_annonce_index') }}" class="btn btn-success">
                     <i class="fa fa-undo" aria-hidden="true"></i> Retourner à la page d'annonce
                 </a>
             </div>
@@ -61,10 +57,13 @@
                                 <dd>{{ annonce.region }}</dd>
                             </dl>  <!-- item-property-hor .// -->
                             <dl class="param param-feature">
-                                <dt>Viwes</dt>
-                                <dd>{{ annonce.views }}</dd>
+                                <dt>Color</dt>
+                                <dd>Black and white</dd>
                             </dl>  <!-- item-property-hor .// -->
                             <hr>
+                            <a href="#" class="btn btn-lg btn-primary text-uppercase"> Partage
+                                <faceBook></faceBook>
+                            </a>
                             <a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i
                                         class="fas fa-shopping-cart"></i> Add to cart </a>
                         </article> <!-- card-body.// -->

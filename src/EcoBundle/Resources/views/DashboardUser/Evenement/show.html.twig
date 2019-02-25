@@ -1,7 +1,7 @@
 {% extends './Default/dashboard.html.twig' %}
 
 {% block title %}
-    Affichage d'un Event
+    Les détails de votre mission
 {% endblock %}
 {% block stylesheets %}
 <style>
@@ -27,14 +27,14 @@
         <div class=" container    container-fixed-lg sm-p-l-0 sm-p-r-0">
             <div class="inner" style="transform: translateY(0px); opacity: 1;">
                 <div class="pull-bottom bottom-left m-b-40 sm-p-l-15">
-                    <h5 class="text-white no-margin">welcome to pages social</h5>
-                    <h1 class="text-white no-margin"><span class="semi-bold">social</span> cover</h1>
+                    <h5 class="text-white no-margin"></h5>
+                    <h1 class="text-white no-margin"><span class="semi-bold">Affiche de la </span>Mission</h1>
                 </div>
             </div>
         </div>
     </div>
 
-    <h1> Event</h1>
+    <h1> Détails de votre mission </h1>
     <div class="row">
         <div class="col-md-12">
             <div class="card card-borderless">
@@ -48,20 +48,45 @@
                                style="width: 100% !important;">
                             <tbody>
                             <tr>
-                                <th><i class="fas fa-info-circle" aria-hidden=true"></i></th>
+                                <th><i class="fas fa-info-circle" aria-hidden=true">    Titre : </i></th>
+                                <td>{{ evenement.titre }}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="fas fa-info-circle" aria-hidden=true">    Categorie : </i></th>
+                                <td>{{ evenement.categorie }}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="fas fa-users" aria-hidden=true">    Nombre des Participants : </i></th>
+                                <td>{{ evenement.participants |length}}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="fas fa-file-text" aria-hidden=true">    Description :</i></th>
                                 <td>{{ evenement.description }}</td>
                             </tr>
 
                             <tr>
-                                <th> <i class="fa fa-map-marker" aria-hidden="true"></i></th>
+                                <th> <i class="fa fa-map-marker" aria-hidden="true">    Lieu de la mission : </i></th>
                                 <td>{{ evenement.lieu }}</td>
                             </tr>
                             <tr>
-                                <th><i class="fa fa-calendar" aria-hidden="true"></i></th>
+                                <th><i class="fa fa-calendar" aria-hidden="true">   Date de création de la mission : </i></th>
                                 <td>{{ evenement.date |date }}</td>
                             </tr>
                             <tr>
-                                <th><i class="fa fa-user" aria-hidden="true"></i></th>
+                                <th><i class="fas fa-calendar" aria-hidden=true">   Date limite de la mission : </i></th>
+                                <td>{{ evenement.dateLimite |date  }}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="fas fa-diamond" aria-hidden=true">   Objectif à atteindre : </i></th>
+                                <td>{{ evenement.objectif }}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="fas fa-address-book" aria-hidden=true">    Nombre de collectes atteint : </i></th>
+                                <td>{{ evenement.atteint }}</td>
+                            </tr>
+
+                            <tr>
+                                <th><i class="fa fa-user" aria-hidden="true">   Crée par : </i></th>
                                 <td>{{ evenement.createdBy }}</td>
                             </tr>
 
@@ -77,19 +102,19 @@
                                 <li>
                                     <button type="button" class="btn btn-danger btn_lg" data-toggle="modal"
                                             data-target="#myModal">
-                                        <i class="fa fa-times" aria-hidden="true"></i> Supprimer
+                                        <i class="fa fa-times" aria-hidden="true"></i> Supprimer Mission
                                     </button>
-                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
                                          aria-labelledby="exampleModalLabel"
                                          aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel"> Supprimer
+                                                    <h5 class="modal-title" id="exampleModalLabel"> Mission
                                                     </h5>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Voulez-vous vraiement supprimer cet évènement?
+                                                    Voulez-vous vraiement supprimer cette Mission?
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default btn-secondary"

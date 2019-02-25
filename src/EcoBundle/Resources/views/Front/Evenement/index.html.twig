@@ -18,7 +18,7 @@
                 <a href="{{ path('du_evenements_new') }}" class="btn btn-success">
                     <i class="icon-plus">
                         <i class="fa fa-plus" aria-hidden="true"></i>
-                        &nbsp;Ajouter un évènement
+                        &nbsp;Ajouter une mission
                     </i>
                 </a>
             </div>
@@ -55,7 +55,7 @@
                                                    value="{{ app.session.get('lieu') }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="input-group date form-input-group form-group-default" data-provide="datepicker" >
                                             <label>Date</label>
                                             <input data-date-format="mm/dd/yyyy"
@@ -66,7 +66,24 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-5 text-right">
+                                    <div class="col-sm-2">
+
+                                        <form class="m-t-5" role="form">
+                                            <div class="form-group form-group-default form-group-default-select2">
+                                                <label> Mots clés :</label>
+                                                <select class=" full-width" data-init-plugin="select2" multiple>
+                                                    <option value="Nettoyage">Nettoyage</option>
+                                                    <option value="Don">Don</option>
+                                                    <option value="NonLucratif">Non Lucratif</option>
+                                                    <option value="Lucratif">Lucratif</option>
+                                                    <option value="CollecteFond">Collecte de fonds</option>
+                                                    <option value="Sensibilisation">Sensibilisation</option>
+
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-2 text-right">
                                         <input class="btn btn-secondary" type="submit">
                                     </div>
 
@@ -85,7 +102,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                     <i class="icon-plus">
                         <i class="fa fa-plus" aria-hidden="true"></i>
-                        &nbsp;Ajouter un évènement
+                        &nbsp;Ajouter une mission
                     </i>
                 </button>
             </div>
@@ -95,7 +112,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <i class="fa fa-exclamation fa-5x" style="color: red;margin: 0 auto;"></i>
-                            <h5 class="modal-title" id="exampleModalLabel">Vous devez se connecter d'abord</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Vous devez étre connecté avant d'effectuer cette action ! </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

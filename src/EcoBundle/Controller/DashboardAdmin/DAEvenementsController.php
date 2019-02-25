@@ -179,5 +179,22 @@ class DAEvenementsController extends Controller
         return$this->redirectToRoute('da_evenements_index');
     }
 
+    /**
+     * Finds and displays a user entity.
+     *
+     * @Route("/evenement/{id}", name="da_evenement_show")
+     * @Method("GET")
+     */
+    public function showEventAction(Evenement $evenement)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+        }
+
+        return $this->render('@Eco/DashboardAdmin/Evenement/showEvent.html.twig', array(
+            'evenement' => $evenement,
+        ));
+    }
+
 
 }

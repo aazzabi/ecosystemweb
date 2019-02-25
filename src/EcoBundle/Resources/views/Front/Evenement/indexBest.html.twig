@@ -11,24 +11,24 @@
     {% if app.user %}
         <div class="row">
             <div class="col-md-10 offset-md-1 text-right">
-                <button class="btn btn-complete btn-cons " data-target="#collapseSearch" data-toggle="collapse"
+                {#<button class="btn btn-complete btn-cons " data-target="#collapseSearch" data-toggle="collapse"
                         href="collapseSearch" role="button"><i class="fa fa-filter" aria-hidden="true"></i> Appliquer un
                     filtre
-                </button>
+                </button>#}
                 <a href="{{ path('du_evenements_new') }}" class="btn btn-success">
                     <i class="icon-plus">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         &nbsp;Ajouter un évènement
                     </i>
                 </a>
-                <a href="{{ path('front_evenements_Best') }}" class="btn btn-info">
-                    <i class="icon-star">
+               {# <a href="{{ path('front_evenements_Best') }}" class="btn btn-success">
+                    <i class="icon-plus">
                         <i class="fa fa-plus" aria-hidden="true"></i>
-                        &nbsp;Best
+                        &nbsp;filtrer
                     </i>
-                </a>
+                </a>#}
             </div>
-            <div class="col-md-10 offset-md-1">
+      {#      <div class="col-md-10 offset-md-1">
                 <br>
                 <div class="collapse col-md-12" id="collapseSearch">
                     <form id="form-project" method="GET" role="form" autocomplete="off" novalidate="novalidate">
@@ -36,7 +36,7 @@
                             <h5 class="m-t-10">Filtrer selon:</h5>
                             <div class="form-group-attached">
                                 <div class="row clearfix">
-                                    {#Disponibilité#}
+                                    #}{#Disponibilité#}{#
                                     <div class="col-sm-2">
                                         <div class="form-group form-group-default">
                                             <label>Catégorie</label>
@@ -53,7 +53,7 @@
                                         </div>
 
                                     </div>
-                                    {#Experiences#}
+                                    #}{#Experiences#}{#
                                     <div class="col-sm-2">
                                         <div class="form-group form-group-default">
                                             <label>Lieu </label>
@@ -65,8 +65,8 @@
                                         <div class="input-group date form-input-group form-group-default" data-provide="datepicker" >
                                             <label>Date</label>
                                             <input data-date-format="mm/dd/yyyy"
-                                                    class="form-control"
-                                                    name="date">
+                                                   class="form-control"
+                                                   name="date">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -82,7 +82,7 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div>#}
         </div>
 
     {% else %}
@@ -129,7 +129,7 @@
 
 
     <div class="row">
-        {% for  evenement in evenements %}
+        {% for  evenement in events  %}
             <div class="col-sm-4 offset-md-1">
                 <ul class="event-list">
                     <li>
@@ -168,11 +168,11 @@
                                             <p><a href="#">#{{ evenement.categorie }}</a></p>
                                         </div>
                                         {#<div class="likeblock pull-left btn-group">#}
-                                            {#<button id="like" type="submit" value="{{ evenement.id}}"#}
-                                                    {#class="like btn up btn-tag-light btn-tag-rounded m-r-10 float-right">#}
-                                                {#<i class="fa fa-thumbs-up" aria-hidden="true"></i>#}
+                                        {#<button id="like" type="submit" value="{{ evenement.id}}"#}
+                                        {#class="like btn up btn-tag-light btn-tag-rounded m-r-10 float-right">#}
+                                        {#<i class="fa fa-thumbs-up" aria-hidden="true"></i>#}
 
-                                            {#</button>#}
+                                        {#</button>#}
                                         {#</div>#}
                                     </div>
                                     {#<div class="row">#}
@@ -302,7 +302,7 @@
                 error: function(response){
                     $(".confirmer"+id).hide();
                     $(".annuler"+id).show();
-                  //  alert(".annuler"+id);
+                    //  alert(".annuler"+id);
                 },
                 success: function(response){
                     $(".confirmer"+id).hide();
@@ -323,7 +323,7 @@
                 error: function(response){
                     $(".annuler"+id).hide();
                     $(".confirmer"+id).show();
-                   // alert(".confirmer"+id);
+                    // alert(".confirmer"+id);
                 },
                 success: function(response){
                     $(".annuler"+id).hide();

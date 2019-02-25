@@ -1,6 +1,7 @@
 <?php
 
 namespace EcoBundle\Repository;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * EvenementRepository
@@ -36,27 +37,29 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('lieu', $search['lieu']);
         }
 
-//        // Expérience
-//        if ($search['experience'] !== null) {
-//            $session->set('experience', $search['experience']);
-//        } else {
-//            $search['experience'] = $session->get('experience');
-//        }
-//        if ($search['experience']) {
-//            $builder->andWhere('p.experience >= :experience')
-//                ->setParameter('experience', $search['experience']);
-//        }
-//
+        // Expérience
+        if ($search['categorie'] !== null) {
+            $session->set('categorie', $search['categorie']);
+        } else {
+            $search['categorie'] = $session->get('categorie');
+        }
+        if ($search['categorie']) {
+            $builder
+                ->innerJoin('e.categorie', 'cat', 'WITH', 'cat.id = :categorie')
+                ->andWhere('cat.id >= :categorie')
+                ->setParameter('categorie', $search['categorie']);
+        }
+
 //        // Intéret
-//        if ($search['interet'] !== null) {
-//            $session->set('interet', $search['interet']);
-//        } else {
-//            $search['interet'] = $session->get('interet');
-//        }
-//        if ($search['interet']) {
-//            $builder->andWhere('p.interet = :interet')
-//                ->setParameter('interet', $search['interet']);
-//        }
+        if ($search['date'] !== null) {
+            $session->set('date', $search['date']);
+        } else {
+            $search['date'] = $session->get('date');
+        }
+        if ($search['date']) {
+            $builder->andWhere('e.date > :date')
+                ->setParameter('date', $search['date']);
+        }
 //
 //        /// contrat
 //        if ($search['contrat'] !== null) {
@@ -106,6 +109,13 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
     {
         $query=$this->getEntityManager()->createQuery("SELECT m from EcoBundle:Evenement m WHERE m.categorie=:categorie")
             ->setParameter('categorie',$categorie);
+        return $query->getResult();
+    }
+
+    public function BestEvents()
+    {
+        $query=$this->getEntityManager()
+            ->createQuery("SELECT m from EcoBundle:Evenement m WHERE SIZE(m.participants) >1 ");
         return $query->getResult();
     }
 }

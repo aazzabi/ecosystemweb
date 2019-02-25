@@ -78,7 +78,7 @@
                     <tr class="event">
 
                         <td>
-                           {{ evenement.titre }}
+                            <a href="{{ path('da_evenement_show', { 'id': evenement.id }) }}">{{ evenement.titre }}</a>
                         </td>
                         <td>{{ evenement.description }}</td>
                         <td>{{ evenement.categorie.libelle }}</td>
@@ -93,6 +93,7 @@
                                    data-toggle="tooltip" title="Promouvoir">
                                     <i class="fa fa-bullhorn" aria-hidden="true"></i>
                                 </a>
+
                             </div>
 
                             {#<div class="btn-group btn-group-sm btn-group-horizontal">

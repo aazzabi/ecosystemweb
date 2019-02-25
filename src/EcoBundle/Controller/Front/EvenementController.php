@@ -44,27 +44,33 @@ class EvenementController extends Controller
         $evenements = array();
         $search['categorie'] = $request->get('categorie', null);
         $search['lieu'] = $request->get('lieu', null);
-        $search['date'] = $request->get('date', null);
+        $date = $request->get('date', null);
+        $search['date'] = date('Y-m-d', strtotime($date));
 //        var_dump($search);die;
 
+//        var_dump($search);die;
+//        $evenements = $em->getRepository('EcoBundle:Evenement')->findAll();
 
-        if ($search['categorie']) {
-            $evenementsCat = $em->getRepository('EcoBundle:Evenement')->searchByCategorieEvt($search['categorie']);
-            if ($search['lieu']) {
-                foreach ($evenementsCat as $event) {
-                    if  ($event->getLieu() == $search['lieu']) {
-                        $evenements[] = $event;
-                    }
-                }
-            }else {
-                $evenements = $evenementsCat;
-            }
+//        if ($search['categorie']) {
+//            $evenementsCat = $em->getRepository('EcoBundle:Evenement')->searchByCategorieEvt($search['categorie']);
+//            if ($search['lieu']) {
+//                foreach ($evenementsCat as $event) {
+//                    if  ($event->getLieu() == $search['lieu']) {
+//                        $evenements[] = $event;
+//                    }
+//                }
+//            }else {
+//                $evenements = $evenementsCat;
+//            }
+//        }
+        if (!$search['lieu'] && !$search['date'] && !$search['categorie'] ) {
+            $evenements = $em->getRepository('EcoBundle:Evenement')->findAll();
+        } else {
+            $evenements = $em->getRepository('EcoBundle:Evenement')->search($search);
         }
 
-//       $evenements =  $em->getRepository('EcoBundle:Evenement')->search($search);
+//         var_dump($evenements);die;
 
-//      var_dump($evenements);die;
-        $evenements = $em->getRepository('EcoBundle:Evenement')->findAll();
         $categories = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
         return $this->render('@Eco/Front/Evenement/index.html.twig', array(
             //'evenements' => $evenements,
@@ -237,45 +243,98 @@ class EvenementController extends Controller
     }*/
 
     /**
-     * @Route("/evenementP/{id}", name="front_evenements_participer")
-     * @Method("GET")
+     * @Route("/evenementP", name="front_evenements_participer")
+     * @Method({"GET", "POST"})
      */
-   public function participerAction($id)
+   public function participerAction(Request $request)
    {
+       $id = $request->get('id');
        $em = $this->getDoctrine()->getManager();
-       $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
-       $user = $this->get('security.token_storage')->getToken()->getUser();
 
-       $evenement->addParticipant($user);
-       $user->addEventsParticipes($evenement);
+       if ($request->isXmlHttpRequest())
+       {
+           $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
+           $user = $this->get('security.token_storage')->getToken()->getUser();
+           $evenement->addParticipant($user);
+           $user->addEventsParticipes($evenement);
+           $em->persist($evenement);
+           $em->persist($user);
+           $em->flush();
 
-       $em->persist($evenement);
-       $em->persist($user);
-       $em->flush();
+           $arrData = ['msg' => "ok super"];
+           return new JsonResponse($arrData);
+       }
        return $this->redirectToRoute('front_evenements_index');
-
    }
 
     /**
-     * @Route("/evenementNP/{id}", name="front_evenements_noparticiper")
+     * @Route("/evenementNP", name="front_evenements_noparticiper")
      * @Method("GET")
      */
-    public function noParticiperAction($id)
+    public function noParticiperAction(Request $request)
     {
+        $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
-        $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
-        $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $evenement->removeParticipants($user);
-        $user->removeEventsParticipes($evenement);
+        if ($request->isXmlHttpRequest())
+        {
+            $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $evenement->removeParticipants($user);
+            $user->removeEventsParticipes($evenement);
+            $em->persist($evenement);
+            $em->persist($user);
+            $em->flush();
 
-       // $em->persist($evenement);
-     //   $em->persist($user);
-        $em->flush();
+            $arrData = ['msg' => "ok super"];
+            return new JsonResponse($arrData);
+        }
         return $this->redirectToRoute('front_evenements_index');
 
     }
 
+    /**
+     * @Route("/evenementM", name="front_mail_event")
+     * @Method("GET")
+     */
+    public function SendMailReclamAction(Request $request )
+    {
+      // $reclam=$this->getDoctrine()->getRepository(Reclamation::class)->find($id);
+        if($request->getMethod()=="GET")
+        {
+            $Subject=$request->get("Subject");
+            $email=$request->get("Email");
+            $message=$request->get("message");
+            $mailer=$this->container->get('mailer');
+            $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com',465,'ssl')
+                ->setUsername('arafet.azzabi@esprit.tn')
+                ->setPassword('183JMT0449');
+            $mailer=\Swift_Mailer::newInstance($transport);
+            $message=\Swift_Message::newInstance('test')
+                ->setSubject($Subject)
+                ->setFrom('arafet.azzabi@esprit.tn')
+                ->setTo($email)
+                ->setBody($message);
+            $this->get('mailer')->send($message);
+           // $reclam->setEtat('1');
 
+            return  $this->redirectToRoute("front_evenements_index");
+
+        }
+        return $this->render("@Eco/MailParticiper.html.twig");
+    }
+
+    /**
+     * @Route("/evenementBest", name="front_evenements_Best")
+     * @Method("GET")
+     */
+    public function findBestEventsAction()
+    {
+        $em=$this->getDoctrine()->getManager();
+        $events=$em->getRepository(Evenement::class)->BestEvents();
+        //var_dump($events);die;
+        return $this->render('@Eco/Front/Evenement/indexBest.html.twig',array("events"=>$events));
+
+    }
 
 }

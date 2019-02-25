@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block head %}
+    <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+{% endblock %}
 {% block body %}
 
     {% if commandes|length >0 %}
@@ -22,7 +24,9 @@
                         <tr>
 
                             <td>{{ value.dateEmission|date}}</td>
-                            <td>{{ value.etatCommande }}</td>
+                            <td>{{ value.etatCommande }}
+                                <i class="fa fa-spinner fa-1.5x fa-pulse"></i>
+                            </td>
                             <td>{{ value.prixTotal }}</td>
                             <td><a  href="{{ path('ligne_show',{ 'id_c': value.id  }) }}">Afficher les détails </a> </br>
                              <a  href="{{ path('annuler_commande',{ 'id_c': value.id  }) }}">Annuler Commande </a></td>

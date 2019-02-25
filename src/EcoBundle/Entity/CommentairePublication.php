@@ -59,7 +59,7 @@ class CommentairePublication
      *
      * var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="Signalisation", mappedBy="commentaire", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="SignalisationForumComm", mappedBy="commentaire", cascade={"remove"})
      *
      */
     private $signlaisations;
@@ -95,6 +95,13 @@ class CommentairePublication
     /**
      * @var int
      *
+     * @ORM\Column(name="nbSignalisation", type="integer")
+     */
+    private $nbrSignalisation;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="dislikes", type="integer")
      */
     private $dislikes;
@@ -104,6 +111,7 @@ class CommentairePublication
         $this->commentedAt = new \DateTime('now');
         $this->dislikes = 0;
         $this->likes = 0;
+        $this->nbrSignalisation = 0;
     }
 
     /**
@@ -249,11 +257,11 @@ class CommentairePublication
 
     /**
      *
-     * @param \EcoBundle\Entity\Signalisation $signlaisation
+     * @param \EcoBundle\Entity\SignalisationForumComm $signlaisation
      *
      * @return CommentairePublication
      */
-    public function addCommentaire(Signalisation $signlaisation)
+    public function addCommentaire(SignalisationForumComm $signlaisation)
     {
         $this->signlaisations[] = $signlaisation;
 
@@ -262,9 +270,9 @@ class CommentairePublication
 
     /**
      *
-     * @param \EcoBundle\Entity\Signalisation $signlaisation
+     * @param \EcoBundle\Entity\SignalisationForumComm $signlaisation
      */
-    public function removeCommentaire(Signalisation $signlaisation)
+    public function removeCommentaire(SignalisationForumComm $signlaisation)
     {
         $this->signlaisations->removeElement($signlaisation);
     }
@@ -299,6 +307,22 @@ class CommentairePublication
     public function setDislikes($dislikes)
     {
         $this->dislikes = $dislikes;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbrSignalisation()
+    {
+        return $this->nbrSignalisation;
+    }
+
+    /**
+     * @param int $nbrSignalisation
+     */
+    public function setNbrSignalisation($nbrSignalisation)
+    {
+        $this->nbrSignalisation = $nbrSignalisation;
     }
 }
 

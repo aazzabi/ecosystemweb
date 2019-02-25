@@ -192,6 +192,12 @@
                     </a>
                     <span class=" {% if path('da_users_index') == currentPath %}bg-success{% endif %}  icon-thumbnail">User</span>
                 </li>
+                <li class="" style="padding: 10px 5px;">
+                    <a href="{{ path('da_signalisation_index') }}">
+                        <span class="title">Signalisation</span>
+                    </a>
+                    <span class=" {% if path('da_signalisation_index') == currentPath %}bg-success{% endif %}  icon-thumbnail">Sign</span>
+                </li>
             {% endif %}
         </ul>
         <div class="clearfix"></div>

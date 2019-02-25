@@ -1,0 +1,87 @@
+{% extends './Default/dashboard.html.twig' %}
+{% block title %}
+    Liste des signalisations
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            var tableForum = $('#sigForumTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        <h1><b>Liste des signalisation</b></h1>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-borderless">
+            <ul class="nav nav-tabs nav-tabs-simple hidden-sm-down" role="tablist"
+                data-init-reponsive-tabs="dropdownfx">
+                <li class="nav-item">
+                    <a class="active" data-toggle="tab" role="tab" data-target="#signalisationForumComm" href="#"
+                       aria-expanded="true">Commentaires (Forum)</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" data-toggle="tab" role="tab" data-target="#signalisationAnnonces" class=""
+                       aria-expanded="false">Signalisation</a>
+                </li>
+            </ul>
+            <div class="tab-content" >
+                <div class="tab-pane active display" id="signalisationForumComm" aria-expanded="true">
+                    <table id="sigForumTab" class="table display table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Cause</th>
+                            <th>Publication</th>
+                            <th>Nombre de fois </th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for signalisation in signalisationForumComms %}
+                            <tr>
+                                <td> {{ signalisation.libelle }}</td>
+                                <td>
+                                    {#<a class="btn btn-danger" href="{{ path('du_forum_publication_show', { 'id': signalisation.commentaire.publication.id }) }}">#}
+                                        {{ signalisation.commentaire.publication }}
+                                    {#</a>#}
+                                    </td>
+                                <td>{{ signalisation.commentaire.nbrSignalisation }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm btn-group-horizontal">
+                                        <a class="btn btn-danger" href="{{ path('da_signalisation_comm_forum_delete', { 'id': signalisation.id }) }}">
+                                            <i class="fa fa-trash"> </i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="signalisationAnnonces" aria-expanded="false">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

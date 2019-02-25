@@ -15,7 +15,7 @@ use EcoBundle\Entity\PublicationForum;
 use EcoBundle\Entity\Reparateur;
 use EcoBundle\Entity\RespAsso;
 use EcoBundle\Entity\RespSoc;
-use EcoBundle\Entity\Signalisation;
+use EcoBundle\Entity\SignalisationForumComm;
 use EcoBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -255,18 +255,20 @@ class ForumController extends Controller
      */
     public function signalerCommentaireAction(Request $request, $id)
     {
-        $signalisation = new Signalisation();
+        $signalisation = new SignalisationForumComm();
         $user          = $this->get('security.token_storage')->getToken()->getUser();
         $em            = $this->getDoctrine()->getManager();
 
         $commentaire      = $this->getDoctrine()->getRepository('EcoBundle:CommentairePublication')->find($id);
         $publicationForum = $commentaire->getPublication();
+        $commentaire->setNbrSignalisation($commentaire->getNbrSignalisation()+1);
 
         $libRadio = $request->get('radioLib');
         $signalisation->setLibelle($libRadio);
         $signalisation->setSignaledBy($user);
         $signalisation->setCommentaire($commentaire);
 
+        $em->persist($commentaire);
         $em->persist($signalisation);
         $em->flush();
 

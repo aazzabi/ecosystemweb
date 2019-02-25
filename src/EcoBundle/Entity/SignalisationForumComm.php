@@ -5,12 +5,12 @@ namespace EcoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Signalisation
+ * SignalisationCommPub
  *
  * @ORM\Table(name="signalisationForumComm")
  * @ORM\Entity(repositoryClass="EcoBundle\Repository\SignalisationRepository")
  */
-class Signalisation
+class SignalisationForumComm
 {
     /**
      * @var int
@@ -58,7 +58,7 @@ class Signalisation
      *
      * @param string $libelle
      *
-     * @return Signalisation
+     * @return SignalisationCommPub
      */
     public function setLibelle($libelle)
     {

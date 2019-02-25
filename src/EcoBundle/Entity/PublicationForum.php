@@ -253,5 +253,9 @@ class PublicationForum
         $this->commentaires->removeElement($commentaire);
     }
 
+    function __toString()
+    {
+        return $this->getTitre();
+    }
 }
 

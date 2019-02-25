@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     <link href="{{ asset ('assets/css/raniaEvt.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset ('assets/css/missionCarts.css') }}" rel="stylesheet" type="text/css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
 {% endblock %}
@@ -140,6 +141,158 @@
 
 
     <div class="row">
+
+
+
+
+        {% set i = 0 %}
+        {% for  evenement in evenements %}
+            <div class="wrapper">
+
+                {#<span le variable i represente le numero du card  {{ cardnb }}#}
+
+                {% set i = i +  1 %}
+
+                {% set cardnb = "card" ~ i   %}
+                <pre>
+    {{ dump(cardnb) }}
+</pre>
+                <div class="card">
+                    <input type="checkbox" id={{ evenement.id }}, class="more" aria-hidden="true">
+                    <div class="content">
+                        {% if evenement.cover != '' %}
+                            <div class="front" style=" background-image:url('{{ asset('uploads/evt/cover/' ~ evenement.cover) }}');">
+                        {% else %}
+                            <div class="front" style="  background-image:url('{{ asset('assets/img/profile.png') }}')">
+                        {% endif %}
+                        <div class="inner">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h3 style="font-size: 1vw; line-height: normal;"><a
+                                                    href="{{ path('front_evenements_show', { 'id': evenement.id }) }}">{{ evenement.titre }}
+                                            </a>
+                                            <p>
+                                        <span class="location semi-bold"> <i
+                                                    class="fa fa-eye"></i>  </span>{{ evenement.nbvues }}
+                                            </p>
+                                        </h3>
+                                    </div>
+                                </div>
+
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <label for={{ evenement.id }}, class="button" aria-hidden="true">
+                                    Détails :
+                                </label>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <div class="info">
+                                    <span>5</span>
+                                    <div class="icon">
+                                        <i class="fas fa-users"></i>
+                                        <span>Participants</span>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <span>4</span>
+                                    <div class="icon">
+                                        <i class="fas fa-door-open"></i>
+                                        <span>Objectif</span>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <span>3</span>
+                                    <div class="icon">
+                                        <i class="fas fa-bed"></i>
+                                        <span>Atteint</span>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <span>
+                                        <div class="icon">
+                                    <time datetime="2014-07-31 1600">
+                                        <span class="day">{{ evenement.dateLimite |date ("d") }}</span>
+                                        <span class="month">{{ evenement.dateLimite |date ("M") }}</span>
+                                        <span class="year">{{ evenement.dateLimite |date ("Y") }}</span>
+                                        <span class="time">4:00 PM</span>
+                                    </time></div></span>
+                                    <div class="icon">
+                                        <i class="fas fa-bath"></i>
+                                        <span>Date limite</span>
+                                    </div>
+                                </div>
+                                <div class="description">
+                                    <p>Categorie : <a href="#">{{ evenement.categorie }}</a></p>
+
+                                    <p>Description :</p>
+                                    <br>
+
+                                    {{ evenement.description }}
+                                </div>
+                                <div class="location">
+                                    <p>Lieu : <a href="#">{{ evenement.lieu }}</a></p>
+                                </div>
+                                <div class="icon">
+                                    <time datetime="2014-07-31 1600">
+                                        <span class="day">{{ evenement.date |date ("d") }}</span>
+                                        <span class="month">{{ evenement.date |date ("M") }}</span>
+                                        <span class="year">{{ evenement.date |date ("Y") }}</span>
+                                        <span class="time">4:00 PM</span>
+                                    </time></div>
+
+                                <label for={{ evenement.id }},   class="button return" aria-hidden="true">
+                                    <i class="fas fa-arrow-left"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#
+
+
+
         {% for  evenement in evenements %}
             <div class="col-sm-4 offset-md-1">
                 <ul class="event-list">
@@ -180,42 +333,42 @@
                                         </div>
                                     </div>
                                     {#<div class="row">#}
-                                    <p>
+                                  {#  <p>
                                         <span class="location semi-bold"> <i
                                                     class="fa fa-map-marker"></i> {{ evenement.lieu }}</span>
                                     </p>
                                     {#</div>#}
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <div class="via">via {{ evenement.createdBy }}</div>
-                                        </div>
-                                        {% if app.user %}
-                                            <div class="col-sm-3">
-                                                <a href="{{ path('front_evenements_participer' ,{ 'id' : evenement.id }) }}"
-                                                            class="btn btn-sm btn-info" id="yes">
-                                                    <i class="fa fa-smile-o" aria-hidden="true"></i>&nbsp;Je
-                                                    participe!
-                                                </a>
-                                                <a href="{{ path('front_evenements_noparticiper' ,{ 'id' : evenement.id }) }}"
-                                                   class="btn btn-xs btn-info" id="no">
-                                                    Je
-                                                    participe plus
-                                                </a>
+            {#<div class="row">
+               <div class="col-md-5">
+                   <div class="via">via {{ evenement.createdBy }}</div>
+               </div>
+               {% if app.user %}
+                   <div class="col-sm-3">
+                       <a href="{{ path('front_evenements_participer' ,{ 'id' : evenement.id }) }}"
+                                   class="btn btn-sm btn-info" id="yes">
+                           <i class="fa fa-smile-o" aria-hidden="true"></i>&nbsp;Je
+                           participe!
+                       </a>
+                       <a href="{{ path('front_evenements_noparticiper' ,{ 'id' : evenement.id }) }}"
+                          class="btn btn-xs btn-info" id="no">
+                           Je
+                           participe plus
+                       </a>
 
-                                            </div>
-
-
+                   </div>
 
 
 
-                                        {% endif %}
+
+
+               {% endif %}
 
 
 
-                                    </div>
+           </div>
 
-                                </div>
-                            </div>
+       </div>#}
+                            {#</div>#}
                             {#<h2 class="title">#}
                             {#<a href="{{ path('front_evenements_show', { 'id': evenement.id }) }}">#}
                             {#{{ evenement.titre }}#}
@@ -241,11 +394,12 @@
                             {#</a>#}
                             {#</div>#}
                             {#</ul>#}
-                        </div>
+          {#              </div>
                     </li>
                 </ul>
-            </div>
+            </div>#}
         {% endfor %}
+    </div>
 
         {# <form id="form_recherche" action="{{ path('front_evenements_rechercheajax') }}" method="post">
                {{ form_widget(form) }}
@@ -278,7 +432,7 @@
                    });
                </script>#}
 
-    </div>
+
 
 {% endblock %}
 

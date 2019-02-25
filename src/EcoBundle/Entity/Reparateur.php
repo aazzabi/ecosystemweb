@@ -34,12 +34,29 @@ class Reparateur extends  User
      */
     private $horaire;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+
 
 
     public function __construct()
     {
         parent::__construct();
         $this->roles = array('ROLE_REPARATEUR');
+        $this->type="Normal";
+        $this->description="aucune";
     }
 
     /**
@@ -124,5 +141,39 @@ class Reparateur extends  User
     {
         return $this->horaire;
     }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+
 }
 

@@ -100,11 +100,11 @@
                  icon-thumbnail">Ano</span>
             </li>
             <li class="" style="padding: 10px 5px;">
-                <a href="#" class="detailed">
+                <a href="{{ path('da_rep_index') }}" class="detailed">
                     <span class="title">Réparation</span>
                 </a>
                 <span class="
-                {#{% if path('poste_index') == currentPath %}bg-success{% endif %}#}
+                {% if path('da_rep_index') == currentPath %}bg-success{% endif %}
                  icon-thumbnail">Rép</span>
             </li>
             <li class="" style="padding: 10px 5px;">

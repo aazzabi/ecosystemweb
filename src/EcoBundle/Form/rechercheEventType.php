@@ -19,6 +19,4 @@ class rechercheEventType extends AbstractType
         $builder->add('lieu')->add('save',SubmitType::class);
     }
 
-
-
 }

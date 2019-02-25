@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"/>
+    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <link href="{{ asset ('assets/plugins/pace/pace-theme-flash.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/font-awesome/css/font-awesome.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/jquery-scrollbar/jquery.scrollbar.css') }}" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <link href="{{ asset ('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <link href="{{ asset ('assets/plugins/switchery/css/switchery.min.css') }}" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <link href="{{ asset ('assets/plugins/nvd3/nv.d3.min.css') }}" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="{{ asset ('assets/plugins/mapplic/css/mapplic.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/rickshaw/rickshaw.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet"
+          type="text/css" media="screen">
+    <link href="{{ asset ('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet"
+          type="text/css" media="screen">
+    <link href="{{ asset ('assets/plugins/jquery-datatable/media/css/dataTables.bootstrap.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset ('assets/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css') }}"
+          rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/datatables-responsive/css/datatables.responsive.css') }}" rel="stylesheet"
+          type="text/css" media="screen"/>
+    <link href="{{ asset ('pages/css/pages-icons.css') }}" rel="stylesheet" type="text/css">
+    <link class="main-stylesheet" href="{{ asset ('pages/css/themes/modern.css') }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/solid.css"
+          integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous">
+    {#<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/regular.css" integrity="sha384-IG162Tfx2WTn//TRUi9ahZHsz47lNKzYOp0b6Vv8qltVlPkub2yj9TVwzNck6GEF" crossorigin="anonymous">#}
+    {#<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">#}
+    {#<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">#}
+
+    <link href="{{ asset ('assets/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset ('assets/css/dashboard.widgets.css') }}" rel="stylesheet" type="text/css" media="screen"/>
+
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body class="fixed-header horizontal-menu horizontal-app-menu dashboard">
+<!-- START PAGE-CONTAINER -->
+<div class="header bg-primary">
+    <div class="header-inner header-md-height">
+        <a href="#" class="btn-link toggle-sidebar hidden-lg-up text-white" data-toggle="horizontal-menu">
+            <i class="fa fa-bars"></i>
+        </a>
+        <div class="brand inline no-border hidden-xs-down">
+            <img src="{{ asset('assets/img/logofinalev2.png') }}" alt="logo"
+                 style="width: 200px !important; height: 60px;">
+        </div>
+        <div class="d-flex align-items-center">
+            {% if app.user %}
+                <div class="pull-left p-r-10 fs-14 font-heading hidden-md-down text-white">
+                    <span class="semi-bold">{{ app.user.prenom }}</span> <span
+                            class="">{{ app.user.nom | upper }}</span>
+                </div>
+                <div class="dropdown pull-right">
+                    <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+              <span class="thumbnail-wrapper d32 circular inline sm-m-r-5">
+                <img src="{{ asset('assets/img/profiles/avatar.jpg') }}" width="32" height="32">
+                </span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
+                        <a href="{{ path('da_users_edit', { 'id': app.user.id }) }}" class="dropdown-item"
+                           data-unsp-sanitized="clean"><i class="fa fa-wrench" aria-hidden="true"></i> Settings</a>
+                        <a href="#" class="dropdown-item" data-unsp-sanitized="clean"><i class="fa fa-comments"
+                                                                                         aria-hidden="true"></i>
+                            Feedback</a>
+                        <a href="#" class="dropdown-item" data-unsp-sanitized="clean"><i class="fa fa-info"
+                                                                                         aria-hidden="true"></i>
+                            Help</a>
+                        <a href="{{ path('fos_user_security_logout') }}"
+                           class="clearfix bg-master-lighter dropdown-item">
+                            <span class="pull-left">Logout</span>
+                            <span class="pull-right"><i class="fa  fa-sign-out" aria-hidden="true"></i></span>
+                        </a>
+                    </div>
+                </div>
+                <!-- END User Info-->
+                {#notification section dropdown#}
+                <div class="dropdown">
+                    <a href="javascript:;" id="notification-center" class="header-icon" data-toggle="dropdown">
+                        <i class="fa fa-globe"></i>
+                        <span class="bubble"></span>
+                    </a>
+                    <!-- START Notification Dropdown -->
+                    <div class="dropdown-menu notification-toggle" role="menu" aria-labelledby="notification-center">
+                        <!-- START Notification -->
+                        <div class="notification-panel">
+                            <!-- START Notification Body-->
+                            <div class="notification-body scrollable">
+                                <!-- START Notification Item-->
+                                <div class="notification-item unread clearfix">
+                                    <!-- START Notification Item-->
+                                    <div class="heading open">
+                                        <a href="#" class="text-complete pull-left">
+                                            <i class="pg-map fs-16 m-r-10"></i>
+                                            <span class="bold">Carrot Design</span>
+                                            <span class="fs-12 m-l-10">David Nester</span>
+                                        </a>
+                                        <div class="pull-right">
+                                            <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details">
+                                                <div><i class="fa fa-angle-left"></i>
+                                                </div>
+                                            </div>
+                                            <span class=" time">few sec ago</span>
+                                        </div>
+                                        <div class="more-details">
+                                            <div class="more-details-inner">
+                                                <h5 class="semi-bold fs-16">“Apple’s Motivation - Innovation <br>
+                                                    distinguishes between <br>
+                                                    A leader and a follower.”</h5>
+                                                <p class="small hint-text">
+                                                    Commented on john Smiths wall.
+                                                    <br> via pages framework.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Notification Item-->
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option" data-toggle="tooltip" data-placement="left"
+                                         title="mark as read">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- START Notification Body-->
+                                <!-- START Notification Item-->
+                                <div class="notification-item  clearfix">
+                                    <div class="heading">
+                                        <a href="#" class="text-danger pull-left">
+                                            <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                            <span class="bold">98% Server Load</span>
+                                            <span class="fs-12 m-l-10">Take Action</span>
+                                        </a>
+                                        <span class="pull-right time">2 mins ago</span>
+                                    </div>
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- END Notification Item-->
+                                <!-- START Notification Item-->
+                                <div class="notification-item  clearfix">
+                                    <div class="heading">
+                                        <a href="#" class="text-warning-dark pull-left">
+                                            <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                            <span class="bold">Warning Notification</span>
+                                            <span class="fs-12 m-l-10">Buy Now</span>
+                                        </a>
+                                        <span class="pull-right time">yesterday</span>
+                                    </div>
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- END Notification Item-->
+                                <!-- START Notification Item-->
+                                <div class="notification-item unread clearfix">
+                                    <div class="heading">
+                                        <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                            <img width="30" height="30" src="{{ asset('assets/img/profiles/1.jpg') }}">
+                                        </div>
+                                        <a href="#" class="text-complete pull-left">
+                                            <span class="bold">Revox Design Labs</span>
+                                            <span class="fs-12 m-l-10">Owners</span>
+                                        </a>
+                                        <span class="pull-right time">11:00pm</span>
+                                    </div>
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option" data-toggle="tooltip" data-placement="left"
+                                         title="mark as read">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- END Notification Item-->
+                            </div>
+                            <!-- END Notification Body-->
+                            <!-- START Notification Footer-->
+                            <div class="notification-footer text-center">
+                                <a href="#" class="">Read all notifications</a>
+                                <a data-toggle="refresh" class="portlet-refresh text-black pull-right" href="#">
+                                    <i class="pg-refresh_new"></i>
+                                </a>
+                            </div>
+                            <!-- START Notification Footer-->
+                        </div>
+                        <!-- END Notification -->
+                    </div>
+                    <!-- END Notification Dropdown -->
+                </div>
+            {% else %}
+                <a href="{{ path('inscription') }}">
+                    <button class="btn btn-default btn-cons  btn-sm">S'inscrire</button>
+                </a>
+                <a href="{{ path('fos_user_security_login') }}">
+                    <button class="btn btn-primary btn-cons  btn-sm">Se Connecter</button>
+                </a>
+            {% endif %}
+
+        </div>
+    </div>
+    <div style="background-color: #4d984d !important;">
+        <div class="container">
+            <div class="menu-bar header-sm-height">
+                <a href="#" class="btn-link toggle-sidebar hidden-lg-up" data-toggle="horizontal-menu">
+                    <i class="fa fa-times"></i>
+                </a>
+                <ul>
+                    <li class=" active">
+                        <a href="builder.html"><span class="title">Accueil</span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:;"><span class="title">A propos</span></a>
+                    </li>
+                    <li>
+                        <a href="social.html"><span class="title">Annonces</span></a>
+                    </li>
+                    <li>
+                        <a href="social.html"><span class="title">Réparation</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ path('recyclage') }}"><span class="title">Recyclage</span></a>
+                    </li>
+                    <li>
+                        <a href="views.html"><span class="title">Evénements</span></a>
+                    </li>
+                    <li>
+                        <a href="charts.html"><span class="title">Forum</span></a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="{{ path('dashboard') }}"><span class="title">Dashboard</span></a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="charts.html"><span class="title">Contactez-nous</span></a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-container ">
+    <style>
+        .mapael .map {
+            position: relative;
+        }
+
+        .mapael .mapTooltip {
+            position: absolute;
+            background-color: #fff;
+            moz-opacity: 0.70;
+            opacity: 0.70;
+            filter: alpha(opacity=70);
+            border-radius: 10px;
+            padding: 10px;
+            z-index: 1000;
+            max-width: 200px;
+            display: none;
+            color: #343434;
+        }
+    </style>
+    {% block body %}
+
+        <div class="container-fluid">
+            <div class="mapcontainer">
+                <h1>Vous pouvez voir les points de collectes par région : </h1>
+
+                <div class="map">
+                    <span>Alternative content for the map</span>
+                </div>
+                <div class="areaLegend">
+                    <span>Alternative content for the legend</span>
+                </div>
+            </div>
+
+        </div>
+
+    {% endblock %}
+</div>
+<script src="{{ asset ('assets/plugins/pace/pace.min.js' ) }} " type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/modernizr.custom.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/tether/js/tether.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery/jquery-easy.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-unveil/jquery.unveil.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-ios-list/jquery.ioslist.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-actual/jquery.actual.min.js') }}"></script>
+<script src="{{ asset ('assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset ('assets/plugins/select2/js/select2.full.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset ('assets/plugins/classie/classie.js') }}"></script>
+<script src="{{ asset ('assets/plugins/switchery/js/switchery.min.js') }}" type="text/javascript"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/lib/d3.v3.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/nv.d3.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/utils.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/tooltip.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/interactiveLayer.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/models/axis.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/models/line.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/models/lineWithFocusChart.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/mapplic/js/hammer.js') }}"></script>
+<script src="{{ asset ('assets/plugins/mapplic/js/jquery.mousewheel.js') }}"></script>
+<script src="{{ asset ('assets/plugins/mapplic/js/mapplic.js') }}"></script>
+<script src="{{ asset ('assets/plugins/rickshaw/rickshaw.min.js') }}"></script>
+<script src="{{ asset ('assets/plugins/jquery-metrojs/MetroJs.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/skycons/skycons.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset ('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset ('assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-datatable/media/js/dataTables.bootstrap.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js') }}"
+        type="text/javascript"></script>
+<script type="text/javascript"
+        src="{{ asset ('assets/plugins/datatables-responsive/js/datatables.responsive.js') }}"></script>
+<script type="text/javascript" src="{{ asset ('assets/plugins/datatables-responsive/js/lodash.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js" charset="utf-8"></script>
+
+<!-- END VENDOR JS -->
+<!-- BEGIN CORE TEMPLATE JS -->
+<script src="{{ asset ('pages/js/pages.min.js') }}"></script>
+<!-- END CORE TEMPLATE JS -->
+<!-- BEGIN PAGE LEVEL JS -->
+<script src="{{ asset ('assets/js/dashboard.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/js/scripts.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/js/jquery.mapael.js') }}" charset="utf-8"></script>
+<script src="{{ asset ('assets/js/maps/france_departments.js') }}" charset="utf-8"></script>
+<script src="{{ asset ('assets/js/maps/world_countries.js') }}" charset="utf-8"></script>
+<script src="{{ asset ('assets/js/maps/usa_states.js') }}" charset="utf-8"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".mapcontainer").mapael({
+            map: {
+                name: "france_departments",
+                defaultArea: {
+                    attrs: {
+                        stroke: "#fff",
+                        "stroke-width": 1
+                    },
+                    attrsHover: {
+                        "stroke-width": 2
+                    }
+                }
+            },
+            legend: {
+                area: {
+                    title: "Population of France by department",
+                    exclusive: true,
+                    slices: [
+                        {
+                            max: 300000,
+                            attrs: {
+                                fill: "#97e766"
+                            },
+                            label: "Less than de 300 000 inhabitants",
+                            clicked: true
+                        },
+                        {
+                            min: 300000,
+                            max: 500000,
+                            attrs: {
+                                fill: "#7fd34d"
+                            },
+                            label: "Between 100 000 and 500 000 inhabitants"
+                        },
+                        {
+                            min: 500000,
+                            max: 1000000,
+                            attrs: {
+                                fill: "#5faa32"
+                            },
+                            label: "Between 500 000 and 1 000 000 inhabitants",
+                            clicked: true
+                        },
+                        {
+                            min: 1000000,
+                            attrs: {
+                                fill: "#3f7d1a"
+                            },
+                            label: "More than 1 million inhabitants",
+                            clicked: true
+                        }
+                    ]
+                }
+            },
+            areas: {
+                "department-59": {
+                    value: "2617939",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Nord (59)</span><br />Population : 2617939"}
+                },
+                "department-75": {
+                    value: "2268265",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Paris (75)</span><br />Population : 2268265"}
+                },
+                "department-13": {
+                    value: "2000550",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Bouches-du-Rhône (13)</span><br />Population : 2000550"}
+                },
+                "department-69": {
+                    value: "1756069",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Rhône (69)</span><br />Population : 1756069"}
+                },
+                "department-92": {
+                    value: "1590749",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Hauts-de-Seine (92)</span><br />Population : 1590749"}
+                },
+                "department-93": {
+                    value: "1534895",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Seine-Saint-Denis (93)</span><br />Population : 1534895"}
+                },
+                "department-62": {
+                    value: "1489209",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Pas-de-Calais (62)</span><br />Population : 1489209"}
+                },
+                "department-33": {
+                    value: "1479277",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Gironde (33)</span><br />Population : 1479277"}
+                },
+                "department-78": {
+                    value: "1435448",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Yvelines (78)</span><br />Population : 1435448"}
+                },
+                "department-77": {
+                    value: "1347008",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Seine-et-Marne (77)</span><br />Population : 1347008"}
+                },
+                "department-94": {
+                    value: "1340868",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Val-de-Marne (94)</span><br />Population : 1340868"}
+                },
+                "department-44": {
+                    value: "1317685",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Loire-Atlantique (44)</span><br />Population : 1317685"}
+                },
+                "department-76": {
+                    value: "1275952",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Seine-Maritime (76)</span><br />Population : 1275952"}
+                },
+                "department-31": {
+                    value: "1268370",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Haute-Garonne (31)</span><br />Population : 1268370"}
+                },
+                "department-38": {
+                    value: "1233759",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Isère (38)</span><br />Population : 1233759"}
+                },
+                "department-91": {
+                    value: "1233645",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Essonne (91)</span><br />Population : 1233645"}
+                },
+                "department-95": {
+                    value: "1187836",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Val-d'Oise (95)</span><br />Population : 1187836"}
+                },
+                "department-67": {
+                    value: "1115226",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Bas-Rhin (67)</span><br />Population : 1115226"}
+                },
+                "department-06": {
+                    value: "1094579",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Alpes-Maritimes (06)</span><br />Population : 1094579"}
+                },
+                "department-57": {
+                    value: "1066667",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Moselle (57)</span><br />Population : 1066667"}
+                },
+                "department-34": {
+                    value: "1062617",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Hérault (34)</span><br />Population : 1062617"}
+                },
+                "department-83": {
+                    value: "1026222",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Var (83)</span><br />Population : 1026222"}
+                },
+                "department-35": {
+                    value: "1015470",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Ille-et-Vilaine (35)</span><br />Population : 1015470"}
+                },
+                "department-29": {
+                    value: "929286",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Finistère (29)</span><br />Population : 929286"}
+                },
+                "department-974": {
+                    value: "829903",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">La Réunion (974)</span><br />Population : 829903"}
+                },
+                "department-60": {
+                    value: "823668",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Oise (60)</span><br />Population : 823668"}
+                },
+                "department-49": {
+                    value: "808298",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Maine-et-Loire (49)</span><br />Population : 808298"}
+                },
+                "department-42": {
+                    value: "766729",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Loire (42)</span><br />Population : 766729"}
+                },
+                "department-68": {
+                    value: "765634",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Haut-Rhin (68)</span><br />Population : 765634"}
+                },
+                "department-74": {
+                    value: "760979",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Haute-Savoie (74)</span><br />Population : 760979"}
+                },
+                "department-54": {
+                    value: "746502",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Meurthe-et-Moselle (54)</span><br />Population : 746502"}
+                },
+                "department-56": {
+                    value: "744663",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Morbihan (56)</span><br />Population : 744663"}
+                },
+                "department-30": {
+                    value: "726285",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Gard (30)</span><br />Population : 726285"}
+                },
+                "department-14": {
+                    value: "699561",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Calvados (14)</span><br />Population : 699561"}
+                },
+                "department-45": {
+                    value: "674913",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Loiret (45)</span><br />Population : 674913"}
+                },
+                "department-64": {
+                    value: "674908",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Pyrénées-Atlantiques (64)</span><br />Population : 674908"}
+                },
+                "department-85": {
+                    value: "654096",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Vendée (85)</span><br />Population : 654096"}
+                },
+                "department-63": {
+                    value: "649643",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Puy-de-Dôme (63)</span><br />Population : 649643"}
+                },
+                "department-17": {
+                    value: "640803",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Charente-Maritime (17)</span><br />Population : 640803"}
+                },
+                "department-01": {
+                    value: "614331",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Ain (01)</span><br />Population : 614331"}
+                },
+                "department-22": {
+                    value: "612383",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Côtes-d'Armor (22)</span><br />Population : 612383"}
+                },
+                "department-37": {
+                    value: "605819",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Indre-et-Loire (37)</span><br />Population : 605819"}
+                },
+                "department-27": {
+                    value: "603194",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Eure (27)</span><br />Population : 603194"}
+                },
+                "department-80": {
+                    value: "583388",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Somme (80)</span><br />Population : 583388"}
+                },
+                "department-51": {
+                    value: "579533",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Marne (51)</span><br />Population : 579533"}
+                },
+                "department-72": {
+                    value: "579497",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Sarthe (72)</span><br />Population : 579497"}
+                },
+                "department-71": {
+                    value: "574874",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Saône-et-Loire (71)</span><br />Population : 574874"}
+                },
+                "department-84": {
+                    value: "555240",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Vaucluse (84)</span><br />Population : 555240"}
+                },
+                "department-02": {
+                    value: "555094",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Aisne (02)</span><br />Population : 555094"}
+                },
+                "department-25": {
+                    value: "542509",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Doubs (25)</span><br />Population : 542509"}
+                },
+                "department-21": {
+                    value: "538505",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Côte-d'Or (21)</span><br />Population : 538505"}
+                },
+                "department-50": {
+                    value: "517121",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Manche (50)</span><br />Population : 517121"}
+                },
+                "department-26": {
+                    value: "499313",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Drôme (26)</span><br />Population : 499313"}
+                },
+                "department-66": {
+                    value: "457238",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Pyrénées-Orientales (66)</span><br />Population : 457238"}
+                },
+                "department-28": {
+                    value: "440291",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Eure-et-Loir (28)</span><br />Population : 440291"}
+                },
+                "department-86": {
+                    value: "438566",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Vienne (86)</span><br />Population : 438566"}
+                },
+                "department-73": {
+                    value: "428751",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Savoie (73)</span><br />Population : 428751"}
+                },
+                "department-24": {
+                    value: "426607",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Dordogne (24)</span><br />Population : 426607"}
+                },
+                "department-971": {
+                    value: "409905",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Guadeloupe (971)</span><br />Population : 409905"}
+                },
+                "department-972": {
+                    value: "400535",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Martinique (972)</span><br />Population : 400535"}
+                },
+                "department-40": {
+                    value: "397766",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Landes (40)</span><br />Population : 397766"}
+                },
+                "department-88": {
+                    value: "392846",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Vosges (88)</span><br />Population : 392846"}
+                },
+                "department-81": {
+                    value: "387099",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Tarn (81)</span><br />Population : 387099"}
+                },
+                "department-87": {
+                    value: "384781",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Haute-Vienne (87)</span><br />Population : 384781"}
+                },
+                "department-79": {
+                    value: "380569",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Deux-Sèvres (79)</span><br />Population : 380569"}
+                },
+                "department-11": {
+                    value: "365854",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Aude (11)</span><br />Population : 365854"}
+                },
+                "department-16": {
+                    value: "364429",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Charente (16)</span><br />Population : 364429"}
+                },
+                "department-89": {
+                    value: "353366",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Yonne (89)</span><br />Population : 353366"}
+                },
+                "department-03": {
+                    value: "353124",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Allier (03)</span><br />Population : 353124"}
+                },
+                "department-47": {
+                    value: "342500",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Lot-et-Garonne (47)</span><br />Population : 342500"}
+                },
+                "department-41": {
+                    value: "340729",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Loir-et-Cher (41)</span><br />Population : 340729"}
+                },
+                "department-07": {
+                    value: "324885",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Ardèche (07)</span><br />Population : 324885"}
+                },
+                "department-18": {
+                    value: "319600",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Cher (18)</span><br />Population : 319600"}
+                },
+                "department-53": {
+                    value: "317006",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Mayenne (53)</span><br />Population : 317006"}
+                },
+                "department-10": {
+                    value: "311720",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Aube (10)</span><br />Population : 311720"}
+                },
+                "department-61": {
+                    value: "301421",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Orne (61)</span><br />Population : 301421"}
+                },
+                "department-08": {
+                    value: "291678",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Ardennes (08)</span><br />Population : 291678"}
+                },
+                "department-12": {
+                    value: "288364",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Aveyron (12)</span><br />Population : 288364"}
+                },
+                "department-39": {
+                    value: "271973",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Jura (39)</span><br />Population : 271973"}
+                },
+                "department-19": {
+                    value: "252235",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Corrèze (19)</span><br />Population : 252235"}
+                },
+                "department-82": {
+                    value: "248227",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Tarn-et-Garonne (82)</span><br />Population : 248227"}
+                },
+                "department-70": {
+                    value: "247311",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Haute-Saône (70)</span><br />Population : 247311"}
+                },
+                "department-36": {
+                    value: "238261",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Indre (36)</span><br />Population : 238261"}
+                },
+                "department-65": {
+                    value: "237945",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Hautes-Pyrénées (65)</span><br />Population : 237945"}
+                },
+                "department-43": {
+                    value: "231877",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Haute-Loire (43)</span><br />Population : 231877"}
+                },
+                "department-973": {
+                    value: "231167",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Guyane (973)</span><br />Population : 231167"}
+                },
+                "department-58": {
+                    value: "226997",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Nièvre (58)</span><br />Population : 226997"}
+                },
+                "department-55": {
+                    value: "200509",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Meuse (55)</span><br />Population : 200509"}
+                },
+                "department-32": {
+                    value: "195489",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Gers (32)</span><br />Population : 195489"}
+                },
+                "department-52": {
+                    value: "191004",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Haute-Marne (52)</span><br />Population : 191004"}
+                },
+                "department-46": {
+                    value: "181232",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Lot (46)</span><br />Population : 181232"}
+                },
+                "department-2B": {
+                    value: "168869",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Haute-Corse (2B)</span><br />Population : 168869"}
+                },
+                "department-04": {
+                    value: "165155",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Alpes-de-Haute-Provence (04)</span><br />Population : 165155"}
+                },
+                "department-09": {
+                    value: "157582",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Ariège (09)</span><br />Population : 157582"}
+                },
+                "department-15": {
+                    value: "154135",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Cantal (15)</span><br />Population : 154135"}
+                },
+                "department-90": {
+                    value: "146475",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Territoire de Belfort (90)</span><br />Population : 146475"}
+                },
+                "department-2A": {
+                    value: "145998",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Corse-du-Sud (2A)</span><br />Population : 145998"}
+                },
+                "department-05": {
+                    value: "142312",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Hautes-Alpes (05)</span><br />Population : 142312"}
+                },
+                "department-23": {
+                    value: "127919",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Creuse (23)</span><br />Population : 127919"}
+                },
+                "department-48": {
+                    value: "81281",
+                    href: "#",
+                    tooltip: {content: "<span style=\"font-weight:bold;\">Lozère (48)</span><br />Population : 81281"}
+                }
+            }
+        });
+    });
+</script>
+{% block javascripts %}
+
+{% endblock %}
+</body>
+</html>

@@ -2,6 +2,7 @@
 
 namespace EcoBundle\Controller;
 
+use Swift_Attachment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -98,6 +99,38 @@ class DefaultController extends Controller
         );
     }
 
+    /**
+     * @Route("/email", name="email")
+     */
+    public function envoyerTicketAction(Request $request)
+    {
+      $message = \Swift_Message::newInstance()
+                ->setSubject('Hello Email')
+                ->setFrom('pidevmailer2019@gmail.com')
+                ->setTo('arafet.azzabi@gmail.com')
+//                ->setBody(
+//                    $this->renderView(
+//                        // app/Resources/views/Emails/registration.html.twig
+//                        'Emails/registration.html.twig',
+//                        array('name' => $name)
+//                    ),
+//                    'text/html'
+//                )
+                /*
+                 * If you also want to include a plaintext version of the message
+                ->addPart(
+                    $this->renderView(
+                        'Emails/registration.txt.twig',
+                        array('name' => $name)
+                    ),
+                    'text/plain'
+                )
+                */
+            ;
+            $this->get('mailer')->send($message);
+
+        return $this->redirectToRoute('homepage');
+    }
 
 
 

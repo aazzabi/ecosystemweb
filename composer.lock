@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dbfeb201221956b12c8265731df7ac3d",
+    "content-hash": "e066f68c7ae145d566eaac936ddc6c09",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1516,7 +1516,7 @@
         },
         {
             "name": "ob/highcharts-bundle",
-            "version": "dev-master",
+            "version": "1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marcaube/ObHighchartsBundle.git",
@@ -3088,8 +3088,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "nomaya/social-bundle": 20,
-        "ob/highcharts-bundle": 20
+        "nomaya/social-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

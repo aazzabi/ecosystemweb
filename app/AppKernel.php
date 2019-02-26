@@ -24,7 +24,6 @@ class AppKernel extends Kernel
             new Ob\HighchartsBundle\ObHighchartsBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Nomaya\SocialBundle\NomayaSocialBundle(),
-
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

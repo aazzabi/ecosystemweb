@@ -197,4 +197,20 @@ class DAUserController extends Controller
         $em->flush();
         return $this->redirectToRoute('da_users_index');
     }
+
+    /**
+     * Creates a form to delete a user entity.
+     *
+     * @param User $user The user entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(User $user)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('da_users_delete', array('id' => $user->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
+    }
 }

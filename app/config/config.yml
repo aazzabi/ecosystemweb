@@ -124,6 +124,20 @@ vich_uploader:
             inject_on_load:     false
             delete_on_update:   true
             delete_on_remove:   true
+        annoncerep_photo:
+            uri_prefix:         /uploads/annoncerep/photos
+            upload_destination: %kernel.root_dir%/../web/uploads/annoncerep/photos
+            namer:              vich_uploader.namer_uniqid
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+        compteprof_photo:
+            uri_prefix:         /uploads/demandecompte/photos
+            upload_destination: %kernel.root_dir%/../web/uploads/demandecompte/photos
+            namer:              vich_uploader.namer_uniqid
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
 
 knp_paginator:
     page_range: 5                       # number of links showed in the pagination menu (e.g: you have 10 pages, a page_range of 3, on the 5th page you'll see links to page 4, 5, 6)

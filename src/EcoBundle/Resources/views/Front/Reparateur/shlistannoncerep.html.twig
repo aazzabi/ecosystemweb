@@ -1,0 +1,338 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <link href="{{ asset ('assets/css/cardannonce.css') }}" rel="stylesheet" type="text/css"
+          xmlns="http://www.w3.org/1999/html"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet"/>
+    <link href="{{ asset ('assets/css/searchbarrep.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/css/modalrep.css') }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="{{ asset ('assets/css/inputreps.css') }}" rel="stylesheet" type="text/css"/>
+
+    <script src="{{ asset ('assets/plugins/jquery/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
+    <script language="javascript">
+
+
+
+    </script>
+    <div class="s003">
+        <form>
+            <div class="inner-form">
+                <div class="input-field first-wrap">
+                    <div class="input-select">
+                        <select data-trigger="" name="choices-single-default" id="selectsearch">
+                            <option placeholder="Critère">Titre</option>
+                            <option>Utilisateur</option>
+
+
+
+                        </select>
+                    </div>
+                </div>
+                <div class="input-field second-wrap">
+                    <input id="search0" type="text" placeholder="Entrez des mots  clés"/>
+                </div>
+                <div class="input-field third-wrap">
+
+                </div>
+            </div>
+        </form>
+             <div class="col-sm-2">
+        <select id="categorie" class="form-control">
+            <option selected>Catégorie</option>
+            <option>Téléphone</option>
+            <option>Electroménager</option>
+            <option>Meuble</option>
+        </select>
+    </div>
+    </div>
+
+
+    <script src="{{ asset ('assets/js/searchbarrep.js' ) }} " type="text/javascript"></script>
+    <script>
+        const choices = new Choices('[data-trigger]',
+            {
+                searchEnabled: false,
+                itemSelectText: '',
+
+            });
+
+    </script>
+
+    {% if app.user %}
+        <center><a data-toggle="modal" data-target="#ajoutAnnonce" class='ph-button ph-btn-green '>Postez votre announce
+                maintenant
+                !</a></center>
+    {% else %}
+        <center><a  class="ph-button ph-btn-green" data-toggle="modal" data-target="#connect">Postez votre announce
+            maintenant
+        </a></center>
+        <!--Modal Authentification -->
+        <div class="modal fade" id="connect" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Vous n'etes pas connecté, veuillez se connecter
+                            !</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a href="{{ path('inscription') }}">
+                            <button class="btn btn-default btn-cons  btn-sm">S'inscrire</button>
+                        </a>
+                        <a href="{{ path('fos_user_security_login') }}">
+                            <button class="btn btn-primary btn-cons  btn-sm">Se Connecter</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN Modal Authentification -->
+    {% endif %}
+    <br>
+    <br>
+    <!--Modal AJOUT ANNONCE REP -->
+    <div class="modal fade" id="ajoutAnnonce" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                   <h4 class="modal-title text-center marg" id="exampleModalLabel">Ajout d'une announce !</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+                        {% form_theme formAnnonce 'bootstrap_3_horizontal_layout.html.twig' %}
+                        {{ form_start(formAnnonce) }}
+                        <center>
+                            <div class="test input-effect marg">
+
+                                {{ form_widget(formAnnonce.titre, { 'attr': {'class': 'effect-21','placeholder': 'Titre announce'} }) }}
+                                <span class="focus-border marg">
+            	<i></i>
+                    </span>
+                            </div>
+                        </center>
+
+                        <center>
+                            <div class="test  input-effect marg">
+                                {{ form_widget(formAnnonce.description, { 'attr': {'class': 'effect-21','placeholder': 'Description'} }) }}
+                                <span class="focus-border">
+            	<i></i>
+                        </span>
+                            </div>
+                        </center>
+
+                        <center>
+                            <div class="test  input-effect marg">
+                                {{ form_widget(formAnnonce.categorie, { 'attr': {'class': 'effect-21'} }) }}
+                                <span class="focus-border">
+            	<i></i>
+                        </span>
+                            </div>
+                        </center>
+                        <center><div class="test  input-effect marg">
+                                {{ form_widget(formAnnonce.annoncerepPhoto.file, { 'attr': {'class': 'btn'} }) }}
+                                <span class="focus-border">
+            	<i></i>
+                        </span>
+                            </div></center>
+                        {#<center>#}
+                            {#<div>#}
+                                {#{{ form_rest(formAnnonce) }}#}
+                            {#</div>#}
+                        {#</center>#}
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+
+
+
+                </div>
+                    {{ form_end(formAnnonce) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN Modal AJOUT ANNONCE REP -->
+    <center><p> Nombre d'annonces :{{ annonce|length }}</p></center>
+      <div id="result" class="">
+    <div class="wrapper" >
+
+        {% for value in annonce %}
+            <!-- DEBUT  CARD VIEW -->
+            <div class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"
+                 style="width: 360px; overflow: hidden; border-radius: 1px;">
+                {%   if value.photo!='' %}
+
+                <img src="{{ asset('uploads/annoncerep/photos/' ~ value.photo) }}" alt="Pas de photo"
+                     class="d-block w-full ex1">
+                {% else %}
+                    <img src="http://glace-sorbet.fr/wp-content/uploads/2010/10/pas-de-photo.jpg" alt="Pas de photo"
+                         class="d-block w-full ex1">
+                    {% endif %}
+
+
+                <div class="px-2 py-2">
+                    <p class="mb-0 small font-weight-medium text-uppercase mb-1 text-muted lts-2px">
+                        Catégorie : {{ value.categorie }}
+                    </p>
+                    <p class="mb-0 small font-weight-medium text-uppercase mb-1 text-muted lts-2px">
+                        Créer par  :{{ value.utilisateur }}
+                    </p>
+                    <h4 class="ff-serif font-weight-normal text-black card-heading mt-0 mb-1"
+                        style="line-height: 1.25;"> {{ value.titre }}
+                    </h4>
+                    <p class="mb-1">
+                        Description :{{ value.description }} &hellip;
+                    </p>
+                </div>
+                <center>
+                    {% if is_granted('ROLE_REPARATEUR') %}
+                    <button type="button" class="btn btn-complete btn-cons mx-auto" data-toggle="modal"
+                            data-target="#{{ value.id }}">
+                        Faire une offre
+                    </button>
+                </center>
+                {% endif %}
+
+            </div>
+            <!-- FIN  CARD VIEW -->
+            <!-- Modal ANNONCE REP -->
+            <div class="modal fade modalrep" id="{{ value.id }}" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="ff-serif font-weight-normal text-black card-heading mt-0 mb-1" class="" id="">{{ value.titre }}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ path('reparateur_updateanrep') }}" method="GET" id="Formupdate">
+                            <div class="modal-body">
+
+                                {%   if value.photo!='' %}
+
+                                    <img src="{{ asset('uploads/annoncerep/photos/' ~ value.photo) }}" alt="Pas de photo"
+                                         class="d-block w-full ex1">
+                                {% else %}
+                                    <img src="http://glace-sorbet.fr/wp-content/uploads/2010/10/pas-de-photo.jpg" alt="Pas de photo"
+                                         class="d-block w-full ex1">
+                                {% endif %}
+                                <input name="id" value="{{ value.id }}" style="display: none">
+                                <h4 class="dz-size">Catégorie :{{ value.categorie }}</h4>
+                                 <p>{{ value.description }} </p>
+
+                                <h4 style="color:blue;"> Meilleure offre :{{ value.lastprix }} DT par : {{ value.reparateur }} </h4>
+
+
+
+                                <center>
+                                    <div class="test input-effect marg">
+
+                                        <input name="prix" type="number" class="effect-21" min="0" required
+                                               placeholder="Proposez votre prix !" id="prix">
+                                        <span class="focus-border marg">
+            	<i></i>
+                    </span>
+                                    </div>
+                                </center>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary">Valider</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- END MODAL ANNONCE REP-->
+
+        {% endfor %}
+    </div>
+      </div>
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+ <script>
+
+     $("#search0").keyup(function (){
+
+         $.ajax({
+             url : '{{ path('reparateur_copy') }}',
+             type : 'POST',
+             dataType: "json",
+             data: {
+                 type: $( "#selectsearch" ).val(),
+                 valeur: $( "#search0" ).val()
+             },
+             success :     function(reponse) {
+                 $( "#result" ).html( reponse );
+                 // alert($( "#selectsearch" ).val());
+             },
+
+             error : function(resultat, statut, erreur){
+
+             },
+
+             complete : function(resultat, statut){
+
+             }
+
+         });
+
+     });
+
+
+     $('#categorie').on('change', function() {
+
+
+
+         $.ajax({
+             url : '{{ path('reparateur_copy') }}',
+             type : 'POST',
+             dataType: "json",
+             data: {
+                 type: $( "#categorie" ).val(),
+             },
+             success :     function(reponse) {
+                 $( "#result" ).html( reponse );
+
+             },
+
+             error : function(resultat, statut, erreur){
+
+             },
+
+             complete : function(resultat, statut){
+
+             }
+
+         });
+
+      });
+
+    </script>
+
+{% endblock %}

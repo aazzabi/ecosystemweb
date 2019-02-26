@@ -23,13 +23,6 @@
                     "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
                 }
             });
-            var reparateursPro = $('#reparateursProTab').DataTable({
-                "paging": true,
-                "stateSave": true,
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
-                }
-            });
             var livreurs = $('#livreursTab').DataTable({
                 "paging": true,
                 "stateSave": true,
@@ -88,10 +81,6 @@
                     <li class="nav-item">
                         <a href="#" data-toggle="tab" role="tab" data-target="#reparateurs" class=""
                            aria-expanded="false">Reparateurs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#reparateursPro" class=""
-                           aria-expanded="false">Reparateurs Pro</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" data-toggle="tab" role="tab" data-target="#livreurs" class=""
@@ -183,6 +172,8 @@
                             <th>Username</th>
                             <th>Email</th>
                             <th>Adresse</th>
+                            <th>Numéro</th>
+                            <th>Type</th>
                             <th>Specialite</th>
                             <th>Horaire</th>
                             <th>Actions</th>
@@ -206,6 +197,8 @@
                                 <td>{{ reparateur.username }}</td>
                                 <td>{{ reparateur.email }}</td>
                                 <td>{{ reparateur.adresse }}</td>
+                                <td>Numéro Fixe :{{ reparateur.numeroFix }} Numéro Tél:{{ reparateur.numeroTel }} </td>
+                                <td>{{ reparateur.type }}</td>
                                 <td>{{ reparateur.specialite }}</td>
                                 <td>{{ reparateur.horaire }}</td>
 
@@ -220,48 +213,6 @@
                                             <i class="fa fa-trash"> </i>
                                         </a>
                                     </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane" id="reparateursPro" aria-expanded="false">
-                    <table id="reparateursProTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
-                        <tr>
-                            <th>Photo</th>
-                            <th>Nom - Prenom</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Société</th>
-                            <th>Roles</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <thead>
-                        <tbody>
-                        {% for reparateurp in reparateursPro %}
-                            <tr>
-
-                                <td style="width: 55px; padding:0px; text-align: center">
-                                    {% if reparateurp.photo != '' %}
-                                        <img alt="User Pic" style="width:50px;"
-                                             src="{{ asset('uploads/user/photo/' ~ reparateurp.photo) }}"
-                                             class="img-circle img-responsive">
-                                    {% else %}
-                                        <img alt="User Pic" style="width:50px;" src="{{ asset('assets/img/profile.png') }}"
-                                             id="profile-image1" class="img-circle img-responsive">
-                                    {% endif %}
-                                </td>
-                                <td>{{ reparateurp.nom|upper }} {{ reparateur.prenom }} </td>
-                                <td>{{ reparateurp.username }}</td>
-                                <td>{{ reparateurp.email }}</td>
-                                <td>{{ reparateurp.adresse }}</td>
-                                <td>{{ reparateurp.specialite }}</td>
-                                <td>{{ reparateurp.horaire }}</td>
-
-                                <td>
                                     <div class="btn-group btn-group-sm btn-group-horizontal">
                                         <a class="btn btn-secondary"
                                            href="{{ path('da_users_edit', { 'id': reparateurp.id }) }}"
@@ -269,7 +220,10 @@
                                             <i class="fa fa-pencil-square-o"></i>
                                         </a>&nbsp;
                                         <a class="btn btn-danger" href="{{ path('da_users_delete', { 'id': reparateurp.id }) }}">
-                                            <i class="fa fa-trash"> </i>
+                                            <i class="fa fa-trash"> </i></a>
+                                        <a href="{{ path('da_rep_grant', { 'id': reparateur.id }) }}"
+                                           data-toggle="tooltip" title="Promovoir réparateur">
+                                            <i class="fa fa-star"></i>
                                         </a>
                                     </div>
                                 </td>

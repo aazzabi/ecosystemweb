@@ -50,7 +50,17 @@ class ReparateurType extends AbstractType
                 'required'=>false,
             ))
             ->add('adresse')
-            ->add('specialite')
+            ->add('numeroTel')
+            ->add('numeroFix')
+            ->add('specialite', ChoiceType::class, [
+                    'choices'  => [
+                    'Téléphone' => "Téléphone",
+                    'Electroménager' => "Electroménager",
+                    'Meuble' => "Meuble",
+                ],
+            ])
+            ->add('description',TextareaType::class)
+
             ->add('horaire', TextareaType::class, [
                 'label' => 'Horaire de travail',
                 'required'=>true,

@@ -1,0 +1,281 @@
+{% extends 'base.html.twig' %}
+{% block stylesheet %}
+
+    <link href="{{ asset ('assets/css/cardoffrerep.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block body %}
+    <link href="{{ asset ('assets/css/cardoffrerep.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/css/inputreps.css') }}" rel="stylesheet" type="text/css"/>
+    <! ========================
+    Syed Sahar Ali Raza
+    ========================	!>
+    <div id="generic_price_table">
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--PRICE HEADING START-->
+                        <div class="price-heading clearfix">
+                            <h1>Demander un compte profesionnel maintenant !</h1>
+                        </div>
+                        <!--//PRICE HEADING END-->
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+
+                <!--BLOCK ROW START-->
+                <div class="row">
+                    <div class="col-md-4">
+
+                        <!--PRICE CONTENT START-->
+                        <div class="generic_content clearfix">
+
+                            <!--HEAD PRICE DETAIL START-->
+                            <div class="generic_head_price clearfix">
+
+                                <!--HEAD CONTENT START-->
+                                <div class="generic_head_content clearfix">
+
+                                    <!--HEAD START-->
+                                    <div class="head_bg"></div>
+                                    <div class="head">
+                                        <span>Basique</span>
+                                    </div>
+                                    <!--//HEAD END-->
+
+                                </div>
+                                <!--//HEAD CONTENT END-->
+
+                                <!--PRICE START-->
+                                <div class="generic_price_tag clearfix">
+                                <span class="price">
+                                    <span class="sign">DT</span>
+                                    <span class="currency">39</span>
+                                    <span class="cent">.99</span>
+                                    <span class="month">/MOIS</span>
+                                </span>
+                                </div>
+                                <!--//PRICE END-->
+
+                            </div>
+                            <!--//HEAD PRICE DETAIL END-->
+
+                            <!--FEATURE LIST START-->
+                            <div class="generic_feature_list">
+                                <ul>
+                                    <li><span>Un badge</span> Profesionnel</li>
+                                    <li><span>10</span> SMS/mois</li>
+                                    <li><span>1</span> Email</li>
+                                    <li><span>24/7</span> Support</li>
+                                </ul>
+                            </div>
+                            <!--//FEATURE LIST END-->
+
+                            {% if is_granted('ROLE_REPARATEUR') %}
+                                <!--BUTTON START-->
+                                <div class="generic_price_btn clearfix">
+
+                                    <a data-toggle="modal" data-target="#demandec">Demander un compte</a>
+
+                                </div>
+                            {% else %}
+                                <h1>Compte réparateur requis</h1>
+                            {% endif %}
+                            <!--//BUTTON END-->
+
+                        </div>
+                        <!--//PRICE CONTENT END-->
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <!--PRICE CONTENT START-->
+                        <div class="generic_content active clearfix">
+
+                            <!--HEAD PRICE DETAIL START-->
+                            <div class="generic_head_price clearfix">
+
+                                <!--HEAD CONTENT START-->
+                                <div class="generic_head_content clearfix">
+
+                                    <!--HEAD START-->
+                                    <div class="head_bg"></div>
+                                    <div class="head">
+                                        <span>Standard</span>
+                                    </div>
+                                    <!--//HEAD END-->
+
+                                </div>
+                                <!--//HEAD CONTENT END-->
+
+                                <!--PRICE START-->
+                                <div class="generic_price_tag clearfix">
+                                <span class="price">
+                                    <span class="sign">DT</span>
+                                    <span class="currency">79</span>
+                                    <span class="cent">.99</span>
+                                    <span class="month">/MOIS</span>
+                                </span>
+                                </div>
+                                <!--//PRICE END-->
+
+                            </div>
+                            <!--//HEAD PRICE DETAIL END-->
+
+                            <!--FEATURE LIST START-->
+                            <div class="generic_feature_list">
+                                <ul>
+                                    <li><span>Un badge</span> Profesionnel</li>
+                                    <li><span>100</span> SMS/mois</li>
+                                    <li><span>2</span> Email</li>
+                                    <li><span>24/7</span> Support</li>
+                                </ul>
+                            </div>
+                            <!--//FEATURE LIST END-->
+                            {% if is_granted('ROLE_REPARATEUR') %}
+                                <!--BUTTON START-->
+                                <div class="generic_price_btn clearfix">
+
+                                    <a data-toggle="modal" data-target="#demandec">Demander un compte</a>
+
+                                </div>
+                            {% else %}
+                                <h1>Compte réparateur requis</h1>
+                            {% endif %}
+                            <!--//BUTTON END-->
+
+                        </div>
+                        <!--//PRICE CONTENT END-->
+
+                    </div>
+                    <div class="col-md-4">
+
+                        <!--PRICE CONTENT START-->
+                        <div class="generic_content clearfix">
+
+                            <!--HEAD PRICE DETAIL START-->
+                            <div class="generic_head_price clearfix">
+
+                                <!--HEAD CONTENT START-->
+                                <div class="generic_head_content clearfix">
+
+                                    <!--HEAD START-->
+                                    <div class="head_bg"></div>
+                                    <div class="head">
+                                        <span>Ilimitée</span>
+                                    </div>
+                                    <!--//HEAD END-->
+
+                                </div>
+                                <!--//HEAD CONTENT END-->
+
+                                <!--PRICE START-->
+                                <div class="generic_price_tag clearfix">
+                                <span class="price">
+                                    <span class="sign">DT</span>
+                                    <span class="currency">149</span>
+                                    <span class="cent">.99</span>
+                                    <span class="month">/MOIS</span>
+                                </span>
+                                </div>
+                                <!--//PRICE END-->
+
+                            </div>
+                            <!--//HEAD PRICE DETAIL END-->
+
+                            <!--FEATURE LIST START-->
+                            <div class="generic_feature_list">
+                                <ul>
+                                    <li><span>Un badge</span> Profesionnel</li>
+                                    <li><span>5000</span> SMS/mois</li>
+                                    <li><span>4</span> Email</li>
+                                    <li><span>24/7</span> Support</li>
+                                </ul>
+                            </div>
+                            <!--//FEATURE LIST END-->
+                            {% if is_granted('ROLE_REPARATEUR') %}
+                            <!--BUTTON START-->
+                            <div class="generic_price_btn clearfix">
+
+                                <a data-toggle="modal" data-target="#demandec">Demander un compte</a>
+
+                            </div>
+                            {% else %}
+                                <h1>Compte réparateur requis</h1>
+                            {% endif %}
+                            <!--//BUTTON END-->
+
+                        </div>
+                        <!--//PRICE CONTENT END-->
+
+                    </div>
+                </div>
+                <!--//BLOCK ROW END-->
+
+            </div>
+        </section>
+        <footer>
+            <h1>Charte :</h1>
+                <p>
+            Pourquoi choisir notre platforme ?
+            Des réparateurs audités et agréés selon notre charte qualité
+            Nous avons au fil de notre expérience testé, audité et agréé les meilleurs centres de réparation par typologie d'appareil. Ecozone.com vous assure une qualité de service irréprochable à travers des processus industriels stricts et une charte d'agrément pour nos réparateurs dont les principaux éléments sont la qualité, le délai, et le suivi d'information en temps réel.
+
+            Des délais de réparation rapides
+            Les délais de réparation constatés sont de 24 à 72 heures ouvrées, sous condition de disponibilité des pièces.
+
+            Une garantie incluse
+            Pour chaque réparation, vous bénéficiez d'une garantie de 6 mois.
+                </p>
+        </footer>
+
+    </div>
+    <!--Modal AJOUT ANNONCE REP -->
+    <div class="modal fade" id="demandec" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center marg" id="exampleModalLabel">Demande d'un compte Profesionnel !</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+                        <p>Merci de joindre un fichier PDF contenant : Recu de paiement, Une copie de la carte d'identité , Une copie de la battende</p>
+                        <p>Numéro de L'IBAN: ###########</p>
+                        <p style="color:red;">Toute demande qui ne contient pas le fichier PDF associé sera directement effacée</p>
+                        {% form_theme formAnnonce 'bootstrap_3_horizontal_layout.html.twig' %}
+                        {{ form_start(formAnnonce) }}
+                        Offre :{{ form_widget(formAnnonce.type, { 'attr': {'class': 'effect-21'} }) }}
+                        PDF : {{ form_widget(formAnnonce.compteprof_photo.file, { 'attr': {'class': 'btn'} }) }}
+
+
+
+                    </div>
+
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+
+
+
+                </div>
+                    {{ form_end(formAnnonce) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN Modal AJOUT ANNONCE REP -->
+
+
+
+
+
+{% endblock%}

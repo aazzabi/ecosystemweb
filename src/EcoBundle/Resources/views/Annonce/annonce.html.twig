@@ -62,16 +62,16 @@
         });
     </script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $(".keyWord").keyup(function () {
                 var keyWord = $(this).val();
                 $.ajax({
                     dataType: "json",
-                    url : '{{ path('f_annonce_recherche') }}',
+                    url: '{{ path('f_annonce_recherche') }}',
                     data: {
                         "keyWord": keyWord
                     },
-                    success:function(response) {
+                    success: function (response) {
                         $("#postContent").html(response);
                     },
                 });
@@ -136,88 +136,83 @@
                 <div class="card card-default m-b-0">
                     <div class="card-header " role="tab" id="headingOne">
                         <h4 class="card-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
-                               aria-expanded="false" aria-controls="collapseOne" class="collapsed">
-                                Categories
-                            </a>
+                            Categories
                         </h4>
                     </div>
-                    <div id="collapseOne" class="collapse" role="tabcard" aria-labelledby="headingOne" style="">
-                        <div class="card-body">
-                            <ul class="list-group">
-                                <a href="{{ path('f_annonce_index') }}">
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <a href="{{ path('f_annonce_index') }}">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    All
+                                    {#<span class="badge badge-primary badge-pill">{{ c.annonces | length}}</span>#}
+                                </li>
+                            </a>
+                            {% for c in categories %}
+                                <a href="{{ path('f_recherch_Categorie', { 'cat': c.id }) }}">
+                                    {#{{ dump(c) }}#}
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        All
+                                        {{ c.libelle }}
                                         {#<span class="badge badge-primary badge-pill">{{ c.annonces | length}}</span>#}
                                     </li>
                                 </a>
-                                {% for c in categories %}
-                                    <a href="{{ path('f_recherch_Categorie', { 'cat': c.id }) }}">
-                                        {#{{ dump(c) }}#}
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            {{ c.libelle }}
-                                            {#<span class="badge badge-primary badge-pill">{{ c.annonces | length}}</span>#}
-                                        </li>
-                                    </a>
-                                {% endfor %}
-                            </ul>
-                        </div>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-9" id="main">
-            <h1>Annonce Les Plus Aimer</h1>
-            <div class="row" id="aa" style="margin-right:30px; margin-left: 30px;">
-                {% for l in likes %}
-                    <div class="col-md-3">
-                        <figure class="card card-product">
-                            <div class="img-wrap">
-                                {% if l.photo != '' %}
-                                    <img style="width:230px;" src="{{ asset('uploads/Annonce/photo/' ~ l.photo) }}"
-                                         class="card-img-top">
-                                {% else %}
-                                    <img alt="annonce_Pic" style="width:230px ; height: 230px;"
-                                         src="{{ asset('assets/img/annonces.png') }}"
-                                         id="profile-image1" class="card-img-top">
-                                {% endif %}
-                            </div>
-                            <figcaption class="info-wrap">
-                                <h4 class="title">{{ l.titre }}</h4>
-                                <p class="desc">{{ l.description }}</p>
-                                <div class="price-wrap h5">
-                                    <span class="price-new">${{ l.prix }}</span>
-                                    <button type="submit" value="{{ l.id }}"
-                                            class="jaime btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">
-                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
-                                    </button>
-                                </div>
-                                <div>
-                                    <a href="{{ path('du_annonce_signaler', { 'id': l.id }) }}"
-                                       class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">
-                                        <i class="icon-plus">
-                                            <i class="fa fa-bug" aria-hidden="true"></i>
-                                            &nbsp;Signaler
-                                        </i>
-                                    </a>
-                                </div>
-                            </figcaption>
-                            <div class="bottom-wrap">
+            {#<h1>Annonce Les Plus Aimer</h1>#}
+            {#<div class="row" id="aa" style="margin-right:30px; margin-left: 30px;">#}
+            {#{% for l in likes %}#}
+            {#<div class="col-md-3">#}
+            {#<figure class="card card-product">#}
+            {#<div class="img-wrap">#}
+            {#{% if l.photo != '' %}#}
+            {#<img style="width:230px;" src="{{ asset('uploads/Annonce/photo/' ~ l.photo) }}"#}
+            {#class="card-img-top">#}
+            {#{% else %}#}
+            {#<img alt="annonce_Pic" style="width:230px ; height: 230px;"#}
+            {#src="{{ asset('assets/img/annonces.png') }}"#}
+            {#id="profile-image1" class="card-img-top">#}
+            {#{% endif %}#}
+            {#</div>#}
+            {#<figcaption class="info-wrap">#}
+            {#<h4 class="title">{{ l.titre }}</h4>#}
+            {#<p class="desc">{{ l.description }}</p>#}
+            {#<div class="price-wrap h5">#}
+            {#<span class="price-new">${{ l.prix }}</span>#}
+            {#<button type="submit" value="{{ l.id }}"#}
+            {#class="jaime btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">#}
+            {#<i class="fa fa-thumbs-up" aria-hidden="true"></i> Like#}
+            {#</button>#}
+            {#</div>#}
+            {#<div>#}
+            {#<a href="{{ path('du_annonce_signaler', { 'id': l.id }) }}"#}
+            {#class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">#}
+            {#<i class="icon-plus">#}
+            {#<i class="fa fa-bug" aria-hidden="true"></i>#}
+            {#&nbsp;Signaler#}
+            {#</i>#}
+            {#</a>#}
+            {#</div>#}
+            {#</figcaption>#}
+            {#<div class="bottom-wrap">#}
 
-                                <a href="#" class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-left">panier
-                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                </a>
-                                <a href="{{ path('f_annonce_show', { 'id': l.id }) }}" class="btn btn-tag
-                                btn-tag-light btn-tag-rounded m-r-10 float-right">
-                                    show <i class="fa fa-eye" aria-hidden="true"></i>
-                                </a>
-                            </div> <!-- bottom-wrap.// -->
-                        </figure>
-                    </div>
-                {% endfor %}
-            </div>
-            <hr>
+            {#<a href="#" class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-left">panier#}
+            {#<i class="fa fa-thumbs-up" aria-hidden="true"></i>#}
+            {#</a>#}
+            {#<a href="{{ path('f_annonce_show', { 'id': l.id }) }}" class="btn btn-tag#}
+            {#btn-tag-light btn-tag-rounded m-r-10 float-right">#}
+            {#show <i class="fa fa-eye" aria-hidden="true"></i>#}
+            {#</a>#}
+            {#</div> <!-- bottom-wrap.// -->#}
+            {#</figure>#}
+            {#</div>#}
+            {#{% endfor %}#}
+            {#</div>#}
+            {#<hr>#}
             <h1>Tous les Annonce</h1>
             <div class="row" id="postContent" style="margin-right:30px; margin-left: 30px;">
                 {% for a in annonces %}
@@ -239,7 +234,7 @@
                                 <div class="price-wrap h5">
                                     <span class="price-new">${{ a.prix }}</span>
                                     <button type="submit" value="{{ a.id }}"
-                                                     class="jaime btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">
+                                            class="jaime btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">
                                         <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
                                     </button>
                                     <button type="submit" value="{{ a.id }}"

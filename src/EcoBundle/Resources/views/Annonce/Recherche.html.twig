@@ -1,0 +1,48 @@
+{% for a in annonces %}
+    <div class="col-md-3">
+        <figure class="card card-product">
+            <div class="img-wrap">
+                {% if a.photo != '' %}
+                    <img style="width:230px;" src="{{ asset('uploads/Annonce/photo/' ~ a.photo) }}"
+                         class="card-img-top">
+                {% else %}
+                    <img alt="annonce_Pic" style="width:230px ; height: 230px;"
+                         src="{{ asset('assets/img/annonces.png') }}"
+                         id="profile-image1" class="card-img-top">
+                {% endif %}
+            </div>
+            <figcaption class="info-wrap">
+                <h4 class="title">{{ a.titre }}</h4>
+                <p class="desc">{{ a.description }}</p>
+                <div class="price-wrap h5">
+                    <span class="price-new">${{ a.prix }}</span>
+                    <button type="submit" value="{{ a.id }}"
+                            class="jaime btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
+                    </button>
+
+                </div>
+                <div>
+                    <a href="{{ path('du_annonce_signaler', { 'id': a.id }) }}"
+                       class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">
+                        <i class="icon-plus">
+                            <i class="fa fa-bug" aria-hidden="true"></i>
+                            Signaler
+                        </i>
+                    </a>
+
+                </div>
+            </figcaption>
+            <div class="bottom-wrap">
+
+                <a href="#" class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-left">panier
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                </a>
+                <a href="{{ path('f_annonce_show', { 'id': a.id }) }}" class="btn btn-tag
+                                btn-tag-light btn-tag-rounded m-r-10 float-right">
+                    show <i class="fa fa-eye" aria-hidden="true"></i>
+                </a>
+            </div> <!-- bottom-wrap.// -->
+        </figure>
+    </div>
+{% endfor %}

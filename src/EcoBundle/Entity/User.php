@@ -2,6 +2,7 @@
 
 namespace EcoBundle\Entity;
 
+use FOS\UserBundle\Model\Group;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -82,6 +83,11 @@ class User extends BaseUser
      * })
      */
     private $group;
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="User")
+     */
+    private $myAnnonces;
 
     /**
      *
@@ -107,6 +113,17 @@ class User extends BaseUser
         $this->roles = array();
         $this->eventsCrees = new ArrayCollection();
         $this->eventsParticipes = new ArrayCollection();
+        $this->myAnnonces = new ArrayCollection();
+    }
+
+    public function addMyAnnonce(Annonce $annonce)
+    {
+        $this->myAnnonces[] = $annonce;
+        return $this;
+    }
+    public function removeMyAnnonce(Annonce $annonce)
+    {
+        $this->myAnnonces->removeElement($annonce);
     }
 
     /**
@@ -364,5 +381,17 @@ class User extends BaseUser
     public function removeEventsCrees(Evenement $e)
     {
         $this->eventsCrees->removeElement($e);
+    }
+    public function getMyAnnonces()
+    {
+        return $this->myAnnonces;
+    }
+
+    /**
+     * @param mixed $myAnnonces
+     */
+    public function setMyAnnonces($myAnnonces)
+    {
+        $this->myAnnonces = $myAnnonces;
     }
 }

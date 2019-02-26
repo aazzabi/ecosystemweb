@@ -87,7 +87,7 @@ class User extends BaseUser
      *
      * var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="createdBy")
+     * @ORM\OneToMany(targetEntity="Missions", mappedBy="createdBy")
      *
      */
     private $eventsCrees;
@@ -95,7 +95,7 @@ class User extends BaseUser
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Evenement", mappedBy="participants")
+     * @ORM\ManyToMany(targetEntity="Missions", mappedBy="participants")
      */
     private $eventsParticipes;
 
@@ -346,11 +346,11 @@ class User extends BaseUser
 
     /**
      *
-     * @param \EcoBundle\Entity\Evenement $e
+     * @param \EcoBundle\Entity\Missions $e
      *
      * @return User
      */
-    public function addEventsCrees(Evenement $e)
+    public function addEventsCrees(Missions $e)
     {
         $this->eventsCrees[] = $e;
 
@@ -359,20 +359,20 @@ class User extends BaseUser
 
     /**
      *
-     * @param \EcoBundle\Entity\Evenement $eventsCrees
+     * @param \EcoBundle\Entity\Missions $eventsCrees
      */
-    public function removeEventsCrees(Evenement $e)
+    public function removeEventsCrees(Missions $e)
     {
         $this->eventsCrees->removeElement($e);
     }
 
     /**
      *
-     * @param \EcoBundle\Entity\Evenement $e
+     * @param \EcoBundle\Entity\Missions $e
      *
      * @return User
      */
-    public function addEventsParticipes(Evenement $e)
+    public function addEventsParticipes(Missions $e)
     {
         $this->eventsParticipes[] = $e;
 
@@ -381,9 +381,9 @@ class User extends BaseUser
 
     /**
      *
-     * @param \EcoBundle\Entity\Evenement $eventsParticipes
+     * @param \EcoBundle\Entity\Missions $eventsParticipes
      */
-    public function removeEventsParticipes(Evenement $e)
+    public function removeEventsParticipes(Missions $e)
     {
         $this->eventsParticipes->removeElement($e);
     }

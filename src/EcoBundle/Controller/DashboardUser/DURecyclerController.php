@@ -9,7 +9,7 @@
 namespace EcoBundle\Controller\DashboardUser;
 
 use EcoBundle\Entity\CategorieEvts;
-use EcoBundle\Entity\Evenement;
+use EcoBundle\Entity\Missions;
 
 use EcoBundle\Entity\Group;
 use EcoBundle\Entity\Livreur;
@@ -52,7 +52,7 @@ class DURecyclerController extends Controller
 //        var_dump($idGroup = $user->getGroup());die;
 
 //        na5dhou tout les evenements
-        $evenements = $em->getRepository('EcoBundle:Evenement')->findBy(array('createdBy'=>$user));
+        $evenements = $em->getRepository('EcoBundle:Missions')->findBy(array('createdBy'=>$user));
 
         foreach ($evenements as $e) {
 //            anou li connecté ykoun houwa createur de l evenement
@@ -70,7 +70,7 @@ class DURecyclerController extends Controller
 //       $categoriesEvts = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
 //        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
 
-        return $this->render('@Eco/DashboardUser/Evenement/index.html.twig', array(
+        return $this->render('@Eco/DashboardUser/Missions/index.html.twig', array(
             'evenements' => $evenements,
             //'categoriesEvts' => $categoriesEvts,
         ));
@@ -85,7 +85,7 @@ class DURecyclerController extends Controller
     {
 
 
-        $evenement = new Evenement();
+        $evenement = new Missions();
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $form = $this->createForm('EcoBundle\Form\EvenementType', $evenement);
         $form->handleRequest($request);
@@ -102,7 +102,7 @@ class DURecyclerController extends Controller
             $em->flush();
             return $this->redirectToRoute('du_evenements_index');
         }
-        return $this->render('@Eco/DashboardUser/Evenement/new.html.twig', array(
+        return $this->render('@Eco/DashboardUser/Missions/new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -113,7 +113,7 @@ class DURecyclerController extends Controller
      * @Route("/evenement/{id}/edit", name="du_evenement_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request,Evenement $evenement)
+    public function editAction(Request $request, Missions $evenement)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if ($evenement->getCreatedBy()!= $user)
@@ -130,7 +130,7 @@ class DURecyclerController extends Controller
             return $this->redirectToRoute('du_evenements_index', array('id' => $evenement->getId()));
         }
 
-        return $this->render('@Eco/DashboardUser/Evenement/edit.html.twig', array(
+        return $this->render('@Eco/DashboardUser/Missions/edit.html.twig', array(
             'evenement' => $evenement,
             'form' => $editForm->createView(),
         ));
@@ -141,7 +141,7 @@ class DURecyclerController extends Controller
      * @Route("/evenement/{id}", name="du_evenements_show")
      * @Method("GET")
      */
-    public function showAction(Evenement $evenement)
+    public function showAction(Missions $evenement)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if ($evenement->getCreatedBy()!= $user)
@@ -149,7 +149,7 @@ class DURecyclerController extends Controller
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
 
-        return $this->render('@Eco/DashboardUser/Evenement/show.html.twig', array(
+        return $this->render('@Eco/DashboardUser/Missions/show.html.twig', array(
             'evenement' => $evenement,
         ));
     }
@@ -162,7 +162,7 @@ class DURecyclerController extends Controller
     public function deleteEventAction($id)
     {
         $m=$this->getDoctrine()->getManager();
-        $evenement = $m->getRepository(Evenement::class)->find($id);
+        $evenement = $m->getRepository(Missions::class)->find($id);
         $m->remove($evenement);
         $m->flush();
 

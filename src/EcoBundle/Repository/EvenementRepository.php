@@ -14,7 +14,7 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
     public function filterEvts($lieu)
     {
         $query=$this->getEntityManager()
-            ->createQuery("SELECT e from EcoBundle:Evenement e WHERE e.lieu=:lieu ")
+            ->createQuery("SELECT e from EcoBundle:Missions e WHERE e.lieu=:lieu ")
             ->setParameter('lieu',$lieu)
            ;
         return $query->getResult();
@@ -97,14 +97,14 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
 
     public function searchByLieu($lieu)
     {
-        $query=$this->getEntityManager()->createQuery("SELECT m from EcoBundle:Evenement m WHERE m.lieu=:lieu")
+        $query=$this->getEntityManager()->createQuery("SELECT m from EcoBundle:Missions m WHERE m.lieu=:lieu")
             ->setParameter('lieu',$lieu);
         return $query->getResult();
     }
 
     public function searchByCategorieEvt($categorie)
     {
-        $query=$this->getEntityManager()->createQuery("SELECT m from EcoBundle:Evenement m WHERE m.categorie=:categorie")
+        $query=$this->getEntityManager()->createQuery("SELECT m from EcoBundle:Missions m WHERE m.categorie=:categorie")
             ->setParameter('categorie',$categorie);
         return $query->getResult();
     }

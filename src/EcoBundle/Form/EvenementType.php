@@ -38,7 +38,7 @@ class EvenementType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'EcoBundle\Entity\Evenement'
+            'data_class' => 'EcoBundle\Entity\Missions'
         ));
     }
 

@@ -9,12 +9,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Evenement
+ * Missions
  * @Vich\Uploadable
  * @ORM\Table(name="evenement")
  * @ORM\Entity(repositoryClass="EcoBundle\Repository\EvenementRepository")
  */
-class Evenement
+class Missions
 {
     /**
      * @var int
@@ -247,7 +247,7 @@ class Evenement
      *
      * @param string $lieu
      *
-     * @return Evenement
+     * @return Missions
      */
     public function setLieu($lieu)
     {
@@ -302,7 +302,7 @@ class Evenement
      *
      * @param \DateTime $date
      *
-     * @return Evenement
+     * @return Missions
      */
     public function setDate($date)
     {

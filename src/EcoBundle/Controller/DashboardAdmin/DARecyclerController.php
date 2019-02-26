@@ -9,7 +9,7 @@
 namespace EcoBundle\Controller\DashboardAdmin;
 
 use EcoBundle\Entity\CategorieEvts;
-use EcoBundle\Entity\Evenement;
+use EcoBundle\Entity\Missions;
 use EcoBundle\Entity\Group;
 use EcoBundle\Entity\Livreur;
 use EcoBundle\Entity\Reparateur;
@@ -44,7 +44,7 @@ class DARecyclerController extends Controller
         $categoriesEvts = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
 //        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
 
-        return $this->render('@Eco/DashboardAdmin/Evenement/index.html.twig', array(
+        return $this->render('@Eco/DashboardAdmin/Missions/index.html.twig', array(
             //'evenements' => $evenements,
             'categoriesEvts' => $categoriesEvts,
         ));
@@ -61,7 +61,7 @@ class DARecyclerController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-       // $evenement = new Evenement();
+       // $evenement = new Missions();
         $categorieEvts = new CategorieEvts();
 //        tasna3 les autres entités li aand'hom 3ala9a bel module mta3ek
 
@@ -90,7 +90,7 @@ class DARecyclerController extends Controller
 //        lahna tu persiste l'entité selon le formulaire adéquat mta3ha ( Exple pour $formEvt tu persiste $evenement )
 //        w tab9a t3awed fihom 3la 3dad les entités que tu gére
 
-        return $this->render('@Eco/DashboardAdmin/Evenement/new.html.twig', array(
+        return $this->render('@Eco/DashboardAdmin/Missions/new.html.twig', array(
             'CategorieEvts' => $categorieEvts,
            // 'formEvt' => $formEvt->createView(),
             'formCateg' => $formCateg->createView(),
@@ -117,7 +117,7 @@ class DARecyclerController extends Controller
             return $this->redirectToRoute('da_categorie_index', array('id' => $categorieEvts->getId()));
         }
 
-        return $this->render('@Eco/DashboardAdmin/Evenement/edit.html.twig', array(
+        return $this->render('@Eco/DashboardAdmin/Missions/edit.html.twig', array(
             'CategorieEvts' => $categorieEvts,
             'form' => $editForm->createView(),
         ));
@@ -135,7 +135,7 @@ class DARecyclerController extends Controller
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
 
-        return $this->render('@Eco/DashboardAdmin/Evenement/show.html.twig', array(
+        return $this->render('@Eco/DashboardAdmin/Missions/show.html.twig', array(
             'CategorieEvts' => $categorieEvts,
         ));
     }
@@ -156,8 +156,8 @@ class DARecyclerController extends Controller
         //$evenements = $em->getRepository('EcoBundle:Evenements')->findAll();
 
 //        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
-        $evenement = $em->getRepository('EcoBundle:Evenement')->findAll();
-        return $this->render('@Eco/DashboardAdmin/Evenement/indexEvent.html.twig', array(
+        $evenement = $em->getRepository('EcoBundle:Missions')->findAll();
+        return $this->render('@Eco/DashboardAdmin/Missions/indexEvent.html.twig', array(
             //'evenements' => $evenements,
             'evenement' => $evenement,
         ));
@@ -172,7 +172,7 @@ class DARecyclerController extends Controller
     public function deleteEventAction($id)
     {
         $m=$this->getDoctrine()->getManager();
-        $evenement = $m->getRepository(Evenement::class)->find($id);
+        $evenement = $m->getRepository(Missions::class)->find($id);
         $m->remove($evenement);
         $m->flush();
 

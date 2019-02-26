@@ -21,7 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use EcoBundle\Entity\Evenement;
+use EcoBundle\Entity\Missions;
 use EcoBunde\Form\rechercheEventType;
 
 /**
@@ -49,7 +49,7 @@ class RecyclerController extends Controller
 
 
         if ($search['categorie']) {
-            $evenementsCat = $em->getRepository('EcoBundle:Evenement')->searchByCategorieEvt($search['categorie']);
+            $evenementsCat = $em->getRepository('EcoBundle:Missions')->searchByCategorieEvt($search['categorie']);
             if ($search['lieu']) {
                 foreach ($evenementsCat as $event) {
                     if  ($event->getLieu() == $search['lieu']) {
@@ -61,12 +61,12 @@ class RecyclerController extends Controller
             }
         }
 
-//       $evenements =  $em->getRepository('EcoBundle:Evenement')->search($search);
+//       $evenements =  $em->getRepository('EcoBundle:Missions')->search($search);
 
 //      var_dump($evenements);die;
-        $evenements = $em->getRepository('EcoBundle:Evenement')->findAll();
+        $evenements = $em->getRepository('EcoBundle:Missions')->findAll();
         $categories = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
-        return $this->render('@Eco/Front/Evenement/index.html.twig', array(
+        return $this->render('@Eco/Front/Missions/index.html.twig', array(
             //'evenements' => $evenements,
             'evenements' => $evenements,
             'categories'=> $categories,
@@ -82,10 +82,10 @@ class RecyclerController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
-        $evenement = new Evenement();
-        $evenement = $em->getRepository('EcoBundle:Evenement')->findByCategorie($cat);
+        $evenement = new Missions();
+        $evenement = $em->getRepository('EcoBundle:Missions')->findByCategorie($cat);
 
-        return $this->render('@Eco/Front/Evenement/index.html.twig', array(
+        return $this->render('@Eco/Front/Missions/index.html.twig', array(
             "evenements"=>$evenement,'categories'=> $categories,
 
         ));
@@ -94,7 +94,7 @@ class RecyclerController extends Controller
      * @Route("/evenement/{id}", name="front_evenements_show")
      * @Method("GET")
      */
-    public function showAction(Evenement $evenement)
+    public function showAction(Missions $evenement)
     {
 
         $evenement->setNbVues($evenement->getNbVues()+1);
@@ -102,7 +102,7 @@ class RecyclerController extends Controller
         $em->flush();
         $deleteForm = $this->createDeleteForm($evenement);
 
-        return $this->render('@Eco/Front/Evenement/show.html.twig', array(
+        return $this->render('@Eco/Front/Missions/show.html.twig', array(
             'evenement' => $evenement,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -115,7 +115,7 @@ class RecyclerController extends Controller
      * @Route("/evenement/{id}", name="front_evenements_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Evenement $evenement)
+    public function deleteAction(Request $request, Missions $evenement)
     {
         $form = $this->createDeleteForm($evenement);
         $form->handleRequest($request);
@@ -138,18 +138,18 @@ class RecyclerController extends Controller
         var_dump("hey");
 
         $em = $this->getDoctrine()->getManager();
-        $evenement = new Evenement();
+        $evenement = new Missions();
         $form=$this->createForm(FilterType::class ,$evenement);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted()) {
-            $evenements = $em->getRepository(Evenement::class)->filterEvts($evenement->getLieu());
+            $evenements = $em->getRepository(Missions::class)->filterEvts($evenement->getLieu());
         } else {
-            $evenements = $em->getRepository(Evenement::class)->findAll();
+            $evenements = $em->getRepository(Missions::class)->findAll();
         }
 
-        return $this->render('@Eco/Front/Evenement/filterEvts.html.twig',array(
+        return $this->render('@Eco/Front/Missions/filterEvts.html.twig',array(
             'formSearch'=>$form->createView(),
             "evenements"=>$evenements
         ));
@@ -163,7 +163,7 @@ class RecyclerController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Evenement $evenement)
+    private function createDeleteForm(Missions $evenement)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('front_evenements_delete', array('id' => $evenement->getId())))
@@ -180,18 +180,18 @@ class RecyclerController extends Controller
 
    /* public function rechercherLieuAction(Request $request)
     {
-        $event= new Evenement();
+        $event= new Missions();
         $form= $this->createForm(rechercheEventType::class ,$event);
         $form->handleRequest($request);
         if($form->isSubmitted()){
-            $events= $this->getDoctrine()->getRepository(Evenement::class)
+            $events= $this->getDoctrine()->getRepository(Missions::class)
                 ->findBy(array('lieu'=>$event->getLieu()));
         }
         else{
-            $events= $this->getDoctrine()->getRepository(Evenement::class)
+            $events= $this->getDoctrine()->getRepository(Missions::class)
                 ->findAll();
         }
-        return $this->render('@Eco/Front/Evenement/rechercheEvent.html.twig',array("form"=>$form->createView(),'events'=>$events));
+        return $this->render('@Eco/Front/Missions/rechercheEvent.html.twig',array("form"=>$form->createView(),'events'=>$events));
 
     }*/
 
@@ -215,7 +215,7 @@ class RecyclerController extends Controller
                 $qb = $em->createQueryBuilder();
 
                 $qb->select('a')
-                    ->from('EcoBundle:Evenement', 'a')
+                    ->from('EcoBundle:Missions', 'a')
                     ->where("a.lieu LIKE :motcle ")
                     ->orderBy('a.lieu', 'ASC')
                     ->setParameter('motcle', '%'.$motcle.'%');
@@ -224,10 +224,10 @@ class RecyclerController extends Controller
                 $events = $query->getResult();
             }
             else {
-                $events = $em->getRepository('EcoBundle:Evenement')->findAll();
+                $events = $em->getRepository('EcoBundle:Missions')->findAll();
             }
 
-            return $this->container->get('templating')->renderResponse('EcoBundle:Evenement:index.html.twig', array(
+            return $this->container->get('templating')->renderResponse('EcoBundle:Missions:index.html.twig', array(
                 'events' => $events
             ));
         }
@@ -243,7 +243,7 @@ class RecyclerController extends Controller
    public function participerAction($id)
    {
        $em = $this->getDoctrine()->getManager();
-       $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
+       $evenement =  $em->getRepository('EcoBundle:Missions')->find($id);
        $user = $this->get('security.token_storage')->getToken()->getUser();
 
        $evenement->addProfile($user);
@@ -265,7 +265,7 @@ class RecyclerController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
+        $evenement =  $em->getRepository('EcoBundle:Missions')->find($id);
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $evenement->removeProfile($user);

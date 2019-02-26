@@ -9,6 +9,7 @@
 namespace EcoBundle\Controller\Front;
 
 
+use EcoBundle\Entity\DemeandeC;
 use EcoBundle\Entity\Group;
 use EcoBundle\Entity\Livreur;
 use EcoBundle\Entity\Reparateur;
@@ -26,6 +27,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 /**
  *
  * @Route("reparateur")
@@ -40,25 +42,76 @@ class FrontRepController extends Controller
     {
 
 
-        return $this->render('@Eco/Front/mainindex.html.twig');
+        return $this->render('@Eco/Front/Reparateur/mainindex.html.twig');
 
     }
+
+    /**
+     * @Route("/repprof", name="reparateur_prof")
+     * @Method({"GET", "POST"})
+     */
+    public function profAction(Request $request)
+    {
+        $demande = new DemeandeC();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $formAnnonce = $this->createForm('EcoBundle\Form\DemeandeCType', $demande);
+        $formAnnonce->handleRequest($request);
+        if ($formAnnonce->isSubmitted() && $formAnnonce->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $demande->setReparateur($user);
+            $em->persist($demande);
+            $em->flush();
+            return $this->redirectToRoute('reparateur_shlista');
+        }
+
+
+        return $this->render('@Eco/Front/Reparateur/devenirrepprof.html.twig', array('formAnnonce' => $formAnnonce->createView()
+        ));
+
+    }
+
     /**
      * @Route("/copy", name="reparateur_copy")
      * @Method({"GET", "POST"})
      */
-    public function copyAction(Request $request)
+    public function ajaxAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ($request->get('type')=="Titre")
-        {$annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findBy(['titre' => $request->get('valeur')]);}
-        else  if ($request->get('type')=="Utilisateur"){
-            $annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findBy(['utilisateur' => $request->get('valeur')]);
+
+        if ($request->get('type') == "Titre") {
+            if ($request->get('valeur') == '') {
+                $annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findAll();
+            } else {
+                $annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findBy(['titre' => $request->get('valeur')]);
+            }
+
+
+        } else if ($request->get('type') == "Utilisateur") {
+            if ($request->get('valeur') == '') {
+                $annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findAll();
+            } else {
+                $user = $em->getRepository('EcoBundle:User')->findBy(['nom' => $request->get('valeur')]);
+
+                $annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findBy(['utilisateur' => $user]);
+            }
+
+        } else if ($request->get('type') == "Téléphone") {
+            $annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findBy(['categorie' => $request->get('type')]);
+
+        } else if ($request->get('type') == "Electroménager") {
+            $annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findBy(['categorie' => $request->get('type')]);
+
+        } else if ($request->get('type') == "Meuble") {
+            $annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findBy(['categorie' => $request->get('type')]);
+
+        } else {
+            $annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findAll();
         }
 
 
-        $template = $this->render('@Eco/Front/test.html.twig', array(
+        $template = $this->render('@Eco/Front/Reparateur/copy.html.twig', array(
             'annonce' => $annoncerep))->getContent();
 
         $json = json_encode($template);
@@ -67,22 +120,68 @@ class FrontRepController extends Controller
         return $response;
 
     }
+
+    /**
+     * @Route("/copy2", name="reparateur_copy2")
+     * @Method({"GET", "POST"})
+     */
+    public function ajax2Action(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        if ($request->get('type') == "Nom") {
+            if ($request->get('valeur') == '') {
+                $reparation = $em->getRepository('EcoBundle:Reparateur')->findAll();
+            } else {
+                $reparation = $em->getRepository('EcoBundle:Reparateur')->findBy(['nom' => $request->get('valeur')]);
+            }
+
+
+        } else if ($request->get('type') == "Catégorie") {
+            if ($request->get('valeur') == '') {
+                $reparation = $em->getRepository('EcoBundle:Reparateur')->findAll();
+            } else {
+                $reparation = $em->getRepository('EcoBundle:Reparateur')->findBy(['specialite' => $request->get('valeur')]);
+            }
+
+        } else if ($request->get('type') == "Professionel") {
+            $reparation = $em->getRepository('EcoBundle:Reparateur')->findBy(['type' => $request->get('type')]);
+
+        } else if ($request->get('type') == "Normal") {
+            $reparation = $em->getRepository('EcoBundle:Reparateur')->findBy(['type' => $request->get('type')]);
+
+        } else if ($request->get('type') == "Tout") {
+            $reparation = $em->getRepository('EcoBundle:Reparateur')->findAll();
+
+        }
+
+
+        $template = $this->render('@Eco/Front/Reparateur/copy2.html.twig', array(
+            'reparateur' => $reparation))->getContent();
+
+        $json1 = json_encode($template);
+        $response1 = new Response($json1, 200);
+        $response1->headers->set('Content-Type', 'application/json');
+        return $response1;
+
+    }
+
     /**
      * @Route("/shlist", name="reparateur_shlista")
      * @Method({"GET", "POST"})
      */
-    public function annlistAction( Request $request)
+    public function annlistAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findAll();
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $annonce = new AnnonceRep();
-        $annoncerep=array_reverse($annoncerep);
+        $annoncerep = array_reverse($annoncerep);
 
-        $formAnnonce = $this->createForm('EcoBundle\Form\AnnonceRepType',$annonce);
+        $formAnnonce = $this->createForm('EcoBundle\Form\AnnonceRepType', $annonce);
         $formAnnonce->handleRequest($request);
-        if($formAnnonce->isSubmitted() && $formAnnonce->isValid())
-        {
+        if ($formAnnonce->isSubmitted() && $formAnnonce->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $annonce->setUtilisateur($user);
@@ -90,8 +189,8 @@ class FrontRepController extends Controller
             $em->flush();
             return $this->redirectToRoute('reparateur_shlista');
         }
-        return $this->render('@Eco/Front/shlistannoncerep.html.twig', array(
-            'annonce' => $annoncerep,'formAnnonce' => $formAnnonce->createView()
+        return $this->render('@Eco/Front/Reparateur/shlistannoncerep.html.twig', array(
+            'annonce' => $annoncerep, 'formAnnonce' => $formAnnonce->createView()
         ));
 
 
@@ -107,40 +206,11 @@ class FrontRepController extends Controller
         $reparateur = $em->getRepository('EcoBundle:Reparateur')->findAll();
 
 
-        return $this->render('@Eco/Front/shlistrep.html.twig', array(
+        return $this->render('@Eco/Front/Reparateur/shlistrep.html.twig', array(
             'reparateur' => $reparateur));
 
 
     }
-
-    /**
-     * @Route("/detailrep", name="reparateur_detailrep")
-     * @Method({"GET"})
-     */
-    public function detailrepAction()
-    {
-
-        return $this->render('@Eco/Front/detailrep.html.twig');
-
-
-    }
-
-    /**
-     * @Route("/ajax", name="reparateur_search")
-     * @Method({"POST"})
-     */
-    public function ajaxAction(Request $request) {
-        /* on récupère la valeur envoyée par la vue */
-
-        $personnage = $request->request->get('id1');
-//        $em = $this->getDoctrine()->getManager();
-//        $annoncerep = $em->getRepository('EcoBundle:AnnonceRep')->findAll();
-echo $personnage;
-        return $this->render('reparateur_copy');
-
-    }
-
-
 
     /**
      * Creates a new annonceREp entity.
@@ -150,16 +220,15 @@ echo $personnage;
      */
     public function newAction(Request $request)
     {
-      /*  if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
-        }*/
+        /*  if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+              throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+          }*/
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $annonce = new AnnonceRep();
 
-        $formAnnonce = $this->createForm('EcoBundle\Form\AnnonceRepType',$annonce);
+        $formAnnonce = $this->createForm('EcoBundle\Form\AnnonceRepType', $annonce);
         $formAnnonce->handleRequest($request);
-        if($formAnnonce->isSubmitted() && $formAnnonce->isValid())
-        {
+        if ($formAnnonce->isSubmitted() && $formAnnonce->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $annonce->setUtilisateur($user);
@@ -172,6 +241,7 @@ echo $personnage;
         ));
 
     }
+
     /**
      * Update  annonceREp entity.
      *
@@ -185,12 +255,12 @@ echo $personnage;
               throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
           }*/
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $announce = $em->getRepository(AnnonceRep::class)->find($request->get('id'));
         if ($request->isMethod('GET')) {
 //update our object given the sent data in the request
             $announce->setLastprix($request->get('prix'));
-            $announce->setReparateur("$user");
+            $announce->setReparateur($user);
 
 
 //fresh the data base

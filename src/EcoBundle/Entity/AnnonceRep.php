@@ -34,6 +34,14 @@ class AnnonceRep
     /**
      * @var string
      *
+     * @ORM\Column(name="etat", type="string", length=255)
+     */
+    private $etat;
+
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
@@ -53,16 +61,20 @@ class AnnonceRep
     private $datemodification;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="utilisateur", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id", onDelete="CASCADE")
+     *
      */
     private $utilisateur;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(nullable=true, name="reparateur", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id", onDelete="CASCADE")
+     *
      */
     private $reparateur;
 
@@ -81,12 +93,6 @@ class AnnonceRep
     private $lastprix;
 
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(nullable=true,name="note", type="integer")
-     */
-    private $note;
     /**
      * @Vich\UploadableField(mapping="annoncerep_photo", fileNameProperty="photo")
      *
@@ -117,6 +123,7 @@ class AnnonceRep
         $this->photoUpdatedAt = new \DateTime('now');
         $this->datemodification = new \DateTime('now');
         $this->datepublication = new \DateTime('now');
+        $this->etat="En cours";
 
 
     }
@@ -228,23 +235,7 @@ class AnnonceRep
     }
 
     /**
-     * Set utilisateur
-     *
-     * @param string $utilisateur
-     *
-     * @return AnnonceRep
-     */
-    public function setUtilisateur($utilisateur)
-    {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
-
-    /**
-     * Get utilisateur
-     *
-     * @return string
+     * @return User
      */
     public function getUtilisateur()
     {
@@ -252,18 +243,15 @@ class AnnonceRep
     }
 
     /**
-     * Set note
-     *
-     * @param integer $note
-     *
-     * @return AnnonceRep
+     * @param User $utilisateur
      */
-    public function setNote($note)
+    public function setUtilisateur($utilisateur)
     {
-        $this->note = $note;
-
-        return $this;
+        $this->utilisateur = $utilisateur;
     }
+
+
+
 
     /**
      * Get note
@@ -340,7 +328,7 @@ class AnnonceRep
     }
 
     /**
-     * @return string
+     * @return User
      */
     public function getReparateur()
     {
@@ -348,12 +336,14 @@ class AnnonceRep
     }
 
     /**
-     * @param string $reparateur
+     * @param User $reparateur
      */
     public function setReparateur($reparateur)
     {
         $this->reparateur = $reparateur;
     }
+
+
 
     /**
      * @return string
@@ -370,6 +360,24 @@ class AnnonceRep
     {
         $this->categorie = $categorie;
     }
+
+    /**
+     * @return string
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+
+    /**
+     * @param string $etat
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+    }
+
+
 
 
 

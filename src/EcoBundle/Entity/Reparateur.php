@@ -20,6 +20,20 @@ class Reparateur extends  User
     private $adresse;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(nullable=true, name="numerotel", type="integer")
+     */
+    private $numeroTel;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(nullable=true, name="numerofix", type="integer")
+     */
+    private $numeroFix;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="specialite", type="string", length=255)
@@ -82,6 +96,8 @@ class Reparateur extends  User
 
         return $this;
     }
+
+
 
     /**
      * Get adresse
@@ -173,6 +189,40 @@ class Reparateur extends  User
     {
         $this->description = $description;
     }
+
+    /**
+     * @return int
+     */
+    public function getNumeroTel()
+    {
+        return $this->numeroTel;
+    }
+
+    /**
+     * @param int $numeroTel
+     */
+    public function setNumeroTel($numeroTel)
+    {
+        $this->numeroTel = $numeroTel;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumeroFix()
+    {
+        return $this->numeroFix;
+    }
+
+    /**
+     * @param int $numeroFix
+     */
+    public function setNumeroFix($numeroFix)
+    {
+        $this->numeroFix = $numeroFix;
+    }
+
+
 
 
 }

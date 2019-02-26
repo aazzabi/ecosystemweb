@@ -21,6 +21,11 @@ div.marg{
     height: 50%;
     margin: 10px auto;
 }
+div.marg1{
+    width:50%;
+    height: 50%;
+    margin: 50px auto;
+}
 h2:before {
     position: absolute;
     content: '';

@@ -1,0 +1,91 @@
+{% for value in reparateur %}
+    <div class="movie_card" id="bright">
+        <div class="info_section">
+            <div class="movie_header">
+                <img class="locandina" src="{{ asset('uploads/user/photo/' ~ value.photo) }}"/>
+
+                <h1>{{ value.nom }}</h1>
+                <h3>{{ value.specialite }}</h3>
+
+
+
+            </div>
+            <div class="movie_desc">
+                {% if value.type=="Professionel" %}
+                    <img src="https://skweezer.net/assets/redesign/images/check-circle-icon.svg">
+                {% endif %}
+                <p class="text">
+                    Horraire du travail :  {{ value.horaire }}
+                </p>
+                <p class="text">
+                    Description :  {{ value.description }}
+                </p>
+            </div>
+            <div class="movie_social">
+                <ul>
+                    <center> <li><a  data-target="#{{ value.id }}" data-toggle="modal"><i class="material-icons ">Contact</i></a></li></center>
+
+                </ul>
+            </div>
+        </div>
+        {% if value.specialite=="Téléphone" %}
+            <div class="blur_back" style="background: url('https://www.lyoncapitale.fr/wp-content/uploads/2013/06/341055-ez-Telephone-vintage-770x433.png');"></div>
+        {% endif %}
+        {% if value.specialite=="Meuble" %}
+            <div class="blur_back" style="background: url('https://www.laboutiquedubois.com/media/cache/c/h/chene_ebenisterie_1906_505x337_505x337.jpg');"></div>
+        {% endif %}
+        {% if value.specialite=="Electroménager" %}
+            <div class="blur_back" style="background: url('http://www.rayonelectro.com/wp-content/uploads/banHaut.jpg');"></div>
+        {% endif %}
+    </div>
+{% endfor %}
+
+
+    {% for value in reparateur %}
+
+
+        <!-- Modal DETAIL REP -->
+        <div class="modal fade " id="{{ value.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <center><h1 class="modal-title" id="">{{ value.nom|upper }}</h1></center>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+
+                        <img style="width: 100%;height: 180px" src="{{ asset('uploads/user/photo/' ~ value.photo) }}"
+                             alt="*********"
+                        >
+
+                        <input name="id" value="{{ value.id }}" style="display: none">
+                        <center><h1 class="h1">Specialite </h1></center>
+                        <center><p> {{ value.specialite }} </p></center>
+                        <center><h1 class="h1">Description  </h1></center>
+                        <center> <p>    {{ value.description }} </p></center>
+
+                        <center><h1 class="h1">Contact </h1></center>
+                        <p> Adresse :{{ value.adresse }} </p>
+                        <p> Numéro Téléphone :{{ value.numerotel }} </p>
+                        <p> Numéro Local :{{ value.numerofix }} </p>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Femer</button>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+    {% endfor %}

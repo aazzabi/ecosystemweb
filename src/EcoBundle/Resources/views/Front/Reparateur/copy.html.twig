@@ -1,30 +1,40 @@
 <div class="wrapper" >
     {% for value in annonce %}
-
-
-    <!-- DEBUT  CARD VIEW -->
+        <!-- DEBUT  CARD VIEW -->
         <div class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"
              style="width: 360px; overflow: hidden; border-radius: 1px;">
-            <img src="{{ asset('uploads/annoncerep/photos/' ~ value.photo) }}" alt="Man with backpack"
-                 class="d-block w-full ex1">
+            {%   if value.photo!='' %}
+
+                <img src="{{ asset('uploads/annoncerep/photos/' ~ value.photo) }}" alt="Pas de photo"
+                     class="d-block w-full ex1">
+            {% else %}
+                <img src="http://glace-sorbet.fr/wp-content/uploads/2010/10/pas-de-photo.jpg" alt="Pas de photo"
+                     class="d-block w-full ex1">
+            {% endif %}
+
 
             <div class="px-2 py-2">
                 <p class="mb-0 small font-weight-medium text-uppercase mb-1 text-muted lts-2px">
                     Catégorie : {{ value.categorie }}
                 </p>
+                <p class="mb-0 small font-weight-medium text-uppercase mb-1 text-muted lts-2px">
+                    Créer par  :{{ value.utilisateur }}
+                </p>
                 <h4 class="ff-serif font-weight-normal text-black card-heading mt-0 mb-1"
                     style="line-height: 1.25;"> {{ value.titre }}
                 </h4>
                 <p class="mb-1">
-
+                    Description :{{ value.description }} &hellip;
                 </p>
             </div>
             <center>
+                {% if is_granted('ROLE_REPARATEUR') %}
                 <button type="button" class="btn btn-complete btn-cons mx-auto" data-toggle="modal"
                         data-target="#{{ value.id }}">
                     Faire une offre
                 </button>
             </center>
+            {% endif %}
 
         </div>
         <!-- FIN  CARD VIEW -->
@@ -42,21 +52,26 @@
                     <form action="{{ path('reparateur_updateanrep') }}" method="GET" id="Formupdate">
                         <div class="modal-body">
 
+                            {%   if value.photo!='' %}
 
-                            <img src="{{ asset('uploads/annoncerep/photos/' ~ value.photo) }}" alt="*********"
-                                 class="ex1">
-
+                                <img src="{{ asset('uploads/annoncerep/photos/' ~ value.photo) }}" alt="Pas de photo"
+                                     class="d-block w-full ex1">
+                            {% else %}
+                                <img src="http://glace-sorbet.fr/wp-content/uploads/2010/10/pas-de-photo.jpg" alt="Pas de photo"
+                                     class="d-block w-full ex1">
+                            {% endif %}
                             <input name="id" value="{{ value.id }}" style="display: none">
                             <h4 class="dz-size">Catégorie :{{ value.categorie }}</h4>
                             <p>{{ value.description }} </p>
 
-                            <h4 style="color:blue;"> Meilleure offre :{{ value.lastprix }} DT</h4>
+                            <h4 style="color:blue;"> Meilleure offre :{{ value.lastprix }} DT par : {{ value.reparateur }} </h4>
+
 
 
                             <center>
                                 <div class="test input-effect marg">
 
-                                    <input name="prix" type="number" class="effect-21" min="0"
+                                    <input name="prix" type="number" class="effect-21" min="0" required
                                            placeholder="Proposez votre prix !" id="prix">
                                     <span class="focus-border marg">
             	<i></i>

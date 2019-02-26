@@ -18,7 +18,27 @@
             });
 
         });
+        $(document).ready(function () {
+            var tableP = $('#reparationsTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+        });
+        $(document).ready(function () {
+            var tableP = $('#demandetab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+        });
+
     </script>
+
 {% endblock %}
 
 {% block body %}
@@ -44,20 +64,17 @@
                            aria-expanded="true">Annonces Réparation</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#reparateurs" class=""
-                           aria-expanded="false">Réparation</a>
+                        <a class="" data-toggle="tab" role="tab" data-target="#reparations" href="#"
+                           aria-expanded="true">Les réparations en cours</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#reparateursPro" class=""
-                           aria-expanded="false">///// Pro</a>
+                        <a class="" data-toggle="tab" role="tab" data-target="#comptec" href="#"
+                           aria-expanded="true">Demande de compte prof</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#livreurs" class=""
-                           aria-expanded="false">/////</a>
-                    </li>
+
                 </ul>
                 <div class="tab-content" >
-                    <div class="tab-pane active" id="users" aria-expanded="true">
+                    <div class="tab-pane active" id="annrep" aria-expanded="true">
                         <table id="usersTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
                             <thead>
                             <tr>
@@ -68,7 +85,7 @@
                                 <th>Date Publication</th>
                                 <th>Date modification</th>
                                 <th>Utilisateur</th>
-                                <th>Note</th>
+                                <th>Reparateur</th>
                                 <th>Dernier Prix affiché </th>
                                 <th>Actions </th>
                             </tr>
@@ -93,7 +110,7 @@
                                     <td>{{ value.datepublication|date("m/d/Y") }}</td>
                                     <td>{{ value.datemodification|date("m/d/Y") }}</td>
                                     <td>{{ value.utilisateur }}</td>
-                                    <td>{{ value.note }}</td>
+                                    <td>{{ value.reparateur }}</td>
                                     <td>{{ value.lastprix }}</td>
 
                                     <td>
@@ -110,6 +127,112 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="tab-pane" id="reparations" aria-expanded="false">
+                        <table id="reparationsTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+
+
+                                <th>Id</th>
+                                <th>Demandé par </th>
+                                <th>Réparateur pris en charge</th>
+                                <th>DatePrisEnCharge</th>
+                                <th>Statut</th>
+                                <th>Commentaires</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <thead>
+                            <tbody>
+                            {% for value in reparation %}
+
+                                <td>{{ value.id }}</td>
+                                <td>{{ value.utilisateur }}</td>
+                                <td>{{ value.reparateur }}</td>
+                                <td>{{ value.dateprisencharge|date("m/d/Y") }}</td>
+                                <td>{{ value.statut }}</td>
+                                <td>{{ value.commentaire }}</td>
+
+                                <td>
+                                    <div class="btn-group btn-group-sm btn-group-horizontal">
+
+                                        <a class="btn btn-secondary" href="{{ path('da_rep_annuler',{ 'id': value.id }) }}"
+                                           data-toggle="tooltip" title="Annulé réparation">
+                                            <i class="fa fa-remove"></i>
+                                        </a>
+                                        {% if is_granted('ROLE_REPARATEUR') %}
+                                            <a class="btn btn-secondary" href=""
+                                               data-toggle="tooltip" title="Valider">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                        {% endif %}
+                                        {#{% if publication.etat != "archivé" %}#}
+                                        {#<a class="btn btn-success" href="{{ path('du_forum_publication_archive', { 'id': publication.id }) }}"> Archiver </a>#}
+                                        {#{% endif %}#}
+                                    </div>
+                                </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane" id="comptec" aria-expanded="false">
+                        <table id="demandeTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+
+
+                                <th>PDF</th>
+                                <th>Id</th>
+                                <th>Réparateur</th>
+                                <th>Date Demande</th>
+                                <th>type</th>
+
+                                <th>Actions </th>
+                            </tr>
+                            </thead>
+                            <thead>
+                            <tbody>
+                            {% for value in demande %}
+                                <tr>
+                                    <td style="width: 55px; padding:0px; text-align: center">
+                                        {% if value.photo != '' %}
+
+                                            <embed src="{{ asset('uploads/demandecompte/photos/' ~ value.photo) }}" width="500" height="375">
+                                        {% else %}
+                                            <img alt="User Pic" style="width:50px;" src="{{ asset('assets/img/profile.png') }}"
+                                                 id="profile-image1" class="img-circle img-responsive">
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ value.id }} </td>
+                                    <td>{{ value.reparateur }}</td>
+                                    <td>{{ value.dateDeLaDemande|date("m/d/Y") }}</td>
+
+                                    <td>{{ value.type }}</td>
+
+                                    <td>
+                                        <div class="btn-group btn-group-sm btn-group-horizontal">
+                                            <a class="btn btn-secondary"
+                                               href="{{ path('da_rep_valider', { 'id': value.id }) }}"
+                                               data-toggle="tooltip" title="Valider">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                            <a class="btn btn-secondary"
+                                               href="{{ path('da_compteprof_delete', { 'id': value.id }) }}"
+                                               data-toggle="tooltip" title="Effacer">
+                                                <i class="fa fa-remove"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
 
 
 

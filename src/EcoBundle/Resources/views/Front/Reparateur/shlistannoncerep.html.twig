@@ -21,7 +21,6 @@
                     <div class="input-select">
                         <select data-trigger="" name="choices-single-default" id="selectsearch">
                             <option placeholder="Critère">Titre</option>
-                            <option></option>
                             <option>Utilisateur</option>
 
 
@@ -33,18 +32,21 @@
                     <input id="search0" type="text" placeholder="Entrez des mots  clés"/>
                 </div>
                 <div class="input-field third-wrap">
-                    <button id="search" class="btn-search" type="button">
-                        <svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas"
-                             style="    margin: 0 auto;"
-                             data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                            <path fill="currentColor"
-                                  d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
-                        </svg>
-                    </button>
+
                 </div>
             </div>
         </form>
+             <div class="col-sm-2">
+        <select id="categorie" class="form-control">
+            <option selected>Catégorie</option>
+            <option>Téléphone</option>
+            <option>Electroménager</option>
+            <option>Meuble</option>
+        </select>
     </div>
+    </div>
+
+
     <script src="{{ asset ('assets/js/searchbarrep.js' ) }} " type="text/javascript"></script>
     <script>
         const choices = new Choices('[data-trigger]',
@@ -61,9 +63,9 @@
                 maintenant
                 !</a></center>
     {% else %}
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#connect">Postez votre announce
+        <center><a  class="ph-button ph-btn-green" data-toggle="modal" data-target="#connect">Postez votre announce
             maintenant
-        </button>
+        </a></center>
         <!--Modal Authentification -->
         <div class="modal fade" id="connect" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -174,12 +176,22 @@
             <!-- DEBUT  CARD VIEW -->
             <div class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"
                  style="width: 360px; overflow: hidden; border-radius: 1px;">
-                <img src="{{ asset('uploads/annoncerep/photos/' ~ value.photo) }}" alt="Man with backpack"
+                {%   if value.photo!='' %}
+
+                <img src="{{ asset('uploads/annoncerep/photos/' ~ value.photo) }}" alt="Pas de photo"
                      class="d-block w-full ex1">
+                {% else %}
+                    <img src="http://glace-sorbet.fr/wp-content/uploads/2010/10/pas-de-photo.jpg" alt="Pas de photo"
+                         class="d-block w-full ex1">
+                    {% endif %}
+
 
                 <div class="px-2 py-2">
                     <p class="mb-0 small font-weight-medium text-uppercase mb-1 text-muted lts-2px">
-                        Catégorie : {{ value.categorie }}    Utilisateur :{{ value.utilisateur }}
+                        Catégorie : {{ value.categorie }}
+                    </p>
+                    <p class="mb-0 small font-weight-medium text-uppercase mb-1 text-muted lts-2px">
+                        Créer par  :{{ value.utilisateur }}
                     </p>
                     <h4 class="ff-serif font-weight-normal text-black card-heading mt-0 mb-1"
                         style="line-height: 1.25;"> {{ value.titre }}
@@ -189,11 +201,13 @@
                     </p>
                 </div>
                 <center>
+                    {% if is_granted('ROLE_REPARATEUR') %}
                     <button type="button" class="btn btn-complete btn-cons mx-auto" data-toggle="modal"
                             data-target="#{{ value.id }}">
                         Faire une offre
                     </button>
                 </center>
+                {% endif %}
 
             </div>
             <!-- FIN  CARD VIEW -->
@@ -211,21 +225,26 @@
                         <form action="{{ path('reparateur_updateanrep') }}" method="GET" id="Formupdate">
                             <div class="modal-body">
 
+                                {%   if value.photo!='' %}
 
-                                <img src="{{ asset('uploads/annoncerep/photos/' ~ value.photo) }}" alt="*********"
-                                     class="ex1">
-
+                                    <img src="{{ asset('uploads/annoncerep/photos/' ~ value.photo) }}" alt="Pas de photo"
+                                         class="d-block w-full ex1">
+                                {% else %}
+                                    <img src="http://glace-sorbet.fr/wp-content/uploads/2010/10/pas-de-photo.jpg" alt="Pas de photo"
+                                         class="d-block w-full ex1">
+                                {% endif %}
                                 <input name="id" value="{{ value.id }}" style="display: none">
                                 <h4 class="dz-size">Catégorie :{{ value.categorie }}</h4>
                                  <p>{{ value.description }} </p>
 
-                                <h4 style="color:blue;"> Meilleure offre :{{ value.lastprix }} DT</h4>
+                                <h4 style="color:blue;"> Meilleure offre :{{ value.lastprix }} DT par : {{ value.reparateur }} </h4>
+
 
 
                                 <center>
                                     <div class="test input-effect marg">
 
-                                        <input name="prix" type="number" class="effect-21" min="0"
+                                        <input name="prix" type="number" class="effect-21" min="0" required
                                                placeholder="Proposez votre prix !" id="prix">
                                         <span class="focus-border marg">
             	<i></i>
@@ -260,30 +279,59 @@
 
      $("#search0").keyup(function (){
 
-    $.ajax({
-    url : '{{ path('reparateur_copy') }}',
-    type : 'POST',
-        dataType: "json",
-        data: {
-            type: $( "#selectsearch" ).val(),
-            valeur: $( "#search0" ).val()
-        },
-    success :     function(reponse) {
-        $( "#result" ).html( reponse );
-        // alert($( "#search0" ).val());
-    },
+         $.ajax({
+             url : '{{ path('reparateur_copy') }}',
+             type : 'POST',
+             dataType: "json",
+             data: {
+                 type: $( "#selectsearch" ).val(),
+                 valeur: $( "#search0" ).val()
+             },
+             success :     function(reponse) {
+                 $( "#result" ).html( reponse );
+                 // alert($( "#selectsearch" ).val());
+             },
 
-    error : function(resultat, statut, erreur){
+             error : function(resultat, statut, erreur){
 
-    },
+             },
 
-    complete : function(resultat, statut){
+             complete : function(resultat, statut){
 
-    }
+             }
 
-    });
+         });
 
-    });
+     });
+
+
+     $('#categorie').on('change', function() {
+
+
+
+         $.ajax({
+             url : '{{ path('reparateur_copy') }}',
+             type : 'POST',
+             dataType: "json",
+             data: {
+                 type: $( "#categorie" ).val(),
+             },
+             success :     function(reponse) {
+                 $( "#result" ).html( reponse );
+
+             },
+
+             error : function(resultat, statut, erreur){
+
+             },
+
+             complete : function(resultat, statut){
+
+             }
+
+         });
+
+      });
 
     </script>
 

@@ -43,10 +43,12 @@ class DARepController extends Controller
 
 
         $annoncerep = $this->getDoctrine()->getManager()->getRepository('EcoBundle:AnnonceRep')->findAll();
+        $reparation = $this->getDoctrine()->getManager()->getRepository('EcoBundle:Reparation')->findAll();
+        $demande = $this->getDoctrine()->getManager()->getRepository('EcoBundle:DemeandeC')->findAll();
 
 
         return $this->render('@Eco/DashboardAdmin/Reparateur/indexrep.html.twig', array(
-            'annoncerep' => $annoncerep,
+            'annoncerep' => $annoncerep,'reparation'=> $reparation,'demande'=>$demande
 
         ));
     }
@@ -152,6 +154,78 @@ class DARepController extends Controller
             ->getForm()
             ;
     }
+
+    /**
+     * @Route("/rep/compte/delete/{id}", name="da_compteprof_delete")
+     * @Method({"GET", "DELETE"})
+     */
+    public function deletedemandeComptefAction(Request $request, $id)
+    {
+        $demande = $this->getDoctrine()->getRepository('EcoBundle:DemeandeC')->find($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($demande);
+        $em->flush();
+        return $this->redirectToRoute('da_rep_index');
+    }
+
+    /**
+     * @Route("/rep/reparation/delete/{id}", name="da_reparation_delete")
+     * @Method({"GET", "DELETE"})
+     */
+    public function deletereparationdemandeComptefAction(Request $request, $id)
+    {
+        $demande = $this->getDoctrine()->getRepository('EcoBundle:Reparation')->find($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($demande);
+        $em->flush();
+        return $this->redirectToRoute('da_rep_index');
+    }
+
+    /**
+     *Annuler  a Rep entity.
+     *
+     * @Route("/rep/annuler/{id}", name="da_rep_annuler")
+     * @Method("GET")
+     */
+    public function annulerAction(Request $request)
+    {
+
+        $reparation = $this->getDoctrine()->getManager()->getRepository('EcoBundle:Reparation')
+            ->find($request->get('id'));
+        $reparation->setStatut("Annuler");
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('da_rep_index');
+
+
+    }
+
+    /**
+     *Annuler  a Rep entity.
+     *
+     * @Route("/rep/valider/{id}", name="da_rep_valider")
+     * @Method("GET")
+     */
+    public function validerAction(Request $request)
+    {
+
+        $demande = $this->getDoctrine()->getManager()->getRepository('EcoBundle:DemeandeC')
+            ->find($request->get('id'));
+        $user=$demande->getReparateur();
+        $user->setType("Professionel");
+        $this->getDoctrine()->getManager()->remove($demande);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('da_rep_index');
+
+
+    }
+
+
 
 
 }

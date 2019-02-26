@@ -1,5 +1,5 @@
 {% for a in annonces %}
-    <div class="col-md-3">
+    <div class="col-md-4">
         <figure class="card card-product">
             <div class="img-wrap">
                 {% if a.photo != '' %}
@@ -12,37 +12,25 @@
                 {% endif %}
             </div>
             <figcaption class="info-wrap">
-                <h4 class="title">{{ a.titre }}</h4>
-                <p class="desc">{{ a.description }}</p>
+                <a href="{{ path('f_annonce_show', { 'id': a.id }) }}"><h4 class="title"><b>{{ a.titre }}</b></h4></a>
+                {#<p class="desc">{{ a.description }}</p>#}
                 <div class="price-wrap h5">
                     <span class="price-new">${{ a.prix }}</span>
-                    <button type="submit" value="{{ a.id }}"
-                            class="jaime btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
-                    </button>
-
-                </div>
-                <div>
-                    <a href="{{ path('du_annonce_signaler', { 'id': a.id }) }}"
-                       class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">
-                        <i class="icon-plus">
-                            <i class="fa fa-bug" aria-hidden="true"></i>
-                            Signaler
-                        </i>
-                    </a>
-
                 </div>
             </figcaption>
-            <div class="bottom-wrap">
-
-                <a href="#" class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-left">panier
-                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            <div class=" btn-group bottom-wrap">
+                <button type="submit" value="{{ a.id }}"
+                        class="jaime btn btn-tag">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
+                </button>
+                <a href="{{ path('du_annonce_signaler', { 'id': a.id }) }}"
+                   class="btn btn-tag btn-tag-rounded float-left">
+                    Signaler <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                 </a>
-                <a href="{{ path('f_annonce_show', { 'id': a.id }) }}" class="btn btn-tag
-                                btn-tag-light btn-tag-rounded m-r-10 float-right">
-                    show <i class="fa fa-eye" aria-hidden="true"></i>
+                <a href="#" class="btn btn-tag btn-tag-rounded float-left">Panier
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 </a>
-            </div> <!-- bottom-wrap.// -->
+            </div>
         </figure>
     </div>
 {% endfor %}

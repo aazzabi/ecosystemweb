@@ -149,22 +149,20 @@ class FAnnonceController extends Controller
     }
     /**
      *
-     * @Route("/recherche", name="f_annonce_recherche")
+     * @Route("/annonce/recherche", name="f_recherche")
      * @Method({"GET", "POST"})
      */
     public function rechercheAction(Request $request)
     {
-
-            //$em      = $this->getDoctrine()->getManager();
             $keyWord = $request->get('keyWord');
-            //dump($keyWord);
+           // dump($keyWord);
         if($keyWord == '')
         {
             $annonce = $this->getDoctrine()->getRepository('EcoBundle:Annonce')->findAll();
         }else
         {
             $annonce = $this->getDoctrine()->getRepository('EcoBundle:Annonce')->RechercheTitreAnnonce($keyWord);
-
+            
         }
 
             $template = $this->render( '@Eco/Front/Annonce/Recherche.html.twig', array("annonces" => $annonce))->getContent();
@@ -173,8 +171,6 @@ class FAnnonceController extends Controller
             $response->headers->set('Content-Type', 'application/json');
 
             return $response;
-
-
     }
 
 

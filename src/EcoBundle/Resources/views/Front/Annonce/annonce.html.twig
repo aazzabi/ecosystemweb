@@ -67,7 +67,7 @@
                 var keyWord = $(this).val();
                 $.ajax({
                     dataType: "json",
-                    url: '{{ path('f_annonce_recherche') }}',
+                    url: "{{ path("f_recherche") }}",
                     data: {
                         "keyWord": keyWord
                     },

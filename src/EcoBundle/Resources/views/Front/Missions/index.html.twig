@@ -178,7 +178,7 @@
                     <div class="content">
 
                         {% if evenement.cover != '' %}
-                            <div class="front" style=" background-image:url('{{ asset('uploads/evt/cover/' ~ evenement.cover) }}');">
+                            <div class="front" style=" background-image:url('{{ asset('uploads/missions/cover/' ~ evenement.cover) }}');">
                         {% else %}
                             <div class="front" style="  background-image:url('{{ asset('assets/img/profile.png') }}')">
                         {% endif %}
@@ -370,7 +370,7 @@
 
                         <time
                                 {% if evenement.cover != '' %}
-                                    style="filter: blur(1px); background-size: 120px 120px; background-image:url('{{ asset('uploads/evt/cover/' ~ evenement.cover) }}');"
+                                    style="filter: blur(1px); background-size: 120px 120px; background-image:url('{{ asset('uploads/missions/cover/' ~ evenement.cover) }}');"
                                 {% else %}
                                     style="filter: blur(1px);background-size: 120px 120px; background-image:url('{{ asset('assets/img/profile.png') }}')"
                                 {% endif %}

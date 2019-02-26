@@ -188,7 +188,7 @@
              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                  Catégories : <span class="caret"></span></button>
              <ul class="dropdown-menu" role="menu">
-                 <li><a id="aaaa" href="{{ path('front_evenements_recherche', { 'id': CategorieEvts.id }) }}"> All </a>
+                 <li><a id="aaaa" href="{{ path('front_evenements_recherche', { 'id': CategorieMission.id }) }}"> All </a>
                  </li>
 
              </ul>
@@ -236,7 +236,7 @@
 
                         <time
                                 {% if evenement.cover != '' %}
-                                    style="filter: blur(1px); background-size: 120px 120px; background-image:url('{{ asset('uploads/evt/cover/' ~ evenement.cover) }}');"
+                                    style="filter: blur(1px); background-size: 120px 120px; background-image:url('{{ asset('uploads/missions/cover/' ~ evenement.cover) }}');"
                                 {% else %}
                                     style="filter: blur(1px);background-size: 120px 120px; background-image:url('{{ asset('assets/img/profile.png') }}')"
                                 {% endif %}

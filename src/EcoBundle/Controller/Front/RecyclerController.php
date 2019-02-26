@@ -7,7 +7,7 @@
  */
 
 namespace EcoBundle\Controller\Front;
-use EcoBundle\Entity\CategorieEvts;
+use EcoBundle\Entity\CategorieMission;
 use EcoBundle\Entity\Group;
 use EcoBundle\Entity\Livreur;
 use EcoBundle\Entity\Reparateur;
@@ -65,7 +65,7 @@ class RecyclerController extends Controller
 
 //      var_dump($evenements);die;
         $evenements = $em->getRepository('EcoBundle:Missions')->findAll();
-        $categories = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
+        $categories = $em->getRepository('EcoBundle:CategorieMission')->findAll();
         return $this->render('@Eco/Front/Missions/index.html.twig', array(
             //'evenements' => $evenements,
             'evenements' => $evenements,
@@ -81,7 +81,7 @@ class RecyclerController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $categories = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
+        $categories = $em->getRepository('EcoBundle:CategorieMission')->findAll();
         $evenement = new Missions();
         $evenement = $em->getRepository('EcoBundle:Missions')->findByCategorie($cat);
 

@@ -8,7 +8,7 @@
 
 namespace EcoBundle\Controller\DashboardAdmin;
 
-use EcoBundle\Entity\CategorieEvts;
+use EcoBundle\Entity\CategorieMission;
 use EcoBundle\Entity\Missions;
 use EcoBundle\Entity\Group;
 use EcoBundle\Entity\Livreur;
@@ -41,7 +41,7 @@ class DARecyclerController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         //$evenements = $em->getRepository('EcoBundle:Evenements')->findAll();
-        $categoriesEvts = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
+        $categoriesEvts = $em->getRepository('EcoBundle:CategorieMission')->findAll();
 //        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
 
         return $this->render('@Eco/DashboardAdmin/Missions/index.html.twig', array(
@@ -62,11 +62,11 @@ class DARecyclerController extends Controller
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
        // $evenement = new Missions();
-        $categorieEvts = new CategorieEvts();
+        $categorieEvts = new CategorieMission();
 //        tasna3 les autres entités li aand'hom 3ala9a bel module mta3ek
 
-       // $formEvt = $this->createForm('EcoBundle\Form\EvenementType', $evenement);
-        $formCateg = $this->createForm('EcoBundle\Form\CategorieEvtsType', $categorieEvts);
+       // $formEvt = $this->createForm('EcoBundle\Form\MissionsType', $evenement);
+        $formCateg = $this->createForm('EcoBundle\Form\CategorieMissionType', $categorieEvts);
 //        tasna3 les autres formulaire li aand'hom 3ala9a bel module mta3ek
 
         //$formEvt->handleRequest($request);
@@ -91,7 +91,7 @@ class DARecyclerController extends Controller
 //        w tab9a t3awed fihom 3la 3dad les entités que tu gére
 
         return $this->render('@Eco/DashboardAdmin/Missions/new.html.twig', array(
-            'CategorieEvts' => $categorieEvts,
+            'CategorieMission' => $categorieEvts,
            // 'formEvt' => $formEvt->createView(),
             'formCateg' => $formCateg->createView(),
         ));
@@ -103,12 +103,12 @@ class DARecyclerController extends Controller
      * @Route("/categorie/{id}/edit", name="da_categorie_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, CategorieEvts $categorieEvts)
+    public function editAction(Request $request, CategorieMission $categorieEvts)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $editForm = $this->createForm('EcoBundle\Form\CategorieEvtsType', $categorieEvts);
+        $editForm = $this->createForm('EcoBundle\Form\CategorieMissionType', $categorieEvts);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -118,7 +118,7 @@ class DARecyclerController extends Controller
         }
 
         return $this->render('@Eco/DashboardAdmin/Missions/edit.html.twig', array(
-            'CategorieEvts' => $categorieEvts,
+            'CategorieMission' => $categorieEvts,
             'form' => $editForm->createView(),
         ));
     }
@@ -129,14 +129,14 @@ class DARecyclerController extends Controller
      * @Route("/categorie/{id}", name="da_categorie_show")
      * @Method("GET")
      */
-    public function showAction(CategorieEvts $categorieEvts)
+    public function showAction(CategorieMission $categorieEvts)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
 
         return $this->render('@Eco/DashboardAdmin/Missions/show.html.twig', array(
-            'CategorieEvts' => $categorieEvts,
+            'CategorieMission' => $categorieEvts,
         ));
     }
 

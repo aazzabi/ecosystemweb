@@ -8,7 +8,7 @@
 
 namespace EcoBundle\Controller\DashboardUser;
 
-use EcoBundle\Entity\CategorieEvts;
+use EcoBundle\Entity\CategorieMission;
 use EcoBundle\Entity\Missions;
 
 use EcoBundle\Entity\Group;
@@ -67,7 +67,7 @@ class DURecyclerController extends Controller
                 }
             }*/
         }
-//       $categoriesEvts = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
+//       $categoriesEvts = $em->getRepository('EcoBundle:CategorieMission')->findAll();
 //        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
 
         return $this->render('@Eco/DashboardUser/Missions/index.html.twig', array(
@@ -87,7 +87,7 @@ class DURecyclerController extends Controller
 
         $evenement = new Missions();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $form = $this->createForm('EcoBundle\Form\EvenementType', $evenement);
+        $form = $this->createForm('EcoBundle\Form\MissionsType', $evenement);
         $form->handleRequest($request);
         $evenement->setCreatedBy($user);
         $evenement->setNbVues(0);
@@ -121,7 +121,7 @@ class DURecyclerController extends Controller
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
 
-        $editForm = $this->createForm('EcoBundle\Form\EvenementType', $evenement);
+        $editForm = $this->createForm('EcoBundle\Form\MissionsType', $evenement);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

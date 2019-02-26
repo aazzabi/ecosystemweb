@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
-class EvenementType extends AbstractType
+class MissionsType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -27,7 +27,7 @@ class EvenementType extends AbstractType
                 'download_link' => true
             ])
             ->add('categorie', EntityType::class, array(
-                'class'=>'EcoBundle\Entity\CategorieEvts',
+                'class'=> 'EcoBundle\Entity\CategorieMission',
                 'choice_label'=>'libelle',
                 'multiple'=>false
             ));

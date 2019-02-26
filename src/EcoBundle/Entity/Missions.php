@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * Missions
  * @Vich\Uploadable
  * @ORM\Table(name="evenement")
- * @ORM\Entity(repositoryClass="EcoBundle\Repository\EvenementRepository")
+ * @ORM\Entity(repositoryClass="EcoBundle\Repository\MissionsRepository")
  */
 class Missions
 {
@@ -95,7 +95,7 @@ class Missions
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="CategorieEvts")
+     * @ORM\ManyToOne(targetEntity="CategorieMission")
      * @ORM\JoinColumn(name="categorie",referencedColumnName="id",onDelete="CASCADE")
 
      */

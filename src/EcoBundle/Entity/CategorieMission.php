@@ -5,12 +5,12 @@ namespace EcoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CategorieEvts
+ * CategorieMission
  *
  * @ORM\Table(name="categorie_evts")
- * @ORM\Entity(repositoryClass="EcoBundle\Repository\CategorieEvtsRepository")
+ * @ORM\Entity(repositoryClass="EcoBundle\Repository\CategorieMissionRepository")
  */
-class CategorieEvts
+class CategorieMission
 {
     /**
      * @var int
@@ -51,7 +51,7 @@ class CategorieEvts
      *
      * @param string $libelle
      *
-     * @return CategorieEvts
+     * @return CategorieMission
      */
     public function setLibelle($libelle)
     {
@@ -75,7 +75,7 @@ class CategorieEvts
      *
      * @param string $but
      *
-     * @return CategorieEvts
+     * @return CategorieMission
      */
     public function setBut($but)
     {

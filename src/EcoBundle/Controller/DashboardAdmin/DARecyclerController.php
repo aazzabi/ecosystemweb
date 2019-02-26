@@ -127,7 +127,7 @@ class DARecyclerController extends Controller
 
 
     /**
-     * @Route("/evenement", name="da_evenements_index")
+     * @Route("/evenement", name="da_missions_index")
      * @Method("GET")
      */
 
@@ -148,7 +148,7 @@ class DARecyclerController extends Controller
     /**
      * Deletes a Reparateur entity.
      *
-     * @Route("/evenement/delete/{id}", name="da_evenements_delete")
+     * @Route("/evenement/delete/{id}", name="da_missions_delete")
      */
     public function deleteEventAction($id)
     {
@@ -157,7 +157,7 @@ class DARecyclerController extends Controller
         $m->remove($evenement);
         $m->flush();
 
-        return$this->redirectToRoute('da_evenements_index');
+        return$this->redirectToRoute('da_missions_index');
     }
 
 

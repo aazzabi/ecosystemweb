@@ -85,8 +85,7 @@ class FAnnonceController extends Controller
             $annonce->setLikes($annonce->getLikes() + 1);
             $em->flush();
             return $this->redirectToRoute('du_annonce_index');
-            $reponse = '200';
-            return new JsonResponse($reponse);
+
         }
     }
 

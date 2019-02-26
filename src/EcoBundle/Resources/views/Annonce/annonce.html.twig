@@ -52,7 +52,7 @@
                     data: {
                         "Id": id
                     },
-                    success: function (reponse) {
+                    success: function (data) {
                         $(".jaime").hide();
                         $(".dislike").show();
 
@@ -230,28 +230,19 @@
                             </div>
                             <figcaption class="info-wrap">
                                 <h4 class="title">{{ a.titre }}</h4>
-                                <p class="desc">{{ a.description }}</p>
+                                {#<p class="desc">{{ a.description }}</p>#}
                                 <div class="price-wrap h5">
                                     <span class="price-new">${{ a.prix }}</span>
+                                </div>
+                                <div>
                                     <button type="submit" value="{{ a.id }}"
                                             class="jaime btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">
                                         <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
                                     </button>
-                                    <button type="submit" value="{{ a.id }}"
-                                            class="dislike btn btn-tag hidden  btn-tag-light btn-tag-rounded m-r-10 float-right">
-                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
-                                    </button>
-
-                                </div>
-                                <div>
                                     <a href="{{ path('du_annonce_signaler', { 'id': a.id }) }}"
-                                       class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">
-                                        <i class="icon-plus">
-                                            <i class="fa fa-bug" aria-hidden="true"></i>
-                                            Signaler
-                                        </i>
+                                       class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-left">
+                                        Signaler  <i class="fa fa-bug" aria-hidden="true"></i>
                                     </a>
-
                                 </div>
                             </figcaption>
                             <div class="bottom-wrap">

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"/>
+    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <link href="{{ asset ('assets/plugins/pace/pace-theme-flash.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/font-awesome/css/font-awesome.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/jquery-scrollbar/jquery.scrollbar.css') }}" rel="stylesheet" type="text/css"
+      media="screen"/>
+    <link href="{{ asset ('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <link href="{{ asset ('assets/plugins/switchery/css/switchery.min.css') }}" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <link href="{{ asset ('assets/plugins/nvd3/nv.d3.min.css') }}" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="{{ asset ('assets/plugins/mapplic/css/mapplic.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/rickshaw/rickshaw.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet"
+          type="text/css" media="screen">
+    <link href="{{ asset ('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet"
+          type="text/css" media="screen">
+    <link href="{{ asset ('assets/plugins/jquery-datatable/media/css/dataTables.bootstrap.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset ('assets/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css') }}"
+          rel="stylesheet" type="text/css"/>
+    <link href="{{ asset ('assets/plugins/datatables-responsive/css/datatables.responsive.css') }}" rel="stylesheet"
+          type="text/css" media="screen"/>
+    <link href="{{ asset ('pages/css/pages-icons.css') }}" rel="stylesheet" type="text/css">
+    <link class="main-stylesheet" href="{{ asset ('pages/css/themes/modern.css') }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/solid.css"
+          integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous">
+    {#<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/regular.css" integrity="sha384-IG162Tfx2WTn//TRUi9ahZHsz47lNKzYOp0b6Vv8qltVlPkub2yj9TVwzNck6GEF" crossorigin="anonymous">#}
+    {#<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">#}
+    {#<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">#}
+
+    <link href="{{ asset ('assets/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset ('assets/css/dashboard.widgets.css') }}" rel="stylesheet" type="text/css" media="screen"/>
+
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body class="fixed-header horizontal-menu horizontal-app-menu dashboard">
+<!-- START PAGE-CONTAINER -->
+<div class="header bg-primary">
+    <div class="header-inner header-md-height">
+        <a href="#" class="btn-link toggle-sidebar hidden-lg-up text-white" data-toggle="horizontal-menu">
+            <i class="fa fa-bars"></i>
+        </a>
+        <div class="brand inline no-border hidden-xs-down">
+            <img src="{{ asset('assets/img/logofinalev2.png') }}" alt="logo"
+                 style="width: 200px !important; height: 60px;">
+        </div>
+        <div class="d-flex align-items-center">
+            {% if app.user %}
+                <div class="pull-left p-r-10 fs-14 font-heading hidden-md-down text-white">
+                    <span class="semi-bold">{{ app.user.prenom }}</span> <span
+                            class="">{{ app.user.nom | upper }}</span>
+                </div>
+                <div class="dropdown pull-right">
+                    <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+              <span class="thumbnail-wrapper d32 circular inline sm-m-r-5">
+                <img src="{{ asset('assets/img/profiles/avatar.jpg') }}" width="32" height="32">
+                </span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
+                        <a href="{{ path('da_users_edit', { 'id': app.user.id }) }}" class="dropdown-item"
+                           data-unsp-sanitized="clean"><i class="fa fa-wrench" aria-hidden="true"></i> Settings</a>
+                        <a href="#" class="dropdown-item" data-unsp-sanitized="clean"><i class="fa fa-comments"
+                                                                                         aria-hidden="true"></i>
+                            Feedback</a>
+                        <a href="#" class="dropdown-item" data-unsp-sanitized="clean"><i class="fa fa-info"
+                                                                                         aria-hidden="true"></i>
+                            Help</a>
+                        <a href="{{ path('fos_user_security_logout') }}"
+                           class="clearfix bg-master-lighter dropdown-item">
+                            <span class="pull-left">Logout</span>
+                            <span class="pull-right"><i class="fa  fa-sign-out" aria-hidden="true"></i></span>
+                        </a>
+                    </div>
+                </div>
+                <!-- END User Info-->
+                {#notification section dropdown#}
+                <div class="dropdown">
+                    <a href="javascript:;" id="notification-center" class="header-icon" data-toggle="dropdown">
+                        <i class="fa fa-globe"></i>
+                        <span class="bubble"></span>
+                    </a>
+                    <!-- START Notification Dropdown -->
+                    <div class="dropdown-menu notification-toggle" role="menu" aria-labelledby="notification-center">
+                        <!-- START Notification -->
+                        <div class="notification-panel">
+                            <!-- START Notification Body-->
+                            <div class="notification-body scrollable">
+                                <!-- START Notification Item-->
+                                <div class="notification-item unread clearfix">
+                                    <!-- START Notification Item-->
+                                    <div class="heading open">
+                                        <a href="#" class="text-complete pull-left">
+                                            <i class="pg-map fs-16 m-r-10"></i>
+                                            <span class="bold">Carrot Design</span>
+                                            <span class="fs-12 m-l-10">David Nester</span>
+                                        </a>
+                                        <div class="pull-right">
+                                            <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details">
+                                                <div><i class="fa fa-angle-left"></i>
+                                                </div>
+                                            </div>
+                                            <span class=" time">few sec ago</span>
+                                        </div>
+                                        <div class="more-details">
+                                            <div class="more-details-inner">
+                                                <h5 class="semi-bold fs-16">“Apple’s Motivation - Innovation <br>
+                                                    distinguishes between <br>
+                                                    A leader and a follower.”</h5>
+                                                <p class="small hint-text">
+                                                    Commented on john Smiths wall.
+                                                    <br> via pages framework.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Notification Item-->
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option" data-toggle="tooltip" data-placement="left"
+                                         title="mark as read">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- START Notification Body-->
+                                <!-- START Notification Item-->
+                                <div class="notification-item  clearfix">
+                                    <div class="heading">
+                                        <a href="#" class="text-danger pull-left">
+                                            <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                            <span class="bold">98% Server Load</span>
+                                            <span class="fs-12 m-l-10">Take Action</span>
+                                        </a>
+                                        <span class="pull-right time">2 mins ago</span>
+                                    </div>
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- END Notification Item-->
+                                <!-- START Notification Item-->
+                                <div class="notification-item  clearfix">
+                                    <div class="heading">
+                                        <a href="#" class="text-warning-dark pull-left">
+                                            <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                            <span class="bold">Warning Notification</span>
+                                            <span class="fs-12 m-l-10">Buy Now</span>
+                                        </a>
+                                        <span class="pull-right time">yesterday</span>
+                                    </div>
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- END Notification Item-->
+                                <!-- START Notification Item-->
+                                <div class="notification-item unread clearfix">
+                                    <div class="heading">
+                                        <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                            <img width="30" height="30" src="{{ asset('assets/img/profiles/1.jpg') }}">
+                                        </div>
+                                        <a href="#" class="text-complete pull-left">
+                                            <span class="bold">Revox Design Labs</span>
+                                            <span class="fs-12 m-l-10">Owners</span>
+                                        </a>
+                                        <span class="pull-right time">11:00pm</span>
+                                    </div>
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option" data-toggle="tooltip" data-placement="left"
+                                         title="mark as read">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- END Notification Item-->
+                            </div>
+                            <!-- END Notification Body-->
+                            <!-- START Notification Footer-->
+                            <div class="notification-footer text-center">
+                                <a href="#" class="">Read all notifications</a>
+                                <a data-toggle="refresh" class="portlet-refresh text-black pull-right" href="#">
+                                    <i class="pg-refresh_new"></i>
+                                </a>
+                            </div>
+                            <!-- START Notification Footer-->
+                        </div>
+                        <!-- END Notification -->
+                    </div>
+                    <!-- END Notification Dropdown -->
+                </div>
+            {% else %}
+                <a href="{{ path('inscription') }}">
+                    <button class="btn btn-default btn-cons  btn-sm">S'inscrire</button>
+                </a>
+                <a href="{{ path('fos_user_security_login') }}">
+                    <button class="btn btn-primary btn-cons  btn-sm">Se Connecter</button>
+                </a>
+            {% endif %}
+
+        </div>
+    </div>
+    <div style="background-color: #4d984d !important;">
+        <div class="container">
+            <div class="menu-bar header-sm-height">
+                <a href="#" class="btn-link toggle-sidebar hidden-lg-up" data-toggle="horizontal-menu">
+                    <i class="fa fa-times"></i>
+                </a>
+                <ul>
+                    <li class=" active">
+                        <a href="builder.html"><span class="title">Accueil</span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:;"><span class="title">A propos</span></a>
+                    </li>
+                    <li>
+                        <a href="social.html"><span class="title">Annonces</span></a>
+                    </li>
+                    <li>
+                        <a href="social.html"><span class="title">Réparation</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ path('recyclage') }}"><span class="title">Recyclage</span></a>
+                    </li>
+                    <li>
+                        <a href="views.html"><span class="title">Evénements</span></a>
+                    </li>
+                    <li>
+                        <a href="charts.html"><span class="title">Forum</span></a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="{{ path('dashboard') }}"><span class="title">Dashboard</span></a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="charts.html"><span class="title">Contactez-nous</span></a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-container ">
+
+    {% block body %}
+        <style>
+            /* You can remove this page div in your website */
+            #page {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                background: #eee;
+            }
+
+            /* Our normalize css */
+            * {
+                margin: 0;
+                box-sizing: border-box;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+            /* Our wrapper */
+            .wrapper {
+                width: 690px;
+                height: 600px;
+                max-height: 100vh;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate3d(-50%, -50%, 0);
+                overflow: hidden;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            }
+
+
+            /* Our image information */
+            .bottom,
+            .middle,
+            .top {
+                width: 100%;
+                height: 100%;
+                background-repeat: no-repeat;
+                background-color: white;
+                background-size: cover;
+                background-position: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                overflow: hidden;
+            }
+
+            img {
+                height: 100%;
+            }
+
+
+            .top {
+                width: 125px;
+            }
+
+            .scroller {
+                width: 50px;
+                height: 50px;
+                position: absolute;
+                left: 100px;
+                top: 50%;
+                transform: translateY(-50%);
+                border-radius: 50%;
+                background-color: #fff;
+                opacity: 0.9;
+                transition: opacity 0.12s ease-in-out;
+                pointer-events: auto;
+                cursor: pointer;
+                box-shadow: 3.5px 0px 7px rgba(100, 100, 100, 0.2);
+            }
+
+            .scroller-middle {
+                margin-top: 25px;
+            }
+
+            .scroller-top {
+                margin-top: -25px;
+            }
+
+
+            .scroller:hover {
+                opacity: 1;
+            }
+
+            .scrolling {
+                pointer-events: none;
+                opacity: 1;
+                z-index: 1;
+            }
+
+            .scroller__thumb {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                padding: 7px;
+            }
+
+            .scroller:before,
+            .scroller:after {
+                content: " ";
+                display: block;
+                width: 7px;
+                height: 9999px;
+                position: absolute;
+                left: 50%;
+                margin-left: -3.5px;
+                z-index: 30;
+                transition: 0.1s;
+                box-shadow: 3.5px 0px 7px rgba(100, 100, 100, 0.2);
+            }
+
+            .scroller:before {
+                top: 49px;
+            }
+
+            .scroller:after {
+                bottom: 49px;
+            }
+
+            /* If you want to cahnge the colors, make sure you change the fill in the svgs to match */
+            .scroller-middle > .scroller__thumb {
+                border: 5px solid #FFCCBC;
+            }
+
+            .scroller-middle:before,
+            .scroller-middle:after {
+                background: #FFCCBC;
+            }
+
+            .scroller-top > .scroller__thumb {
+                border: 5px solid #FFAB91;
+            }
+
+            .scroller-top:before,
+            .scroller-top:after {
+                background: #FFAB91;
+            }
+        </style>
+
+        <div id="page" class="container-fluid m-t-10" >
+
+            <span class="align-content-center">Il est temps de prendre action...</span>
+
+            <div class="wrapper">
+                <div class="bottom">
+                    <img src="https://previews.123rf.com/images/antikainen/antikainen1208/antikainen120800268/15583667-sidi-bou-said-tunisia-circa-may-2012-beautiful-streets-of-blue-white-sidi-bou-said-town-on-circa-may.jpg"
+                         draggable="false"/>
+                </div>
+                <div class="middle">
+                    <img src="https://cdn2.webmanagercenter.com/di/wp-content/uploads/2016/03/nettoyer-la-rue-tunisie-directinfo.jpg"
+                         draggable="false"/>
+                </div>
+                <div class="scroller scroller-middle">
+                    <svg class="scroller__thumb" xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                         viewBox="0 0 100 100">
+                        <polygon points="0 50 37 68 37 32 0 50" style="fill:#FFCCBC"/>
+                        <polygon points="100 50 64 32 64 68 100 50" style="fill:#FFCCBC"/>
+                    </svg>
+                </div>
+                <div class="top">
+                    <img src="https://webreportertunisie.files.wordpress.com/2014/02/photo-mongi-aouinet-63051.jpg"
+                         draggable="false"/>
+                </div>
+                <div class="scroller scroller-top">
+                    <svg class="scroller__thumb" xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                         viewBox="0 0 100 100">
+                        <polygon points="0 50 37 68 37 32 0 50" style="fill:#FFAB91"/>
+                        <polygon points="100 50 64 32 64 68 100 50" style="fill:#FFAB91"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid m-5">
+            <div class="row ">
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://www.eco-systemes.fr/uploads/cbtile/8ee903cb967852acb0572b8ba7cd5f892cee4980.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Nos Missions et Challenges</h5>
+                            <p class="card-text">Rien ne ce perds, Tout ce transforme
+                            </p>
+                            <a href="{{ path('missions') }}" class="btn btn-primary">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://www.eco-systemes.fr/uploads/cbtile/TuileRecyclageMobile.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Recycler votre appareil</h5>
+                            <p class="card-text">Vous pouvez recycler ou donner votre appareil.</p>
+                            <a href="{{ path('appareilrc') }}" class="btn btn-primary">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://www.eco-systemes.fr/uploads/cbtile/EcoSyst-Michel-Richard-Pr-039-IMGP6886.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Les centres de recyclages</h5>
+                            <p class="card-text">Vous pouvez voir les centres de recyclages les plus prés de cheaz vous ! </p>
+                            <a href="{{ path('pointrc') }}" class="btn btn-primary">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            // I hope this over-commenting helps. Let's do this!
+            // Let's use the 'active' variable to let us know when we're using it
+            let active = false;
+            // and define our dom elements to make it easier to read
+            let scrollerMiddle = document.querySelector('.scroller-middle');
+            let scrollerTop = document.querySelector('.scroller-top');
+
+
+            // First we'll have to set up our event listeners
+            // We want to watch for clicks on our scroller
+            scrollerMiddle.addEventListener('mousedown', function () {
+                active = "middle";
+                // Add our scrolling class so the scroller has full opacity while active
+                scrollerMiddle.classList.add('scrolling');
+            });
+            // We also want to watch the body for changes to the state,
+            // like moving around and releasing the click
+            // so let's set up our event listeners
+            document.body.addEventListener('mouseup', function () {
+                active = false;
+                scrollerMiddle.classList.remove('scrolling');
+            });
+            document.body.addEventListener('mouseleave', function () {
+                active = false;
+                scrollerMiddle.classList.remove('scrolling');
+            });
+            // We'll have to do the same for our top scroller
+            scrollerTop.addEventListener('mousedown', function () {
+                active = "top";
+                scrollerTop.classList.add('scrolling');
+            });
+            document.body.addEventListener('mouseup', function () {
+                active = false;
+                scrollerTop.classList.remove('scrolling');
+            });
+            document.body.addEventListener('mouseleave', function () {
+                active = false;
+                scrollerTop.classList.remove('scrolling');
+            });
+
+            // Let's figure out where their mouse is at
+            document.body.addEventListener('mousemove', function (e) {
+                if (!active) return;
+                // Their mouse is here...
+                let x = e.pageX;
+                // but we want it relative to our wrapper
+                x -= document.querySelector('.wrapper').getBoundingClientRect().left;
+                // Okay let's change our state
+                scrollIt(x);
+            });
+
+            // Let's use this function
+            function scrollIt(x) {
+                // Calculate our transform
+                let transform = Math.max(0, (Math.min(x, document.querySelector('.wrapper').offsetWidth)));
+                // we show all our bottom image but how much of our middle and top,
+                // that'll depend on what we're dragging
+                // if we're dragging the middle slider
+                if (active === "middle") {
+                    document.querySelector('.middle').style.width = transform + "px";
+                    scrollerMiddle.style.left = transform - 25 + "px";
+                    // if we're using scroller-middle, middle must always be to the right of top
+                    if (scrollerTop.getBoundingClientRect().left > scrollerMiddle.getBoundingClientRect().left - 5) {
+                        document.querySelector('.top').style.width = transform - 5 + "px";
+                        scrollerTop.style.left = transform - 30 + "px";
+                    }
+                }
+                // if we're dragging the top slider
+                if (active === "top") {
+                    document.querySelector('.top').style.width = transform + "px";
+                    scrollerTop.style.left = transform - 25 + "px";
+                    // if we're using scroller-top, top must always be to the left
+                    if (scrollerTop.getBoundingClientRect().left > scrollerMiddle.getBoundingClientRect().left - 5) {
+                        document.querySelector('.middle').style.width = transform + 5 + "px";
+                        scrollerMiddle.style.left = transform - 20 + "px";
+                    }
+                }
+            }
+
+            // Let's set our opening state based off the width,
+            // we want to show a bit of both images so the user can see what's going on
+            active = "middle";
+            scrollIt(460);
+            active = "top";
+            scrollIt(230);
+            active = false;
+
+
+            // And finally let's repeat the process for touch events
+            // first our middle scroller...
+            scrollerMiddle.addEventListener('touchstart', function () {
+                active = "middle";
+                scrollerMiddle.classList.add('scrolling');
+            });
+            document.body.addEventListener('touchend', function () {
+                active = false;
+                scrollerMiddle.classList.remove('scrolling');
+            });
+            document.body.addEventListener('touchcancel', function () {
+                active = false;
+                scrollerMiddle.classList.remove('scrolling');
+            });
+
+            // then scroller top, our second scroller
+            scrollerTop.addEventListener('touchstart', function () {
+                active = "top";
+                scrollerTop.classList.add('scrolling');
+            });
+            document.body.addEventListener('touchend', function () {
+                active = false;
+                scrollerTop.classList.remove('scrolling');
+            });
+            document.body.addEventListener('touchcancel', function () {
+                active = false;
+                scrollerTop.classList.remove('scrolling');
+            });
+
+            document.querySelector('.wrapper').addEventListener('touchmove', function (e) {
+                if (!active) return;
+                e.preventDefault();
+                let x = e.touches[0].pageX;
+                x -= document.querySelector('.wrapper').getBoundingClientRect().left;
+                scrollIt(x);
+            });
+        </script>
+
+
+
+    {% endblock %}
+</div>
+<script src="{{ asset ('assets/plugins/pace/pace.min.js' ) }} " type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/modernizr.custom.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/tether/js/tether.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery/jquery-easy.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-unveil/jquery.unveil.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-ios-list/jquery.ioslist.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-actual/jquery.actual.min.js') }}"></script>
+<script src="{{ asset ('assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset ('assets/plugins/select2/js/select2.full.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset ('assets/plugins/classie/classie.js') }}"></script>
+<script src="{{ asset ('assets/plugins/switchery/js/switchery.min.js') }}" type="text/javascript"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/lib/d3.v3.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/nv.d3.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/utils.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/tooltip.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/interactiveLayer.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/models/axis.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/models/line.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/nvd3/src/models/lineWithFocusChart.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/mapplic/js/hammer.js') }}"></script>
+<script src="{{ asset ('assets/plugins/mapplic/js/jquery.mousewheel.js') }}"></script>
+<script src="{{ asset ('assets/plugins/mapplic/js/mapplic.js') }}"></script>
+<script src="{{ asset ('assets/plugins/rickshaw/rickshaw.min.js') }}"></script>
+<script src="{{ asset ('assets/plugins/jquery-metrojs/MetroJs.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/skycons/skycons.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset ('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset ('assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-datatable/media/js/dataTables.bootstrap.js') }}"
+        type="text/javascript"></script>
+<script src="{{ asset ('assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js') }}"
+        type="text/javascript"></script>
+<script type="text/javascript"
+        src="{{ asset ('assets/plugins/datatables-responsive/js/datatables.responsive.js') }}"></script>
+<script type="text/javascript" src="{{ asset ('assets/plugins/datatables-responsive/js/lodash.min.js') }}"></script>
+<!-- END VENDOR JS -->
+<!-- BEGIN CORE TEMPLATE JS -->
+<script src="{{ asset ('pages/js/pages.min.js') }}"></script>
+<!-- END CORE TEMPLATE JS -->
+<!-- BEGIN PAGE LEVEL JS -->
+<script src="{{ asset ('assets/js/dashboard.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('assets/js/scripts.js') }}" type="text/javascript"></script>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

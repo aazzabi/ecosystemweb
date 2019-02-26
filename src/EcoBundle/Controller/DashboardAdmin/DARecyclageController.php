@@ -2,11 +2,12 @@
 
 namespace EcoBundle\Controller\DashboardAdmin;
 
-use EcoBundle\Entity\Group;
+use EcoBundle\Entity\PtCollecte;
 use EcoBundle\Entity\Livreur;
 use EcoBundle\Entity\Reparateur;
 use EcoBundle\Entity\RespAsso;
 use EcoBundle\Entity\RespSoc;
+use EcoBundle\Entity\Mission;
 use EcoBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -34,10 +35,13 @@ class DARecyclageController extends Controller
 
         $recys = $em->getRepository('EcoBundle:PtCollecte')->findAll();
         $missions = $em->getRepository('EcoBundle:Mission')->findAll();
+        $categoriesEvts = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
 
         return $this->render('@Eco/DashboardAdmin/Recyclage/index.html.twig', array(
             'recys' => $recys,
-            'missions' => $missions
+            'missions' => $missions,
+            'categoriesEvts' => $categoriesEvts
+
 
         ));
     }
@@ -45,7 +49,7 @@ class DARecyclageController extends Controller
     /**
      * Creates a new user entity.
      *
-     * @Route("/group/new", name="da_groups_new")
+     * @Route("/recyclage/new", name="da_recyclage_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -53,66 +57,82 @@ class DARecyclageController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $group = new Group();
-        $form = $this->createForm('EcoBundle\Form\GroupType', $group);
+        $recys = new PtCollecte();
+        $form = $this->createForm('EcoBundle\Form\PtCollecteType', $recys);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($group);
+            $em->persist($recys);
             $em->flush();
 
-            return $this->redirectToRoute('da_groups_show', array('id' => $group->getId()));
+            return $this->redirectToRoute('da_recyclage_index', array('id' => $recys->getId()));
         }
 
-        return $this->render('@Eco/DashboardAdmin/Group/new.html.twig', array(
-            'group' => $group,
+        return $this->render('@Eco/DashboardAdmin/Recyclage/new.html.twig', array(
+            'PtCollecte' => $recys,
             'form' => $form->createView(),
         ));
     }
     /**
      * Finds and displays a user entity.
      *
-     * @Route("/group/{id}", name="da_groups_show")
+     * @Route("/recyclage/{id}", name="da_recyclage_show")
      * @Method("GET")
      */
-    public function showAction(Group $group)
+    public function showAction(PtCollecte $PtCollecte)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $users= $group->getUsers();
-        $deleteForm = $this->createDeleteForm($group);
+        $users= $PtCollecte->getResponsable();
+        $deleteForm = $this->createDeleteForm($PtCollecte);
 
-        return $this->render('@Eco/DashboardAdmin/Group/show.html.twig', array(
+        return $this->render('@Eco/DashboardAdmin/Recyclage/show.html.twig', array(
             'users' => $users,
-            'group' => $group,
+            'PtCollecte' => $PtCollecte,
             'delete_form' => $deleteForm->createView(),
         ));
     }
+    /**
+     * @Route("/recyclage/mission", name="da_mission_index")
+     * @Method("GET")
+     */
+    public function indexAction2()
+    {
+        $em = $this->getDoctrine()->getManager();
 
+        $recys = $em->getRepository('EcoBundle:PtCollecte')->findAll();
+        $missions = $em->getRepository('EcoBundle:Mission')->findAll();
+
+        return $this->render('@Eco/DashboardUser/Recyclage/missions.html.twig', array(
+            'recys' => $recys,
+            'missions' => $missions
+
+        ));
+    }
     /**
      * Displays a form to edit an existing user entity.
      *
-     * @Route("/group/{id}/edit", name="da_groups_edit")
+     * @Route("/recyclage/{id}/edit", name="da_recyclage_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Group $group)
+    public function editAction(Request $request, PtCollecte $PtCollecte)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $deleteForm = $this->createDeleteForm($group);
-        $editForm = $this->createForm('EcoBundle\Form\UserType', $group);
+        $deleteForm = $this->createDeleteForm($PtCollecte);
+        $editForm = $this->createForm('EcoBundle\Form\UserType', $PtCollecte);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('da_groups_edit', array('id' => $group->getId()));
+            return $this->redirectToRoute('da_recyclage_edit', array('id' => $PtCollecte->getId()));
         }
 
-        return $this->render('@Eco/DashboardAdmin/Group/edit.html.twig', array(
-            'user' => $group,
+        return $this->render('@Eco/DashboardAdmin/Recyclage/edit.html.twig', array(
+            'user' => $PtCollecte,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -121,37 +141,37 @@ class DARecyclageController extends Controller
     /**
      * Deletes a user entity.
      *
-     * @Route("/user/{id}", name="da_groups_delete")
+     * @Route("/user/{id}", name="da_recyclage_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Group $group)
+    public function deleteAction(Request $request, PtCollecte $PtCollecte)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $form = $this->createDeleteForm($group);
+        $form = $this->createDeleteForm($PtCollecte);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($group);
+            $em->remove($PtCollecte);
             $em->flush();
         }
 
-        return $this->redirectToRoute('da_groups_index');
+        return $this->redirectToRoute('da_recyclage_delete');
     }
 
     /**
      * Creates a form to delete a user entity.
      *
-     * @param User $group The user entity
+     * @param User $PtCollecte The user entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Group $group)
+    private function createDeleteForm(PtCollecte $PtCollecte)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('da_groups_delete', array('id' => $group->getId())))
+            ->setAction($this->generateUrl('da_recyclage_delete', array('id' => $PtCollecte->getId())))
             ->setMethod('DELETE')
             ->getForm()
             ;

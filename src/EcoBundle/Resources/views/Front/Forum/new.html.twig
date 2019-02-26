@@ -1,6 +1,6 @@
 {% extends './Default/dashboard.html.twig' %}
 {% block title %}
-    Ajout un nouveau point de collecte
+    Ajout d'une nouvelle catégorie de publication
 {% endblock %}
 
 {% block stylesheets %}
@@ -24,9 +24,10 @@
 
 {% block body %}
     <br>
-        {{ form_start(form) }}
+        {{ form_start(formPublication) }}
         <div class="row">
             <div class="col-md-6">
+                <h1><b>Ajout d'une nouvelle publication</b></h1>
             </div>
             <div class="col-md-6 text-right">
                 <br>
@@ -34,22 +35,19 @@
                     <i class="fa fa-check" aria-hidden="true"></i>
                     Confirmer
                 </button>
-                <a href="{{ path('da_recyclage_index') }}" class="btn btn-secondary">
+                <a href="{{ path('du_forum_index') }}" class="btn btn-secondary">
                     <i class="fa fa-undo" aria-hidden="true"></i>
                     Retour à la liste</a>
 
                 <br>
             </div>
         </div>
-
-
     <hr>
     <div class="row">
         <div class="col-md-12">
-            {% form_theme form 'bootstrap_3_layout.html.twig' %}
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
+            {% form_theme formPublication 'bootstrap_3_layout.html.twig' %}
+            {{ form_widget(formPublication) }}
+            {{ form_end(formPublication) }}
         </div>
     </div>
 {% endblock %}

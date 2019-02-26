@@ -1,0 +1,134 @@
+{% extends './Default/dashboard.html.twig' %}
+{% block title %}
+    Liste des events
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery.min.js') }}"...></script>
+
+    <script>
+        $(document).ready(function () {
+            var users = $('#eventTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+
+          /*  $("#b5").click(
+                function()
+                { $('.trhideclass1').toggle();}
+            );
+
+            var rows = $('table.table table-striped table-bordered tr');
+
+            $('#bouton').click(function() {
+                var event = rows.filter('.event').toggle();
+               // rows.not( black ).hide();
+            });*/
+        });
+    </script>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><b>Liste des events</b></h1>
+                </div>
+
+                <div class="col-md-6 text-right">
+                    <br>
+                    <a href="{{ path('da_categorie_index') }}" class="btn btn-default-focus">
+                        <i class="icon-plus">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            &nbsp;Voir les catégories
+                        </i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="eventTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Categorie</th>
+                    <th>Lieu</th>
+                    <th>Date</th>
+                    <th>Cree Par</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <thead>
+                <tbody>
+                {% for evenement in evenement %}
+                    <tr class="event">
+
+                        <td>
+                           {{ evenement.titre }}
+                        </td>
+                        <td>{{ evenement.description }}</td>
+                        <td>{{ evenement.categorie.libelle }}</td>
+                        <td>{{ evenement.lieu }}</td>
+                        <td>{{ evenement.date |date }}</td>
+                        <td>{{ evenement.createdBy }}</td>
+
+                        <td>
+                            <div class="btn-group btn-group-sm btn-group-horizontal">
+                                <a class="btn btn-primary"
+
+                                   data-toggle="tooltip" title="Promouvoir">
+                                    <i class="fa fa-bullhorn" aria-hidden="true"></i>
+                                </a>
+                            </div>
+
+                            {#<div class="btn-group btn-group-sm btn-group-horizontal">
+                                <a class="btn btn-danger"
+
+                                   data-toggle="tooltip" title="supprimer" id="bouton">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </a>
+
+                            </div>#}
+                            <div class="btn-group btn-group-sm btn-group-horizontal">
+                                <a  class="btn btn-default"
+
+                                   data-toggle="tooltip" title="Archiver">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </a>
+                            </div>
+
+                            <div class="btn-group btn-group-sm btn-group-horizontal">
+                                <a href="{{ path('da_evenements_delete', { 'id': evenement.id }) }}" class="btn btn-danger"
+                                   data-toggle="tooltip" title="Supprimer">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </div>
+
+                        </td>
+                        </a>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

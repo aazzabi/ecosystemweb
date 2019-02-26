@@ -78,7 +78,7 @@
                     <tr class="event">
 
                         <td>
-                            <a href="{{ path('da_evenement_show', { 'id': evenement.id }) }}">{{ evenement.titre }}</a>
+                            {{ evenement.titre }}
                         </td>
                         <td>{{ evenement.description }}</td>
                         <td>{{ evenement.categorie.libelle }}</td>
@@ -87,27 +87,11 @@
                         <td>{{ evenement.createdBy }}</td>
 
                         <td>
+
                             <div class="btn-group btn-group-sm btn-group-horizontal">
-                                <a class="btn btn-primary"
+                                <a  href="{{ path('da_evenement_show', { 'id': evenement.id }) }}" class="btn btn-default"
 
-                                   data-toggle="tooltip" title="Promouvoir">
-                                    <i class="fa fa-bullhorn" aria-hidden="true"></i>
-                                </a>
-
-                            </div>
-
-                            {#<div class="btn-group btn-group-sm btn-group-horizontal">
-                                <a class="btn btn-danger"
-
-                                   data-toggle="tooltip" title="supprimer" id="bouton">
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                </a>
-
-                            </div>#}
-                            <div class="btn-group btn-group-sm btn-group-horizontal">
-                                <a  class="btn btn-default"
-
-                                   data-toggle="tooltip" title="Archiver">
+                                   data-toggle="tooltip" title="Voir">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </a>
                             </div>

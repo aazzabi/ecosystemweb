@@ -1,90 +1,92 @@
 {% extends './Default/dashboard.html.twig' %}
 
 {% block title %}
-    Affichage d'une catégorie
+    Affichage d'un Event
 {% endblock %}
-
+{% block stylesheets %}
+    <style>
+        .jumbotron {
+            height:  200px;
+            padding: 0px;
+            width:   100%;
+        }
+    </style>
+{% endblock %}
 {% block body %}
-    <h1>Catégorie Event</h1>
+    {% if evenement.cover != '' %}
+        <div class="jumbotron">
+            <div class="cover-photo text-center"  style="background-image:url('{{ asset('uploads/evt/cover/' ~ evenement.cover) }}'); background-size: 100% 100%"><br>
+                <h1 class="display-3 ">Bienvenue </h1>
+                <p>Voici un bref description sur notre prochain evenement {{ evenement.titre }}, on espére vous
+                    accueilir parmi nous </p>
+            </div>
+        </div>
+    {% else %}
+        <div class="jumbotron">
+            <div class="cover-photo text-center"><br>
+                <h1 class="display-3 ">Bienvenue </h1>
+                <p>Voici un bref description sur notre prochain evenement {{ evenement.titre }}, on espére vous
+                    accueilir parmi nous </p>
+            </div>
+        </div>
+    {% endif %}
     <div class="row">
-        <div class="col-md-12">
-            <div class="card card-borderless">
-                <ul class="nav nav-tabs nav-tabs-simple hidden-sm-down" role="tablist"
-                    data-init-reponsive-tabs="dropdownfx">
-
-                    <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#association" class=""
-                           aria-expanded="false">association</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="societe" aria-expanded="true">
-                        <table id="societesTab" class="table table-striped table-bordered" style="width: 100% !important;">
-
-                            <tbody>
-
-                            <tr>
-
-                            <tr>
-                                <th>Id</th>
-                                <td>{{ CategorieEvts.id }}</td>
-                            </tr>
-                            <tr>
-                                <th>Libelle</th>
-                                <td>{{ CategorieEvts.libelle }}</td>
-                            </tr>
-                            <tr>
-                                <th>But</th>
-                                <td>{{ CategorieEvts.but }}</td>
-                            </tr>
-                            <div class="btn-group btn-group-sm btn-group-horizontal">
-                                <a class="btn btn-secondary" href="{{path ('da_categorie_index') }}"
-                                   data-toggle="tooltip" title="Back to the list">
-                                    <i class="fa fa-eye"></i>
-
-                                </a>
-                                <a class="btn btn-secondary" href="{{ path('da_categorie_edit', { 'id': CategorieEvts.id }) }}"
-                                   data-toggle="tooltip" title="Editer la categorie">
-                                    <i class="fa fa-pencil-square-o"></i>
-                                </a>
-                                <li>
-
-                                    <button type="button" class="btn btn-danger btn_lg" data-toggle="modal" data-target="#myModal">
-                                        <i class="fa fa-times" aria-hidden="true"></i> Supprimer
-                                    </button>
-                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel"> Supprimer
-                                                    </h5>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Voulez-vous vraiement supprimer cette categorie?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default btn-secondary" data-dismiss="modal"> Annuler
-                                                    </button>
-
-                                                    <a href="{{ path('da_evenements_delete', { 'id': CategorieEvts.id }) }}">
-                                                        <input class="btn btn-danger btn_lg" type="submit" value="Supprimer">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </div>
-                            </td>
-                            </tr>
-
-                            </tbody>
-                        </table>
+        <div class="card col-md-5 offset-md-1" style="margin-right: 20px; padding: 15px 25px">
+            <h3 class="text-center"><span class="bold text-center">{{ evenement.titre }}</span></h3>
+            <h5><b>Catégorie :</b> {{ evenement.categorie }}</h5><br>
+            <h5><b>Description :</b> <br>{{ evenement.description }}</h5><br>
+            A : {{ evenement.lieu }}<br>
+            Date : {{ evenement.date |date }}
+            <div>
+                <div class="profile-img-wrapper m-t-5 inline">
+                    <img width="35" height="35" src="{{ asset('uploads/user/photo/' ~ evenement.createdBy.photo) }}">
+                    VIA{{ evenement.createdBy.nom }}
+                </div>
+                <div class=" text-right">
+                    <p class="small hint-text m-t-5">
+                        <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i> A : {{ evenement.lieu }}
+                        <i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>Date : {{ evenement.date |date }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card col-md-5 ">
+            <h3 class="text-center"><span class="bold text-center">A propos d'organisateur</span></h3>
+            <div class="row">
+                {% if evenement.createdBy.photo %}
+                    <div class="col-md-4 profile-img-wrapperinline">
+                        <img width="180" height="180"
+                             src="{{ asset('uploads/user/photo/' ~ evenement.createdBy.photo) }}">
                     </div>
+                {% endif %}
+                <div class="col-md-8">
+                    <h5><b>Nom :</b> {{ evenement.createdBy.nom }}</h5>
+                    <h5><b>Prenom :</b>{{ evenement.createdBy.prenom }}</h5>
+                    {% if evenement.createdBy.group %}
+                        <h5><b>Groupe :</b>{{ evenement.createdBy.group.nom }}</h5>
+                    {% endif %}
+                    <h5><b>Prenom :</b>{{ evenement.createdBy.email }}</h5><br>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row ">
 
+        {% if evenement.participants %}
+            <div class="col-md-10 offset-md-1 card">
+                <h3 class="text-center"><span class="bold text-center">Les participants jusqu'a maintenant ({{ evenement.participants | length }} participants)</span></h3>
+                <ul class="row list-unstyled ">
+                    {% for participant in evenement.participants %}
+                        <li class="text-center" style="width: 100px; height: 130px; margin-right: 15px">
+                            <div class="profile-img-wrapper" style="width: 100px; height: 100px">
+                                <img width="100" height="100" alt="Profile Image" src="{{ asset('uploads/user/photo/' ~ participant.photo) }}">
+                            </div>
+                            <h4>{{ participant.nom }}</h4>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <br>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

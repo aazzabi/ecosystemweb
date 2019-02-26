@@ -6,82 +6,89 @@
 {% block stylesheets %}
     <style>
         .jumbotron {
-            height: 40vh;
+            height:  200px;
             padding: 0px;
-            width: 100%;
+            width:   100%;
         }
     </style>
 {% endblock %}
 {% block body %}
-
-    <div class="jumbotron" data-social="cover" data-pages="parallax" data-scroll-element=".page-container">
-        <div class="cover-photo" style="background-image:url('{{ asset('bundles/appbundle/images/top_bg.jpg') }}'); transform: translateY(0px);">
-            {% if evenement.cover != '' %}
-                <img alt="User Pic"
-                     src="{{ asset('uploads/evt/cover/' ~ evenement.cover) }}"
-                     class="img-circle img-responsive">
-            {% else %}
-                <img alt="User Pic" src="{{ asset('assets/img/profile.png') }}"
-                     id="profile-image1" class="img-circle img-responsive">
-            {% endif %}
+    {% if evenement.cover != '' %}
+        <div class="jumbotron">
+            <div class="cover-photo text-center"  style="background-image:url('{{ asset('uploads/evt/cover/' ~ evenement.cover) }}'); background-size: 100% 100%"><br>
+                <h1 class="display-3 ">Bienvenue </h1>
+                <p>Voici un bref description sur notre prochain evenement {{ evenement.titre }}, on espére vous
+                    accueilir parmi nous </p>
+            </div>
         </div>
-        <div class=" container    container-fixed-lg sm-p-l-0 sm-p-r-0">
-            <div class="inner" style="transform: translateY(0px); opacity: 1;">
-                <div class="pull-bottom bottom-left m-b-40 sm-p-l-15">
-                    <h5 class="text-white no-margin">Venez découvrir...</h5>
-
+    {% else %}
+        <div class="jumbotron">
+            <div class="cover-photo text-center"><br>
+                <h1 class="display-3 ">Bienvenue </h1>
+                <p>Voici un bref description sur notre prochain evenement {{ evenement.titre }}, on espére vous
+                    accueilir parmi nous </p>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="card col-md-5 offset-md-1" style="margin-right: 20px; padding: 15px 25px">
+            <h3 class="text-center"><span class="bold text-center">{{ evenement.titre }}</span></h3>
+            <h5><b>Catégorie :</b> {{ evenement.categorie }}</h5><br>
+            <h5><b>Description :</b> <br>{{ evenement.description }}</h5><br>
+            A : {{ evenement.lieu }}<br>
+            Date : {{ evenement.date |date }}
+            <div>
+                <div class="profile-img-wrapper m-t-5 inline">
+                    <img width="35" height="35" src="{{ asset('uploads/user/photo/' ~ evenement.createdBy.photo) }}">
+                    VIA{{ evenement.createdBy.nom }}
+                </div>
+                <div class=" text-right">
+                    <p class="small hint-text m-t-5">
+                        <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i> A : {{ evenement.lieu }}
+                        <i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>Date : {{ evenement.date |date }}
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
-
-
-    <div class="col-lg-8 sm-no-padding">
-        <div class="card card-transparent">
-            <div class="card-body no-padding">
-                <div id="card-advance" class="card card-default">
-                    <br>
-                    <div class="card-body">
-                        <h3>
-                            <span class="semi-bold">{{ evenement.titre }}</span></h3>
-                        <h3> <p>{{ evenement.description }}</p></h3>
-                        <br>A : {{ evenement.lieu }}
-                        <br>Date : {{ evenement.date |date }}
-                        <div>
-                            <div class="profile-img-wrapper m-t-5 inline">
-                                <img width="35" height="35" src="{{ asset('uploads/user/photo/' ~ evenement.createdBy.photo) }}">
-                                <div class="chat-status available">
-                                </div>
-                            </div>
-                            <div class="inline m-l-10">
-                                <p class="small hint-text m-t-5">VIA {{ evenement.createdBy }}
-
-                            </div>
-                        </div>
+        <div class="card col-md-5 ">
+            <h3 class="text-center"><span class="bold text-center">A propos d'organisateur</span></h3>
+            <div class="row">
+                {% if evenement.createdBy.photo %}
+                    <div class="col-md-4 profile-img-wrapperinline">
+                        <img width="180" height="180"
+                             src="{{ asset('uploads/user/photo/' ~ evenement.createdBy.photo) }}">
                     </div>
+                {% endif %}
+                <div class="col-md-8">
+                    <h5><b>Nom :</b> {{ evenement.createdBy.nom }}</h5>
+                    <h5><b>Prenom :</b>{{ evenement.createdBy.prenom }}</h5>
+                    {% if evenement.createdBy.group %}
+                        <h5><b>Groupe :</b>{{ evenement.createdBy.group.nom }}</h5>
+                    {% endif %}
+                    <h5><b>Prenom :</b>{{ evenement.createdBy.email }}</h5><br>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row ">
 
-
-
-
-        <div class="col-lg-4">
-            <p class="m-b-5 small">Participants</p>
-            <ul class="list-unstyled ">
+       {% if evenement.participants %}
+        <div class="col-md-10 offset-md-1 card">
+            <h3 class="text-center"><span class="bold text-center">Les participants jusqu'a maintenant ({{ evenement.participants | length }} participants)</span></h3>
+            <ul class="row list-unstyled ">
                 {% for participant in evenement.participants %}
-                <li class="m-r-10">
-                    <div class="thumbnail-wrapper d32 circular b-white m-r-5 b-a b-white">
-                        <img width="35" height="35" alt="Profile Image"  src="{{ asset('uploads/user/photo/' ~ participant.photo) }}">
-                        {{ participant.nom }}
-                    </div>
-                </li>
+                    <li class="text-center" style="width: 100px; height: 130px; margin-right: 15px">
+                        <div class="profile-img-wrapper" style="width: 100px; height: 100px">
+                            <img width="100" height="100" alt="Profile Image" src="{{ asset('uploads/user/photo/' ~ participant.photo) }}">
+                        </div>
+                        <h4>{{ participant.nom }}</h4>
+                    </li>
                 {% endfor %}
             </ul>
             <br>
-
         </div>
+        {% endif %}
+    </div>
 
 
 

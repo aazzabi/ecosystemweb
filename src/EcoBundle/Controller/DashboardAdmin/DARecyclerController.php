@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Rania
+ * User: Mehdi
  * Date: 14/02/2019
  * Time: 22:04
  */
@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Route("da")
  */
-class DAEvenementsController extends Controller
+class DARecyclerController extends Controller
 {
     /**
      * @Route("/categorie", name="da_categorie_index")

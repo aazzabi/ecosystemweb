@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @Route("du")
  */
 
-class DUEvenementsController extends Controller
+class DURecyclerController extends Controller
 {
     /**
      * @Route("/evenement", name="du_evenements_index")

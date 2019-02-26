@@ -29,7 +29,7 @@ use EcoBunde\Form\rechercheEventType;
  * @Route("/front")
  */
 
-class EvenementController extends Controller
+class RecyclerController extends Controller
 {
     /**
      * @Route("/evenement", name="front_evenements_index")

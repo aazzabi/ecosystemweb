@@ -49,6 +49,27 @@ class FAnnonceController extends Controller
             'annonce' => $annonce,
         ));
     }
+    /**
+     * Creates a new Categorie et annonce entity.
+     *
+     * @Route("/signalAnnonce/{id}", name="f_annonce_signaler")
+     * @Method({"GET", "POST"})
+     */
+    public function SignalAction(Request $request,$id)
+    {
+
+        $signal = new SignalAnnonce();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $annonce = $em->getRepository('EcoBundle:Annonce')->find($id);
+        $libRadio = $request->get('radioLib');
+        $signal->setDescription($libRadio);
+        $signal->setAnnonce($annonce);
+        $signal->setUser($user);
+        $em->persist($signal);
+        $em->flush();
+        return $this->redirectToRoute('f_annonce_index');
+    }
 
     /**
      * @Route("/categorie/{cat}", name="f_recherch_Categorie")
@@ -162,7 +183,7 @@ class FAnnonceController extends Controller
         }else
         {
             $annonce = $this->getDoctrine()->getRepository('EcoBundle:Annonce')->RechercheTitreAnnonce($keyWord);
-            
+
         }
 
             $template = $this->render( '@Eco/Front/Annonce/Recherche.html.twig', array("annonces" => $annonce))->getContent();

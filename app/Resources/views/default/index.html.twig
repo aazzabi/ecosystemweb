@@ -42,6 +42,56 @@
         </div>
     </header>
     <section style="height: 500px">
+        {#<h1>Annonce Les Plus Aimer</h1>#}
+        {#<div class="row" id="aa" style="margin-right:30px; margin-left: 30px;">#}
+        {#{% for l in likes %}#}
+        {#<div class="col-md-3">#}
+        {#<figure class="card card-product">#}
+        {#<div class="img-wrap">#}
+        {#{% if l.photo != '' %}#}
+        {#<img style="width:230px;" src="{{ asset('uploads/Annonce/photo/' ~ l.photo) }}"#}
+        {#class="card-img-top">#}
+        {#{% else %}#}
+        {#<img alt="annonce_Pic" style="width:230px ; height: 230px;"#}
+        {#src="{{ asset('assets/img/NA.png') }}"#}
+        {#id="profile-image1" class="card-img-top">#}
+        {#{% endif %}#}
+        {#</div>#}
+        {#<figcaption class="info-wrap">#}
+        {#<h4 class="title">{{ l.titre }}</h4>#}
+        {#<p class="desc">{{ l.description }}</p>#}
+        {#<div class="price-wrap h5">#}
+        {#<span class="price-new">${{ l.prix }}</span>#}
+        {#<button type="submit" value="{{ l.id }}"#}
+        {#class="jaime btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">#}
+        {#<i class="fa fa-thumbs-up" aria-hidden="true"></i> Like#}
+        {#</button>#}
+        {#</div>#}
+        {#<div>#}
+        {#<a href="{{ path('du_annonce_signaler', { 'id': l.id }) }}"#}
+        {#class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">#}
+        {#<i class="icon-plus">#}
+        {#<i class="fa fa-bug" aria-hidden="true"></i>#}
+        {#&nbsp;Signaler#}
+        {#</i>#}
+        {#</a>#}
+        {#</div>#}
+        {#</figcaption>#}
+        {#<div class="bottom-wrap">#}
+
+        {#<a href="#" class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-left">panier#}
+        {#<i class="fa fa-thumbs-up" aria-hidden="true"></i>#}
+        {#</a>#}
+        {#<a href="{{ path('f_annonce_show', { 'id': l.id }) }}" class="btn btn-tag#}
+        {#btn-tag-light btn-tag-rounded m-r-10 float-right">#}
+        {#show <i class="fa fa-eye" aria-hidden="true"></i>#}
+        {#</a>#}
+        {#</div> <!-- bottom-wrap.// -->#}
+        {#</figure>#}
+        {#</div>#}
+        {#{% endfor %}#}
+        {#</div>#}
+        {#<hr>#}
     </section>
 
     <section style="min-height:500px; background-size: 100% 500px;background-image: url('{{ asset('assets/img/imgNovio/bg/01.png') }}')" >

@@ -3,7 +3,6 @@
 namespace EcoBundle\Controller\Front;
 
 use EcoBundle\Entity\Annonce;
-use EcoBundle\Entity\MentionAnnonce;
 use EcoBundle\Entity\SignalAnnonce;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,12 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("front")
+ * @Route("annonce")
  */
 class FAnnonceController extends Controller
 {
     /**
-     * @Route("/annonce", name="f_annonce_index")
+     * @Route("/", name="f_annonce_index")
      * @Method({"GET", "POST"})
      */
     public function indexAction(Request $request)
@@ -29,7 +28,7 @@ class FAnnonceController extends Controller
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
         $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
         $signal = $em->getRepository('EcoBundle:SignalAnnonce')->findAll();
-        return $this->render('@Eco/Annonce/annonce.html.twig', array(
+        return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
             "annonces" => $annnonce, 'categories' => $categories, 'likes' => $likes, 'signal' => $signal,
         ));
     }
@@ -37,7 +36,7 @@ class FAnnonceController extends Controller
     /**
      * Finds and displays a user entity.
      *
-     * @Route("/annonce/{id}", name="f_annonce_show")
+     * @Route("/{id}", name="f_annonce_show")
      * @Method("GET")
      */
     public function showAction(Annonce $annonce)
@@ -46,13 +45,13 @@ class FAnnonceController extends Controller
         $annonce->setViews($annonce->getViews() + 1);
         $em = $this->getDoctrine()->getManager();
         $em->flush();
-        return $this->render('@Eco/Annonce/show.html.twig', array(
+        return $this->render('@Eco/Front/Annonce/show.html.twig', array(
             'annonce' => $annonce,
         ));
     }
 
     /**
-     * @Route("/annonce/categorie/{cat}", name="f_recherch_Categorie")
+     * @Route("/categorie/{cat}", name="f_recherch_Categorie")
      * @Method("GET")
      */
     public function RecherchCategorieAction(Request $request, $cat)
@@ -63,7 +62,7 @@ class FAnnonceController extends Controller
         $annnonce = new Annonce();
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findByCategorie($cat);
 
-        return $this->render('@Eco/Annonce/annonce.html.twig', array(
+        return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
             "annonces" => $annnonce, 'categories' => $categories,
 
         ));
@@ -72,7 +71,7 @@ class FAnnonceController extends Controller
     /**
      * Creates a new Categorie et annonce entity.
      *
-     * @Route("/annonce/jaime/new", name="f_annonce_jaime")
+     * @Route("/jaime/new", name="f_annonce_jaime")
      * @Method({"GET", "POST"})
      */
     public function newJaimeAction(Request $request)
@@ -117,7 +116,7 @@ class FAnnonceController extends Controller
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
 
         }
-        return $this->render('@Eco/Annonce/annonce.html.twig', array(
+        return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
             "annonces" => $annonces, 'categories' => $categories, 'likes' => $likes,
         ));
     }
@@ -133,7 +132,7 @@ class FAnnonceController extends Controller
 
         $snappy = $this->get('knp_snappy.pdf');
 
-        $html = $this->renderView('@Eco/Annonce/annoncePdf.html.twig', array(
+        $html = $this->renderView('@Eco/Front/Annonce/annoncePdf.html.twig', array(
             'annonce' => $annonce,
         ));
 
@@ -168,8 +167,7 @@ class FAnnonceController extends Controller
 
         }
 
-            $template = $this->render( '@Eco/Annonce/Recherche.html.twig', array("annonces" => $annonce))->getContent();
-        //dump($template);exit();
+            $template = $this->render( '@Eco/Front/Annonce/Recherche.html.twig', array("annonces" => $annonce))->getContent();
             $json     = json_encode($template);
             $response = new Response($json, 200);
             $response->headers->set('Content-Type', 'application/json');

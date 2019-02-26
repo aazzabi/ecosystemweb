@@ -20,8 +20,10 @@
                 <a href="{{ path('du_annonce_index') }}" class="btn btn-success">
                     <i class="fa fa-undo" aria-hidden="true"></i> Retourner à la page d'annonce
                 </a>
+                <a href="#" class="btn btn-lg btn-outline-primary text-uppercase">
+                    <i class="fas fa-shopping-cart"></i> Add to cart </a>
             </div>
-        </div>
+        </div><br>
         <div class="row">
             <div class="card">
                 <div class="row">
@@ -33,7 +35,7 @@
                                          src="{{ asset('uploads/Annonce/photo/' ~ annonce.photo) }}"
                                          class="img-circle img-responsive">
                                 {% else %}
-                                    <img alt="annonce_Pic" src="{{ asset('assets/img/annonces.png') }}"
+                                    <img alt="annonce_Pic" src="{{ asset('assets/img/NA.png') }}"
                                          id="profile-image1" class="img-circle img-responsive">
                                 {% endif %}
                             </div>
@@ -44,9 +46,9 @@
                             <h3 class="title mb-3">{{ annonce.titre |upper }}</h3>
 
                             <p class="price-detail-wrap">
-	<span class="price h3 text-warning">
-		<span class="currency">DT $</span><span class="num">{{ annonce.prix }}</span>
-	</span>
+                                <span class="price h3 text-warning">
+                                    <span class="currency">DT $</span><span class="num">{{ annonce.prix }}</span>
+                                </span>
                             </p> <!-- price-detail-wrap .// -->
                             <dl class="item-property">
                                 <dt>Description</dt>
@@ -64,12 +66,10 @@
                             <a href="#" class="btn btn-lg btn-primary text-uppercase"> Partage
                                 <faceBook></faceBook>
                             </a>
-                            <a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i
-                                        class="fas fa-shopping-cart"></i> Add to cart </a>
-                        </article> <!-- card-body.// -->
-                    </aside> <!-- col.// -->
-                </div> <!-- row.// -->
-            </div> <!-- card.// -->
+                        </article>
+                    </aside>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

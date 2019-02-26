@@ -37,7 +37,7 @@ class SignalAnnonce
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id"))
      */
     private $user;

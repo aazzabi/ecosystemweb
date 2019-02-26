@@ -33,9 +33,11 @@ class DASignalisation extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $signalisationForumComms = $em->getRepository('EcoBundle:SignalisationForumComm')->findAll();
+        $signalAnnonces = $em->getRepository('EcoBundle:SignalAnnonce')->findAll();
 
         return $this->render('@Eco/DashboardAdmin/Signalisation/index.html.twig', array(
             'signalisationForumComms' => $signalisationForumComms,
+            'signalAnnonces' => $signalAnnonces,
         ));
     }
 
@@ -46,6 +48,19 @@ class DASignalisation extends Controller
     public function deleteSignalisationForumCommAction(Request $request, $id)
     {
         $signalisation = $this->getDoctrine()->getRepository('EcoBundle:SignalisationForumComm')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($signalisation);
+        $em->flush();
+        return $this->redirectToRoute('da_signalisation_index');
+    }
+
+    /**
+     * @Route("/signalisation/annonce/delete/{id}", name="da_signalisation_annonce_delete")
+     * @Method({"GET", "DELETE"})
+     */
+    public function deleteSignalAnnoncesAction(Request $request, $id)
+    {
+        $signalisation = $this->getDoctrine()->getRepository('EcoBundle:SignalAnnonce')->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($signalisation);
         $em->flush();

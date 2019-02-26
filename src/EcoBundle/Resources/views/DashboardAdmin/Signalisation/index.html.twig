@@ -35,11 +35,11 @@
                 data-init-reponsive-tabs="dropdownfx">
                 <li class="nav-item">
                     <a class="active" data-toggle="tab" role="tab" data-target="#signalisationForumComm" href="#"
-                       aria-expanded="true">Commentaires (Forum)</a>
+                       aria-expanded="true">Commentaires / Forum</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" data-toggle="tab" role="tab" data-target="#signalisationAnnonces" class=""
-                       aria-expanded="false">Signalisation</a>
+                       aria-expanded="false">Annonce</a>
                 </li>
             </ul>
             <div class="tab-content" >
@@ -59,7 +59,7 @@
                                 <td> {{ signalisation.libelle }}</td>
                                 <td>
                                     {#<a class="btn btn-danger" href="{{ path('du_forum_publication_show', { 'id': signalisation.commentaire.publication.id }) }}">#}
-                                        {{ signalisation.commentaire.publication }}
+                                        {{ signalisation.commentaire.publication.description }}
                                     {#</a>#}
                                     </td>
                                 <td>{{ signalisation.commentaire.nbrSignalisation }}</td>
@@ -76,7 +76,36 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="signalisationAnnonces" aria-expanded="false">
-
+                    <table id="sigForumTab" class="table display table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Cause</th>
+                            <th>Publication</th>
+                            <th>Par</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for signal in signalAnnonces %}
+                            <tr>
+                                <td> {{ signal.description }}</td>
+                                <td>
+                                    <a  href="{{ path('f_annonce_show', { 'id': signal.annonce.id }) }}">
+                                        {{ signal.annonce.titre }} =>  {{ signal.annonce.description }}
+                                    </a>
+                                </td>
+                                <td>{{ signal.user }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm btn-group-horizontal">
+                                        <a class="btn btn-danger" href="{{ path('da_signalisation_annonce_delete', { 'id': signal.id }) }}">
+                                            <i class="fa fa-trash"> </i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 {% extends './Default/dashboard.html.twig' %}
 
 {% block title %}
-    Ajout d'annonce ou Categorie
+    Ajout d'annonce
 {% endblock %}
 {% block javascripts %}
    <script>
@@ -27,9 +27,9 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6">
-                    <h1><b>Ajout d'annonce ou Categorie </b></h1>
+                    <h1><b>Ajout d'annonce</b></h1>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-6 text-right"><br>
                     <a href="{{ path('du_annonce_index') }}" class="btn btn-secondary">
                         <i class="fa fa-undo" aria-hidden="true"></i>  Retour à la liste</a>
                     <br>
@@ -37,16 +37,16 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-borderless">
-                        <ul class="nav nav-tabs nav-tabs-simple hidden-sm-down" role="tablist"
-                            data-init-reponsive-tabs="dropdownfx">
-                            <li class="nav-item">
-                                <a class="active" data-toggle="tab" role="tab" data-target="#annonce" href="#"
-                                   aria-expanded="true">Annonce</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="annonce" aria-expanded="true">
+                    <div class="card" style="padding: 25px">
+                        {#<ul class="nav nav-tabs nav-tabs-simple hidden-sm-down" role="tablist"#}
+                            {#data-init-reponsive-tabs="dropdownfx">#}
+                            {#<li class="nav-item">#}
+                                {#<a class="active" data-toggle="tab" role="tab" data-target="#annonce" href="#"#}
+                                   {#aria-expanded="true">Annonce</a>#}
+                            {#</li>#}
+                        {#</ul>#}
+                        {#<div class="tab-content">#}
+                            {#<div class="tab-pane active" id="annonce" aria-expanded="true">#}
                                 {{ form_start(formAnnonce) }}
                                 {% form_theme formAnnonce 'bootstrap_3_layout.html.twig' %}
                                 {{ form_widget(formAnnonce) }}
@@ -58,8 +58,7 @@
                                     <i class="fa fa-check" aria-hidden="true"></i> Confirmer
                                 </button>
                                 {{ form_end(formAnnonce) }}
-                            </div>
-                        </div>
+                            {#</div>#}
                     </div>
                 </div>
             </div>

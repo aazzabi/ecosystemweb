@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <br>
-                    <a href="{{ path('du_annonce_stat') }}" class="btn btn-info btn-cons m-b-10">
+                    <a href="{{ path('du_annonce_stat') }}" class="btn btn-info">
                         <i class="fa fa-pie-chart" aria-hidden="true"></i>
                         Statistique sur mes Annonce
                     </a>
@@ -82,7 +82,7 @@
                                                  src="{{ asset('uploads/Annonce/photo/' ~ annonce.photo) }}"
                                                  class="img-circle img-responsive">
                                         {% else %}
-                                            <img alt="annonce_Pic" style="width:50px;" src="{{ asset('assets/img/annonces.png') }}"
+                                            <img alt="annonce_Pic" style="width:50px;" src="{{ asset('assets/img/NA.png') }}"
                                                  id="profile-image1" class="img-circle img-responsive">
                                         {% endif %}
                                     </td>

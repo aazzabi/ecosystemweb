@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <br>
-                    <a href="{{ path('da_categorie_new') }}" class="btn btn-success">
+                    <a href="{{ path('da_categoriem_new') }}" class="btn btn-success">
                         <i class="icon-plus">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             &nbsp;Ajouter une catégorie
@@ -53,17 +53,17 @@
                 </thead>
                 <thead>
                 <tbody>
-                {% for categoriesEvt in categoriesEvts %}
+                {% for categoriesMission in categoriesMissions %}
                         <tr>
 
                             <td>
-                                <a href="{{ path('da_categorie_show', { 'id': categoriesEvt.id }) }}">{{ categoriesEvt.libelle }}</a>
+                                <a href="{{ path('da_categoriem_show', { 'id': categoriesMission.id }) }}">{{ categoriesMission.libelle }}</a>
                             </td>
-                            <td>{{ categoriesEvt.but }}</td>
+                            <td>{{ categoriesMission.but }}</td>
                             <td>
                                 <div class="btn-group btn-group-sm btn-group-horizontal">
                                     <a class="btn btn-secondary"
-                                       href="{{ path('da_categorie_edit', { 'id': categoriesEvt.id }) }}"
+                                       href="{{ path('da_categoriem_edit', { 'id': categoriesMission.id }) }}"
                                        data-toggle="tooltip" title="Editer l'utilisateur">
                                         <i class="fa fa-pencil-square-o"></i>
                                     </a>

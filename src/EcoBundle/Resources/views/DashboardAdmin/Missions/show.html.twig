@@ -27,23 +27,23 @@
 
                             <tr>
                                 <th>Id</th>
-                                <td>{{ CategorieEvts.id }}</td>
+                                <td>{{ CategorieMission.id }}</td>
                             </tr>
                             <tr>
                                 <th>Libelle</th>
-                                <td>{{ CategorieEvts.libelle }}</td>
+                                <td>{{ CategorieMission.libelle }}</td>
                             </tr>
                             <tr>
                                 <th>But</th>
-                                <td>{{ CategorieEvts.but }}</td>
+                                <td>{{ CategorieMission.but }}</td>
                             </tr>
                             <div class="btn-group btn-group-sm btn-group-horizontal">
-                                <a class="btn btn-secondary" href="{{path ('da_categorie_index') }}"
+                                <a class="btn btn-secondary" href="{{path ('da_categoriem_index') }}"
                                    data-toggle="tooltip" title="Back to the list">
                                     <i class="fa fa-eye"></i>
 
                                 </a>
-                                <a class="btn btn-secondary" href="{{ path('da_categorie_edit', { 'id': CategorieEvts.id }) }}"
+                                <a class="btn btn-secondary" href="{{ path('da_categoriem_edit', { 'id': CategorieMission.id }) }}"
                                    data-toggle="tooltip" title="Editer la categorie">
                                     <i class="fa fa-pencil-square-o"></i>
                                 </a>
@@ -67,7 +67,7 @@
                                                     <button type="button" class="btn btn-default btn-secondary" data-dismiss="modal"> Annuler
                                                     </button>
 
-                                                    <a href="{{ path('da_evenements_delete', { 'id': evenement.id }) }}">
+                                                    <a href="{{ path('da_evenements_delete', { 'id': CategorieMission.id }) }}">
                                                         <input class="btn btn-danger btn_lg" type="submit" value="Supprimer">
                                                     </a>
                                                 </div>

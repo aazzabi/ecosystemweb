@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DARecyclerController extends Controller
 {
     /**
-     * @Route("/categorie", name="da_categorie_index")
+     * @Route("/categorieM", name="da_categoriem_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -40,20 +40,17 @@ class DARecyclerController extends Controller
         }
         $em = $this->getDoctrine()->getManager();
 
-        //$evenements = $em->getRepository('EcoBundle:Evenements')->findAll();
-        $categoriesEvts = $em->getRepository('EcoBundle:CategorieMission')->findAll();
-//        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
+         $categoriesMissions = $em->getRepository('EcoBundle:CategorieMission')->findAll();
 
         return $this->render('@Eco/DashboardAdmin/Missions/index.html.twig', array(
-            //'evenements' => $evenements,
-            'categoriesEvts' => $categoriesEvts,
+             'categoriesMissions' => $categoriesMissions,
         ));
     }
 
     /**
      * Creates a new user entity.
      *
-     * @Route("/categorie/new", name="da_categorie_new")
+     * @Route("/categoriem/new", name="da_categoriem_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -61,37 +58,24 @@ class DARecyclerController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-       // $evenement = new Missions();
-        $categorieEvts = new CategorieMission();
-//        tasna3 les autres entités li aand'hom 3ala9a bel module mta3ek
+         $categorieMissions = new CategorieMission();
 
-       // $formEvt = $this->createForm('EcoBundle\Form\MissionsType', $evenement);
-        $formCateg = $this->createForm('EcoBundle\Form\CategorieMissionType', $categorieEvts);
-//        tasna3 les autres formulaire li aand'hom 3ala9a bel module mta3ek
+         $formCateg = $this->createForm('EcoBundle\Form\CategorieMissionType', $categorieMissions);
 
-        //$formEvt->handleRequest($request);
-        $formCateg->handleRequest($request);
-//       tu handleRequesti :p les autres formulaire li aand'hom 3ala9a bel module mta3ek
+         $formCateg->handleRequest($request);
 
 
 
-       /* if ($formEvt->isSubmitted() && $formEvt->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($evenement);
-            $em->flush();
-            return $this->redirectToRoute('da_evenements_index');
-        }*/
+
         if ($formCateg->isSubmitted() && $formCateg->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($categorieEvts);
+            $em->persist($categorieMissions);
             $em->flush();
-            return $this->redirectToRoute('da_categorie_index');
+            return $this->redirectToRoute('da_categoriem_index');
         }
-//        lahna tu persiste l'entité selon le formulaire adéquat mta3ha ( Exple pour $formEvt tu persiste $evenement )
-//        w tab9a t3awed fihom 3la 3dad les entités que tu gére
 
         return $this->render('@Eco/DashboardAdmin/Missions/new.html.twig', array(
-            'CategorieMission' => $categorieEvts,
+            'CategorieMission' => $categorieMissions,
            // 'formEvt' => $formEvt->createView(),
             'formCateg' => $formCateg->createView(),
         ));
@@ -100,25 +84,25 @@ class DARecyclerController extends Controller
     /**
      * Displays a form to edit an existing user entity.
      *
-     * @Route("/categorie/{id}/edit", name="da_categorie_edit")
+     * @Route("/categoriem/{id}/edit", name="da_categoriem_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, CategorieMission $categorieEvts)
+    public function editAction(Request $request, CategorieMission $categorieMission)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        $editForm = $this->createForm('EcoBundle\Form\CategorieMissionType', $categorieEvts);
+        $editForm = $this->createForm('EcoBundle\Form\CategorieMissionType', $categorieMission);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('da_categorie_index', array('id' => $categorieEvts->getId()));
+            return $this->redirectToRoute('da_categoriem_index', array('id' => $categorieMission->getId()));
         }
 
         return $this->render('@Eco/DashboardAdmin/Missions/edit.html.twig', array(
-            'CategorieMission' => $categorieEvts,
+            'CategorieMission' => $categorieMission,
             'form' => $editForm->createView(),
         ));
     }
@@ -126,17 +110,17 @@ class DARecyclerController extends Controller
     /**
      * Finds and displays a user entity.
      *
-     * @Route("/categorie/{id}", name="da_categorie_show")
+     * @Route("/categoriem/{id}", name="da_categoriem_show")
      * @Method("GET")
      */
-    public function showAction(CategorieMission $categorieEvts)
+    public function showAction(CategorieMission $categorieMission)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
 
         return $this->render('@Eco/DashboardAdmin/Missions/show.html.twig', array(
-            'CategorieMission' => $categorieEvts,
+            'CategorieMission' => $categorieMission,
         ));
     }
 
@@ -153,13 +137,10 @@ class DARecyclerController extends Controller
               throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
           }
         $em = $this->getDoctrine()->getManager();
-        //$evenements = $em->getRepository('EcoBundle:Evenements')->findAll();
 
-//        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
-        $evenement = $em->getRepository('EcoBundle:Missions')->findAll();
+         $evenement = $em->getRepository('EcoBundle:Missions')->findAll();
         return $this->render('@Eco/DashboardAdmin/Missions/indexEvent.html.twig', array(
-            //'evenements' => $evenements,
-            'evenement' => $evenement,
+             'evenement' => $evenement,
         ));
     }
 

@@ -111,5 +111,7 @@ class CategoriePub
     {
         return $this->getLibelle() . " " . $this->getDescription() . "" ;
     }
+
+
 }
 

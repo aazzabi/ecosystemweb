@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <br>
-                    <a href="{{ path('du_evenements_new') }}" class="btn btn-success">
+                    <a href="{{ path('du_missions_new') }}" class="btn btn-success">
                         <i class="icon-plus">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             &nbsp;Ajouter une mission
@@ -83,14 +83,14 @@
                             </div>
 
                             <div class="btn-group btn-group-sm btn-group-horizontal">
-                                <a href="{{ path('du_evenements_delete', { 'id': evenement.id }) }}" class="btn btn-danger"
+                                <a href="{{ path('du_missions_delete', { 'id': evenement.id }) }}" class="btn btn-danger"
                                    data-toggle="tooltip" title="Supprimer la mission">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </div>
 
                             <div class="btn-group btn-group-sm btn-group-horizontal">
-                                <a href="{{ path('du_evenements_show', { 'id': evenement.id }) }}" class="btn btn-default"
+                                <a href="{{ path('du_missions_show', { 'id': evenement.id }) }}" class="btn btn-default"
                                    data-toggle="tooltip" title="Voir les détails de la mission">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </a>

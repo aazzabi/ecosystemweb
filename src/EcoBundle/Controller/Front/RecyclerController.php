@@ -32,7 +32,7 @@ use EcoBunde\Form\rechercheEventType;
 class RecyclerController extends Controller
 {
     /**
-     * @Route("/evenement", name="front_evenements_index")
+     * @Route("/missions", name="front_missions_index")
      * @Method("GET")
      */
 
@@ -74,7 +74,7 @@ class RecyclerController extends Controller
     }
 
     /**
-     * @Route("/evenement/categorie/{cat}", name="front_evenements_recherche")
+     * @Route("/missions/categorie/{cat}", name="front_missions_recherche")
      * @Method("GET")
      */
     public function RecherchTestAction(Request $request,$cat)
@@ -91,7 +91,7 @@ class RecyclerController extends Controller
         ));
     }
     /**
-     * @Route("/evenement/{id}", name="front_evenements_show")
+     * @Route("/missions/{id}", name="front_missions_show")
      * @Method("GET")
      */
     public function showAction(Missions $evenement)
@@ -110,9 +110,9 @@ class RecyclerController extends Controller
 
     }
     /**
-     * Deletes a Reparateur entity.
+     * Deletes a missions entity.
      *
-     * @Route("/evenement/{id}", name="front_evenements_delete")
+     * @Route("/missions/{id}", name="front_missions_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Missions $evenement)
@@ -125,11 +125,11 @@ class RecyclerController extends Controller
             $em->remove($evenement);
             $em->flush();
         }
-        return $this->redirectToRoute('front_evenements_index');
+        return $this->redirectToRoute('front_missions_index');
     }
 
     /**
-     * @Route("/evenementfilter", name="front_evenements_filter")
+     * @Route("/missionsfilter", name="front_missions_filter")
      * @Method("POST")
      */
 
@@ -149,7 +149,7 @@ class RecyclerController extends Controller
             $evenements = $em->getRepository(Missions::class)->findAll();
         }
 
-        return $this->render('@Eco/Front/Missions/filterEvts.html.twig',array(
+        return $this->render('filterMission.html.twig',array(
             'formSearch'=>$form->createView(),
             "evenements"=>$evenements
         ));
@@ -159,14 +159,14 @@ class RecyclerController extends Controller
     /**
      * Creates a form to delete a Reparateur entity.
      *
-     * @param Reparateur $categorieEvts The Reparateur entity
+     * @param missions $categorieMission The missions entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm(Missions $evenement)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('front_evenements_delete', array('id' => $evenement->getId())))
+            ->setAction($this->generateUrl('front_missions_delete', array('id' => $evenement->getId())))
             ->setMethod('DELETE')
             ->getForm()
             ;
@@ -174,11 +174,11 @@ class RecyclerController extends Controller
 
 
     /**
-     * @Route("/evenement/recherche", name="front_evenements_recherche")
+     * @Route("/missions/recherche", name="front_missions_recherche")
      * @Method("GET")
      */
 
-   /* public function rechercherLieuAction(Request $request)
+   public function rechercherLieuAction(Request $request)
     {
         $event= new Missions();
         $form= $this->createForm(rechercheEventType::class ,$event);
@@ -191,15 +191,15 @@ class RecyclerController extends Controller
             $events= $this->getDoctrine()->getRepository(Missions::class)
                 ->findAll();
         }
-        return $this->render('@Eco/Front/Missions/rechercheEvent.html.twig',array("form"=>$form->createView(),'events'=>$events));
+        return $this->render('rechercheMission.html.twig',array("form"=>$form->createView(),'events'=>$events));
 
-    }*/
+    }
 
     /**
-     * @Route("/evenement/rechercheajax", name="front_evenements_rechercheajax")
+     * @Route("/missions/rechercheajax", name="front_missions_rechercheajax")
      * @Method("POST")
      */
-  /*  public function rechercherAjaxAction()
+    public function rechercherAjaxAction()
     {
         $request = $this->container->get('request');
 
@@ -234,10 +234,10 @@ class RecyclerController extends Controller
         else {
             return $this->listerAction();
         }
-    }*/
+    }
 
     /**
-     * @Route("/evenementP/{id}", name="front_evenements_participer")
+     * @Route("/missionsP/{id}", name="front_missions_participer")
      * @Method("GET")
      */
    public function participerAction($id)
@@ -252,13 +252,13 @@ class RecyclerController extends Controller
        $em->persist($evenement);
        $em->persist($user);
        $em->flush();
-       return $this->redirectToRoute('front_evenements_index');
+       return $this->redirectToRoute('front_missions_index');
        $this->addFlash("success", "Vous avez participer avec succés  ! ");
 
    }
 
     /**
-     * @Route("/evenementNP/{id}", name="front_evenements_noparticiper")
+     * @Route("/missionsNP/{id}", name="front_missions_noparticiper")
      * @Method("GET")
      */
     public function noParticiperAction($id)
@@ -274,7 +274,7 @@ class RecyclerController extends Controller
        // $em->persist($evenement);
      //   $em->persist($user);
         $em->flush();
-        return $this->redirectToRoute('front_evenements_index');
+        return $this->redirectToRoute('front_missions_index');
         $this->addFlash("warning", "Vous avez annuler votre participation ! ");
 
     }

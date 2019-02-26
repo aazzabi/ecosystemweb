@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-    <link href="{{ asset ('assets/css/raniaEvt.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset ('assets/css/Missions.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block body %}
@@ -13,7 +13,7 @@
                         href="collapseSearch" role="button"><i class="fa fa-filter" aria-hidden="true"></i> Appliquer un
                     filtre
                 </button>
-                <a href="{{ path('du_evenements_new') }}" class="btn btn-success">
+                <a href="{{ path('du_missions_new') }}" class="btn btn-success">
                     <i class="icon-plus">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         &nbsp;Ajouter un évènement
@@ -37,10 +37,10 @@
                                                     name="disponibilite"
                                                     data-init-plugin="cs-select">
                                                 <option value="0">Toutes</option>
-                                                <a href="{{ path('front_evenements_index') }}"></a>
+                                                <a href="{{ path('front_missions_index') }}"></a>
                                                 {% for c in categories %}
                                                     <option>
-                                                        <a href="{{ path('front_evenements_recherche', { 'cat': c.id }) }}">
+                                                        <a href="{{ path('front_missions_recherche', { 'cat': c.id }) }}">
                                                             <li class="list-group-item d-flex justify-content-between align-items-center">
 
 
@@ -188,7 +188,7 @@
              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                  Catégories : <span class="caret"></span></button>
              <ul class="dropdown-menu" role="menu">
-                 <li><a id="aaaa" href="{{ path('front_evenements_recherche', { 'id': CategorieMission.id }) }}"> All </a>
+                 <li><a id="aaaa" href="{{ path('front_missions_recherche', { 'id': CategorieMission.id }) }}"> All </a>
                  </li>
 
              </ul>
@@ -203,14 +203,14 @@
 
     <div class="card-body">
         <ul class="list-group">
-            <a href="{{ path('front_evenements_index') }}">
+            <a href="{{ path('front_missions_index') }}">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     All
                     {#<span class="badge badge-primary badge-pill">{{ c.annonces | length}}</span>#}
                 </li>
             </a>
             {% for c in categories %}
-                <a href="{{ path('front_evenements_recherche', { 'cat': c.id }) }}">
+                <a href="{{ path('front_missions_recherche', { 'cat': c.id }) }}">
                     {#{{ dump(c) }}#}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         {{ c.libelle }}
@@ -248,7 +248,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <h3 style="font-size: 1vw; line-height: normal;"><a
-                                                        href="{{ path('front_evenements_show', { 'id': evenement.id }) }}">{{ evenement.titre }}
+                                                        href="{{ path('front_missions_show', { 'id': evenement.id }) }}">{{ evenement.titre }}
                                                 </a>
                                                 <p>
                                         <span class="location semi-bold"> <i
@@ -272,7 +272,7 @@
                                         </div>
                                         {% if app.user %}
                                             <div class="col-sm-3">
-                                                <a href="{{ path('du_evenements_new') }}" class="btn btn-sm btn-info">
+                                                <a href="{{ path('du_missions_new') }}" class="btn btn-sm btn-info">
                                                     <i class="fa fa-smile-o" aria-hidden="true"></i>&nbsp;Je
                                                     participe! </i>
                                                 </a>
@@ -284,7 +284,7 @@
                                 </div>
                             </div>
                             {#<h2 class="title">#}
-                            {#<a href="{{ path('front_evenements_show', { 'id': evenement.id }) }}">#}
+                            {#<a href="{{ path('front_missions_show', { 'id': evenement.id }) }}">#}
                             {#{{ evenement.titre }}#}
                             {#</a>#}
                             {#</h2>#}
@@ -300,7 +300,7 @@
 
                             {#<div class="col-md-3 text-right">#}
                             {#<br>#}
-                            {#<a href="{{ path('du_evenements_new') }}" class="btn btn-sm btn-info">#}
+                            {#<a href="{{ path('du_missions_new') }}" class="btn btn-sm btn-info">#}
                             {#<i class="icon-plus">#}
                             {#<i class="fa fa-smile-o" aria-hidden="true"></i>#}
                             {#&nbsp;Je participe!#}
@@ -314,7 +314,7 @@
             </div>
         {% endfor %}
 
-        {# <form id="form_recherche" action="{{ path('front_evenements_rechercheajax') }}" method="post">
+        {# <form id="form_recherche" action="{{ path('front_missions_rechercheajax') }}" method="post">
                {{ form_widget(form) }}
                <input type="submit" value="Rechercher" />
            </form>
@@ -333,7 +333,7 @@
                        var DATA = 'motcle=' + motcle;
                        $.ajax({
                            type: "POST",
-                           url: "{{ path('front_evenements_rechercheajax')}}",
+                           url: "{{ path('front_missions_rechercheajax')}}",
                            data: DATA,
                            cache: false,
                            success: function(data){

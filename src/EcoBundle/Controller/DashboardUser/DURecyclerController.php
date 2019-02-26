@@ -32,53 +32,34 @@ use Symfony\Component\HttpFoundation\Response;
 class DURecyclerController extends Controller
 {
     /**
-     * @Route("/evenement", name="du_evenements_index")
+     * @Route("/missions", name="du_missions_index")
      * @Method("GET")
      */
     public function indexAction()
     {
-        //$this->addFlash("success", "Votre missions et challenges personnels !");
 
-        /*  $evenements = array();
-          if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-              throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
-          }*/
-//        eli 7ajetna bihom mellaa5er
         $events = array();
 
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-//        var_dump($idUser = $user->getId());die;
-//        var_dump($idGroup = $user->getGroup());die;
 
-//        na5dhou tout les evenements
-        $evenements = $em->getRepository('EcoBundle:Missions')->findBy(array('createdBy'=>$user));
+         $evenements = $em->getRepository('EcoBundle:Missions')->findBy(array('createdBy'=>$user));
 
         foreach ($evenements as $e) {
-//            anou li connecté ykoun houwa createur de l evenement
-            if ($e->getCreatedBy()== $user) {
+             if ($e->getCreatedBy()== $user) {
                 $events[] = $e;
             }
-//            anou li connecté ykoun houwa de meme groupe que le createur de l evenement
-          /*  if ($user->getGroups()) { //test idha 3andou deja groupe ( ma3neha en faite houwa respAsso walla respSoc )
-                if ($e->getCreatedBy()->getGroup() == $user->getGroup()) {
-                    $events[] = $e;
-//                  bech ylemhom
-                }
-            }*/
+
         }
-//       $categoriesEvts = $em->getRepository('EcoBundle:CategorieMission')->findAll();
-//        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
 
         return $this->render('@Eco/DashboardUser/Missions/index.html.twig', array(
             'evenements' => $evenements,
-            //'categoriesEvts' => $categoriesEvts,
-        ));
+         ));
     }
 
     /**
      *
-     * @Route("/evenement/new", name="du_evenements_new")
+     * @Route("/missions/new", name="du_missions_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -98,9 +79,10 @@ class DURecyclerController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($evenement);
-            $this->addFlash("success", "Votre mission a été ajoutée avec succés ! ");
             $em->flush();
-            return $this->redirectToRoute('du_evenements_index');
+            return $this->redirectToRoute('du_missions_index');
+            $this->addFlash("success", "Votre mission a été ajoutée avec succés ! ");
+
         }
         return $this->render('@Eco/DashboardUser/Missions/new.html.twig', array(
             'form' => $form->createView(),
@@ -110,7 +92,7 @@ class DURecyclerController extends Controller
     /**
      * Displays a form to edit an existing user entity.
      *
-     * @Route("/evenement/{id}/edit", name="du_evenement_edit")
+     * @Route("/missions/{id}/edit", name="du_evenement_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Missions $evenement)
@@ -127,7 +109,7 @@ class DURecyclerController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('du_evenements_index', array('id' => $evenement->getId()));
+            return $this->redirectToRoute('du_missions_index', array('id' => $evenement->getId()));
         }
 
         return $this->render('@Eco/DashboardUser/Missions/edit.html.twig', array(
@@ -138,7 +120,7 @@ class DURecyclerController extends Controller
 
 
     /**
-     * @Route("/evenement/{id}", name="du_evenements_show")
+     * @Route("/missions/{id}", name="du_missions_show")
      * @Method("GET")
      */
     public function showAction(Missions $evenement)
@@ -157,7 +139,7 @@ class DURecyclerController extends Controller
     /**
      * Deletes a Reparateur entity.
      *
-     * @Route("/evenement/delete/{id}", name="du_evenements_delete")
+     * @Route("/missions/delete/{id}", name="du_missions_delete")
      */
     public function deleteEventAction($id)
     {
@@ -166,7 +148,7 @@ class DURecyclerController extends Controller
         $m->remove($evenement);
         $m->flush();
 
-        return$this->redirectToRoute('du_evenements_index');
+        return$this->redirectToRoute('du_missions_index');
     }
 
 

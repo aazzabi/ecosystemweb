@@ -65,9 +65,9 @@
                 <tr>
                     <th>Titre</th>
                     <th>Description</th>
-                    <th>Categorie</th>
                     <th>Lieu</th>
                     <th>Date</th>
+                    {#<th>Categorie</th>#}
                     <th>Date Limite</th>
                     <th>Objectif</th>
                     <th>Atteint</th>
@@ -80,12 +80,11 @@
                 {% for evenement in evenement %}
                     <tr class="event">
 
-
                         <td>{{ evenement.titre }}</td>
                         <td>{{ evenement.description }}</td>
-                        <td>{{ evenement.categorie.libelle }}</td>
                         <td>{{ evenement.lieu }}</td>
                         <td>{{ evenement.date |date }}</td>
+                       {#<td>{{ evenement.categorie.libelle  }}</td>#}
                         <td>{{ evenement.dateLimite |date }}</td>
                         <td>{{ evenement.objectif}}</td>
                         <td>{{ evenement.atteint}}</td>

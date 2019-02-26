@@ -11,8 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * @Route("front")
@@ -87,6 +85,8 @@ class FAnnonceController extends Controller
             $annonce->setLikes($annonce->getLikes() + 1);
             $em->flush();
             return $this->redirectToRoute('du_annonce_index');
+            $reponse = '200';
+            return new JsonResponse($reponse);
         }
     }
 
@@ -122,32 +122,6 @@ class FAnnonceController extends Controller
             "annonces" => $annonces, 'categories' => $categories, 'likes' => $likes,
         ));
     }
-
-    /**
-     * @Route("/annonce/recherche)", name="f_recherch")
-     * @Method("GET")
-     */
-    public function RecherchAction(Request $request)
-    {
-
-        if (($request->isXmlHttpRequest())) {
-            $val = $request->get('val');
-            dump($val);exit();
-            $em = $this->getDoctrine()->getManager();
-            $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
-            $annnonce = $em->getRepository('EcoBundle:Annonce')->RechercheTitreAnnonce($val);
-            $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
-            $signal = $em->getRepository('EcoBundle:SignalAnnonce')->findAll();
-            return $this->render('@Eco/Annonce/Recherche.html.twig', array(
-                "annonces" => $annnonce, 'categories' => $categories, 'likes' => $likes, 'signal' => $signal,
-            ));
-        }
-
-    }
-
-
-
-
     /**
      * @Route("/pdf/{id}", name="pdf")
      */
@@ -174,6 +148,36 @@ class FAnnonceController extends Controller
                 'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
             )
         );
+    }
+    /**
+     *
+     * @Route("/recherche", name="f_annonce_recherche")
+     * @Method({"GET", "POST"})
+     */
+    public function rechercheAction(Request $request)
+    {
+
+            //$em      = $this->getDoctrine()->getManager();
+            $keyWord = $request->get('keyWord');
+            //dump($keyWord);
+        if($keyWord == '')
+        {
+            $annonce = $this->getDoctrine()->getRepository('EcoBundle:Annonce')->findAll();
+        }else
+        {
+            $annonce = $this->getDoctrine()->getRepository('EcoBundle:Annonce')->RechercheTitreAnnonce($keyWord);
+
+        }
+
+            $template = $this->render( '@Eco/Annonce/Recherche.html.twig', array("annonces" => $annonce))->getContent();
+        //dump($template);exit();
+            $json     = json_encode($template);
+            $response = new Response($json, 200);
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
+
+
     }
 
 

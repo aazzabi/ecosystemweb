@@ -42,14 +42,12 @@ class AnnonceRepository extends \Doctrine\ORM\EntityRepository
         return $query->setMaxResults(4)->getResult();
 
     }
-    public function RechercheTitreAnnonce($val)
+    public function RechercheTitreAnnonce($keyWord)
     {
-        $query = $this->createQueryBuilder('p')
-            ->andWhere('p.titre like :titre')
-            ->setParameter('titre', $val)
-            ->getQuery();
+        $query = $this->getEntityManager()->createQuery('SELECT v from EcoBundle:Annonce v WHERE v.titre LiKE :val ')
+        ->setParameter('val',$keyWord);
 
-        return $query->setMaxResults(4)->getResult();
+        return $query->getResult();
 
     }
 }

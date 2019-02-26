@@ -65,9 +65,11 @@
                                 <dd>{{ annonce.views }}</dd>
                             </dl>  <!-- item-property-hor .// -->
                             <hr>
-                            {{ socialButtons( {'googleplus':false, 'facebook':false, 'linkedin':false} ) }}
-                            <a href="{{ path('pdf',{ 'id ': annonce.id }) }}" class="btn btn-lg btn-outline-primary text-uppercase"> <i
+                            {{ socialButtons() }}
+                            <a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i
                                         class="fas fa-shopping-cart"></i> Add to cart </a>
+                            <a href="{{ path('pdf',{ 'id': annonce.id }) }}" class="btn btn-lg btn-outline-primary text-uppercase"> <i
+                                        class="fa fa-file-pdf-o"></i> PDF </a>
                         </article> <!-- card-body.// -->
                     </aside> <!-- col.// -->
                 </div> <!-- row.// -->

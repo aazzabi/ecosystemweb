@@ -127,28 +127,57 @@ class FAnnonceController extends Controller
     {
 
         $val = $request->get('val');
+        //dump($val);exit();
         if ($val == 'PR') {
             $em = $this->getDoctrine()->getManager();
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPlusRecent();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
+            /**
+             * @var $paginator \Knp\Component\Pager\Paginator
+             */
+            $paginator    = $this->get('knp_paginator');
+            $anonnce = $paginator->paginate(
+                $annonces,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 9)
+            );
 
-        } elseif ($val = 'PE') {
+        } elseif ($val == 'PE') {
             $em = $this->getDoctrine()->getManager();
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixElv();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
+            /**
+             * @var $paginator \Knp\Component\Pager\Paginator
+             */
+            $paginator    = $this->get('knp_paginator');
+            $anonnce = $paginator->paginate(
+                $annonces,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 9)
+            );
 
 
-        } else {
+        } elseif ($val == 'PB') {
+
             $em = $this->getDoctrine()->getManager();
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixBas();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
+            /**
+             * @var $paginator \Knp\Component\Pager\Paginator
+             */
+            $paginator    = $this->get('knp_paginator');
+            $anonnce = $paginator->paginate(
+                $annonces,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 9)
+            );
 
         }
         return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
-            "annonces" => $annonces, 'categories' => $categories, 'likes' => $likes,
+            "annonces" => $anonnce, 'categories' => $categories, 'likes' => $likes,
         ));
     }
     /**

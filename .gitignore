@@ -16,4 +16,6 @@
 /vendor/
 /web/bundles/
 /.idea/*
+/.idea/ecoSystem.iml
+/.idea/php.xml
 /web/uploads/*

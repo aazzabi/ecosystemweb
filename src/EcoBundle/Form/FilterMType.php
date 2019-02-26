@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Rania
+ *
  * Date: 20/02/2019
  * Time: 15:47
  */
@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class FilterType extends AbstractType
+class FilterMType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

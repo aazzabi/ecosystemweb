@@ -43,7 +43,9 @@ class DARecyclerController extends Controller
          $categoriesMissions = $em->getRepository('EcoBundle:CategorieMission')->findAll();
 
         return $this->render('@Eco/DashboardAdmin/Missions/index.html.twig', array(
-             'categoriesMissions' => $categoriesMissions,
+
+            'categoriesMissions' => $categoriesMissions,
+
         ));
     }
 
@@ -137,9 +139,11 @@ class DARecyclerController extends Controller
               throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
           }
         $em = $this->getDoctrine()->getManager();
+        $recys = $em->getRepository('EcoBundle:PtCollecte')->findAll();
 
          $evenement = $em->getRepository('EcoBundle:Missions')->findAll();
         return $this->render('@Eco/DashboardAdmin/Missions/indexEvent.html.twig', array(
+            'recys' => $recys,
              'evenement' => $evenement,
         ));
     }

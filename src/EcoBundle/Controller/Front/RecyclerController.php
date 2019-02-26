@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Rania
+ *
  * Date: 19/02/2019
  * Time: 15:48
  */
@@ -14,7 +14,7 @@ use EcoBundle\Entity\Reparateur;
 use EcoBundle\Entity\RespAsso;
 use EcoBundle\Entity\RespSoc;
 use EcoBundle\Entity\User;
-use EcoBundle\Form\FilterType;
+use EcoBundle\Form\FilterMType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -72,6 +72,52 @@ class RecyclerController extends Controller
             'categories'=> $categories,
         ));
     }
+
+
+
+    /**
+     * @Route("/recyclage", name="front_recyclage_index")
+     * @Method("GET")
+     */
+
+    public function indexRcyclageAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $search = [];
+        $evenements = array();
+        $search['categorie'] = $request->get('categorie', null);
+        $search['lieu'] = $request->get('lieu', null);
+        $search['date'] = $request->get('date', null);
+//        var_dump($search);die;
+
+
+        if ($search['categorie']) {
+            $evenementsCat = $em->getRepository('EcoBundle:Missions')->searchByCategorieEvt($search['categorie']);
+            if ($search['lieu']) {
+                foreach ($evenementsCat as $event) {
+                    if  ($event->getLieu() == $search['lieu']) {
+                        $evenements[] = $event;
+                    }
+                }
+            }else {
+                $evenements = $evenementsCat;
+            }
+        }
+
+//       $evenements =  $em->getRepository('EcoBundle:Missions')->search($search);
+
+//      var_dump($evenements);die;
+        $evenements = $em->getRepository('EcoBundle:Missions')->findAll();
+        $categories = $em->getRepository('EcoBundle:CategorieMission')->findAll();
+        return $this->render('@Eco/Front/Recyclage/index.html.twig', array(
+            //'evenements' => $evenements,
+            'evenements' => $evenements,
+            'categories'=> $categories,
+        ));
+    }
+
+
 
     /**
      * @Route("/missions/categorie/{cat}", name="front_missions_recherche")
@@ -139,7 +185,7 @@ class RecyclerController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $evenement = new Missions();
-        $form=$this->createForm(FilterType::class ,$evenement);
+        $form=$this->createForm(FilterMType::class ,$evenement);
         $form->handleRequest($request);
 
 

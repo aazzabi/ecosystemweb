@@ -27,9 +27,19 @@ class FAnnonceController extends Controller
         $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
         $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
-        $signal = $em->getRepository('EcoBundle:SignalAnnonce')->findAll();
-        return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
-            "annonces" => $annnonce, 'categories' => $categories, 'likes' => $likes, 'signal' => $signal,
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator    = $this->get('knp_paginator');
+        $anonnces = $paginator->paginate(
+            $annnonce,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 9)
+        );
+        return $this->render
+        ('@Eco/Front/Annonce/annonce.html.twig',
+            array(
+            'annonces' => $anonnces, 'categories' => $categories, 'likes' => $likes,
         ));
     }
 

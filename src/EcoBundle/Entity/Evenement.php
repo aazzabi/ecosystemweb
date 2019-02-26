@@ -96,8 +96,6 @@ class Evenement
     private $participants;
 
 
-
-
     /**
      * @Vich\UploadableField(mapping="evt_cover", fileNameProperty="cover")
      *
@@ -139,7 +137,7 @@ class Evenement
      *
      * @return Competence
      */
-    public function addProfile(User $p)
+    public function addPartcipants(User $p)
     {
         $this->participants[] = $p;
 
@@ -151,7 +149,7 @@ class Evenement
      *
      * @param \AppBundle\Entity\User $p
      */
-    public function removeProfile(User $p)
+    public function removeParticipants(User $p)
     {
         $this->participants->removeElement($p);
     }
@@ -346,6 +344,15 @@ class Evenement
         $this->nbVues = $nbVues;
     }
 
+    /**
+     * @param \EcoBundle\Entity\User $user
+     */
+    public function addParticipant(User $user)
+    {
+        $this->participants[] = $user;
+
+        return $this;
+    }
 
 }
 

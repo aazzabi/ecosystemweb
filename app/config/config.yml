@@ -32,7 +32,6 @@ framework:
     php_errors:
         log: true
     templating: { engines: ['twig'] }
-
 # Twig Configuration
 twig:
     debug: '%kernel.debug%'
@@ -60,9 +59,8 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
-# Swiftmailer Configuration
 swiftmailer:
-    transport: '%mailer_transport%' 
+    transport: '%mailer_transport%'
     port: '%mailer_transport%'
     host: '%mailer_host%'
     username: '%mailer_user%'
@@ -172,9 +170,14 @@ nomaya_social:
             locale:         "fr"
             message:        "Je veux partager ça avec vous"
             text:           "Tweet"
-            via:            "L'Equipe cartedevisitevirtuelle.fr"
+            via:            "EcoZone5"
             tag:            "ttot"
-
+        googleplus:
+            url:            null
+            locale :        "fr"
+            size :          "medium"
+            annotation :    "bubble"
+            width :         300
         linkedin:
             url:            null
             locale:         "fr_FR"

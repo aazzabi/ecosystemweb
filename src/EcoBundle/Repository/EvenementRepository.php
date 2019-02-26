@@ -1,6 +1,7 @@
 <?php
 
 namespace EcoBundle\Repository;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * EvenementRepository
@@ -17,6 +18,104 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery("SELECT e from EcoBundle:Evenement e WHERE e.lieu=:lieu ")
             ->setParameter('lieu',$lieu)
            ;
+        return $query->getResult();
+    }
+
+    public function search($search)
+    {
+        $session = new Session();
+        $builder = $this->createQueryBuilder('e');
+
+        // Disponibilité
+        if ($search['lieu'] !== null) {
+            $session->set('lieu', $search['lieu']);
+        } else {
+            $search['lieu'] = $session->get('lieu');
+        }
+        if ($search['lieu']) {
+            $builder->andWhere('e.lieu = :lieu')
+                ->setParameter('lieu', $search['lieu']);
+        }
+
+        // Expérience
+        if ($search['categorie'] !== null) {
+            $session->set('categorie', $search['categorie']);
+        } else {
+            $search['categorie'] = $session->get('categorie');
+        }
+        if ($search['categorie']) {
+            $builder
+                ->innerJoin('e.categorie', 'cat', 'WITH', 'cat.id = :categorie')
+                ->andWhere('cat.id >= :categorie')
+                ->setParameter('categorie', $search['categorie']);
+        }
+
+//        // Intéret
+        if ($search['date'] !== null) {
+            $session->set('date', $search['date']);
+        } else {
+            $search['date'] = $session->get('date');
+        }
+        if ($search['date']) {
+            $builder->andWhere('e.date > :date')
+                ->setParameter('date', $search['date']);
+        }
+//
+//        /// contrat
+//        if ($search['contrat'] !== null) {
+//            $session->set('contrat', $search['contrat']);
+//        } else {
+//            $search['contrat'] = $session->get('contrat');
+//        }
+//        if ($search['contrat']) {
+//            $builder->andWhere('p.contrat = :contrat')
+//                ->setParameter('contrat', $search['contrat']);
+//        }
+//
+//        // competence
+//        if ($search['competences'] !== null) {
+//            $session->set('competences', $search['competences']);
+//        } else {
+//            $search['competences'] = $session->get('competences');
+//        }
+//        if ($search['competences']) {
+//            $builder->innerJoin('p.competences', 'c', 'WITH', 'c.id = :competences')
+//                ->setParameter('competences', $search['competences']);
+//        }
+//
+//        // ambition
+//        if ($search['ambition'] !== null) {
+//            $session->set('ambition', $search['ambition']);
+//        } else {
+//            $search['ambition'] = $session->get('ambition');
+//        }
+//        if ($search['ambition']) {
+//            $builder->andWhere('p.ambition = :ambition')
+//                ->setParameter('ambition', $search['ambition']);
+//        }
+
+
+        return $builder->orderBy("e.id", 'DESC')->getQuery()->getResult();
+    }
+
+    public function searchByLieu($lieu)
+    {
+        $query=$this->getEntityManager()->createQuery("SELECT m from EcoBundle:Evenement m WHERE m.lieu=:lieu")
+            ->setParameter('lieu',$lieu);
+        return $query->getResult();
+    }
+
+    public function searchByCategorieEvt($categorie)
+    {
+        $query=$this->getEntityManager()->createQuery("SELECT m from EcoBundle:Evenement m WHERE m.categorie=:categorie")
+            ->setParameter('categorie',$categorie);
+        return $query->getResult();
+    }
+
+    public function BestEvents()
+    {
+        $query=$this->getEntityManager()
+            ->createQuery("SELECT m from EcoBundle:Evenement m WHERE SIZE(m.participants) >1 ");
         return $query->getResult();
     }
 }

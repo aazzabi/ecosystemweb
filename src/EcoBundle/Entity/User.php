@@ -394,4 +394,25 @@ class User extends BaseUser
     {
         $this->myAnnonces = $myAnnonces;
     }
+    /**
+     *
+     * @param \EcoBundle\Entity\Evenement $e
+     *
+     * @return User
+     */
+    public function addEventsParticipes(Evenement $e)
+    {
+        $this->eventsParticipes[] = $e;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param \EcoBundle\Entity\Evenement $eventsParticipes
+     */
+    public function removeEventsParticipes(Evenement $e)
+    {
+        $this->eventsParticipes->removeElement($e);
+    }
 }

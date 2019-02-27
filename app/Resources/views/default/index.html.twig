@@ -9,21 +9,24 @@
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
             </ol>
             <div class="carousel-inner" role="listbox">
-                <div class="carousel-item active " style="background-image: url('{{ asset('assets/img/imgNovio/bg/04.png') }}')">
+                <div class="carousel-item active "
+                     style="background-image: url('{{ asset('assets/img/imgNovio/bg/04.png') }}')">
                     <div class="hero">
-                            <h1>Faites vos annonces</h1>
-                            <h3>Get start your next awesome project</h3>
+                        <h1>Faites vos annonces</h1>
+                        <h3>Get start your next awesome project</h3>
                         <button class="btn btn-hero btn-lg" role="button">See all features</button>
                     </div>
                 </div>
-                <div class="carousel-item" style="background-image: url('{{ asset('assets/img/imgNovio/bg/03.png') }}')">
+                <div class="carousel-item"
+                     style="background-image: url('{{ asset('assets/img/imgNovio/bg/03.png') }}')">
                     <div class="hero">
                         <h1>Vous avez besoin d'aide d'un réparateur ? </h1>
                         <h3>Get start your next awesome project</h3>
                         <button class="btn btn-hero btn-lg" role="button">See all features</button>
                     </div>
                 </div>
-                <div class="carousel-item" style="background-image: url('{{ asset('assets/img/imgNovio/bg/04.png') }}')">
+                <div class="carousel-item"
+                     style="background-image: url('{{ asset('assets/img/imgNovio/bg/04.png') }}')">
                     <div class="hero">
                         <h1>Animer vos événements !</h1>
                         <h3>Get start your next awesome project</h3>
@@ -42,59 +45,59 @@
         </div>
     </header>
     <section style="height: 500px">
-        {#<h1>Annonce Les Plus Aimer</h1>#}
-        {#<div class="row" id="aa" style="margin-right:30px; margin-left: 30px;">#}
-        {#{% for l in likes %}#}
-        {#<div class="col-md-3">#}
-        {#<figure class="card card-product">#}
-        {#<div class="img-wrap">#}
-        {#{% if l.photo != '' %}#}
-        {#<img style="width:230px;" src="{{ asset('uploads/Annonce/photo/' ~ l.photo) }}"#}
-        {#class="card-img-top">#}
-        {#{% else %}#}
-        {#<img alt="annonce_Pic" style="width:230px ; height: 230px;"#}
-        {#src="{{ asset('assets/img/NA.png') }}"#}
-        {#id="profile-image1" class="card-img-top">#}
-        {#{% endif %}#}
-        {#</div>#}
-        {#<figcaption class="info-wrap">#}
-        {#<h4 class="title">{{ l.titre }}</h4>#}
-        {#<p class="desc">{{ l.description }}</p>#}
-        {#<div class="price-wrap h5">#}
-        {#<span class="price-new">${{ l.prix }}</span>#}
-        {#<button type="submit" value="{{ l.id }}"#}
-        {#class="jaime btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">#}
-        {#<i class="fa fa-thumbs-up" aria-hidden="true"></i> Like#}
-        {#</button>#}
-        {#</div>#}
-        {#<div>#}
-        {#<a href="{{ path('du_annonce_signaler', { 'id': l.id }) }}"#}
-        {#class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">#}
-        {#<i class="icon-plus">#}
-        {#<i class="fa fa-bug" aria-hidden="true"></i>#}
-        {#&nbsp;Signaler#}
-        {#</i>#}
-        {#</a>#}
-        {#</div>#}
-        {#</figcaption>#}
-        {#<div class="bottom-wrap">#}
+        <h1>Annonce Les Plus Aimer</h1>
+        <div class="row" id="aa" style="margin-right:30px; margin-left: 30px;">
+            {% for l in likes %}
+                <div class="col-md-3">
+                    <figure class="card card-product">
+                        <div class="img-wrap">
+                            {% if l.photo != '' %}
+                                <img style="width:230px;" src="{{ asset('uploads/Annonce/photo/' ~ l.photo) }}"
+                                     class="card-img-top">
+                            {% else %}
+                                <img alt="annonce_Pic" style="width:230px ; height: 230px;"
+                                     src="{{ asset('assets/img/NA.png') }}"
+                                     id="profile-image1" class="card-img-top">
+                            {% endif %}
+                        </div>
+                        <figcaption class="info-wrap">
+                            <h4 class="title">{{ l.titre }}</h4>
+                            <p class="desc">{{ l.description }}</p>
+                            <div class="price-wrap h5">
+                                <span class="price-new">${{ l.prix }}</span>
+                                <button type="submit" value="{{ l.id }}"
+                                        class="jaime btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">
+                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
+                                </button>
+                            </div>
+                            <div>
+                                {#<a href="{{ path('du_annonce_signaler', { 'id': l.id }) }}"#}
+                                   {#class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-right">#}
+                                    <i class="icon-plus">
+                                        <i class="fa fa-bug" aria-hidden="true"></i>
+                                        &nbsp;Signaler
+                                    </i>
+                                {#</a>#}
+                            </div>
+                        </figcaption>
+                        <div class="bottom-wrap">
 
-        {#<a href="#" class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-left">panier#}
-        {#<i class="fa fa-thumbs-up" aria-hidden="true"></i>#}
-        {#</a>#}
-        {#<a href="{{ path('f_annonce_show', { 'id': l.id }) }}" class="btn btn-tag#}
-        {#btn-tag-light btn-tag-rounded m-r-10 float-right">#}
-        {#show <i class="fa fa-eye" aria-hidden="true"></i>#}
-        {#</a>#}
-        {#</div> <!-- bottom-wrap.// -->#}
-        {#</figure>#}
-        {#</div>#}
-        {#{% endfor %}#}
-        {#</div>#}
-        {#<hr>#}
+                            <a href="#" class="btn btn-tag   btn-tag-light btn-tag-rounded m-r-10 float-left">panier
+                                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            </a>
+                            <a href="{{ path('f_annonce_show', { 'id': l.id }) }}" class="btn btn-tag btn-tag-light btn-tag-rounded m-r-10 float-right">
+                                show <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                        </div> <!-- bottom-wrap.// -->
+                    </figure>
+                </div>
+            {% endfor %}
+        </div>
+        <hr>
     </section>
 
-    <section style="min-height:500px; background-size: 100% 500px;background-image: url('{{ asset('assets/img/imgNovio/bg/01.png') }}')" >
+    <section
+            style="min-height:500px; background-size: 100% 500px;background-image: url('{{ asset('assets/img/imgNovio/bg/01.png') }}')">
     </section>
 
     <footer></footer>
@@ -103,48 +106,50 @@
 {% block stylesheets %}
     <style>
         .carousel-item {
-            min-height: 500px !important;
-            background: no-repeat top center scroll;
+            min-height:              500px !important;
+            background:              no-repeat top center scroll;
             -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: 100% 500px;
+            -moz-background-size:    cover;
+            -o-background-size:      cover;
+            background-size:         100% 500px;
         }
 
         .hero {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: 3;
-            color: #fff;
-            text-align: center;
-            text-shadow: 1px 1px 0 rgba(0,0,0,.75);
-            -webkit-transform: translate3d(-50%,-50%,0);
-            -moz-transform: translate3d(-50%,-50%,0);
-            -ms-transform: translate3d(-50%,-50%,0);
-            -o-transform: translate3d(-50%,-50%,0);
-            transform: translate3d(-50%,-50%,0);
+            position:          absolute;
+            top:               50%;
+            left:              50%;
+            z-index:           3;
+            color:             #fff;
+            text-align:        center;
+            text-shadow:       1px 1px 0 rgba(0, 0, 0, .75);
+            -webkit-transform: translate3d(-50%, -50%, 0);
+            -moz-transform:    translate3d(-50%, -50%, 0);
+            -ms-transform:     translate3d(-50%, -50%, 0);
+            -o-transform:      translate3d(-50%, -50%, 0);
+            transform:         translate3d(-50%, -50%, 0);
         }
+
         .hero h1 {
-            color: #fff;
+            color:       #fff;
             font-family: 'Titilium-SemiBold';
-            font-size: 6em;
+            font-size:   6em;
             font-weight: bold;
-            margin: 0;
+            margin:      0;
             line-height: 0.9;
-            padding: 10px;
+            padding:     10px;
         }
+
         .hero .btn-hero {
-            background: #e2e659 !important;
-            padding: 15px 25px;
-            border-radius: 5px;
-            font-family: 'Titillium Web', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
+            background:     #e2e659 !important;
+            padding:        15px 25px;
+            border-radius:  5px;
+            font-family:    'Titillium Web', sans-serif;
+            font-size:      15px;
+            font-weight:    700;
             text-transform: capitalize;
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
+            position:       relative;
+            z-index:        1;
+            overflow:       hidden;
         }
     </style>
 {% endblock %}

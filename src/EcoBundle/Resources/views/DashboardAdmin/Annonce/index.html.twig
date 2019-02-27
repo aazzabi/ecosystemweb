@@ -78,7 +78,6 @@
                                 <th>Region</th>
                                 <th>Etat</th>
                                 <th>User</th>
-                                <th>Role</th>
                                 <th>Image</th>
                                 <th>Actions</th>
                             </tr>
@@ -95,11 +94,6 @@
                                     <td>{{ annonce.region }}</td>
                                     <td>{{ annonce.etat }}</td>
                                     <td> {{ annonce.user.nom|upper }} {{ annonce.user.prenom }}</td>
-                                    <td>
-                                        {% for role in annonce.user.roles %}
-                                            {{ role }} <br>
-                                        {% endfor %}
-                                    </td>
                                     <td style="width: 60px; padding:0px; text-align: center">
                                         {% if annonce.photo != '' %}
                                             <img alt="User Pic" style="width:150px;"

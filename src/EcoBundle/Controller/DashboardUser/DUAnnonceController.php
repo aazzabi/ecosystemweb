@@ -149,7 +149,7 @@ class DUAnnonceController extends Controller
         $statement3 = $em->getConnection()->prepare($RAW_QUERY3);
         $statement3->bindValue(1,$val);
         $statement3->execute();
-        $nb3 = $statement2->fetch();
+        $nb3 = $statement3->fetch();
 
         //nb4
         $RAW_QUERY4 = 'SELECT  COUNT(*) as nb4  from annonce where user_id =? AND likes >=5 AND views >=5 AND (date_creation >= \'2019-04-01\') AND (date_creation <= \'2019-04-31\');';

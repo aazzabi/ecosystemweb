@@ -96,7 +96,7 @@ class DAAnnonceController extends Controller
         if ($editFormcat->isSubmitted() && $editFormcat->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('da_annonce_cat_edit', array('id' => $categorieAnnonce->getId()));
+            return $this->redirectToRoute('da_annonce_index');
         }
         return $this->render('@Eco/DashboardAdmin/Annonce/editCat.html.twig', array(
             'Categories' => $categorieAnnonce,
@@ -123,7 +123,7 @@ class DAAnnonceController extends Controller
         {
             $annonce->setDateUpdate(new \DateTime('now'));
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('da_annonce_edit', array('id' => $annonce->getId()));
+            return $this->redirectToRoute('da_annonce_index');
         }
 
         return $this->render('@Eco/DashboardAdmin/Annonce/editAnnonce.html.twig', array(

@@ -19,7 +19,14 @@
                         {% if value.idCommande == tab.id_commande %}
                             {% if value.idAnnonce == a.id %}
                                 <tr>
-                                    <td> <img src="C:\wamp\www\ecosystemweb\web\assets\img\{{ a.photo }}"></td>
+                                    <td>{% if a.photo != '' %}
+                                            <img alt="User Pic" style="width:150px;" width="50" height="50"
+                                                 src="{{ asset('uploads/Annonce/photo/' ~ a.photo) }}"
+                                                 class="img-circle img-responsive">
+                                        {% else %}
+                                            <img alt="annonce_Pic" style="width:50px;" src="{{ asset('assets/img/NA.png') }}" width="50" height="50"
+                                                 id="profile-image1" class="img-circle img-responsive">
+                                        {% endif %}</td>
                                     <td>{{ a.titre}}</td>
                                     <td>{{ a.description }}</td>
                                     <td>{{ a.prix }}</td>

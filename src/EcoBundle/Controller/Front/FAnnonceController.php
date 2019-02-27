@@ -27,11 +27,13 @@ class FAnnonceController extends Controller
         $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
         $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
+        $lc = $em->getRepository('EcoBundle:LigneCommande')->findAll();
+
         $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
         return $this->render
         ('@Eco/Front/Annonce/annonce.html.twig',
             array(
-            'annonces' => $annnonce,'liste' => $liste, 'categories' => $categories, 'likes' => $likes,
+            'annonces' => $annnonce,'liste' => $liste,'lc' => $lc, 'categories' => $categories, 'likes' => $likes,
         ));
     }
 

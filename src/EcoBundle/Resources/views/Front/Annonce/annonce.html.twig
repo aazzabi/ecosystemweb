@@ -293,7 +293,8 @@
             <div class="col-md-10" id="main">
                 <div class="row" id="postContent" style="margin-right:20px; margin-left: 20px;">
                     {% for a in annonces %}
-                        <div class="col-md-4">
+
+                        <div class="col-md-4" >
                             <figure class="card card-product">
                                 <div class="img-wrap">
                                     {% if a.photo != '' %}
@@ -315,60 +316,61 @@
                                 </figcaption>
                                 <div class=" btn-group bottom-wrap">
                                     {% if app.user %}
-                                    <button type="submit" value="{{ a.id }}"
-                                            class="jaime btn btn-tag">
-                                        <i class="fa fa-thumbs-up" style="color: #0a7c71" aria-hidden="true"></i> Like
-                                    </button>
-                                    <button type="button" class="btn btn-tag btn-tag-rounded float-left"
-                                            data-toggle="modal" data-target="#exampleModal">
-                                        Signaler<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: darkred"></i>
-                                    </button>
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Signaler cette
-                                                        Annonce</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body"><br>
-                                                    <form action="{{ path('f_annonce_signaler', {'id': a.id}) }}"
-                                                          id="{{ a.id }}" method="get" name="formulario_login">
-                                                        <input type="radio" value="violence" name="radioLib"
-                                                               id="violence"><label for="violence">Violence</label><br>
-                                                        <input type="radio" value="arnaque" name="radioLib"
-                                                               id="arnaque"><label for="arnaque">arnaque</label><br>
-                                                        <input type="radio" value="harcelement" name="radioLib"
-                                                               id="harcelement"><label
-                                                                for="harcelement">Harcelement</label><br>
-                                                        <input type="radio" value="haine" name="radioLib"
-                                                               id="haine"><label for="haine">Discour insitant à la
-                                                            haine</label><br>
-
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Annuler
+                                        <button type="submit" value="{{ a.id }}"
+                                                class="jaime btn btn-tag">
+                                            <i class="fa fa-thumbs-up" style="color: #0a7c71" aria-hidden="true"></i> Like
+                                        </button>
+                                        <button type="button" class="btn btn-tag btn-tag-rounded float-left"
+                                                data-toggle="modal" data-target="#exampleModal">
+                                            Signaler<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: darkred"></i>
+                                        </button>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Signaler cette
+                                                            Annonce</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
                                                         </button>
-                                                        <button type="submit" class="btn btn-success">Signaler</button>
-                                                    </form>
+                                                    </div>
+                                                    <div class="modal-body"><br>
+                                                        <form action="{{ path('f_annonce_signaler', {'id': a.id}) }}"
+                                                              id="{{ a.id }}" method="get" name="formulario_login">
+                                                            <input type="radio" value="violence" name="radioLib"
+                                                                   id="violence"><label for="violence">Violence</label><br>
+                                                            <input type="radio" value="arnaque" name="radioLib"
+                                                                   id="arnaque"><label for="arnaque">arnaque</label><br>
+                                                            <input type="radio" value="harcelement" name="radioLib"
+                                                                   id="harcelement"><label
+                                                                    for="harcelement">Harcelement</label><br>
+                                                            <input type="radio" value="haine" name="radioLib"
+                                                                   id="haine"><label for="haine">Discour insitant à la
+                                                                haine</label><br>
+
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Annuler
+                                                            </button>
+                                                            <button type="submit" class="btn btn-success">Signaler</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {#<a href="{{ path('du_annonce_signaler', { 'id': a.id }) }}"#}
-                                    {#class="btn btn-tag btn-tag-rounded float-left">#}
-                                    {#Signaler  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>#}
-                                    {#</a>#}
-                                    <a href="{{ path('ajout_annonce',{ 'id_c': app.user.id , 'id_a' :a.id }) }}" class="btn btn-tag btn-tag-rounded float-left">Panier
-                                        <i class="fa fa-shopping-cart" aria-hidden="true" style="color: #0e90d2"></i>
-                                    </a>
+                                        {#<a href="{{ path('du_annonce_signaler', { 'id': a.id }) }}"#}
+                                        {#class="btn btn-tag btn-tag-rounded float-left">#}
+                                        {#Signaler  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>#}
+                                        {#</a>#}
+                                        <a href="{{ path('ajout_annonce',{ 'id_c': app.user.id , 'id_a' :a.id }) }}" class="btn btn-tag btn-tag-rounded float-left">Panier
+                                            <i class="fa fa-shopping-cart" aria-hidden="true" style="color: #0e90d2"></i>
+                                        </a>
                                     {% endif %}
                                 </div>
                             </figure>
                         </div>
+
                     {% endfor %}
                 </div>
             </div>

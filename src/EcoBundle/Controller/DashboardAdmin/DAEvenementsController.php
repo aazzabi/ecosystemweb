@@ -179,6 +179,22 @@ class DAEvenementsController extends Controller
         return$this->redirectToRoute('da_evenements_index');
     }
 
+
+    /**
+     * Deletes a Reparateur entity.
+     *
+     * @Route("/categorie/delete/{id}", name="da_categorie_delete")
+     */
+    public function deleteCategorietAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $categorieEvt = $em->getRepository(CategorieEvts::class)->find($id);
+        $em->remove($categorieEvt);
+        $em->flush();
+
+        return$this->redirectToRoute('da_evenements_index');
+    }
+
     /**
      * Finds and displays a user entity.
      *

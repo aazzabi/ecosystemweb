@@ -202,8 +202,8 @@
                     <li class=" {% if path('homepage') == currentPath %}active{% endif %}">
                         <a href="{{ path('homepage') }}"><span class="title">Accueil</span></a>
                     </li>
-                    <li class=" {% if path('annonce_show3') == currentPath %}active{% endif %}">
-                        <a href="{{ path('annonce_show3') }}"><span class="title">Annonces</span></a>
+                    <li class=" {% if path('f_annonce_index') == currentPath %}active{% endif %}">
+                        <a href="{{ path('f_annonce_index') }}"><span class="title">Annonces</span></a>
                     </li>
                     <li class=" {% if path('reparateur_mainindex') == currentPath %}active{% endif %}">
                         <a href="{{ path('reparateur_mainindex') }}"><span class="title">Réparation</span></a>
@@ -230,7 +230,11 @@
                     <li>
                         <a href="{{ path('dashboard_livreur') }}"><span class="title">Dashboard</span></a>
                     </li>
-                    {% elseif app.user == false %}
+                    {% endif %}
+                    {% if is_granted('ROLE_USER') %}
+                        <li>
+                            <a href="{{ path('du_annonce_index') }}"><span class="title">Dashboard</span></a>
+                        </li>
                     {% endif %}
 
                 </ul>

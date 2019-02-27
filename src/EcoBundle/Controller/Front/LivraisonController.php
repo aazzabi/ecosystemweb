@@ -24,6 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
+
 class LivraisonController extends Controller
 {
     /**
@@ -69,7 +70,7 @@ foreach ($livreurs as $l)
         }
         else
         {
-            echo "<script language=\"javascript\" class='foo'>alert(\"Veuillez nous excuser nous n'avons as de livreur Disponible pour le moment ,Votre Livraison va être retardé par 2 jours \");</script>";
+            echo "<script language=\"javascript\" class='foo'>alert(\"Veuillez nous excuser nous n'avons as de livreur Disponible pour le moment ,On va essayer de libérer un livreur \");</script>";
             $em=$this->getDoctrine()->getManager();
             $commandes = $em->getRepository('EcoBundle:Commande')->findAll();
             return $this->render('@Eco/DashboardUser/page_index_commande.html.twig', array(
@@ -77,6 +78,16 @@ foreach ($livreurs as $l)
             ));
         }
 
+    }
+    else
+    {
+        echo "<script language=\"javascript\" class='foo'>alert(\"Veuillez nous excuser nous n'avons as de livreur Disponible Dans votre Zone  pour le moment ,Réessayer plus tard\");</script>";
+        $em=$this->getDoctrine()->getManager();
+
+        $commandes = $em->getRepository('EcoBundle:Commande')->findAll();
+        return $this->render('@Eco/DashboardUser/page_index_commande.html.twig', array(
+            'commandes'=> $commandes
+        ));
     }
 }
          $Livraison->setEtatLivraison('En cours');
@@ -103,6 +114,7 @@ foreach ($livreurs as $l)
          return $this->render('@Eco/DashboardUser/page_index_livraison.html.twig',array(
              'livraisons'=> $livraisons,'commandes'=> $commandes));
        }
+
     /**
      * @Route("/show_livraison", name="show_livraison")
      * @Method("GET")
@@ -135,5 +147,7 @@ foreach ($livreurs as $l)
             'liste_ligne'=> $liste_ligne,'annonces'=>$annonces,'tab'=>$tab));
 
     }
+
+
 
 }

@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DAEvenementsController extends Controller
 {
     /**
-     * @Route("/categorie", name="da_categorie_index")
+     * @Route("/evenement", name="da_evenements_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -40,12 +40,11 @@ class DAEvenementsController extends Controller
         }
         $em = $this->getDoctrine()->getManager();
 
-        //$evenements = $em->getRepository('EcoBundle:Evenements')->findAll();
+        $evenements = $em->getRepository('EcoBundle:Evenement')->findAll();
         $categoriesEvts = $em->getRepository('EcoBundle:CategorieEvts')->findAll();
-//        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
 
         return $this->render('@Eco/DashboardAdmin/Evenement/index.html.twig', array(
-            //'evenements' => $evenements,
+            'evenements' => $evenements,
             'categoriesEvts' => $categoriesEvts,
         ));
     }
@@ -61,38 +60,19 @@ class DAEvenementsController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-       // $evenement = new Evenement();
         $categorieEvts = new CategorieEvts();
-//        tasna3 les autres entités li aand'hom 3ala9a bel module mta3ek
-
-       // $formEvt = $this->createForm('EcoBundle\Form\EvenementType', $evenement);
         $formCateg = $this->createForm('EcoBundle\Form\CategorieEvtsType', $categorieEvts);
-//        tasna3 les autres formulaire li aand'hom 3ala9a bel module mta3ek
-
-        //$formEvt->handleRequest($request);
         $formCateg->handleRequest($request);
-//       tu handleRequesti :p les autres formulaire li aand'hom 3ala9a bel module mta3ek
 
-
-
-       /* if ($formEvt->isSubmitted() && $formEvt->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($evenement);
-            $em->flush();
-            return $this->redirectToRoute('da_evenements_index');
-        }*/
         if ($formCateg->isSubmitted() && $formCateg->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($categorieEvts);
             $em->flush();
-            return $this->redirectToRoute('da_categorie_index');
+            return $this->redirectToRoute('da_evenements_index');
         }
-//        lahna tu persiste l'entité selon le formulaire adéquat mta3ha ( Exple pour $formEvt tu persiste $evenement )
-//        w tab9a t3awed fihom 3la 3dad les entités que tu gére
 
         return $this->render('@Eco/DashboardAdmin/Evenement/new.html.twig', array(
             'CategorieEvts' => $categorieEvts,
-           // 'formEvt' => $formEvt->createView(),
             'formCateg' => $formCateg->createView(),
         ));
     }
@@ -114,7 +94,7 @@ class DAEvenementsController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('da_categorie_index', array('id' => $categorieEvts->getId()));
+            return $this->redirectToRoute('da_evenements_index', array('id' => $categorieEvts->getId()));
         }
 
         return $this->render('@Eco/DashboardAdmin/Evenement/edit.html.twig', array(
@@ -139,30 +119,6 @@ class DAEvenementsController extends Controller
             'CategorieEvts' => $categorieEvts,
         ));
     }
-
-
-
-    /**
-     * @Route("/evenement", name="da_evenements_index")
-     * @Method("GET")
-     */
-
-    public function indexEventAction()
-    {
-          if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-              throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
-          }
-        $em = $this->getDoctrine()->getManager();
-        //$evenements = $em->getRepository('EcoBundle:Evenements')->findAll();
-
-//        w tkamel tu récupére les autres entités li aand'hom 3ala9a bel module mta3ek
-        $evenement = $em->getRepository('EcoBundle:Evenement')->findAll();
-        return $this->render('@Eco/DashboardAdmin/Evenement/indexEvent.html.twig', array(
-            //'evenements' => $evenements,
-            'evenement' => $evenement,
-        ));
-    }
-
 
     /**
      * Deletes a Reparateur entity.

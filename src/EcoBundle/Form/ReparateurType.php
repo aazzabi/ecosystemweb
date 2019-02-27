@@ -67,7 +67,7 @@ class ReparateurType extends AbstractType
             ])
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'required'=>false,
+                'required'=>true,
                 'options' => array(
                     'translation_domain' => 'FOSUserBundle',
                     'attr' => array(

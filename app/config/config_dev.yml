@@ -39,8 +39,9 @@ monolog:
 
 swiftmailer:
     transport: gmail
-    username: arafet.azzabi@esprit.tn
-    password: 183JMT0449
+    username: info.equipeecosystem@gmail.com
+    password: 147852369+ecosystem
     encryption:	ssl
     auth_mode:	login
     host:	~
+    disable_delivery:  false

@@ -90,7 +90,7 @@ class DURecyclerController extends Controller
     /**
      * Displays a form to edit an existing user entity.
      *
-     * @Route("/missions/{id}/edit", name="du_evenement_edit")
+     * @Route("/missions/{id}/edit", name="du_missions_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Missions $evenement)

@@ -3,7 +3,9 @@
 namespace EcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Annonce
@@ -27,6 +29,9 @@ class Annonce
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
+     *
+     * @Assert\NotBlank
+     *
      */
     private $titre;
 
@@ -34,6 +39,9 @@ class Annonce
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     *
+     * @Assert\NotBlank
+     *
      */
     private $description;
 
@@ -41,6 +49,9 @@ class Annonce
      * @var \DateTime
      *
      * @ORM\Column(name="date_creation", type="datetime")
+     *
+     * @Assert\DateTime
+     *
      */
     private $dateCreation;
 
@@ -48,6 +59,9 @@ class Annonce
      * @var \DateTime
      *
      * @ORM\Column(name="date_update", type="datetime")
+     *
+     * @Assert\DateTime
+     *
      */
     private $dateUpdate;
 
@@ -55,6 +69,9 @@ class Annonce
      * @var float
      *
      * @ORM\Column(name="prix", type="float")
+     *
+     * @Assert\NotNull
+     *
      */
     private $prix;
 
@@ -62,6 +79,9 @@ class Annonce
      * @var string
      *
      * @ORM\Column(name="region", type="string", length=255)
+     *
+     * @Assert\NotBlank
+     *
      */
     private $region;
 

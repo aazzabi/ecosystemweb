@@ -67,7 +67,7 @@
                 var keyWord = $(this).val();
                 $.ajax({
                     dataType: "json",
-                    url: '{{ path('f_annonce_recherche') }}',
+                    url: "{{ path("f_recherche") }}",
                     data: {
                         "keyWord": keyWord
                     },
@@ -80,53 +80,55 @@
     </script>
 {% endblock %}
 {% block body %}<br>
-<div style="padding: 20px 50px">
-    <div>
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <a href="{{ path('du_annonce_new') }}" class="btn btn-success">
-                    <i class="icon-plus">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                        &nbsp;Ajouter une Annonce
-                    </i>
-                </a>
-            </div><br>
-        </div><br>
-        <div class="row" style="background-color: white; padding: 10px">
-            <div class="col-md-2">
-                <h3>Filiter By</h3>
+    <div style="padding: 20px 50px">
+        <div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <a href="{{ path('du_annonce_new') }}" class="btn btn-success">
+                        <i class="icon-plus">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            &nbsp;Ajouter une Annonce
+                        </i>
+                    </a>
+                </div>
+                <br>
             </div>
-            <div class="col-md-6">
-                <form role="form">
-                    <div class="form-group form-group-default input-group">
-                        <div class="form-input-group">
-                            <label>Recherche tous les Annonce</label>
-                            <input type="search" class="keyWord form-control">
+            <br>
+            <div class="row" style="background-color: white; padding: 10px">
+                <div class="col-md-2">
+                    <h3>Filiter By</h3>
+                </div>
+                <div class="col-md-6">
+                    <form role="form">
+                        <div class="form-group form-group-default input-group">
+                            <div class="form-input-group">
+                                <label>Recherche tous les Annonce</label>
+                                <input type="search" class="keyWord form-control">
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-4 text-right">
-                <div class="btn-group" style="height: 51px;">
-                    <button class="max btn btn-secondary btn-lg dropdown-toggle" type="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trier Par
-                    </button>
-                    <div class="dropdown-menu" x-placement="bottom-start"
-                         style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        <a class="dropdown-item" href="{{ path('f_annonce_trier', { 'val': 'PR' }) }}">Plus
-                            Récente</a>
-                        <a class="dropdown-item" href="{{ path('f_annonce_trier', { 'val': 'PE' }) }}">Prix
-                            Eleve</a>
-                        <a class="dropdown-item" href="{{ path('f_annonce_trier', { 'val': 'PB' }) }}">Prix
-                            bas</a>
+                    </form>
+                </div>
+                <div class="col-md-4 text-right">
+                    <div class="btn-group" style="height: 51px;">
+                        <button class="max btn btn-secondary btn-lg dropdown-toggle" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trier Par
+                        </button>
+                        <div class="dropdown-menu" x-placement="bottom-start"
+                             style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <a class="dropdown-item" href="{{ path('f_annonce_trier', { 'val': 'PR' }) }}">Plus
+                                Récente</a>
+                            <a class="dropdown-item" href="{{ path('f_annonce_trier', { 'val': 'PE' }) }}">Prix
+                                Eleve</a>
+                            <a class="dropdown-item" href="{{ path('f_annonce_trier', { 'val': 'PB' }) }}">Prix
+                                bas</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div><br>
-
-    <div class="row">
-        {#<div class="col-md-12">#}
+        <br>
+        <div class="row">
+            {#<div class="col-md-12">#}
             <div class="col-md-2" id="sticky-sidebar">
 
                 <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
@@ -175,7 +177,8 @@
                                     {% endif %}
                                 </div>
                                 <figcaption class="info-wrap">
-                                    <a href="{{ path('f_annonce_show', { 'id': a.id }) }}"><h4 class="title"><b>{{ a.titre }}</b></h4></a>
+                                    <a href="{{ path('f_annonce_show', { 'id': a.id }) }}"><h4 class="title">
+                                            <b>{{ a.titre }}</b></h4></a>
                                     {#<p class="desc">{{ a.description }}</p>#}
                                     <div class="price-wrap h5">
                                         <span class="price-new">${{ a.prix }}</span>
@@ -186,10 +189,49 @@
                                             class="jaime btn btn-tag">
                                         <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
                                     </button>
-                                    <a href="{{ path('du_annonce_signaler', { 'id': a.id }) }}"
-                                       class="btn btn-tag btn-tag-rounded float-left">
-                                        Signaler  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                    </a>
+                                    <button type="button" class="btn btn-tag btn-tag-rounded float-left"
+                                            data-toggle="modal" data-target="#exampleModal">
+                                        Signaler<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Signaler cette
+                                                        Annonce</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body"><br>
+                                                    <form action="{{ path('f_annonce_signaler', {'id': a.id}) }}"
+                                                          id="{{ a.id }}" method="get" name="formulario_login">
+                                                        <input type="radio" value="violence" name="radioLib"
+                                                               id="violence"><label for="violence">Violence</label><br>
+                                                        <input type="radio" value="arnaque" name="radioLib"
+                                                               id="arnaque"><label for="arnaque">arnaque</label><br>
+                                                        <input type="radio" value="harcelement" name="radioLib"
+                                                               id="harcelement"><label
+                                                                for="harcelement">Harcelement</label><br>
+                                                        <input type="radio" value="haine" name="radioLib"
+                                                               id="haine"><label for="haine">Discour insitant à la
+                                                            haine</label><br>
+
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Annuler
+                                                        </button>
+                                                        <button type="submit" class="btn btn-success">Signaler</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {#<a href="{{ path('du_annonce_signaler', { 'id': a.id }) }}"#}
+                                    {#class="btn btn-tag btn-tag-rounded float-left">#}
+                                    {#Signaler  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>#}
+                                    {#</a>#}
                                     <a href="#" class="btn btn-tag btn-tag-rounded float-left">Panier
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                     </a>
@@ -198,8 +240,12 @@
                         </div>
                     {% endfor %}
                 </div>
+                <div class="row">
+                    <div class="navigation text-center">
+                        {{ knp_pagination_render(annonces) }}
+                    </div>
+                </div>
             </div>
-        {#</div>#}
+        </div>
     </div>
-</div>
 {% endblock %}

@@ -2,11 +2,13 @@
 
 namespace EcoBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 class CategorieEvtsType extends AbstractType
 {
     /**
@@ -14,7 +16,9 @@ class CategorieEvtsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('libelle')->add('but',ChoiceType::class,
+        $builder->add('libelle',TextType::class,[
+            'required'=>false,
+        ])->add('but',ChoiceType::class,
             array(
                 'choices'=>array('Lucratif'=>'Lucratif',
                     'Non Lucratif'=>'Non Lucratif',

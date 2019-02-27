@@ -4,6 +4,8 @@ namespace EcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use EcoBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Reparateur
  *
@@ -16,6 +18,8 @@ class Reparateur extends  User
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $adresse;
 
@@ -37,6 +41,8 @@ class Reparateur extends  User
      * @var string
      *
      * @ORM\Column(name="specialite", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $specialite;
 
@@ -45,6 +51,8 @@ class Reparateur extends  User
      * @var string
      *
      * @ORM\Column(name="horaire", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $horaire;
 

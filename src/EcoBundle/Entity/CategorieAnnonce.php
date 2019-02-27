@@ -4,6 +4,8 @@ namespace EcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * CategorieAnnonce
@@ -26,6 +28,9 @@ class CategorieAnnonce
      * @var string
      *
      * @ORM\Column(name="libelle", type="string", length=255)
+     *
+     * @Assert\NotBlank
+     *
      */
     private $libelle;
 

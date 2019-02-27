@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * CommentairePublication
@@ -28,6 +30,9 @@ class CommentairePublication
      * @var string
      *
      * @ORM\Column(nullable= true, name="description", type="string", length=255)
+     *
+     * @Assert\NotBlank
+     *
      */
     private $description;
 
@@ -44,6 +49,9 @@ class CommentairePublication
      * @var \DateTime
      *
      * @ORM\Column(name="commented_at", type="datetime", nullable=true)
+     *
+     * @Assert\DateTime
+     *
      */
     private $commentedAt;
 

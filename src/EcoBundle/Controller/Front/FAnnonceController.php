@@ -27,9 +27,19 @@ class FAnnonceController extends Controller
         $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
         $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
-        $signal = $em->getRepository('EcoBundle:SignalAnnonce')->findAll();
-        return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
-            "annonces" => $annnonce, 'categories' => $categories, 'likes' => $likes, 'signal' => $signal,
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator    = $this->get('knp_paginator');
+        $anonnces = $paginator->paginate(
+            $annnonce,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 9)
+        );
+        return $this->render
+        ('@Eco/Front/Annonce/annonce.html.twig',
+            array(
+            'annonces' => $anonnces, 'categories' => $categories, 'likes' => $likes,
         ));
     }
 
@@ -48,6 +58,27 @@ class FAnnonceController extends Controller
         return $this->render('@Eco/Front/Annonce/show.html.twig', array(
             'annonce' => $annonce,
         ));
+    }
+    /**
+     * Creates a new Categorie et annonce entity.
+     *
+     * @Route("/signalAnnonce/{id}", name="f_annonce_signaler")
+     * @Method({"GET", "POST"})
+     */
+    public function SignalAction(Request $request,$id)
+    {
+
+        $signal = new SignalAnnonce();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $annonce = $em->getRepository('EcoBundle:Annonce')->find($id);
+        $libRadio = $request->get('radioLib');
+        $signal->setDescription($libRadio);
+        $signal->setAnnonce($annonce);
+        $signal->setUser($user);
+        $em->persist($signal);
+        $em->flush();
+        return $this->redirectToRoute('f_annonce_index');
     }
 
     /**
@@ -96,28 +127,57 @@ class FAnnonceController extends Controller
     {
 
         $val = $request->get('val');
+        //dump($val);exit();
         if ($val == 'PR') {
             $em = $this->getDoctrine()->getManager();
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPlusRecent();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
+            /**
+             * @var $paginator \Knp\Component\Pager\Paginator
+             */
+            $paginator    = $this->get('knp_paginator');
+            $anonnce = $paginator->paginate(
+                $annonces,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 9)
+            );
 
-        } elseif ($val = 'PE') {
+        } elseif ($val == 'PE') {
             $em = $this->getDoctrine()->getManager();
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixElv();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
+            /**
+             * @var $paginator \Knp\Component\Pager\Paginator
+             */
+            $paginator    = $this->get('knp_paginator');
+            $anonnce = $paginator->paginate(
+                $annonces,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 9)
+            );
 
 
-        } else {
+        } elseif ($val == 'PB') {
+
             $em = $this->getDoctrine()->getManager();
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixBas();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
+            /**
+             * @var $paginator \Knp\Component\Pager\Paginator
+             */
+            $paginator    = $this->get('knp_paginator');
+            $anonnce = $paginator->paginate(
+                $annonces,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 9)
+            );
 
         }
         return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
-            "annonces" => $annonces, 'categories' => $categories, 'likes' => $likes,
+            "annonces" => $anonnce, 'categories' => $categories, 'likes' => $likes,
         ));
     }
     /**
@@ -149,15 +209,13 @@ class FAnnonceController extends Controller
     }
     /**
      *
-     * @Route("/recherche", name="f_annonce_recherche")
+     * @Route("/annonce/recherche", name="f_recherche")
      * @Method({"GET", "POST"})
      */
     public function rechercheAction(Request $request)
     {
-
-            //$em      = $this->getDoctrine()->getManager();
             $keyWord = $request->get('keyWord');
-            //dump($keyWord);
+           // dump($keyWord);
         if($keyWord == '')
         {
             $annonce = $this->getDoctrine()->getRepository('EcoBundle:Annonce')->findAll();
@@ -173,8 +231,6 @@ class FAnnonceController extends Controller
             $response->headers->set('Content-Type', 'application/json');
 
             return $response;
-
-
     }
 
 

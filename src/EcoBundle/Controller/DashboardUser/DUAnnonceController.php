@@ -118,34 +118,6 @@ class DUAnnonceController extends Controller
         return $this->redirectToRoute('du_annonce_index');
     }
     /**
-     * Creates a new Categorie et annonce entity.
-     *
-     * @Route("/annonce/signal/{id}", name="du_annonce_signaler")
-     * @Method({"GET", "POST"})
-     */
-    public function SignalAction(Request $request)
-    {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $signal = new SignalAnnonce();
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $formsignl = $this->createForm('EcoBundle\Form\SignalAnnonceType',$signal);
-        $formsignl->handleRequest($request);
-        if($formsignl->isSubmitted() && $formsignl->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-            $annonce = $em->getRepository('EcoBundle:Annonce')->find($request->get('id'));
-            $signal->setAnnonce($annonce);
-            $signal->setUser($user);
-            $em->persist($signal);
-            $em->flush();
-            return $this->redirectToRoute('du_annonce_index');
-        }
-        return $this->render('@Eco/DashboardUser/Annonce/Signal.html.twig', array(
-            'formsignl' => $formsignl->createView()
-        ));
-
-    }
-    /**
      * Displays a form to edit an existing Annonce entity.
      *
      * @Route("/statistique", name="du_annonce_stat")

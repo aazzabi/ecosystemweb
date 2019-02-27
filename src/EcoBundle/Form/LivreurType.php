@@ -20,16 +20,16 @@ class LivreurType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'required'=>true,
+                'required'=>false,
                 'label' => 'Nom',
             ],'first')
             ->add('prenom', TextType::class, [
-                'required'=>true,
+                'required'=>false,
                 'label' => 'Prenom'
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
-                'required'=>true,
+                'required'=>false,
             ])
             ->add('userPhoto', VichFileType::class, [
                 'required' => false,
@@ -40,7 +40,11 @@ class LivreurType extends AbstractType
                 'label' => 'Pseudo',
                 'required'=>true,
             ])
-            ->add('zone')->add('disponibilite')
+            ->add('zone',TextType::class,[
+                'required' =>false,
+            ])->add('disponibilite',TextType::class,[
+                'required' =>false,
+            ])
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'required'=>false,

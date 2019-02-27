@@ -4,6 +4,7 @@ namespace EcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use EcoBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Livreur
@@ -18,6 +19,8 @@ class Livreur extends User
      * @var string
      *
      * @ORM\Column(name="zone", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $zone;
 
@@ -25,6 +28,8 @@ class Livreur extends User
      * @var string
      *
      * @ORM\Column(name="disponibilite", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $disponibilite;
 

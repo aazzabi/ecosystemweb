@@ -4,6 +4,7 @@ namespace EcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use EcoBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * RespAsso
@@ -17,6 +18,8 @@ class RespAsso extends User
      * @var int
      *
      * @ORM\Column(name="cin", type="integer")
+     *
+     * Assert\NotNull
      */
     private $cin;
 

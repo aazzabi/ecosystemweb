@@ -64,6 +64,8 @@ class Group extends BaseGroup
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=150, nullable=true)
+     *
+     * @Assert\NotBlank
      */
     private $description;
 
@@ -71,6 +73,8 @@ class Group extends BaseGroup
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=150, nullable=true)
+     *
+     * @Assert\NotBlank
      */
     private $type;
 

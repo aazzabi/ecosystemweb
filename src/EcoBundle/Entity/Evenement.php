@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;*/
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Evenement
@@ -29,6 +31,9 @@ class Evenement
      * @var string
      *
      * @ORM\Column(name="lieu", type="string", length=255)
+     *
+     * @Assert\NotBlank
+     *
      */
     private $lieu;
 
@@ -43,6 +48,8 @@ class Evenement
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $titre;
 
@@ -50,6 +57,9 @@ class Evenement
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
+     *
+     * @Assert\NotBlank
+     *
      */
     private $description;
 
@@ -58,6 +68,9 @@ class Evenement
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     *
+     * @Assert\DateTime
+     *
      */
     private $date;
 

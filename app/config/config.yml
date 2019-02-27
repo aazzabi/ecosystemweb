@@ -116,3 +116,6 @@ vich_uploader:
             inject_on_load:     false
             delete_on_update:   false
             delete_on_remove:   true
+
+cmen_google_charts:
+    version: "current"

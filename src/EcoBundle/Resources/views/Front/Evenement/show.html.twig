@@ -17,16 +17,16 @@
         <div class="jumbotron">
             <div class="cover-photo text-center"  style="background-image:url('{{ asset('uploads/evt/cover/' ~ evenement.cover) }}'); background-size: 100% 100%"><br>
                 <h1 class="display-3 ">Bienvenue </h1>
-                <p>Voici une brève description sur notre prochain évènement {{ evenement.titre }}, on espére vous
-                    accueilir parmi nous !</p>
+                <p>Voici un bref description sur notre prochain evenement {{ evenement.titre }}, on espére vous
+                    accueilir parmi nous </p>
             </div>
         </div>
     {% else %}
         <div class="jumbotron">
             <div class="cover-photo text-center"><br>
                 <h1 class="display-3 ">Bienvenue </h1>
-                <p>Voici une brève description sur notre prochain évènement {{ evenement.titre }}, on espére vous
-                    accueilir parmi nous !</p>
+                <p>Voici un bref description sur notre prochain evenement {{ evenement.titre }}, on espére vous
+                    accueilir parmi nous </p>
             </div>
         </div>
     {% endif %}
@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="card col-md-5 ">
-            <h3 class="text-center"><span class="bold text-center">A propos de l'organisateur</span></h3>
+            <h3 class="text-center"><span class="bold text-center">A propos d'organisateur</span></h3>
             <div class="row">
                 {% if evenement.createdBy.photo %}
                     <div class="col-md-4 profile-img-wrapperinline">
@@ -65,7 +65,7 @@
                     {% if evenement.createdBy.group %}
                         <h5><b>Groupe :</b>{{ evenement.createdBy.group.nom }}</h5>
                     {% endif %}
-                    <h5><b>Email :</b>{{ evenement.createdBy.email }}</h5><br>
+                    <h5><b>Prenom :</b>{{ evenement.createdBy.email }}</h5><br>
                 </div>
             </div>
         </div>

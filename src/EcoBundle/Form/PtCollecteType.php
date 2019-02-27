@@ -17,7 +17,7 @@ class PtCollecteType extends AbstractType
         $builder->add('libelle',TextType::class,['required' =>false,])
             ->add('localisation',TextType::class,['required' =>false,])
             ->add('type',TextType::class,['required' =>false,])
-            ->add('responsable');
+            ->add('responsable',TextType::class,['required' =>false,]);
     }/**
      * {@inheritdoc}
      */

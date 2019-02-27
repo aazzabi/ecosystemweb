@@ -3,7 +3,7 @@
     <link href="{{ asset ('assets/css/Missions.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset ('assets/css/missionCarts.css') }}" rel="stylesheet" type="text/css">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+    <script src="{{ asset ('assets/js/jquery-3.3.1.min.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
@@ -179,8 +179,8 @@
 
                         {% if evenement.cover != '' %}
                             <div class="front" style=" background-image:url('{{ asset('uploads/missions/cover/' ~ evenement.cover) }}');">
-                        {% else %}
-                            <div class="front" style="  background-image:url('{{ asset('assets/img/profile.png') }}')">
+{{ dump(evenement.cover) }}
+
                         {% endif %}
                         <div class="inner">
                                 <div class="row">

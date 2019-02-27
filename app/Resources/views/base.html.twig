@@ -192,31 +192,32 @@
         </div>
     </div>
     <div style="background-color: #4d984d !important;">
+        {% set currentPath = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')) %}
         <div class="container">
             <div class="menu-bar header-sm-height">
                 <a href="#" class="btn-link toggle-sidebar hidden-lg-up" data-toggle="horizontal-menu">
                     <i class="fa fa-times"></i>
                 </a>
                 <ul>
-                    <li class=" active">
+                    <li class=" {% if path('homepage') == currentPath %}active{% endif %}">
                         <a href="{{ path('homepage') }}"><span class="title">Accueil</span></a>
                     </li>
-                    <li>
+                    <li class=" {% if path('annonce_show3') == currentPath %}active{% endif %}">
                         <a href="{{ path('annonce_show3') }}"><span class="title">Annonces</span></a>
                     </li>
-                    <li>
+                    <li class=" {% if path('reparateur_mainindex') == currentPath %}active{% endif %}">
                         <a href="{{ path('reparateur_mainindex') }}"><span class="title">Réparation</span></a>
                     </li>
-                    <li>
+                    <li class=" {% if path('front_recyclage_index') == currentPath %}active{% endif %}">
                         <a href="{{ path('front_recyclage_index') }}"><span class="title">Recyclage</span></a>
                     </li>
-                    <li>
+                    <li class=" {% if path('front_evenements_index') == currentPath %}active{% endif %}">
                         <a href=" {{ path ('front_evenements_index') }}"><span class="title">Evénements</span></a>
                     </li>
-                    <li>
+                    <li class=" {% if path('front_forum_index') == currentPath %}active{% endif %}">
                         <a href="{{ path('front_forum_index') }}"><span class="title">Forum</span></a>
                     </li>
-                    <li>
+                    <li class=" {% if path('show_commande') == currentPath %}active{% endif %}">
                         <a href="{{ path('show_commande') }}"><span class="title">Commandes</span></a>
                     </li>
 

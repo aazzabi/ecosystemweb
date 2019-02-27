@@ -58,7 +58,7 @@ class UserType extends AbstractType
             ])
             ->add('numtel', TextType::class, [
                 'required'=>true,
-                'label' => 'numtel'
+                'label' => 'Numéro téléphone'
             ])
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,

@@ -31,7 +31,7 @@ class LigneCommande
     /**
      * @var int
      *
-     * @ORM\Column(name="id_annonce", type="integer")
+     * @ORM\Column(name="id_annonce", type="integer" ,unique=true)
      */
     public $idAnnonce;
 

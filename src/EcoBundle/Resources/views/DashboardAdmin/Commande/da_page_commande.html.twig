@@ -1,6 +1,7 @@
 {% extends './Default/dashboard.html.twig' %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
 {% endblock %}
 
 {% block javascripts %}
@@ -40,7 +41,14 @@
                             <tr>
                                 <td>{{ value.id}}</td>
                                 <td>{{ value.dateEmission|date}}</td>
-                                <td>{{ value.etatCommande }}</td>
+                                <td>{{ value.etatCommande }}
+                                    {% if value.etatCommande=='En cours' %}
+                                        <i class="fa fa-spinner fa-2x fa-pulse " style="color: #0da899"></i>
+                                    {% endif %}
+                                    {% if value.etatCommande=='Effectué' %}
+                                        <i class="fas fa-check fa-2x " style="color: #0da899"></i>
+                                    {% endif %}
+                                </td>
                                 <td>{{ value.prixTotal }}</td>
 
                                 <td>

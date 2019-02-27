@@ -40,6 +40,99 @@ class User extends BaseUser
     private $nom;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="$nom_propriete", type="string", length=255, nullable=true)
+     */
+    private $nomPropriete;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rue", type="string", length=255 , nullable=true)
+     */
+    private $rue;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ville", type="string", length=255 , nullable=true)
+     */
+    private $ville;
+
+
+    /**
+     * @return string
+     */
+    public function getNomPropriete()
+    {
+        return $this->nomPropriete;
+    }
+
+    /**
+     * @param string $nomPropriete
+     */
+    public function setNomPropriete($nomPropriete)
+    {
+        $this->nomPropriete = $nomPropriete;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRue()
+    {
+        return $this->rue;
+    }
+
+    /**
+     * @param string $rue
+     */
+    public function setRue($rue)
+    {
+        $this->rue = $rue;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * @param string $ville
+     */
+    public function setVille($ville)
+    {
+        $this->ville = $ville;
+    }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numtel", type="string",length=8,nullable=true )
+     */
+    private $numtel;
+
+    /**
+
+    /**
+     * @return string
+     */
+    public function getNumtel()
+    {
+        return $this->numtel;
+    }
+
+    /**
+     * @param int $numtel
+     */
+    public function setNumtel($numtel)
+    {
+        $this->numtel = $numtel;
+    }
+
+    /**
      * @var array
      */
     protected $roles;

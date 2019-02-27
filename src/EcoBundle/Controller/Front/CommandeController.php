@@ -14,7 +14,9 @@ namespace EcoBundle\Controller\Front;
 
 
 use EcoBundle\Entity\Commande;
+use EcoBundle\Entity\Livraison;
 use EcoBundle\Entity\LigneCommande;
+use EcoBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use EcoBundle\Entity\AnnoncePanier;
@@ -39,6 +41,8 @@ class CommandeController extends Controller
         $em =$this->getDoctrine()->getManager();
 
          $liste_panier = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
+        $users = $em->getRepository('EcoBundle:User')->findAll();
+        $livreurs = $em->getRepository('EcoBundle:Livreur')->findAll();
          $commande=new Commande();
          $etat="En cours";
          $date_auj=new \DateTime('now');
@@ -49,7 +53,9 @@ class CommandeController extends Controller
          $em->persist($commande);
          $em->flush();
          $id_com=$commande->getId();
-         foreach ($liste_panier as $article_panier)
+
+
+        foreach ($liste_panier as $article_panier)
          {
              $Ligne_commande=new LigneCommande();
              $prix=$article_panier->getPrix();
@@ -177,6 +183,8 @@ class CommandeController extends Controller
             'commandes'=> $commandes
         ));
     }
+
+
 
 
 

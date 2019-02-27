@@ -3,7 +3,7 @@
 
     <div class="dropdown">
         <a href="{{ path('panier_show') }}">
-            <i class="fa fa-shopping-cart" aria-hidden="true">
+            <i class="fa fa-shopping-cart fa-2x" aria-hidden="true">
             </i>
             <span class="bubble">
                         {{ liste|length }}
@@ -47,7 +47,40 @@
                     </tr>
                 </table>
 
-                <a href="{{ path('ajout_commande',{ 'id_u': app.user.id ,'prix_total' :tab.somme}) }}"> <button class="btn btn-info float-right btn-sm"> Passer Commande </button></a>
+                <a href="{{ path('ajout_commande',{ 'id_u': app.user.id ,'prix_total' :tab.somme}) }}"> <button class="btn btn-success" data-target="#mo_c" data-toggle="modal"> Passer Commande </button></a>
+
+                <div class="modal fade " id="mo_c" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <center><h1 class="modal-title" id=""> Confirmation de Commande </h1></center>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <input name="id" value="" style="display: none">
+                                <center><h1 class="h1">Commande passé aves succès</h1></center>
+
+                                <center><h1 class="h1">Prix Total</h1></center>
+                                <center> <p> {{ tab.somme }}</p></center>
+
+                                <center><h1 class="h1"> <i class="fas fa-check fa-4x" style="color: #0eb2a3"> </i></h1></center>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
 
             {% else %}
             {% endif %}

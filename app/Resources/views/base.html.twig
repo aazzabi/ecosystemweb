@@ -239,6 +239,11 @@
                     <li>
                         <a href="{{ path('dashboard') }}"><span class="title">Dashboard</span></a>
                     </li>
+                    {% elseif  is_granted('ROLE_LIVREUR') %}
+                        <li>
+                            <a href="{{ path('dashboard_livreur') }}"><span class="title">Dashboard Livreur</span></a>
+                        </li>
+
                     {% else %}
                     <li>
                         <a href="charts.html"><span class="title">Contactez-nous</span></a>

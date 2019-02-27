@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block head %}
+    <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+{% endblock %}
 {% block body %}
 
     {% if commandes|length >0 %}
@@ -22,19 +24,30 @@
                         <tr>
 
                             <td>{{ value.dateEmission|date}}</td>
-                            <td>{{ value.etatCommande }}</td>
+                            <td>{{ value.etatCommande }}
+
+                                {% if value.etatCommande=='En cours' %}
+                                    <i class="fa fa-spinner fa-2x fa-pulse " style="color: #0da899"></i>
+                                {% endif %}
+                                {% if value.etatCommande=='Effectué' %}
+                                    <i class="fas fa-check fa-2x " style="color: #0da899"></i>
+                                {% endif %}
+                            </td>
                             <td>{{ value.prixTotal }}</td>
-                            <td><a  href="{{ path('ligne_show',{ 'id_c': value.id  }) }}">Afficher les détails </a> </br>
-                             <a  href="{{ path('annuler_commande',{ 'id_c': value.id  }) }}">Annuler Commande </a></td>
+                            <td>
+
+                                <a  href="{{ path('ligne_show',{ 'id_c': value.id  }) }}">Afficher les détails </a> </br>
+                                <a  href="{{ path('annuler_commande',{ 'id_c': value.id  }) }}">Annuler Commande </a> </br>
+                                <a  href="{{ path('ajout_livraison',{ 'id_c': value.id ,'id_u': app.user.id,'nom_prop': app.user.nomPropriete,'rue_u': app.user.rue,'ville_u': app.user.ville}) }}" >Demander Livraison </a> </td>
+
                         </tr>
                         {% endif %}
                     {% endfor %}
                     </tbody>
-                </table>
 
+                </table>
         </div>
     </div>
-
     {% else %}
         <h1> Vous n'avez pas de commandes </h1>
     {% endif %}

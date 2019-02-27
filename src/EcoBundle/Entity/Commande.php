@@ -38,7 +38,7 @@ class Commande
     /**
      * @var int
      *
-     * @ORM\Column(name="id_utilisateur", type="integer")
+     * @ORM\Column(name="id_utilisateur", type="integer" )
      */
     private $idUtilisateur;
 

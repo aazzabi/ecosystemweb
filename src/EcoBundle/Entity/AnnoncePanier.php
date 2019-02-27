@@ -3,6 +3,7 @@
 namespace EcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * AnnoncePanier
@@ -22,9 +23,9 @@ class AnnoncePanier
     private $id;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="id_annonce", type="integer")
+     * @ORM\Column(name="id_annonce", type="string", length=255 ,unique=true)
      */
     private $idAnnonce;
 
@@ -59,7 +60,7 @@ class AnnoncePanier
     /**
      * @var string
      *
-     * @ORM\Column(name="photo", type="string", length=255)
+     * @ORM\Column(name="photo", type="string", length=255,nullable=true)
      */
     private $photo;
 

@@ -16,6 +16,10 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class UserType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -39,6 +43,22 @@ class UserType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => 'Pseudo',
                 'required'=>true,
+            ])
+            ->add('nomPropriete', TextType::class, [
+                'required'=>true,
+                'label' => 'nomPropriete'
+            ])
+            ->add('rue', TextType::class, [
+                'required'=>true,
+                'label' => 'rue'
+            ])
+            ->add('ville', TextType::class, [
+                'required'=>true,
+                'label' => 'ville'
+            ])
+            ->add('numtel', TextType::class, [
+                'required'=>true,
+                'label' => 'numtel'
             ])
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,

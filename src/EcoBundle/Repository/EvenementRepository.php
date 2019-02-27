@@ -115,7 +115,7 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
     public function BestEvents()
     {
         $query=$this->getEntityManager()
-            ->createQuery("SELECT m from EcoBundle:Evenement m WHERE SIZE(m.participants) >1 ");
+            ->createQuery("SELECT m from EcoBundle:Evenement m WHERE SIZE(m.participants) >3 ");
         return $query->getResult();
     }
 }

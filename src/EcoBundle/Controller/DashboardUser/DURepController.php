@@ -47,6 +47,8 @@ class DURepController extends Controller
             $reparation = $this->getDoctrine()->getManager()->getRepository('EcoBundle:Reparation')
                 ->findBy(array('utilisateur' => $user));
         }
+        $announcerep = array_reverse($announcerep);
+        $reparation = array_reverse($reparation);
 
         return $this->render('@Eco/DashboardUser/Reparateur/indexrep.html.twig', array(
             'annonce' => $announcerep, 'reparation' => $reparation
@@ -160,6 +162,7 @@ class DURepController extends Controller
         $reparation = new Reparation();
         $reparation->setUtilisateur($announcerep->getUtilisateur());
         $reparation->setReparateur($announcerep->getReparateur());
+        $reparation->setCommentaire("  Numéro téléphone Client : ........."."  Numéro Réparateur : ............."." Prix : .........");
         $this->getDoctrine()->getManager()->remove($announcerep);
 
         $this->getDoctrine()->getManager()->persist($reparation);
@@ -230,6 +233,32 @@ class DURepController extends Controller
         return $this->redirectToRoute('du_rep_index');
 
 
+    }
+
+    /**
+     *Ajout commentaire in  a Rep entity.
+     *
+     * @Route("/sms/{id}", name="du_rep_sms")
+     * @Method("GET")
+     */
+    public function callAction(Request $request)
+    {
+        $reparation = $this->getDoctrine()->getManager()->getRepository('EcoBundle:Reparation')
+            ->find($request->get('id'));
+       $user=$reparation->getUtilisateur();
+        $reparateur=$reparation->getReparateur();
+        //returns an instance of Vresh\TwilioBundle\Service\TwilioWrapper
+        $twilio = $this->get('twilio.api');
+
+        $message = $twilio->account->messages->sendMessage(
+            '+12015711871', // From a Twilio number in your account
+            '+21651775201', // Text any number
+            "Hello monkey!"
+        );
+
+
+
+        return new Response($message->sid);
     }
 
 

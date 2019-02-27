@@ -105,7 +105,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forum/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forum/settings.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forum/sliderNormalize.css') }}">
-
+    <style>
+       .linkedinButton  {
+           margin-top: -20px;
+       }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -165,8 +169,8 @@
                 <div class="pull-left">
                     <i class="fa fa-clock-o"></i> Posté le : {{ publication.publicationCreatedAt | date("d/M/y", "Europe/Paris") }}
                 </div>
-                <div class="next pull-right">
-                    <a href="#"><i class="fa fa-share"></i></a>
+                <div class="btn-group pull-right">
+                    {{ socialButtons( { 'facebook': {'locale':'fr_FR', 'send':true}} ) }}
                 </div>
             </div>
         </div>

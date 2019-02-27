@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new AppBundle\AppBundle(),
+            new Vresh\TwilioBundle\VreshTwilioBundle(),
             new EcoBundle\EcoBundle(),
             new CMEN\GoogleChartsBundle\CMENGoogleChartsBundle(),
             new Ob\HighchartsBundle\ObHighchartsBundle(),

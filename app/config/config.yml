@@ -69,6 +69,16 @@ swiftmailer:
     encryption: '%mailer_encryption%'
     auth_mode: cram-md5
 
+vresh_twilio:
+    #(Required) Your Account SID from www.twilio.com/user/account
+    sid: 'AC5676bb425276f7ee63955cf4079883ec'
+    #(Required) Your Auth Token from www.twilio.com/user/account
+    authToken: '260916038da9a829cc9a8adf2e9a94e7'
+    #(Optional, default: '2010-04-01') Twilio API version
+    version: '2010-04-01'
+    #(Optional, default: 1) Number of times to retry failed requests
+    retryAttempts: 3
+
 fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main

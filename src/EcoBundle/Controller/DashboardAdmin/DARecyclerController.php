@@ -176,39 +176,12 @@ class DARecyclerController extends Controller
         $collectChart->getData()->setArrayToDataTable(
             $arr
         );
-        $collectChart->getOptions()->setTitle('Statistiques par rapport au représentant de société et leurs Points de collectes');
-        $collectChart->getOptions()->setHeight(500);
-        $collectChart->getOptions()->setWidth(900);
-        $collectChart->getOptions()->getTitleTextStyle()->setBold(true);
-        $collectChart->getOptions()->getTitleTextStyle()->setColor('#009900');
-        $collectChart->getOptions()->getTitleTextStyle()->setItalic(true);
-        $collectChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
-        $collectChart->getOptions()->getTitleTextStyle()->setFontSize(20);
 
-        $missionChart = new PieChart();
-        $missionChart->getData()->setArrayToDataTable(
-            [['Task', 'Hours per Day'],
-             ['Work', 11],
-             ['Eat', 2],
-             ['Commute', 2],
-             ['Watch TV', 2],
-             ['Sleep', 7]
-            ]
-        );
-        $missionChart->getOptions()->setTitle('My Daily Activities');
-        $missionChart->getOptions()->setHeight(500);
-        $missionChart->getOptions()->setWidth(900);
-        $missionChart->getOptions()->getTitleTextStyle()->setBold(true);
-        $missionChart->getOptions()->getTitleTextStyle()->setColor('#009900');
-        $collectChart->getOptions()->getTitleTextStyle()->setItalic(true);
-        $missionChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
-        $missionChart->getOptions()->getTitleTextStyle()->setFontSize(20);
 
         return $this->render('@Eco/DashboardAdmin/Missions/indexEvent.html.twig', array(
             'recys' => $recys,
             'evenement' => $evenement,
             'collectChart' => $collectChart,
-            'missionChart' => $missionChart
         ));
     }
 

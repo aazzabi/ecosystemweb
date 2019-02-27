@@ -230,10 +230,7 @@
                     <li>
                         <a href="{{ path('dashboard_livreur') }}"><span class="title">Dashboard</span></a>
                     </li>
-                    {% else %}
-                    <li>
-                        <a href="{{ path('du_annonce_index') }}"><span class="title">Dashboard</span></a>
-                    </li>
+                    {% elseif app.user == false %}
                     {% endif %}
 
                 </ul>

@@ -191,6 +191,16 @@ class User extends BaseUser
      */
     private $eventsCrees;
 
+
+    /**
+     *
+     * var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Missions", mappedBy="createdBy")
+     *
+     */
+    private $missionsCrees;
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
@@ -257,7 +267,6 @@ class User extends BaseUser
             $roles = array_merge($roles, $group->getRoles());
         }
 
-        // we need to make sure to have at least one role
         $roles[] = static::ROLE_DEFAULT;
 
         return $roles;
@@ -508,5 +517,42 @@ class User extends BaseUser
     public function removeEventsParticipes(Evenement $e)
     {
         $this->eventsParticipes->removeElement($e);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMissionsCrees()
+    {
+        return $this->missionsCrees;
+    }
+
+    /**
+     * @param mixed $missionsCrees
+     */
+    public function setMissionsCrees($missionsCrees)
+    {
+        $this->missionsCrees = $missionsCrees;
+    }
+    /**
+     *
+     * @param \EcoBundle\Entity\Missions $m
+     *
+     * @return User
+     */
+    public function addMissionsCrees(Missions $e)
+    {
+        $this->missionsCrees[] = $e;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param \EcoBundle\Entity\Missions $m
+     */
+    public function removeMissionsCrees(Missions $m)
+    {
+        $this->missionsCrees->removeElement($m);
     }
 }

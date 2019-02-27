@@ -210,7 +210,6 @@ class DARecyclerController extends Controller
             'collectChart' => $collectChart,
             'missionChart' => $missionChart
         ));
-
     }
 
 

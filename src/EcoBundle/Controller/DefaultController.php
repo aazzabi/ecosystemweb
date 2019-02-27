@@ -31,48 +31,7 @@ class DefaultController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-        // replace this example code with whatever you need
         return $this->render('default/dashboard.html.twig');
-    }
-
-
-    /**
-     * @Route("/recyclage", name="recyclage")
-     */
-    public function recyclageAction(Request $request)
-    {
-
-        // replace this example code with whatever you need
-        return $this->render('@Eco/recyclage/recyclage.html.twig');
-    }
-
-    /**
-     * @Route("/missions", name="missions")
-     */
-    public function missionsAction(Request $request)
-    {
-
-        // replace this example code with whatever you need
-        return $this->render('@Eco/recyclage/missions.html.twig');
-    }
-
-    /**
-     * @Route("/appareilrc", name="appareilrc")
-     */
-    public function appareilrcAction(Request $request)
-    {
-
-        // replace this example code with whatever you need
-        return $this->render('@Eco/recyclage/appareilrc.html.twig');
-    }
-
-    /**
-     * @Route("/pointrc", name="pointrc")
-     */
-    public function pointrcAction(Request $request)
-    {
-        // replace this example code with whatever you need
-        return $this->render('@Eco/recyclage/pointrc.html.twig');
     }
 
     /**

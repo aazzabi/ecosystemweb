@@ -1,6 +1,6 @@
 {% extends './Default/dashboard.html.twig' %}
 {% block title %}
-    Liste des Annonces
+    Liste de mes Annonces
 {% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
@@ -25,13 +25,13 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6">
-                    <h1><b>Liste des Annonces </b></h1>
+                    <h1><b>Mes Annonces </b></h1>
                 </div>
                 <div class="col-md-6 text-right">
                     <br>
                     <a href="{{ path('du_annonce_stat') }}" class="btn btn-info">
                         <i class="fa fa-pie-chart" aria-hidden="true"></i>
-                        Statistique sur mes Annonce
+                        Statistique sur mes Annonces
                     </a>
                     <a href="{{ path('du_annonce_new') }}" class="btn btn-success">
                         <i class="icon-plus">

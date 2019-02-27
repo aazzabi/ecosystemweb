@@ -86,7 +86,6 @@ class RecyclerController extends Controller
         $search['categorie'] = $request->get('categorie', null);
         $search['lieu'] = $request->get('lieu', null);
         $search['date'] = $request->get('date', null);
-//        var_dump($search);die;
 
 
         if ($search['categorie']) {
@@ -102,13 +101,9 @@ class RecyclerController extends Controller
             }
         }
 
-//       $evenements =  $em->getRepository('EcoBundle:Missions')->search($search);
-
-//      var_dump($evenements);die;
         $evenements = $em->getRepository('EcoBundle:Missions')->findAll();
         $categories = $em->getRepository('EcoBundle:CategorieMission')->findAll();
         return $this->render('@Eco/Front/Recyclage/index.html.twig', array(
-            //'evenements' => $evenements,
             'evenements' => $evenements,
             'categories' => $categories,
         ));

@@ -29,9 +29,6 @@ class DUForumController extends Controller
      */
     public function indexAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
-        }
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $publications = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')
             ->findBy(array('publicationCreatedBy'=> $user));

@@ -64,21 +64,19 @@ class DURecyclerController extends Controller
      */
     public function newAction(Request $request)
     {
-
-
-        $evenement = new Missions();
+        $missions = new Missions();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $form = $this->createForm('EcoBundle\Form\MissionsType', $evenement);
+        $form = $this->createForm('EcoBundle\Form\MissionsType', $missions);
         $form->handleRequest($request);
-        $evenement->setCreatedBy($user);
-        $evenement->setNbVues(0);
-        $evenement->setAtteint(0);
+        $missions->setCreatedBy($user);
+        $missions->setNbVues(0);
+        $missions->setAtteint(0);
 
 
-        $user->addEventsCrees($evenement);
+        $user->addMissionsCrees($missions);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($evenement);
+            $em->persist($missions);
             $em->flush();
             return $this->redirectToRoute('du_missions_index');
             $this->addFlash("success", "Votre mission a été ajoutée avec succés ! ");

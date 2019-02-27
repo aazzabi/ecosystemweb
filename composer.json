@@ -16,12 +16,14 @@
     "require": {
         "php": ">=5.5.9",
         "ext-json": "*",
+        "cmen/google-charts-bundle": "^2.2",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "friendsofsymfony/user-bundle": "~2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "knplabs/knp-paginator-bundle": "^2.8",
         "knplabs/knp-snappy-bundle": "^1.4",
+        "nomaya/social-bundle": "dev-master",
         "ob/highcharts-bundle": "^1.6",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
@@ -31,9 +33,7 @@
         "symfony/symfony": "3.4.*",
         "symfony/templating": "^3.4",
         "twig/twig": "^1.0||^2.0",
-        "vich/uploader-bundle": "^1.4",
-        "nomaya/social-bundle": "dev-master"
-
+        "vich/uploader-bundle": "^1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

@@ -165,7 +165,7 @@ class ForumController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('du_forum_edit', ['id' => $publication->getId()]);
+            return $this->redirectToRoute('front_forum_show', ['id' => $publication->getId()]);
         }
 
         return $this->render(

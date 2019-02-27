@@ -28,6 +28,55 @@ class Livreur extends User
      */
     private $disponibilite;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nbr_livraison", type="integer", nullable=true ,options={"default" : 0})
+     */
+    private $nbrLivraison;
+
+    /**
+     * @var note
+     *
+     * @ORM\Column(name="note", type="integer", nullable=true ,options={"default" : 0})
+     */
+    private $note;
+
+    /**
+     * @return note
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param note $note
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+    }
+
+
+
+
+    /**
+     * @return int
+     */
+    public function getNbrLivraison()
+    {
+        return $this->nbrLivraison;
+    }
+
+    /**
+     * @param int $nbrLivraison
+     */
+    public function setNbrLivraison($nbrLivraison)
+    {
+        $this->nbrLivraison = $nbrLivraison;
+    }
+
 
     public function __construct()
     {

@@ -68,6 +68,7 @@
                         </a>
                     </div>
                 </div>
+                {% block Panier %}{% endblock %}
                 <!-- END User Info-->
                 {#notification section dropdown#}
                 <div class="dropdown">
@@ -192,6 +193,8 @@
                 <a href="{{ path('fos_user_security_login') }}">
                     <button class="btn btn-primary btn-cons  btn-sm">Se Connecter</button>
                 </a>
+
+
             {% endif %}
 
         </div>
@@ -210,7 +213,8 @@
                         <a href="javascript:;"><span class="title">A propos</span></a>
                     </li>
                     <li>
-                        <a href="social.html"><span class="title">Annonces</span></a>
+
+                        <a href="{{ path('annonce_show3') }}"><span class="title">Annonces</span></a>
                     </li>
                     <li>
                         <a href="{{ path('reparateur_mainindex') }}"><span class="title">Réparation</span></a>
@@ -224,14 +228,21 @@
                     <li>
                         <a href="{{ path('front_forum_index') }}"><span class="title">Forum</span></a>
                     </li>
+                    <li>
+                        <a href="{{ path('show_commande') }}"><span class="title">Commandes</span></a>
+                    </li>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <li>
-                            <a href="{{ path('dashboard') }}"><span class="title">Dashboard</span></a>
-                        </li>
+                    <li>
+                        <a href="{{ path('da_annonce_index') }}"><span class="title">Dashboard</span></a>
+                    </li>
+                    {% elseif  is_granted('ROLE_LIVREUR') %}
+                    <li>
+                        <a href="{{ path('dashboard_livreur') }}"><span class="title">Dashboard</span></a>
+                    </li>
                     {% else %}
-                        <li>
-                            <a href="charts.html"><span class="title">Contactez-nous</span></a>
-                        </li>
+                    <li>
+                        <a href="{{ path('du_annonce_index') }}"><span class="title">Dashboard</span></a>
+                    </li>
                     {% endif %}
 
                 </ul>

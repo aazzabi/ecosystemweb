@@ -198,6 +198,16 @@
                     </a>
                     <span class=" {% if path('da_signalisation_index') == currentPath %}bg-success{% endif %}  icon-thumbnail">Sign</span>
                 </li>
+                {% if  is_granted('ROLE_LIVREUR') %}
+                    <li>
+                        <a href="{{ path('da_show_commande') }}"><span class="title" >Commandes</span></a>
+                        <span class="icon-thumbnail">Cmd</span>
+                    </li>
+                    <li class="" style="padding: 10px 5px;">
+                        <a href="{{ path('da_show_livraison') }}"><span class="title">Livraisons</span></a>
+                        <span class="icon-thumbnail">Lvr</span>
+                    </li>
+                {% endif %}
             {% endif %}
         </ul>
         <div class="clearfix"></div>

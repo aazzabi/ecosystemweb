@@ -1,0 +1,102 @@
+{% extends './Default/dashboard.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="//code.highcharts.com/highcharts.js"></script>
+    <script src="//code.highcharts.com/modules/exporting.js"></script>
+    <script>
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Statistiques par rapport aux Livraisons '
+            },
+            subtitle: {
+                text: 'Nombre de livraisons par Gouvernorat'
+            },
+            xAxis: {
+                categories: [
+                    'Ariana',
+                    'Béja',
+                    'Ben Arous',
+                    'Bizerte',
+                    'Gabes',
+                    'Gafsa',
+                    'Jendouba',
+                    'Kairouan',
+                    'Kasserine',
+                    'Kébili',
+                    'Le Kef',
+                    'Mahdia',
+                    'La Manouba',
+                    'Médanine',
+                    'Monastir',
+                    'Nabeul',
+                    'Sfax',
+                    'Sidi Bouzid',
+                    'Siliana',
+                    'Sousse',
+                    'Tataouine',
+                    'Tozeur',
+                    'Tunis',
+                    'Zaghouan'
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Nombre'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [ {
+                name: 'Nombres de livraisons',
+                data: [
+                    {{ tab[1] }},
+                    {{ tab[2] }},
+                    {{ tab[3] }},
+                    {{ tab[4] }},
+                    {{ tab[5] }},
+                    {{ tab[6] }},
+                    {{ tab[7] }},
+                    {{ tab[8] }},
+                    {{ tab[9] }},
+                    {{ tab[10] }},
+                    {{ tab[11] }},
+                    {{ tab[12] }},
+                    {{ tab[13] }},
+                    {{ tab[14] }},
+                    {{ tab[15] }},
+                    {{ tab[16] }},
+                    {{ tab[17] }},
+                    {{ tab[18] }},
+                    {{ tab[19] }},
+                    {{ tab[20] }},
+                    {{ tab[21] }},
+                    {{ tab[22] }},
+                    {{ tab[23] }},
+                    {{ tab[24] }}]
+
+            }]
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+{% endblock %}

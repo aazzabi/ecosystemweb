@@ -7,6 +7,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Annonce
+ *
  * @Vich\Uploadable
  * @ORM\Table(name="annonce")
  * @ORM\Entity(repositoryClass="EcoBundle\Repository\AnnonceRepository")
@@ -105,6 +106,7 @@ class Annonce
      * @var \DateTime
      */
     private $photoUpdatedAt;
+
     /**
      * @var int
      *
@@ -418,8 +420,5 @@ class Annonce
     {
         $this->views = $views;
     }
-
-
-
 }
 

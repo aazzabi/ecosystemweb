@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% block head %}
+    <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+{% endblock %}
+{% block body %}
+
+    {% if livraisons|length >0 %}
+        <h1> Mes Livraisons : </h1>
+        <div class="tab-content" >
+            <div class="tab-pane active" id="users" aria-expanded="true">
+
+                <table id="usersTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th> Nom & Prénom Utilisateur </th>
+                        <th> Etat </th>
+                        <th> Date Livraison </th>
+                        <th> Prix Commande  </th>
+                        <th> Frais de livraison </th>
+                        <th> Total </th>
+                        <th> Action</th>
+                    </tr>
+                    <tbody>
+                    {% for value in livraisons %}
+                    {% for c in commandes %}
+                        {% if app.user.id == value.idUtilisateur %}
+                        {% if value.idCommande == c.id %}
+                            <tr>
+                                <td> {{ app.user.nom  }} {{ app.user.prenom }} </td>
+                                <td> {{ value.etatLivraison }}
+                                    {% if value.etatLivraison=='En cours' %}
+                                        <i class="fa fa-spinner fa-2x fa-pulse " style="color: #0da899"></i>
+                                    {% endif %}
+                                    {% if value.etatLivraison=='Effectué' %}
+                                        <i class="fas fa-check fa-2x " style="color: #0da899"></i>
+                                    {% endif %}
+                                </td>
+                                <td>{{ value.dateLivraison|date }}</td>
+
+                                <td> {{ c.prixTotal }} DT</td>
+                                <td> 5 DT </td>
+                                <td>{{ c.prixTotal+5 }} DT</td>
+                                <td>
+                                    <a href="{{ path('detail_livraison',{ 'id_c': value.idCommande }) }}">Détail de la livraison</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    {% else %}
+        <h1> Vous n'avez pas de livraisons </h1>
+    {% endif %}
+{% endblock %}

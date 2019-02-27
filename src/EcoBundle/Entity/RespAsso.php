@@ -4,6 +4,7 @@ namespace EcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use EcoBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * RespAsso

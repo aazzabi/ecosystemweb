@@ -5,6 +5,7 @@ namespace EcoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use EcoBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * RespSoc

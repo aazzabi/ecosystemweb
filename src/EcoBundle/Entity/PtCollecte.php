@@ -36,6 +36,8 @@ class PtCollecte
      * @var string
      *
      * @ORM\Column(name="localisation", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $localisation;
 

@@ -3,6 +3,7 @@
 namespace EcoBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +14,10 @@ class PtCollecteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('libelle')->add('localisation')->add('type')->add('responsable');
+        $builder->add('libelle',TextType::class,['required' =>false,])
+            ->add('localisation',TextType::class,['required' =>false,])
+            ->add('type',TextType::class,['required' =>false,])
+            ->add('responsable');
     }/**
      * {@inheritdoc}
      */

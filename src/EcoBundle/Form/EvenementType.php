@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 class EvenementType extends AbstractType
 {
     /**
@@ -15,7 +17,9 @@ class EvenementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('lieu')
+            ->add('lieu',TextType::class,[
+                'required' =>false,
+            ])
             ->add('date')
             ->add('evtCover', VichFileType::class, [
                 'required' =>false,
@@ -27,8 +31,12 @@ class EvenementType extends AbstractType
                 'choice_label'=>'libelle',
                 'multiple'=>false
             ))
-            ->add('titre')
-            ->add('description');
+            ->add('titre',TextType::class,[
+                'required' =>false,
+            ])
+            ->add('description',TextType::class,[
+                'required' =>false,
+            ]);
     }/**
      * {@inheritdoc}
      */

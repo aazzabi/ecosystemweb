@@ -41,9 +41,6 @@ class Evenement
      * @var string
      *
      * @ORM\Column(name="nbvues", type="integer")
-     *
-     * @Assert\NotNull
-     *
      */
     private $nbVues;
 
@@ -51,6 +48,8 @@ class Evenement
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $titre;
 

@@ -27,6 +27,12 @@ class Reparateur extends  User
      * @var int
      *
      * @ORM\Column(nullable=true, name="numerotel", type="integer")
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      minMessage = "Le numéro de téléphone doit se composer de deux chiffre",
+     *      maxMessage = "Le numéro de téléphone doit se composer de deux chiffre",
+     * )
      */
     private $numeroTel;
 
@@ -34,6 +40,12 @@ class Reparateur extends  User
      * @var int
      *
      * @ORM\Column(nullable=true, name="numerofix", type="integer")
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      minMessage = "Le numéro de téléphone doit se composer de deux chiffre",
+     *      maxMessage = "Le numéro de téléphone doit se composer de deux chiffre",
+     * )
      */
     private $numeroFix;
 

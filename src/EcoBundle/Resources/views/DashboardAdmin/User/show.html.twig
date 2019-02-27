@@ -9,7 +9,7 @@
     <div class="col-md-2 col-md-offset-1">
         <a>
             {% if user.photo != '' %}
-                <img alt="User Pic"
+                <img alt="User Pic" width="350" height="300"
                      src="{{ asset('uploads/user/photo/' ~ user.photo) }}"
                      class="img-circle img-responsive">
             {% else %}

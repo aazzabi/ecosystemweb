@@ -155,9 +155,19 @@ class DAUserController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
+        $em = $this->getDoctrine()->getManager();
+
+        $annonces = $em->getRepository('EcoBundle:Annonce')->findByUser($user);
+        $evenements = $em->getRepository('EcoBundle:Evenement')->findBy(array('createdBy'=>$user));
+        $publications = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findBy(array('publicationCreatedBy'=> $user));
+        $missions = $em->getRepository('EcoBundle:Missions')->findBy(array('createdBy'=>$user));
 
         return $this->render('@Eco/DashboardAdmin/User/show.html.twig', array(
             'user' => $user,
+            'annonces' => $annonces,
+            'evenements' => $evenements,
+            'publications' => $publications,
+            'missions' => $missions,
         ));
     }
 

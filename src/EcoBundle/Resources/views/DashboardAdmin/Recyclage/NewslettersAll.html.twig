@@ -1,0 +1,332 @@
+{% extends 'baseBack.html.twig' %}
+{% block stylesheets %}
+    <link href="{{ asset('assetsBack/css/lib/toastr/toastr.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/foscomment/css/comments.css') }}"/>
+{% endblock %}
+{% block content %}
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-title">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h4>All NewsLetters <a class="ml-2" href="{{ path('newsletters_addNew') }}">
+                                <button type="button" class="btn btn-primary btn-sm btn-flat btn-addon m-b-10 "
+                                ><i
+                                            class="ti-plus"></i> New Newsletter
+                                </button>
+                            </a></h4>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="input-group input-group-rounded">
+                            <span class="input-group-btn"><button
+                                        class="btn btn-primary input-group-close-icon btn-group-left" type="button"
+                                        onclick="cancelSearch()"><i
+                                            class="ti-close"></i></button></span>
+                                <input type="text" class="form-control" placeholder="Search Articles"
+                                       id="searchNewsletter"
+                                       name="searchNewsletter">
+                                <span class="input-group-btn"><button class="btn btn-primary btn-group-right"
+                                                                      type="button" onclick="searchNewsletters()"><i
+                                                class="ti-search"></i></button></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover " id="newslettersTable">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Subject</th>
+                            <th>Recipient</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="loader" style="display: none;">
+                            <td id="loader" style="text-align:center; " colspan="7"><img
+                                        src="{{ asset('img/articles_show_loader.gif') }}">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /# card -->
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/db.js') }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/jsgrid.core.js') }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/jsgrid.load-indicator.js') }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/jsgrid.load-strategies.js') }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/jsgrid.sort-strategies.js') }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/jsgrid.field.js') }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/fields/jsgrid.field.text.js') }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/fields/jsgrid.field.number.js') }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/fields/jsgrid.field.select.js') }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/fields/jsgrid.field.checkbox.js') }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/fields/jsgrid.field.control.js') }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/jsgrid/jsgrid-init.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assetsBack/js/lib/jquery.min.js') }}"></script>
+    <!-- popper.js-->
+    <script type="text/javascript" src="{{ asset('assets/js/popper.min.js') }}"></script>
+    <!-- bootstrap.min.js-->
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <!-- required-scripts.js-->
+    <script type="text/javascript" src="{{ asset('assets/js/theme-scripts.js') }}"></script>
+    <!-- theme-main.js-->
+    <script type="text/javascript" src="{{ asset('assets/js/theme-main.js') }}"></script>
+    <script language="JavaScript" src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('assetsBack/js/lib/toastr/toastr.min.js') }}"></script>
+    <!-- scripit init-->
+    <script src="{{ asset('assetsBack/js/lib/toastr/toastr.init.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            fillTable();
+        });
+
+        function fillTable() {
+            $.ajax({
+                url: '{{ (path('newsletters_getAll')) }}',
+                type: "POST",
+                async: true,
+                beforeSend: function () {
+                    $('#loader').show('slow');
+                },
+                success: function (data) {
+                    setTimeout(function () {
+                        $('#loader').hide('slow');
+                        setTimeout(function () {
+                            $.each(data, function (index, val) {
+                                var url = Routing.generate('newsletter_view', {'id': val.id});
+                                if (val.status === 1) {
+                                    $('<tr> <th scope="row">' + index + '</th><td>' + val.subject + '</td><td>' + val.recipient + '</td><td> SENT </td><td><div class="row"><a href="#" onclick="deleteNewsletter(this); return false;" id=' + val.id + '>Delete</a><a href=' + url + ' >View</a></div></td></tr>').appendTo('#newslettersTable').show('slow');
+                                } else {
+                                    $('<tr> <th scope="row">' + index + '</th><td>' + val.subject + '</td><td>' + val.recipient + '</td><td> NOT SENT</td><td><div class="row"><a class="mr-1" href="#" id=' + val.id + ' onclick="sendNewsletter(this); return false;">Send</a> <a href="#" onclick="deleteNewsletter(this); return false;" id=' + val.id + '>Delete</a><a href=' + url + ' >View</a></div></td></tr>').appendTo('#newslettersTable').show('slow');
+                                }
+                            })
+                        }, 720);
+                    }, 2600);
+                }
+                , error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        function deleteNewsletter(elem) {
+            var idNews = elem.id;
+            $.ajax({
+                url: '{{ path('newsletters_delete') }}',
+                type: "POST",
+                data: {
+                    'id': idNews
+                },
+                async: true,
+                success: function (data) {
+                    switch (data) {
+                        case 'Deleted':
+                            toastr.success('The newsletter chosen has been deleted', 'Top Right', {
+                                timeOut: 5000,
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": true,
+                                "progressBar": true,
+                                "positionClass": "toast-top-right",
+                                "preventDuplicates": true,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut",
+                                "tapToDismiss": false
+                            });
+                            $('#newslettersTable > tbody').find('tr').not('#loader').hide();
+                            fillTable('Article');
+                            break;
+                        default:
+                            toastr.error('Error Message : ' + data, 'Top Right', {
+                                "positionClass": "toast-top-right",
+                                timeOut: 5000,
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": true,
+                                "progressBar": true,
+                                "preventDuplicates": true,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut",
+                                "tapToDismiss": false
+                            });
+                            break;
+
+                    }
+
+
+                }
+                , error: function (data) {
+                    toastr.error('Error Message : Your request coulndt be parsed', 'Top Right', {
+                        "positionClass": "toast-top-right",
+                        timeOut: 5000,
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "preventDuplicates": true,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut",
+                        "tapToDismiss": false
+                    })
+                }
+            });
+        }
+
+        function cancelSearch() {
+            $('#searchNewsletter').val('');
+        }
+
+        function searchNewsletters() {
+            var words = $('#searchNewsletter').val();
+            //var visible = $(this).next('div.info').toggle().is(":visible");
+
+            $.ajax({
+                url: '{{ (path('newsletters_search')) }}',
+                type: "POST",
+                data: {
+                    "words": words
+                },
+                async: true,
+                beforeSend: function () {
+                    $('#newslettersTable > tbody').find('tr').not('#loader').hide();
+                    $('#loader').show('slow');
+                },
+                success: function (data) {
+                    setTimeout(function () {
+                        $('#loader').hide('slow');
+                        $('#newslettersTable > tbody').find('tr').not('#loader').hide();
+                        setTimeout(function () {
+                            $.each(data, function (index, val) {
+                                var url = Routing.generate('newsletter_view', {'id': val.id});
+                                if (val.status === 1) {
+                                    $('<tr> <th scope="row">' + index + '</th><td>' + val.subject + '</td><td>' + val.recipient + '</td><td> SENT </td><td><div class="row"><a href="#" onclick="deleteNewsletter(this); return false;" id=' + val.id + '>Delete</a><a href=' + url + ' >View</a></div></td></tr>').appendTo('#newslettersTable').show('slow');
+                                } else {
+                                    $('<tr> <th scope="row">' + index + '</th><td>' + val.subject + '</td><td>' + val.recipient + '</td><td> NOT SENT</td><td><div class="row"><a class="mr-1" href="#" id=' + val.id + ' onclick="sendNewsletter(this); return false;">Send</a> <a href="#" onclick="deleteNewsletter(this); return false;" id=' + val.id + '>Delete</a><a href=' + url + ' >View</a></div></td></tr>').appendTo('#newslettersTable').show('slow');
+                                }
+                            });
+                        }, 720);
+                    }, 2600);
+                }
+                , error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+        function sendNewsletter(elem) {
+            var id = elem.id;
+            $.ajax({
+                url: '{{ path('newsletters_send') }}',
+                type: "POST",
+                data: {
+                    'id': id
+                },
+                async: true,
+                success: function (data) {
+                    switch (data) {
+                        case 'Sent':
+                            toastr.success('The newsletter chosen has been sent', 'Top Right', {
+                                timeOut: 5000,
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": true,
+                                "progressBar": true,
+                                "positionClass": "toast-top-right",
+                                "preventDuplicates": true,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut",
+                                "tapToDismiss": false
+                            });
+                            $('#newslettersTable > tbody').find('tr').not('#loader').hide();
+                            fillTable('Article');
+                            break;
+                        default:
+                            toastr.error('Error Message : ' + data, 'Top Right', {
+                                "positionClass": "toast-top-right",
+                                timeOut: 5000,
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": true,
+                                "progressBar": true,
+                                "preventDuplicates": true,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut",
+                                "tapToDismiss": false
+                            });
+                            break;
+
+                    }
+
+
+                }
+                , error: function (data) {
+                    toastr.error('Error Message : Your request coulndt be parsed', 'Top Right', {
+                        "positionClass": "toast-top-right",
+                        timeOut: 5000,
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "preventDuplicates": true,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut",
+                        "tapToDismiss": false
+                    })
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+

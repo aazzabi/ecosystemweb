@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new AppBundle\AppBundle(),
+            new Vresh\TwilioBundle\VreshTwilioBundle(),
             new EcoBundle\EcoBundle(),
         ];
 

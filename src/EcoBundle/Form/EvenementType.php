@@ -18,7 +18,7 @@ class EvenementType extends AbstractType
     {
         $builder
             ->add('lieu',TextType::class,[
-                'required' =>false,
+                'required' =>true,
             ])
             ->add('date')
             ->add('evtCover', VichFileType::class, [
@@ -27,12 +27,13 @@ class EvenementType extends AbstractType
                 'download_link' => true
             ])
             ->add('categorie', EntityType::class, array(
+                'required' =>true,
                 'class'=>'EcoBundle\Entity\CategorieEvts',
                 'choice_label'=>'libelle',
                 'multiple'=>false
             ))
             ->add('titre',TextType::class,[
-                'required' =>false,
+                'required' =>true,
             ])
             ->add('description',TextType::class,[
                 'required' =>false,

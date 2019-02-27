@@ -72,8 +72,6 @@ class Evenement
      *
      * @ORM\Column(name="date", type="datetime")
      *
-     * @Assert\DateTime
-     *
      */
     private $date;
 

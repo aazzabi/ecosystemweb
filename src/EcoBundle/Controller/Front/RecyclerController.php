@@ -7,6 +7,7 @@
  */
 
 namespace EcoBundle\Controller\Front;
+
 use EcoBundle\Entity\CategorieMission;
 use EcoBundle\Entity\Group;
 use EcoBundle\Entity\Livreur;
@@ -28,7 +29,6 @@ use EcoBunde\Form\rechercheEventType;
  *
  * @Route("/front")
  */
-
 class RecyclerController extends Controller
 {
     /**
@@ -52,11 +52,11 @@ class RecyclerController extends Controller
             $evenementsCat = $em->getRepository('EcoBundle:Missions')->searchByCategorieEvt($search['categorie']);
             if ($search['lieu']) {
                 foreach ($evenementsCat as $event) {
-                    if  ($event->getLieu() == $search['lieu']) {
+                    if ($event->getLieu() == $search['lieu']) {
                         $evenements[] = $event;
                     }
                 }
-            }else {
+            } else {
                 $evenements = $evenementsCat;
             }
         }
@@ -69,10 +69,9 @@ class RecyclerController extends Controller
         return $this->render('@Eco/Front/Missions/index.html.twig', array(
             //'evenements' => $evenements,
             'evenements' => $evenements,
-            'categories'=> $categories,
+            'categories' => $categories,
         ));
     }
-
 
 
     /**
@@ -96,11 +95,11 @@ class RecyclerController extends Controller
             $evenementsCat = $em->getRepository('EcoBundle:Missions')->searchByCategorieEvt($search['categorie']);
             if ($search['lieu']) {
                 foreach ($evenementsCat as $event) {
-                    if  ($event->getLieu() == $search['lieu']) {
+                    if ($event->getLieu() == $search['lieu']) {
                         $evenements[] = $event;
                     }
                 }
-            }else {
+            } else {
                 $evenements = $evenementsCat;
             }
         }
@@ -113,9 +112,10 @@ class RecyclerController extends Controller
         return $this->render('@Eco/Front/Recyclage/index.html.twig', array(
             //'evenements' => $evenements,
             'evenements' => $evenements,
-            'categories'=> $categories,
+            'categories' => $categories,
         ));
     }
+
     /**
      * @Route("/maps", name="front_maps_index")
      * @Method("GET")
@@ -125,37 +125,11 @@ class RecyclerController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $search = [];
-        $evenements = array();
-        $search['categorie'] = $request->get('categorie', null);
-        $search['lieu'] = $request->get('lieu', null);
-        $search['date'] = $request->get('date', null);
-//        var_dump($search);die;
+        $markers = $em->getRepository('EcoBundle:PtCollecte')->findAll();
 
 
-        if ($search['categorie']) {
-            $evenementsCat = $em->getRepository('EcoBundle:Missions')->searchByCategorieEvt($search['categorie']);
-            if ($search['lieu']) {
-                foreach ($evenementsCat as $event) {
-                    if  ($event->getLieu() == $search['lieu']) {
-                        $evenements[] = $event;
-                    }
-                }
-            }else {
-                $evenements = $evenementsCat;
-            }
-        }
-
-//       $evenements =  $em->getRepository('EcoBundle:Missions')->search($search);
-
-//      var_dump($evenements);die;
-        $evenements = $em->getRepository('EcoBundle:Missions')->findAll();
-        $categories = $em->getRepository('EcoBundle:CategorieMission')->findAll();
         return $this->render('@Eco/Front/Recyclage/maps.html.twig', array(
-            //'evenements' => $evenements,
-            'evenements' => $evenements,
-            'categories'=> $categories,
-        ));
+            'markers' => $markers));
     }
 
 
@@ -163,7 +137,7 @@ class RecyclerController extends Controller
      * @Route("/missions/categorie/{cat}", name="front_missions_recherche")
      * @Method("GET")
      */
-    public function RecherchTestAction(Request $request,$cat)
+    public function RecherchTestAction(Request $request, $cat)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -172,10 +146,11 @@ class RecyclerController extends Controller
         $evenement = $em->getRepository('EcoBundle:Missions')->findByCategorie($cat);
 
         return $this->render('@Eco/Front/Missions/index.html.twig', array(
-            "evenements"=>$evenement,'categories'=> $categories,
+            "evenements" => $evenement, 'categories' => $categories,
 
         ));
     }
+
     /**
      * @Route("/missions/{id}", name="front_missions_show")
      * @Method("GET")
@@ -183,7 +158,7 @@ class RecyclerController extends Controller
     public function showAction(Missions $evenement)
     {
 
-        $evenement->setNbVues($evenement->getNbVues()+1);
+        $evenement->setNbVues($evenement->getNbVues() + 1);
         $em = $this->getDoctrine()->getManager();
         $em->flush();
         $deleteForm = $this->createDeleteForm($evenement);
@@ -195,6 +170,7 @@ class RecyclerController extends Controller
 
 
     }
+
     /**
      * Deletes a missions entity.
      *
@@ -225,7 +201,7 @@ class RecyclerController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $evenement = new Missions();
-        $form=$this->createForm(FilterMType::class ,$evenement);
+        $form = $this->createForm(FilterMType::class, $evenement);
         $form->handleRequest($request);
 
 
@@ -235,9 +211,9 @@ class RecyclerController extends Controller
             $evenements = $em->getRepository(Missions::class)->findAll();
         }
 
-        return $this->render('filterMission.html.twig',array(
-            'formSearch'=>$form->createView(),
-            "evenements"=>$evenements
+        return $this->render('filterMission.html.twig', array(
+            'formSearch' => $form->createView(),
+            "evenements" => $evenements
         ));
     }
 
@@ -254,8 +230,7 @@ class RecyclerController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('front_missions_delete', array('id' => $evenement->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-            ;
+            ->getForm();
     }
 
 
@@ -264,20 +239,19 @@ class RecyclerController extends Controller
      * @Method("GET")
      */
 
-   public function rechercherLieuAction(Request $request)
+    public function rechercherLieuAction(Request $request)
     {
-        $event= new Missions();
-        $form= $this->createForm(rechercheEventType::class ,$event);
+        $event = new Missions();
+        $form = $this->createForm(rechercheEventType::class, $event);
         $form->handleRequest($request);
-        if($form->isSubmitted()){
-            $events= $this->getDoctrine()->getRepository(Missions::class)
-                ->findBy(array('lieu'=>$event->getLieu()));
-        }
-        else{
-            $events= $this->getDoctrine()->getRepository(Missions::class)
+        if ($form->isSubmitted()) {
+            $events = $this->getDoctrine()->getRepository(Missions::class)
+                ->findBy(array('lieu' => $event->getLieu()));
+        } else {
+            $events = $this->getDoctrine()->getRepository(Missions::class)
                 ->findAll();
         }
-        return $this->render('rechercheMission.html.twig',array("form"=>$form->createView(),'events'=>$events));
+        return $this->render('rechercheMission.html.twig', array("form" => $form->createView(), 'events' => $events));
 
     }
 
@@ -289,35 +263,31 @@ class RecyclerController extends Controller
     {
         $request = $this->container->get('request');
 
-        if($request->isXmlHttpRequest())
-        {
+        if ($request->isXmlHttpRequest()) {
             $motcle = '';
             $motcle = $request->request->get('motcle');
 
             $em = $this->container->get('doctrine')->getEntityManager();
 
-            if($motcle != '')
-            {
+            if ($motcle != '') {
                 $qb = $em->createQueryBuilder();
 
                 $qb->select('a')
                     ->from('EcoBundle:Missions', 'a')
                     ->where("a.lieu LIKE :motcle ")
                     ->orderBy('a.lieu', 'ASC')
-                    ->setParameter('motcle', '%'.$motcle.'%');
+                    ->setParameter('motcle', '%' . $motcle . '%');
 
                 $query = $qb->getQuery();
                 $events = $query->getResult();
-            }
-            else {
+            } else {
                 $events = $em->getRepository('EcoBundle:Missions')->findAll();
             }
 
             return $this->container->get('templating')->renderResponse('EcoBundle:Missions:index.html.twig', array(
                 'events' => $events
             ));
-        }
-        else {
+        } else {
             return $this->listerAction();
         }
     }
@@ -326,22 +296,22 @@ class RecyclerController extends Controller
      * @Route("/missionsP/{id}", name="front_missions_participer")
      * @Method("GET")
      */
-   public function participerAction($id)
-   {
-       $em = $this->getDoctrine()->getManager();
-       $evenement =  $em->getRepository('EcoBundle:Missions')->find($id);
-       $user = $this->get('security.token_storage')->getToken()->getUser();
+    public function participerAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $evenement = $em->getRepository('EcoBundle:Missions')->find($id);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
-       $evenement->addProfile($user);
-       $user->addEventsParticipes($evenement);
+        $evenement->addProfile($user);
+        $user->addEventsParticipes($evenement);
 
-       $em->persist($evenement);
-       $em->persist($user);
-       $em->flush();
-       return $this->redirectToRoute('front_missions_index');
-       $this->addFlash("success", "Vous avez participer avec succés  ! ");
+        $em->persist($evenement);
+        $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('front_missions_index');
+        $this->addFlash("success", "Vous avez participer avec succés  ! ");
 
-   }
+    }
 
     /**
      * @Route("/missionsNP/{id}", name="front_missions_noparticiper")
@@ -351,20 +321,19 @@ class RecyclerController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $evenement =  $em->getRepository('EcoBundle:Missions')->find($id);
+        $evenement = $em->getRepository('EcoBundle:Missions')->find($id);
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $evenement->removeProfile($user);
         $user->removeEventsParticipes($evenement);
 
-       // $em->persist($evenement);
-     //   $em->persist($user);
+        // $em->persist($evenement);
+        //   $em->persist($user);
         $em->flush();
         return $this->redirectToRoute('front_missions_index');
         $this->addFlash("warning", "Vous avez annuler votre participation ! ");
 
     }
-
 
 
 }

@@ -8,6 +8,7 @@
 
 namespace EcoBundle\Controller\DashboardAdmin;
 
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 use EcoBundle\Entity\CategorieMission;
 use EcoBundle\Entity\Missions;
 use EcoBundle\Entity\Group;
@@ -35,12 +36,13 @@ class DARecyclerController extends Controller
      */
     public function indexAction()
     {
+
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
         $em = $this->getDoctrine()->getManager();
 
-         $categoriesMissions = $em->getRepository('EcoBundle:CategorieMission')->findAll();
+        $categoriesMissions = $em->getRepository('EcoBundle:CategorieMission')->findAll();
 
         return $this->render('@Eco/DashboardAdmin/Missions/index.html.twig', array(
 
@@ -60,13 +62,11 @@ class DARecyclerController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
-         $categorieMissions = new CategorieMission();
+        $categorieMissions = new CategorieMission();
 
-         $formCateg = $this->createForm('EcoBundle\Form\CategorieMissionType', $categorieMissions);
+        $formCateg = $this->createForm('EcoBundle\Form\CategorieMissionType', $categorieMissions);
 
-         $formCateg->handleRequest($request);
-
-
+        $formCateg->handleRequest($request);
 
 
         if ($formCateg->isSubmitted() && $formCateg->isValid()) {
@@ -78,7 +78,7 @@ class DARecyclerController extends Controller
 
         return $this->render('@Eco/DashboardAdmin/Missions/new.html.twig', array(
             'CategorieMission' => $categorieMissions,
-           // 'formEvt' => $formEvt->createView(),
+            // 'formEvt' => $formEvt->createView(),
             'formCateg' => $formCateg->createView(),
         ));
     }
@@ -127,7 +127,6 @@ class DARecyclerController extends Controller
     }
 
 
-
     /**
      * @Route("/missions", name="da_missions_index")
      * @Method("GET")
@@ -135,17 +134,83 @@ class DARecyclerController extends Controller
 
     public function indexEventAction()
     {
-          if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-              throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
-          }
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+        }
         $em = $this->getDoctrine()->getManager();
         $recys = $em->getRepository('EcoBundle:PtCollecte')->findAll();
 
-         $evenement = $em->getRepository('EcoBundle:Missions')->findAll();
+        $evenement = $em->getRepository('EcoBundle:Missions')->findAll();
         return $this->render('@Eco/DashboardAdmin/Missions/indexEvent.html.twig', array(
             'recys' => $recys,
-             'evenement' => $evenement,
+            'evenement' => $evenement,
         ));
+
+    }
+
+    /**
+     * @Route("/missionsStats", name="da_missionsStats_index")
+     * @Method("GET")
+     */
+
+    public function indexStatsAction()
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $recys = $em->getRepository('EcoBundle:PtCollecte')->findAll();
+        $evenement = $em->getRepository('EcoBundle:Missions')->findAll();
+        $resps = $em->getRepository('EcoBundle:User')->findAll();
+        $val = 0;
+        $arr = [['Responsable', 'Nombre de de Pts collect'],];
+        foreach ($resps as $resp) {
+            foreach ($recys as $rec) {
+                if ($resp->getUsername() == $rec->getResponsable())
+                    $val += 1;
+            }
+            array_push($arr, [$resp->getUsername(), $val]);
+            $val = 0;
+        }
+        $collectChart = new PieChart();
+        $collectChart->getData()->setArrayToDataTable(
+            $arr
+        );
+        $collectChart->getOptions()->setTitle('My Daily dsd');
+        $collectChart->getOptions()->setHeight(500);
+        $collectChart->getOptions()->setWidth(900);
+        $collectChart->getOptions()->getTitleTextStyle()->setBold(true);
+        $collectChart->getOptions()->getTitleTextStyle()->setColor('#009900');
+        $collectChart->getOptions()->getTitleTextStyle()->setItalic(true);
+        $collectChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+        $collectChart->getOptions()->getTitleTextStyle()->setFontSize(20);
+
+        $missionChart = new PieChart();
+        $missionChart->getData()->setArrayToDataTable(
+            [['Task', 'Hours per Day'],
+                ['Work', 11],
+                ['Eat', 2],
+                ['Commute', 2],
+                ['Watch TV', 2],
+                ['Sleep', 7]
+            ]
+        );
+        $missionChart->getOptions()->setTitle('My Daily Activities');
+        $missionChart->getOptions()->setHeight(500);
+        $missionChart->getOptions()->setWidth(900);
+        $missionChart->getOptions()->getTitleTextStyle()->setBold(true);
+        $missionChart->getOptions()->getTitleTextStyle()->setColor('#009900');
+        $collectChart->getOptions()->getTitleTextStyle()->setItalic(true);
+        $missionChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+        $missionChart->getOptions()->getTitleTextStyle()->setFontSize(20);
+
+        return $this->render('@Eco/DashboardAdmin/Missions/indexEvent.html.twig', array(
+            'recys' => $recys,
+            'evenement' => $evenement,
+            'collectChart' => $collectChart,
+            'missionChart' => $missionChart
+        ));
+
     }
 
 
@@ -156,12 +221,12 @@ class DARecyclerController extends Controller
      */
     public function deleteEventAction($id)
     {
-        $m=$this->getDoctrine()->getManager();
+        $m = $this->getDoctrine()->getManager();
         $evenement = $m->getRepository(Missions::class)->find($id);
         $m->remove($evenement);
         $m->flush();
 
-        return$this->redirectToRoute('da_missions_index');
+        return $this->redirectToRoute('da_missions_index');
     }
 
 

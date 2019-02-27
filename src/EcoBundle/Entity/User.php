@@ -212,6 +212,29 @@ class User extends BaseUser
      */
     private $eventsParticipes;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Missions", mappedBy="participants")
+     */
+    private $missionsParticipes;
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMissionsParticipes()
+    {
+        return $this->missionsParticipes;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\Collection $missionsParticipes
+     */
+    public function setMissionsParticipes($missionsParticipes)
+    {
+        $this->missionsParticipes = $missionsParticipes;
+    }
+
     public function __construct()
     {
         parent::__construct();
@@ -219,7 +242,9 @@ class User extends BaseUser
         $this->enabled = true;
         $this->roles = array();
         $this->eventsCrees = new ArrayCollection();
+        $this->missionsCrees = new ArrayCollection();
         $this->eventsParticipes = new ArrayCollection();
+        $this->missionsParticipes = new ArrayCollection();
         $this->myAnnonces = new ArrayCollection();
     }
 
@@ -558,5 +583,26 @@ class User extends BaseUser
     public function removeMissionsCrees(Missions $m)
     {
         $this->missionsCrees->removeElement($m);
+    }
+    /**
+     *
+     * @param \EcoBundle\Entity\Missions $e
+     *
+     * @return User
+     */
+    public function addMissionsParticipes(Missions $e)
+    {
+        $this->missionsParticipes[] = $e;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param \EcoBundle\Entity\Missions $missionsParticipes
+     */
+    public function removeMissionsParticipes(Missions $e)
+    {
+        $this->missionsParticipes->removeElement($e);
     }
 }

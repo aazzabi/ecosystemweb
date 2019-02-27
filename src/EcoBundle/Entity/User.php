@@ -181,11 +181,6 @@ class User extends BaseUser
      * })
      */
     private $group;
-    /**
-     *
-     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="User")
-     */
-    private $myAnnonces;
 
     /**
      *

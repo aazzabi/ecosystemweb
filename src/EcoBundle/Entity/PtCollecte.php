@@ -29,11 +29,50 @@ class PtCollecte
     private $libelle;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="localisation", type="string", length=255)
+     * @ORM\Column(name="lat", type="float")
      */
-    private $localisation;
+    private $lat;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="lng", type="float")
+     */
+    private $lng;
+
+    /**
+     * @return float
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * @param float $lat
+     */
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLng()
+    {
+        return $this->lng;
+    }
+
+    /**
+     * @param float $lng
+     */
+    public function setLng($lng)
+    {
+        $this->lng = $lng;
+    }
 
     /**
      * @var string
@@ -84,29 +123,6 @@ class PtCollecte
         return $this->libelle;
     }
 
-    /**
-     * Set localisation
-     *
-     * @param string $localisation
-     *
-     * @return PtCollecte
-     */
-    public function setLocalisation($localisation)
-    {
-        $this->localisation = $localisation;
-
-        return $this;
-    }
-
-    /**
-     * Get localisation
-     *
-     * @return string
-     */
-    public function getLocalisation()
-    {
-        return $this->localisation;
-    }
 
     /**
      * Set type

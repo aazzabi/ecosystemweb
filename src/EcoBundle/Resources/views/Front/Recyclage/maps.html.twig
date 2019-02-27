@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+    {% block stylesheets %}
+        <link href="{{ asset ('assets/css/Recyclage.css') }}" rel="stylesheet" type="text/css">
+
+    {% endblock %}
+
+    {% block body %}
+        <style>
+            #map {
+                width: 50%;
+                height: 400px;
+                background-color: grey;
+            }
+        </style>
+
+        <div id="page" class="container-fluid m-t-10">
+
+            <div class="row">
+                <div id="map">
+
+                </div>
+            </div>
+
+        </div>
+        {% for marker in markers %}
+            <div class="modal" tabindex="-1" role="dialog" id="modalMap{{ marker.id }}">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ marker.responsable }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{ marker.libelle }}.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        function initMap() {
+
+            var tn = {lat: 34.601246, lng: 9.924554};
+            // The map, centered at Uluru
+            var map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 7, center: tn});
+
+            {% for marker in markers %}
+            var marker = new google.maps.Marker({
+                position: {lat: {{ marker.lat }}, lng: {{ marker.lng }} },
+                map: map,
+                animation: google.maps.Animation.DROP,
+
+            });
+            marker.addListener('click', function () {
+                $('#modalMap' +{{ marker.id }}).modal('show');
+            });
+            {% endfor %}
+
+        }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3KhyS-EYfLay-lwqDUE4XEXvIiSkF5Zg&callback=initMap">
+{% endblock %}

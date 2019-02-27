@@ -1,0 +1,109 @@
+{% extends './Default/dashboard.html.twig' %}
+{% block title %}
+    Vos missions et challenges
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            var users = $('#categorieTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><b>Vos missions et challenges : </b></h1>
+                </div>
+                <div class="col-md-6 text-right">
+                    <br>
+                    <a href="{{ path('du_missions_new') }}" class="btn btn-success">
+                        <i class="icon-plus">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            &nbsp;Ajouter une mission
+                        </i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="categorieTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Categorie</th>
+                    <th>Lieu</th>
+                    <th>Date</th>
+                    <th>Date Limite</th>
+                    <th>Objectif</th>
+                    <th>Atteint</th>
+                    <th>Cree Par</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <thead>
+                <tbody>
+                {% for evenement in evenements %}
+                    <tr>
+
+                        <td>{{ evenement.titre }}</td>
+                        <td>{{ evenement.description }}</td>
+                        <td>{{ evenement.categorie}}</td>
+                        <td>{{ evenement.lieu }}</td>
+                        <td>{{ evenement.date |date }}</td>
+                        <td>{{ evenement.dateLimite |date }}</td>
+                        <td>{{ evenement.objectif}}</td>
+                        <td>{{ evenement.atteint}}</td>
+                        <td>{{ evenement.createdBy }}</td>
+
+                        <td>
+                            <div class="btn-group btn-group-sm btn-group-horizontal">
+                                <a class="btn btn-secondary"
+                                   href="{{ path('du_evenement_edit', { 'id': evenement.id }) }}"
+                                   data-toggle="tooltip" title="Editer la mission">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </a>
+                            </div>
+
+                            <div class="btn-group btn-group-sm btn-group-horizontal">
+                                <a href="{{ path('du_missions_delete', { 'id': evenement.id }) }}" class="btn btn-danger"
+                                   data-toggle="tooltip" title="Supprimer la mission">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </div>
+
+                            <div class="btn-group btn-group-sm btn-group-horizontal">
+                                <a href="{{ path('du_missions_show', { 'id': evenement.id }) }}" class="btn btn-default"
+                                   data-toggle="tooltip" title="Voir les détails de la mission">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+
+
+{% endblock %}

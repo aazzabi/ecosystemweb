@@ -1,0 +1,57 @@
+
+{% extends './Default/dashboard.html.twig' %}
+
+{% block title %}
+    Modification d'une categorie
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-md-6">
+            <h1><b>  Modification d'une categorie</b></h1>
+        </div>
+        <div class="col-md-6 text-right">
+            <br>
+            <button type="submit" class="btn btn-success" value="Create">
+                <i class="fa fa-check" aria-hidden="true"></i>Confirmer
+            </button>
+            <a href="{{ path('da_missions_index') }}" class="btn btn-secondary">
+                <i class="fa fa-undo" aria-hidden="true"></i>Retour à la liste</a>
+            <button type="button" class="btn btn-danger btn_lg" data-toggle="modal" data-target="#myModal">
+                <i class="fa fa-times" aria-hidden="true"></i> Supprimer
+            </button>
+            <br>
+        </div>
+    </div>
+
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Supprimer
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    Voulez-vous vraiement supprimer cette categorie?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-secondary" data-dismiss="modal"> Annuler
+                    </button>
+
+                    <a href="{{ path('da_missions_delete', { 'id':  CategorieMission.id }) }}">
+                        <input class="btn btn-danger btn_lg" type="submit" value="Supprimer">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

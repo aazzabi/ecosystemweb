@@ -1,0 +1,174 @@
+{% extends 'base.html.twig' %}
+
+<!-- Section Area - Content Central -->
+<section class="content-info">
+
+    <div class="container paddings-mini">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <!-- Content Text-->
+                <div class="panel-box">
+                    <div class="titles">
+                        <h4>Recent News</h4>
+                    </div>
+                    <!-- Post Item -->
+                    {% for article in articles %}
+                        <div class="post-item">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="img-hover">
+                                        <img src="{{ article.articleimage }}" alt="" class="img-responsive">
+                                        <div class="overlay"><a
+                                                    href="{{ path('articles_articlePage',{'year': article.datepublication | date('Y'),'month': article.datepublication | date('m'),'day': article.datepublication | date('d') ,'id': article.id }) }}">+</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h5>
+                                        <a href="{{ path('articles_articlePage',{'year': article.datepublication | date('Y'),'month': article.datepublication | date('m'),'day': article.datepublication | date('d') ,'id': article.id }) }}">{{ article.titre }}</a>
+                                    </h5>
+                                    <span class="data-info">January 3, 2014  / <i class="fa fa-comments"></i><a
+                                                href="#">0</a></span>
+                                    <span class="data-info">{{ article.datepublication | date('Y-m-d') }} / <i
+                                                class="fa fa-comments"></i><a
+                                                href="#">0</a></span>
+                                    <p> {{ article.contenu|length > 5 ?(article.contenu | slice(0, 5) ~ '...' )| striptags : article.contenu | striptags }}
+                                        .<a href="{{ path('articles_articlePage',{'year': article.datepublication | date('Y'),'month': article.datepublication | date('m'),'day': article.datepublication | date('d') ,'id': article.id }) }}">Read
+                                            More [+]</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <!-- End Post Item -->
+                </div>
+                <!-- End Content Text-->
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <h2>If you can't view this email ,please click this{% if catg is empty %} <a
+                href="{{ path('subscribers_viewNewsWeb', {'catg' : 'General', 'number': number }) }}">link</a>
+        {% else %}
+            <a
+                    href="{{ path('subscribers_viewNewsWeb', {'catg' : 'General', 'number': number }) }}">link</a>
+            {% endif %}</h2>
+    </div>
+    <div class="row text-center">
+        <h2>If you'd liek to unsubscribe from our mailing list, please click this button
+            </button>
+        </h2>
+    </div>
+</section>
+
+<!-- footer Down-->
+<div class="footer-down">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p>&copy; 2018 SportsCup . All Rights Reserved</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer Down-->
+</div>
+<!-- End layout-->
+
+<!-- ======================= JQuery libs =========================== -->
+<!-- jQuery local-->
+<script type="text/javascript" src="{{ asset('assets/js/jquery.js') }}"></script>
+<!-- popper.js-->
+<script type="text/javascript" src="{{ asset('assets/js/popper.min.js') }}"></script>
+<!-- bootstrap.min.js-->
+<script type="text/javascript" src="{{ asset('assets/plugins/bootstrap/js/bootstrap.js') }}"></script>
+<!-- required-scripts.js-->
+<script type="text/javascript" src="{{ asset('assets/js/scripts.js') }}"></script>
+<!-- theme-main.js-->
+<script type="text/javascript" src="{{ asset('assets/js/scripts.js') }}"></script>
+
+<!-- ======================= End JQuery libs =========================== -->
+<script src="{{ asset('assetsBack/js/lib/toastr/toastr.min.js') }}"></script>
+<!-- scripit init-->
+<script src="{{ asset('assetsBack/js/lib/toastr/toastr.init.js') }}"></script>
+<script>
+    function unsub(elem) {
+        var email = elem.id;
+        $.ajax({
+            url: '{{ (path('subscribers_unsub')) }}',
+            type: "POST",
+            data: {
+                'email': email
+            },
+            async: true,
+            success: function (data) {
+                switch (data) {
+                    case 'Unsubed':
+                        toastr.success('You have successfully unsubbed from our mailing list', 'Top Right', {
+                            timeOut: 5000,
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": true,
+                            "progressBar": true,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": true,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut",
+                            "tapToDismiss": false
+                        });
+                        break;
+                    default:
+                        toastr.error('Error Message : ' + data, 'Top Right', {
+                            "positionClass": "toast-top-right",
+                            timeOut: 5000,
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": true,
+                            "progressBar": true,
+                            "preventDuplicates": true,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut",
+                            "tapToDismiss": false
+                        });
+                        break;
+
+                }
+            }
+            , error: function (data) {
+                toastr.error('Error Message : Your request coulndt be parsed', 'Top Right', {
+                    "positionClass": "toast-top-right",
+                    timeOut: 5000,
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "preventDuplicates": true,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    "tapToDismiss": false
+                })
+            }
+        });
+
+    }
+</script>
+</body>
+</html>

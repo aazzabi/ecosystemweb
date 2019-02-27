@@ -1,0 +1,197 @@
+{% extends './Default/dashboard.html.twig' %}
+{% block title %}
+    Liste des Missions et Points de Collectes
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery.min.js') }}"...></script>
+
+    <script>
+        $(document).ready(function () {
+            var users = $('#eventTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+
+          /*  $("#b5").click(
+                function()
+                { $('.trhideclass1').toggle();}
+            );
+
+            var rows = $('table.table table-striped table-bordered tr');
+
+            $('#bouton').click(function() {
+                var event = rows.filter('.event').toggle();
+               // rows.not( black ).hide();
+            });*/
+        });
+    </script>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><b>Liste des Missions</b></h1>
+                </div>
+
+                <div class="col-md-6 text-right">
+                    <br>
+                    <a href="{{ path('da_categoriem_index') }}" class="btn btn-default-focus">
+                        <i class="icon-plus">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            &nbsp;Voir les catégories
+                        </i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-borderless">
+                <ul class="nav nav-tabs nav-tabs-simple hidden-sm-down" role="tablist"
+                    data-init-reponsive-tabs="dropdownfx">
+                    <li class="nav-item">
+                        <a class="active" data-toggle="tab" role="tab" data-target="#societe" href="#"
+                           aria-expanded="true">Collectes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" role="tab" data-target="#association" class=""
+                           aria-expanded="false">Missions</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="societe" aria-expanded="true">
+                        <table id="societesTab" class="table table-striped table-bordered"
+                               style="width: 100% !important;">
+                            <thead>
+                            <tr>
+                                <th>Libelle</th>
+                                <th>type</th>
+                                <th>responsable</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for collecte in recys %}
+                                <tr>
+
+                                    <td>{{ collecte.libelle }}</td>
+                                    <td>{{ collecte.type }}</td>
+                                    <td>{{ collecte.responsable.nom }}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm btn-group-horizontal">
+                                            <a class="btn btn-secondary"
+                                               href="{{ path('da_groups_show', { 'id': collecte.id }) }}"
+                                               data-toggle="tooltip" title="Afficher le profile">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="btn btn-secondary"
+                                               href="{{ path('da_groups_edit', { 'id': collecte.id }) }}"
+                                               data-toggle="tooltip" title="Editer le profile">
+                                                <i class="fa fa-pencil-square-o"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div id="collectChart"></div>
+
+                    </div>
+                    <div class="tab-pane" id="association" aria-expanded="false">
+                        <table id="associationsTab" class="table table-striped table-bordered"
+                               style="width: 100% !important;">
+                            <thead>
+                            <tr>
+                                <th>Objectif</th>
+                                <th> matscollectes</th>
+                                <th>dateLimite</th>
+                                <th>recompense</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for evenement in evenement %}
+                                <tr class="event">
+
+                                    <td>{{ evenement.titre }}</td>
+                                    <td>{{ evenement.description }}</td>
+                                    <td>{{ evenement.lieu }}</td>
+                                    <td>{{ evenement.date |date }}</td>
+                                    {#<td>{{ evenement.categorie.libelle  }}</td>#}
+                                    <td>{{ evenement.dateLimite |date }}</td>
+                                    <td>{{ evenement.objectif}}</td>
+                                    <td>{{ evenement.atteint}}</td>
+                                    <td>{{ evenement.createdBy }}</td>
+
+                                    <td>
+                                        <div class="btn-group btn-group-sm btn-group-horizontal">
+                                            <a class="btn btn-primary"
+
+                                               data-toggle="tooltip" title="Promouvoir">
+                                                <i class="fa fa-bullhorn" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+
+                                        {#<div class="btn-group btn-group-sm btn-group-horizontal">
+                                            <a class="btn btn-danger"
+
+                                               data-toggle="tooltip" title="supprimer" id="bouton">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            </a>
+
+                                        </div>#}
+                                        <div class="btn-group btn-group-sm btn-group-horizontal">
+                                            <a  class="btn btn-default"
+
+                                                data-toggle="tooltip" title="Archiver">
+
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-group btn-group-sm btn-group-horizontal">
+                                            <a href="{{ path('da_missions_delete', { 'id': evenement.id }) }}" class="btn btn-danger"
+                                               data-toggle="tooltip" title="Supprimer">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+
+                                    </td>
+                                    </a>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                            </tbody>
+                        </table>
+                        <div id="missionChart"></div>
+
+                    </div>
+
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        {{ gc_draw(collectChart, 'collectChart') }}
+                        {{ gc_draw(missionChart, 'missionChart') }}
+
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

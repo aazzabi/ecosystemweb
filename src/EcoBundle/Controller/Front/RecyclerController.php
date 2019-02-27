@@ -1,7 +1,6 @@
 <?php
 /**
  * Created by PhpStorm.
- *
  * Date: 19/02/2019
  * Time: 15:48
  */
@@ -24,7 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use EcoBundle\Entity\Missions;
 use EcoBunde\Form\rechercheEventType;
-
 /**
  *
  * @Route("/front")

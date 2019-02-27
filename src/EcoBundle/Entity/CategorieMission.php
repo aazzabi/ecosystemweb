@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CategorieMission
  *
- * @ORM\Table(name="categorie_evts")
+ * @ORM\Table(name="categorie_missions")
  * @ORM\Entity(repositoryClass="EcoBundle\Repository\CategorieMissionRepository")
  */
 class CategorieMission

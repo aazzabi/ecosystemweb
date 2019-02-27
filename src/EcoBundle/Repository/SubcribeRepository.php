@@ -1,6 +1,6 @@
 <?php
 
-namespace NewslettersBundle\Repository;
+namespace EcoBundle\Repository;
 
 /**
  * SubcribeRepository

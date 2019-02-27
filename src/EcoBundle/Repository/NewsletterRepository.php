@@ -1,6 +1,6 @@
 <?php
 
-namespace NewslettersBundle\Repository;
+namespace EcoBundle\Repository;
 
 /**
  * NewsletterRepository
@@ -12,7 +12,7 @@ class NewsletterRepository extends \Doctrine\ORM\EntityRepository
 {
     public function searchNewslettersBy($words)
     {
-        $query = $this->getEntityManager()->createQuery("SELECT a from NewslettersBundle:Newsletter a where a.subject LIKE :words or a.contenu LIKE :words ")
+        $query = $this->getEntityManager()->createQuery("SELECT a from EcoBundle:Newsletter a where a.subject LIKE :words or a.contenu LIKE :words ")
             ->setParameter('words', '%' . $words . '%')
             ->setParameter('words', '%' . $words . '%');
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace NewslettersBundle\Entity;
+namespace EcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Subcribe
  *
  * @ORM\Table(name="subcribe")
- * @ORM\Entity(repositoryClass="NewslettersBundle\Repository\SubcribeRepository")
+ * @ORM\Entity(repositoryClass="EcoBundle\Repository\SubcribeRepository")
  */
 class Subcribe
 {

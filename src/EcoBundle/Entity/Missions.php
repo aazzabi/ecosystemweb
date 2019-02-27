@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * Missions
  * @Vich\Uploadable
- * @ORM\Table(name="evenement")
+ * @ORM\Table(name="mission")
  * @ORM\Entity(repositoryClass="EcoBundle\Repository\MissionsRepository")
  */
 class Missions
@@ -106,9 +106,9 @@ class Missions
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="User", inversedBy="eventsParticipes")
-     * @ORM\JoinTable(name="evenement_user",
+     * @ORM\JoinTable(name="mission_user",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="evenement_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="mission_id", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")

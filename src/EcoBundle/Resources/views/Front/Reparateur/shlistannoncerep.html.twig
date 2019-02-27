@@ -8,12 +8,11 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="{{ asset ('assets/css/inputreps.css') }}" rel="stylesheet" type="text/css"/>
 
-    <script src="{{ asset ('assets/plugins/jquery/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
-    <script language="javascript">
 
 
 
-    </script>
+
+
     <div class="s003">
         <form>
             <div class="inner-form">
@@ -279,65 +278,69 @@
 
 
 {% endblock %}
+
 {% block javascripts %}
- <script>
-
-     $("#search0").keyup(function (){
-
-         $.ajax({
-             url : '{{ path('reparateur_copy') }}',
-             type : 'POST',
-             dataType: "json",
-             data: {
-                 type: $( "#selectsearch" ).val(),
-                 valeur: $( "#search0" ).val()
-             },
-             success :     function(reponse) {
-                 $( "#result" ).html( reponse );
-                 // alert($( "#selectsearch" ).val());
-             },
-
-             error : function(resultat, statut, erreur){
-
-             },
-
-             complete : function(resultat, statut){
-
-             }
-
-         });
-
-     });
+    <script src="{{ asset ('assets/plugins/jquery/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
+    <script language="javascript">
 
 
-     $('#categorie').on('change', function() {
+        $("#search0").keyup(function (){
+
+            $.ajax({
+                url : '{{ path('reparateur_copy') }}',
+                type : 'POST',
+                dataType: "json",
+                data: {
+                    type: $( "#selectsearch" ).val(),
+                    valeur: $( "#search0" ).val()
+                },
+                success :     function(reponse) {
+                    $( "#result" ).html( reponse );
+                    // alert($( "#selectsearch" ).val());
+                },
+
+                error : function(resultat, statut, erreur){
+
+                },
+
+                complete : function(resultat, statut){
+
+                }
+
+            });
+
+        });
+
+
+        $('#categorie').on('change', function() {
 
 
 
-         $.ajax({
-             url : '{{ path('reparateur_copy') }}',
-             type : 'POST',
-             dataType: "json",
-             data: {
-                 type: $( "#categorie" ).val(),
-             },
-             success :     function(reponse) {
-                 $( "#result" ).html( reponse );
+            $.ajax({
+                url : '{{ path('reparateur_copy') }}',
+                type : 'POST',
+                dataType: "json",
+                data: {
+                    type: $( "#categorie" ).val(),
+                },
+                success :     function(reponse) {
+                    $( "#result" ).html( reponse );
 
-             },
+                },
 
-             error : function(resultat, statut, erreur){
+                error : function(resultat, statut, erreur){
 
-             },
+                },
 
-             complete : function(resultat, statut){
+                complete : function(resultat, statut){
 
-             }
+                }
 
-         });
+            });
 
-      });
+        });
 
     </script>
+
 
 {% endblock %}

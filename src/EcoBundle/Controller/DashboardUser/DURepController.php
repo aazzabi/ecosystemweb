@@ -107,7 +107,7 @@ class DURepController extends Controller
     /**
      * Deletes a AnnonceRep entity.
      *
-     * @Route("/rep/{id}", name="du_rep_delete")
+     * @Route("/rep/delete/{id}", name="du_rep_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, AnnonceRep $annonceRep)
@@ -124,6 +124,26 @@ class DURepController extends Controller
             $em->remove($annonceRep);
             $em->flush();
         }
+
+        return $this->redirectToRoute('du_rep_index');
+    }
+
+    /**
+     * Deletes a AnnonceRep entity.
+     *
+     * @Route("/rep/delete2/{id}", name="du_rep_delete2")
+     * @Method("GET")
+     */
+    public function delete2Action(Request $request)
+    {
+
+        $announcerep = $this->getDoctrine()->getManager()->getRepository('EcoBundle:AnnonceRep')
+            ->find($request->get('id'));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($announcerep);
+            $em->flush();
+
 
         return $this->redirectToRoute('du_rep_index');
     }
@@ -162,7 +182,7 @@ class DURepController extends Controller
         $reparation = new Reparation();
         $reparation->setUtilisateur($announcerep->getUtilisateur());
         $reparation->setReparateur($announcerep->getReparateur());
-        $reparation->setCommentaire("  Numéro téléphone Client : ........."."  Numéro Réparateur : ............."." Prix : .........");
+        $reparation->setCommentaire("  Numéro téléphone Client : ".$announcerep->getUtilisateur()->getNumtel()."  Numéro Réparateur : ". $announcerep->getReparateur()->getNumeroFix()." Prix :".$announcerep->getLastprix());
         $this->getDoctrine()->getManager()->remove($announcerep);
 
         $this->getDoctrine()->getManager()->persist($reparation);
@@ -208,59 +228,75 @@ class DURepController extends Controller
         $reparation->setCommentaire("Fini merci de venir récupérer votre objet ");
 
         $this->getDoctrine()->getManager()->flush();
-
-        return $this->redirectToRoute('du_rep_index');
-
-
-    }
-
-    /**
-     *Ajout commentaire in  a Rep entity.
-     *
-     * @Route("/rep/comment/{id}", name="du_rep_comment")
-     * @Method("GET")
-     */
-    public function commentAction(Request $request)
-    {
-
         $reparation = $this->getDoctrine()->getManager()->getRepository('EcoBundle:Reparation')
             ->find($request->get('id'));
-
-        $reparation->setCommentaire($request->get('comment'));
-
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->redirectToRoute('du_rep_index');
-
-
-    }
-
-    /**
-     *Ajout commentaire in  a Rep entity.
-     *
-     * @Route("/sms/{id}", name="du_rep_sms")
-     * @Method("GET")
-     */
-    public function callAction(Request $request)
-    {
-        $reparation = $this->getDoctrine()->getManager()->getRepository('EcoBundle:Reparation')
-            ->find($request->get('id'));
-       $user=$reparation->getUtilisateur();
+        $user=$reparation->getUtilisateur();
         $reparateur=$reparation->getReparateur();
+        $numuser=$user->getNumtel();
+
         //returns an instance of Vresh\TwilioBundle\Service\TwilioWrapper
         $twilio = $this->get('twilio.api');
 
         $message = $twilio->account->messages->sendMessage(
             '+12015711871', // From a Twilio number in your account
-            '+21651775201', // Text any number
-            "Hello monkey!"
+            '+216'.$numuser, // Text any number
+            "Le réparateur ".$reparateur->getNom()."A réparer votre téléphone veuillez vous rendre dans son local dans les plus brief délais Merci EcoSystem est toujours la pour vous servir :)"
         );
 
+        return $this->redirectToRoute('du_rep_index');
 
 
-        return new Response($message->sid);
     }
 
+//    /**
+//     *Ajout commentaire in  a Rep entity.
+//     *
+//     * @Route("/rep/comment/{id}", name="du_rep_comment")
+//     * @Method("GET")
+//     */
+//    public function commentAction(Request $request)
+//    {
+//
+//        $reparation = $this->getDoctrine()->getManager()->getRepository('EcoBundle:Reparation')
+//            ->find($request->get('id'));
+//
+//        $reparation->setCommentaire($request->get('comment'));
+//
+//        $this->getDoctrine()->getManager()->flush();
+//
+//        return $this->redirectToRoute('du_rep_index');
+//
+//
+//    }
 
-
+//    /**
+//     *Ajout commentaire in  a Rep entity.
+//     *
+//     * @Route("/sms{id]", name="du_rep_sms")
+//     * @Method("GET")
+//     */
+//    public function callAction(Request $request)
+//    {
+//        $reparation = $this->getDoctrine()->getManager()->getRepository('EcoBundle:Reparation')
+//            ->find($request->get('id'));
+//       $user=$reparation->getUtilisateur();
+//        $reparateur=$reparation->getReparateur();
+//        $numuser=$user->getNumtel();
+//
+//        //returns an instance of Vresh\TwilioBundle\Service\TwilioWrapper
+//        $twilio = $this->get('twilio.api');
+//
+//        $message = $twilio->account->messages->sendMessage(
+//            '+12015711871', // From a Twilio number in your account
+//            '+216'.$numuser, // Text any number
+//            "Le réparateur ".$reparateur->getNom()."A réparer votre téléphone veuillez vous rendre a cet adresse" .$reparateur->getAdresse(). "dans les plus brief délais Merci EcoSystem est toujours la pour vous servir :)"
+//        );
+//
+//
+//
+//        return new Response($message->sid);
+//    }
+//
+//
+//
 }

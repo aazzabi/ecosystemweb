@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    {#<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">#}
     <style>
-        #reparationsTab.archived td{
+      #archived {
             background-color: rgba(255,165,0,0.37) !important;
         }
 
@@ -17,7 +17,7 @@
 {% block javascripts %}
     <script>
         $(document).ready(function () {
-            var tableP = $('#announcerep').DataTable({
+            var tableP = $('#announcerepTab').DataTable({
                 "paging": true,
                 "stateSave": true,
                 "language": {
@@ -41,7 +41,6 @@
 
 {% block body %}
 
-    {#Profiles liste et buttons#}
     <div class="row">
         <div class="col-md-12">
             <div class="row">
@@ -80,8 +79,8 @@
 
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="publications" aria-expanded="true">
-                        <table id="announcerep" class="table table-bordered" style="width: 100% !important;">
+                    <div class="tab-pane active" id="announcerep" aria-expanded="true">
+                        <table id="announcerepTab" class="table table-bordered" style="width: 100% !important;">
                             <thead>
                             <tr>
                                 <th>Id</th>
@@ -120,12 +119,9 @@
                                             <i class="fa fa-check"></i>
                                         </a>
                                         {% endif %}
-                                        <a class="btn btn-secondary" href="{{ path('du_rep_delete',{ 'id': value.id }) }}"
+                                        <a class="btn btn-secondary" href="{{ path('du_rep_delete2',{ 'id': value.id }) }}"
                                            data-toggle="tooltip" title="Supprimer"><i class="fa fa-trash"></i>
                                         </a>
-                                        {#{% if publication.etat != "archivé" %}#}
-                                            {#<a class="btn btn-success" href="{{ path('du_forum_publication_archive', { 'id': publication.id }) }}"> Archiver </a>#}
-                                        {#{% endif %}#}
                                     </div>
                                 </td>
                                 </tr>
@@ -152,11 +148,11 @@
                             <tbody>
 
                             {% for value in reparation %}
-                                {% if not value.statut == "En cours" %}
-                                <tr class="archived">
-                                    {% else %}
-                                        <tr>
-                                            {% endif %}
+                                {#{% if not value.statut == "En cours" %}#}
+                                <tr style="background-color:blue; ">
+                                    {#{% else %}#}
+                                        {#<tr>#}
+                                            {#{% endif %}#}
 
                                 <td>{{ value.id }}</td>
                                 <td>{{ value.utilisateur }}</td>
@@ -167,10 +163,7 @@
 
                                 <td>
                                     <div class="btn-group btn-group-sm btn-group-horizontal">
-                                        {#<a class="btn btn-secondary"  href="{{ path('du_rep_comment',{ 'id': value.id }) }}"#}
-                                           {#data-toggle="tooltip" title="Ajouter un commentaire">#}
-                                            {#<i class="fa fa-eye"></i>#}
-                                        {#</a>#}
+
                                         {% if not is_granted('ROLE_REPARATEUR')%}
                                             {% if value.statut=='En cours' %}
                                         <a class="btn btn-secondary" href="{{ path('du_rep_annuler',{ 'id': value.id }) }}"

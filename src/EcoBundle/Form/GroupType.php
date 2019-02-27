@@ -20,6 +20,7 @@ class GroupType extends AbstractType
                 'required' => false,
                 'label' => 'Nom :',
             ])
+            ->add('description')
             ->add('type', ChoiceType::class, [
                 'choices'  => [
                     'Association' => 'association',

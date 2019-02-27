@@ -190,7 +190,7 @@ class User extends BaseUser
      *
      * var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="createdBy")
+     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="createdBy", cascade={"remove"})
      *
      */
     private $eventsCrees;

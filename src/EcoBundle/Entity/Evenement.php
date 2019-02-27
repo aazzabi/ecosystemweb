@@ -2,9 +2,12 @@
 
 namespace EcoBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 /*use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;*/
+
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -87,7 +90,6 @@ class Evenement
     /**
      * @ORM\ManyToOne(targetEntity="CategorieEvts")
      * @ORM\JoinColumn(name="categorie",referencedColumnName="id",onDelete="CASCADE")
-
      */
     private $categorie;
 
@@ -98,14 +100,13 @@ class Evenement
      * @ORM\ManyToMany(targetEntity="User", inversedBy="eventsParticipes")
      * @ORM\JoinTable(name="evenement_user",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="evenement_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="evenement_id", referencedColumnName="id", onDelete="CASCADE")
      *   },
      *   inverseJoinColumns={
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      *   }
      * )
      */
-
     private $participants;
 
 
@@ -130,10 +131,8 @@ class Evenement
      */
     private $coverUpdatedAt;
 
-    /**
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function __constructParticipants()
+
+    public function __construct()
     {
         $this->participants = new ArrayCollection();
     }
@@ -146,9 +145,8 @@ class Evenement
     /**
      * Add profile
      *
-     * @param \AppBundle\Entity\User $p
+     * @param \EcoBundle\Entity\User $p
      *
-     * @return Competence
      */
     public function addPartcipants(User $p)
     {
@@ -160,7 +158,7 @@ class Evenement
     /**
      * Remove profile
      *
-     * @param \AppBundle\Entity\User $p
+     * @param \EcoBundle\Entity\User $p
      */
     public function removeParticipants(User $p)
     {
@@ -169,11 +167,8 @@ class Evenement
 
 
     /**
-     * @return User
+     * @return int
      */
-
-
-
     public function getId()
     {
         return $this->id;

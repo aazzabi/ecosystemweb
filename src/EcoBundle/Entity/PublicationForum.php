@@ -87,10 +87,18 @@ class PublicationForum
      */
     private $commentaires;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nbrVues", type="integer")
+     */
+    private $nbrVues;
+
     public function __construct()
     {
         $this->publicationCreatedAt = new \DateTime('now');
         $this->etat= "publié";
+        $this->nbrVues= 0;
         $this->commentaires = new ArrayCollection();
     }
 
@@ -266,6 +274,22 @@ class PublicationForum
     function __toString()
     {
         return $this->getTitre();
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbrVues()
+    {
+        return $this->nbrVues;
+    }
+
+    /**
+     * @param int $nbrVues
+     */
+    public function setNbrVues($nbrVues)
+    {
+        $this->nbrVues = $nbrVues;
     }
 }
 

@@ -187,7 +187,6 @@
                     <a href="{{ path('da_signalisation_index') }}"><span class="title">Signalisation</span></a>
                     <span class=" {% if path('da_signalisation_index') == currentPath %}bg-success{% endif %}  icon-thumbnail">Sign</span>
                 </li>
-                {% if  is_granted('ROLE_LIVREUR') %}
                     <li>
                         <a href="{{ path('da_show_commande') }}"><span class="title" >Commandes</span></a>
                         <span class="{% if path('da_show_commande') == currentPath %}bg-success{% endif %} icon-thumbnail">Cmd</span>
@@ -196,7 +195,6 @@
                         <a href="{{ path('da_show_livraison') }}"><span class="title">Livraisons</span></a>
                         <span class=" {% if path('da_show_livraison') == currentPath %}bg-success{% endif %} icon-thumbnail">Lvr</span>
                     </li>
-                {% endif %}
             {% endif %}
         </ul>
         <div class="clearfix"></div>

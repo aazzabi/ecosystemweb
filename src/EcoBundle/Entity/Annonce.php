@@ -375,6 +375,9 @@ class Annonce
     public function setAnnoncephoto($annoncephoto)
     {
         $this->annoncephoto = $annoncephoto;
+        if ($annoncephoto instanceof UploadedFile) {
+            $this->setPhotoUpdatedAt(new \DateTime());
+        }
     }
 
     /**

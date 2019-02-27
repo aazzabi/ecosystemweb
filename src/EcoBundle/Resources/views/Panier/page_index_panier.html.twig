@@ -28,7 +28,16 @@
                     <tbody>
                     {% for value in liste %}
                         <tr>
-                            <td> <img src="C:\wamp\www\ecosystemweb\web\assets\img\{{ value.photo }}"></td>
+                            <td style="width: 60px; padding:0px; text-align: center">
+                                {% if value.photo != '' %}
+                                    <img alt="User Pic" style="width:150px;"
+                                         src="{{ asset('uploads/Annonce/photo/' ~ value.photo) }}"
+                                         class="img-circle img-responsive">
+                                {% else %}
+                                    <img alt="annonce_Pic" style="width:50px;" src="{{ asset('assets/img/NA.png') }}"
+                                         id="profile-image1" class="img-circle img-responsive">
+                                {% endif %}
+                            </td>
                             <td>{{ value.titre }}</td>
                             <td>{{ value.description }}</td>
                             <td>{{ value.region }}</td>

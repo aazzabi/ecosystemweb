@@ -83,6 +83,7 @@
     <div style="padding: 20px 50px">
         <div>
             <div class="row">
+                {% if app.user %}
                 <div class="col-md-12 text-right">
                     <a href="{{ path('du_annonce_new') }}" class="btn btn-success">
                         <i class="icon-plus">
@@ -90,6 +91,40 @@
                             &nbsp;Ajouter une Annonce
                         </i>
                     </a>
+                </div>
+                {% else %}
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                            <i class="icon-plus">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                &nbsp;Ajouter une Annonce
+                            </i>
+                        </button>
+                    </div>
+                {% endif %}
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i class="fa fa-exclamation fa-5x" style="color: red;margin: 0 auto;"></i>
+                                <h5 class="modal-title" id="exampleModalLabel">Vous devez se connecter d'abord</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <a href="{{ path('inscription') }}">
+                                    <button class="btn btn-default">S'inscrire</button>
+                                </a>
+                                <a href="{{ path('fos_user_security_login') }}">
+                                    <button type="button" class="btn btn-primary">Se connecter</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br>
             </div>
@@ -185,6 +220,7 @@
                                     </div>
                                 </figcaption>
                                 <div class=" btn-group bottom-wrap">
+                                    {% if app.user %}
                                     <button type="submit" value="{{ a.id }}"
                                             class="jaime btn btn-tag">
                                         <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
@@ -235,6 +271,7 @@
                                     <a href="#" class="btn btn-tag btn-tag-rounded float-left">Panier
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                     </a>
+                                    {% endif %}
                                 </div>
                             </figure>
                         </div>

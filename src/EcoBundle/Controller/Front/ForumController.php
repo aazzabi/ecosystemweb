@@ -86,8 +86,12 @@ class ForumController extends Controller
         $commentaire->setCommentedBy($user);
         $commentaire->setPublication($publicationForum);
 
+        $publicationForum->setNbrVues($publicationForum->getNbrVues() + 1);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($publicationForum);
+        $em->flush();
+
         if ($commentaireForm->isSubmitted() && $commentaireForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($commentaire);
             $em->flush();
 

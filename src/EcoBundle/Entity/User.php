@@ -115,6 +115,12 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="numtel", type="string",length=8,nullable=true )
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      minMessage = "Le numéro de téléphone doit se composer de deux chiffre",
+     *      maxMessage = "Le numéro de téléphone doit se composer de deux chiffre",
+     * )
      */
     private $numtel;
 

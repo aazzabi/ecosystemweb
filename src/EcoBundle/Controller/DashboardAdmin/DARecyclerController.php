@@ -163,7 +163,7 @@ class DARecyclerController extends Controller
         $evenement = $em->getRepository('EcoBundle:Missions')->findAll();
         $resps = $em->getRepository('EcoBundle:User')->findAll();
         $val = 0;
-        $arr = [['Responsable', 'Nombre de de Pts collect'],];
+        $arr = [['Responsable', 'Nombre de  Points collectes'],];
         foreach ($resps as $resp) {
             foreach ($recys as $rec) {
                 if ($resp->getUsername() == $rec->getResponsable())
@@ -176,7 +176,7 @@ class DARecyclerController extends Controller
         $collectChart->getData()->setArrayToDataTable(
             $arr
         );
-        $collectChart->getOptions()->setTitle('My Daily dsd');
+        $collectChart->getOptions()->setTitle('Statistiques par rapport au représentant de société et leurs Points de collectes');
         $collectChart->getOptions()->setHeight(500);
         $collectChart->getOptions()->setWidth(900);
         $collectChart->getOptions()->getTitleTextStyle()->setBold(true);

@@ -68,7 +68,7 @@ class DAEvenementsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($categorieEvts);
             $em->flush();
-            return $this->redirectToRoute('da_categorie_index');
+            return $this->redirectToRoute('da_evenements_index');
         }
 
         return $this->render('@Eco/DashboardAdmin/Evenement/new.html.twig', array(
@@ -94,7 +94,7 @@ class DAEvenementsController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('da_categorie_index', array('id' => $categorieEvts->getId()));
+            return $this->redirectToRoute('da_evenements_index', array('id' => $categorieEvts->getId()));
         }
 
         return $this->render('@Eco/DashboardAdmin/Evenement/edit.html.twig', array(

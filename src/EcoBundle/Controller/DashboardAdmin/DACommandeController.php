@@ -117,7 +117,7 @@ class DACommandeController extends Controller
         $RAW_QUERY3 = 'SELECT  COUNT(*) as nb3  from commande where (date_emission >= \'2019-03-01\') AND (date_emission <= \'2019-03-31\');';
         $statement3 = $em->getConnection()->prepare($RAW_QUERY3);
         $statement3->execute();
-        $nb3 = $statement2->fetch();
+        $nb3 = $statement3->fetch();
 
         //nb4
         $RAW_QUERY4 = 'SELECT  COUNT(*) as nb4  from commande where (date_emission >= \'2019-04-01\') AND (date_emission <= \'2019-04-31\');';

@@ -109,7 +109,7 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <div id="collectChart"></div>
+                       {#<div id="collectChart"></div>#}
 
                     </div>
                     <div class="tab-pane" id="association" aria-expanded="false">
@@ -132,7 +132,7 @@
                                     <td>{{ evenement.description }}</td>
                                     <td>{{ evenement.lieu }}</td>
                                     <td>{{ evenement.date |date }}</td>
-                                    {#<td>{{ evenement.categorie.libelle  }}</td>#}
+                                    <td>{{ evenement.categorie.libelle  }}</td>
                                     <td>{{ evenement.dateLimite |date }}</td>
                                     <td>{{ evenement.objectif}}</td>
                                     <td>{{ evenement.atteint}}</td>
@@ -185,8 +185,8 @@
 
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                     <script type="text/javascript">
-                        {{ gc_draw(collectChart, 'collectChart') }}
-                        {{ gc_draw(missionChart, 'missionChart') }}
+                        {#{{ gc_draw(collectChart, 'collectChart') }}
+                        {{ gc_draw(missionChart, 'missionChart') }}#}
 
                     </script>
                 </div>

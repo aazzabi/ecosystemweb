@@ -93,7 +93,7 @@
                             <thead>
                             <tr>
                                 <th>Libelle</th>
-                                <th> localisation</th>
+                                <th>localisation</th>
                                 <th>type</th>
                                 <th>responsable</th>
                                 <th>Actions</th>
@@ -106,7 +106,10 @@
                                     <td>{{ collecte.libelle }}</td>
                                     <td>{{ collecte.localisation }}</td>
                                     <td>{{ collecte.type }}</td>
+                                    {% if not (collecte.responsable is  null) %}
                                     <td>{{ collecte.responsable.nom }}</td>
+                                    {% endif %}
+
                                     <td>
                                         <div class="btn-group btn-group-sm btn-group-horizontal">
                                             <a class="btn btn-secondary"

@@ -40,6 +40,98 @@
          }
      </style>
  {% endblock %}
+{% block Panier %}
+    {% if app.user %}
+
+        <div class="dropdown">
+            <a >
+                <a href="javascript:;" id="notification-center" class="header-icon" data-toggle="dropdown">
+                    <i class="fa fa-shopping-cart fa-2x" aria-hidden="true">
+                    </i>
+                    <span class="bubble">
+                        {{ liste|length }}
+                    </span>
+                </a>
+            </a>
+
+            <div class="dropdown-menu notification-toggle" role="menu" aria-labelledby="notification-center">
+
+                <div class="notification-panel">
+                    <div class="notification-body scrollable">
+                        {% if liste|length > 0 %}
+
+                            {% for value in liste %}
+                                <div class="notification-item  clearfix">
+                                    <div class="heading">
+                                        <a href="#" class="text-danger pull-left">
+                                            <i class="fa fa-check-square m-r-10"></i>
+                                            <span class="bold">{{ value.titre }}</span>
+                                            <span class="fs-12 m-l-10"> {{ value.description }}</span>
+                                        </a>
+                                        <span class="pull-right time">{{ value.prix }} DT</span>
+
+                                    </div>
+                                    <div class="option">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+
+                            <div class="notification-item unread clearfix">
+                                <!-- START Notification Item-->
+                                <div class="heading open">
+                                    <a href="#" class="text-complete pull-left">
+                                        <i class="fa fa-exclamation-triangle m-r-10" style="color: red"></i>
+                                        <span class="bold" >Nombres d'annonces dans le panier : </span>
+                                        <span class="fs-12 m-l-10">0</span>
+                                    </a>
+                                    <div class="pull-right">
+                                        <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details">
+                                            <div><i class="fa fa-angle-left"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="more-details">
+                                        <div class="more-details-inner">
+                                            <h5 class="semi-bold fs-16">Votre Panier est Vide </h5><br>
+                                               <h4 style="color: #0f3e68"> Veuillez Ajouter des annonces </h4><br>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Notification Item-->
+                                <!-- START Notification Item Right Side-->
+                                <div class="option" data-toggle="tooltip" data-placement="left" title="mark as read">
+                                    <a href="#" class="mark"></a>
+                                </div>
+                                <!-- END Notification Item Right Side-->
+                            </div>
+
+
+                        {% endif %}
+                    </div>
+
+                    <div class="notification-footer text-center">
+                        <a href="{{ path('panier_show') }}" class="">Consulter Panier </a>
+                        <a data-toggle="refresh" class="portlet-refresh text-black pull-right" href="#">
+                            <i class="pg-refresh_new"></i>
+                        </a>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+    {% endif %}
+{% endblock %}
+
 {% block javascripts %}
     <script src="{{ asset('assets/js/jquery.js') }}" type="text/javascript"></script>
     <script>
@@ -79,11 +171,13 @@
         });
     </script>
 {% endblock %}
-{% block body %}<br>
+{% block body %}
+    <br>
     <div style="padding: 20px 50px">
         <div>
             <div class="row">
                 {% if app.user %}
+
                 <div class="col-md-12 text-right">
                     <a href="{{ path('du_annonce_new') }}" class="btn btn-success">
                         <i class="icon-plus">
@@ -223,11 +317,11 @@
                                     {% if app.user %}
                                     <button type="submit" value="{{ a.id }}"
                                             class="jaime btn btn-tag">
-                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
+                                        <i class="fa fa-thumbs-up" style="color: #0a7c71" aria-hidden="true"></i> Like
                                     </button>
                                     <button type="button" class="btn btn-tag btn-tag-rounded float-left"
                                             data-toggle="modal" data-target="#exampleModal">
-                                        Signaler<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                        Signaler<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: darkred"></i>
                                     </button>
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -268,19 +362,14 @@
                                     {#class="btn btn-tag btn-tag-rounded float-left">#}
                                     {#Signaler  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>#}
                                     {#</a>#}
-                                    <a href="#" class="btn btn-tag btn-tag-rounded float-left">Panier
-                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                    <a href="{{ path('ajout_annonce',{ 'id_c': app.user.id , 'id_a' :a.id }) }}" class="btn btn-tag btn-tag-rounded float-left">Panier
+                                        <i class="fa fa-shopping-cart" aria-hidden="true" style="color: #0e90d2"></i>
                                     </a>
                                     {% endif %}
                                 </div>
                             </figure>
                         </div>
                     {% endfor %}
-                </div>
-                <div class="row">
-                    <div class="navigation text-center">
-                        {{ knp_pagination_render(annonces) }}
-                    </div>
                 </div>
             </div>
         </div>

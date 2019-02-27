@@ -35,7 +35,7 @@ class LivreurController extends Controller
      */
     public function showAction()
     {
-        return $this->render('@Eco/DashboardUser/da_page_livreur.html.twig');
+        return $this->render('default/da_page_livreur.html.twig');
     }
 
 

@@ -70,7 +70,7 @@ class DefaultController extends Controller
     public function pointrcAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('@Eco/recyclage/pointrc.html.twig');
+        return $this->render('@Eco/recyclage/maps.html.twig');
     }
 }
 

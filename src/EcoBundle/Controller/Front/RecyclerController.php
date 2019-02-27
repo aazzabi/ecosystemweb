@@ -116,7 +116,47 @@ class RecyclerController extends Controller
             'categories'=> $categories,
         ));
     }
+    /**
+     * @Route("/maps", name="front_maps_index")
+     * @Method("GET")
+     */
 
+    public function indexMapAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $search = [];
+        $evenements = array();
+        $search['categorie'] = $request->get('categorie', null);
+        $search['lieu'] = $request->get('lieu', null);
+        $search['date'] = $request->get('date', null);
+//        var_dump($search);die;
+
+
+        if ($search['categorie']) {
+            $evenementsCat = $em->getRepository('EcoBundle:Missions')->searchByCategorieEvt($search['categorie']);
+            if ($search['lieu']) {
+                foreach ($evenementsCat as $event) {
+                    if  ($event->getLieu() == $search['lieu']) {
+                        $evenements[] = $event;
+                    }
+                }
+            }else {
+                $evenements = $evenementsCat;
+            }
+        }
+
+//       $evenements =  $em->getRepository('EcoBundle:Missions')->search($search);
+
+//      var_dump($evenements);die;
+        $evenements = $em->getRepository('EcoBundle:Missions')->findAll();
+        $categories = $em->getRepository('EcoBundle:CategorieMission')->findAll();
+        return $this->render('@Eco/Front/Recyclage/maps.html.twig', array(
+            //'evenements' => $evenements,
+            'evenements' => $evenements,
+            'categories'=> $categories,
+        ));
+    }
 
 
     /**

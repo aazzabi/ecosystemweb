@@ -72,6 +72,8 @@ class Evenement
      *
      * @ORM\Column(name="date", type="datetime")
      *
+     * @Assert\GreaterThan("today")
+     *
      */
     private $date;
 

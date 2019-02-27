@@ -18,7 +18,7 @@ class EvenementType extends AbstractType
     {
         $builder
             ->add('lieu',TextType::class,[
-                'required' =>true,
+                'required' =>false,
             ])
             ->add('date')
             ->add('evtCover', VichFileType::class, [
@@ -33,7 +33,7 @@ class EvenementType extends AbstractType
                 'multiple'=>false
             ))
             ->add('titre',TextType::class,[
-                'required' =>true,
+                'required' =>false,
             ])
             ->add('description',TextType::class,[
                 'required' =>false,

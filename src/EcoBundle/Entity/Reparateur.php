@@ -16,6 +16,8 @@ class Reparateur extends  User
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $adresse;
 
@@ -23,6 +25,8 @@ class Reparateur extends  User
      * @var string
      *
      * @ORM\Column(name="specialite", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $specialite;
 
@@ -31,6 +35,8 @@ class Reparateur extends  User
      * @var string
      *
      * @ORM\Column(name="horaire", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $horaire;
 

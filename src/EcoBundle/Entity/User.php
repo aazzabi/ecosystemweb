@@ -38,6 +38,8 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=150, nullable=false)
+     *
+     * @Assert\NotBlank
      */
     private $nom;
 
@@ -71,6 +73,8 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=150, nullable=false)
+     *
+     * @Assert\NotBlank
      */
     private $prenom;
 

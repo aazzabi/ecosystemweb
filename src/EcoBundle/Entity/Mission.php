@@ -3,6 +3,7 @@
 namespace EcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Recyclage
@@ -25,6 +26,9 @@ class Mission
      * @var int
      *
      * @ORM\Column(name="objectif", type="integer")
+     *
+     * @Assert\NotNull
+     *
      */
     private $objectif;
 
@@ -32,13 +36,18 @@ class Mission
      * @var int
      *
      * @ORM\Column(name="matscollectes", type="integer")
+     *
+     * @Assert\NotNull
+     *
      */
     private $matscollectes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateLimite", type="date")
+     * @ORM\Column(name="dateLimite", type="date")*
+     *
+     * @Assert\DateTime
      */
     private $dateLimite;
 
@@ -46,6 +55,8 @@ class Mission
      * @var float
      *
      * @ORM\Column(name="recompense", type="float")
+     *
+     * @Assert\NotNull
      */
     private $recompense;
 

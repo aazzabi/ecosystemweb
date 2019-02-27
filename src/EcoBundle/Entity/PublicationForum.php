@@ -4,6 +4,8 @@ namespace EcoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * PublicationForum
@@ -26,6 +28,8 @@ class PublicationForum
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $titre;
 
@@ -33,6 +37,8 @@ class PublicationForum
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=555)
+     *
+     * @Assert\NotBlank
      */
     private $description;
 
@@ -40,6 +46,8 @@ class PublicationForum
      * @var string
      *
      * @ORM\Column(name="etat", type="string", length=255)
+     *
+     * @Assert\NotBlank
      */
     private $etat;
 
@@ -65,6 +73,8 @@ class PublicationForum
      * @var \DateTime
      *
      * @ORM\Column(name="pub_created_at", type="datetime", nullable=true)
+     *
+     * @Assert\DateTime
      */
     private $publicationCreatedAt;
 

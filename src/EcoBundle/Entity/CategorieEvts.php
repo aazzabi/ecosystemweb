@@ -3,6 +3,7 @@
 namespace EcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CategorieEvts
@@ -25,6 +26,9 @@ class CategorieEvts
      * @var string
      *
      * @ORM\Column(name="Libelle", type="string", length=255)
+     *
+     * @Assert\NotBlank
+     *
      */
     private $libelle;
 
@@ -32,6 +36,9 @@ class CategorieEvts
      * @var string
      *
      * @ORM\Column(name="But", type="string", length=255)
+     *
+     * @Assert\NotBlank
+     *
      */
     private $but;
 

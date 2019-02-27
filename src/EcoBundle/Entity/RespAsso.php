@@ -17,6 +17,8 @@ class RespAsso extends User
      * @var int
      *
      * @ORM\Column(name="cin", type="integer")
+     *
+     * Assert\NotNull
      */
     private $cin;
 

@@ -57,7 +57,7 @@ class ForumController extends Controller
         $publications = $paginator->paginate(
             $publicationsPubliee,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 7)
+            $request->query->getInt('limit', 5)
         );
 
         return $this->render(
@@ -66,6 +66,47 @@ class ForumController extends Controller
                 'categories'            => $categoriesPub,
                 'publications'          => $publications,
                 'publicationsArchivees' => $publicationsArchivee,
+            ]
+        );
+    }
+    /**
+     *
+     * @Route("/{id}", name="front_forum_categ_index")
+     * @Method("GET")
+     */
+    public function indexPubParCategorieAction(Request $request, $id)
+    {
+        $categoriesPub        = $this->getDoctrine()->getManager()->getRepository('EcoBundle:CategoriePub')->findAll();
+        $categ  = $this->getDoctrine()
+                                     ->getManager()
+                                     ->getRepository('EcoBundle:CategoriePub')
+                                     ->find($id);
+        $publicationsC  = $this->getDoctrine()
+                                     ->getManager()
+                                     ->getRepository('EcoBundle:PublicationForum')
+                                     ->findBy(['categorie'=> $categ]);
+
+        $publicationsArchivee = $this->getDoctrine()
+                                     ->getManager()
+                                     ->getRepository('EcoBundle:PublicationForum')
+                                     ->findFivePublicationArchivee()
+        ;
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator    = $this->get('knp_paginator');
+        $publications = $paginator->paginate(
+            $publicationsC,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 7)
+        );
+
+        return $this->render(
+            '@Eco/Front/Forum/indexParCat.html.twig',
+            [
+                'publicationsArchivees' => $publicationsArchivee,
+                'categories'            => $categoriesPub,
+                'publications'          => $publications,
             ]
         );
     }
@@ -336,6 +377,37 @@ class ForumController extends Controller
         $keyWord = $request->get('keyWord');
 
         $publications = $em->getRepository('EcoBundle:PublicationForum')->findPublication($keyWord);
+
+        $template = $this->render(
+            '@Eco/Front/Forum/publication.html.twig',
+            [
+                'publications' => $publications,
+            ]
+        )->getContent()
+        ;
+
+        $json     = json_encode($template);
+        $response = new Response($json, 200);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+    /**
+     *
+     * @Route("/rechercheC", name="front_get_forum_categ_index")
+     * @Method({"GET", "POST"})
+     */
+    public function rechercheCategAction(Request $request)
+    {
+        $em      = $this->getDoctrine()->getManager();
+        $id = $request->get('id');
+        var_dump($id);die;
+        $categ  = $this->getDoctrine()
+                       ->getManager()
+                       ->getRepository('EcoBundle:CategoriePub')
+                       ->find($id);
+        $publications = $em->getRepository('EcoBundle:PublicationForum')->find(['categorie'=>$categ]);
 
         $template = $this->render(
             '@Eco/Front/Forum/publication.html.twig',

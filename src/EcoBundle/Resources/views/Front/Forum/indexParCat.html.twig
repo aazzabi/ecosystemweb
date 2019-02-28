@@ -216,7 +216,7 @@
                         <h3><b>Categories</b></h3>
                         <div class="divline"></div>
                         <div class="blocktxt">
-                            <ul class="cats" id="categss">
+                            <ul class="cats">
                                 <li><a href="{{ path('front_forum_index') }}">Toutes<span class="badge pull-right"></span></a></li>
                                 {% for categorie in categories %}
                                     <li><a href="{{ path('front_forum_categ_index', {'id' : categorie.id }) }}">{{ categorie.libelle }}<span class="badge pull-right">{{ categorie.publicationsForum | length }}</span></a></li>
@@ -226,7 +226,7 @@
                     </div>
 
                     <div class="sidebarblock">
-                        <h3><b>Voir aussi :</b> </h3>
+                        <h3><b>Voir aussi :</b></h3>
                         {% for publication in publicationsArchivees %}
                             <div class="divline"></div>
                             <div class="blocktxt">

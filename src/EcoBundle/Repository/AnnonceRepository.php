@@ -39,7 +39,7 @@ class AnnonceRepository extends \Doctrine\ORM\EntityRepository
             ->orderBy('p.likes', 'DESC')
             ->getQuery();
 
-        return $query->setMaxResults(4)->getResult();
+        return $query->setMaxResults(3)->getResult();
 
     }
     public function RechercheTitreAnnonce($keyWord)

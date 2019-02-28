@@ -218,7 +218,21 @@ class DARepController extends Controller
         $user->setType("Professionel");
         $this->getDoctrine()->getManager()->remove($demande);
 
+
+
+        $number=$user->getNumeroTel();
         $this->getDoctrine()->getManager()->flush();
+
+        //returns an instance of Vresh\TwilioBundle\Service\TwilioWrapper
+        $twilio = $this->get('twilio.api');
+
+        $message = $twilio->account->messages->sendMessage(
+            '+12015711871', // From a Twilio number in your account
+            '+216'.$number, // Text any number
+            "Féliciation ".$user->getNom()."Votre demande a été accpeté ! 
+            EcoSystem est toujours la pour vous servir "
+        );
+
 
         return $this->redirectToRoute('da_rep_index');
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace EcoBundle\Repository;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * MissionsRepository
@@ -33,22 +34,53 @@ class MissionsRepository extends \Doctrine\ORM\EntityRepository
         }
         if ($search['lieu']) {
             $builder->andWhere('e.lieu = :lieu')
-                    ->setParameter('lieu', $search['lieu']);
+                ->setParameter('lieu', $search['lieu']);
         }
+
+        // Expérience
+        if ($search['categorie'] !== null) {
+            $session->set('categorie', $search['categorie']);
+        } else {
+            $search['categorie'] = $session->get('categorie');
+        }
+        if ($search['categorie']) {
+            $builder
+                ->innerJoin('e.categorie', 'cat', 'WITH', 'cat.id = :categorie')
+                ->andWhere('cat.id >= :categorie')
+                ->setParameter('categorie', $search['categorie']);
+        }
+
+         if ($search['date'] !== null) {
+            $session->set('date', $search['date']);
+        } else {
+            $search['date'] = $session->get('date');
+        }
+        if ($search['date']) {
+            $builder->andWhere('e.date > :date')
+                ->setParameter('date', $search['date']);
+        }
+
         return $builder->orderBy("e.id", 'DESC')->getQuery()->getResult();
     }
 
     public function searchByLieu($lieu)
     {
         $query=$this->getEntityManager()->createQuery("SELECT m from EcoBundle:Missions m WHERE m.lieu=:lieu")
-                    ->setParameter('lieu',$lieu);
+            ->setParameter('lieu',$lieu);
         return $query->getResult();
     }
 
     public function searchByCategorieEvt($categorie)
     {
         $query=$this->getEntityManager()->createQuery("SELECT m from EcoBundle:Missions m WHERE m.categorie=:categorie")
-                    ->setParameter('categorie',$categorie);
+            ->setParameter('categorie',$categorie);
+        return $query->getResult();
+    }
+
+    public function BestEvents()
+    {
+        $query=$this->getEntityManager()
+            ->createQuery("SELECT m from EcoBundle:Missions m WHERE SIZE(m.participants) >3 ");
         return $query->getResult();
     }
 }

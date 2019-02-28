@@ -183,7 +183,7 @@
                                     {% endif %}
                                 </div>
                                 <div class="posttext pull-left">
-                                    <h2><a href="{{ path('front_forum_show', {'id' : publication.id }) }}"><b class="title" >{{ publication.titre }}</b></a></h2>
+                                    <a href="{{ path('front_forum_show', {'id' : publication.id }) }}"><h3 class="title" style="font-weight: 500;" >{{ publication.titre }}</h3></a>
                                     <p id="description">{{ publication.description }}</p>
                                 </div>
                                 <div class="clearfix"></div>

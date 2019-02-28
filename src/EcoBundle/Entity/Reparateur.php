@@ -220,6 +220,7 @@ class Reparateur extends  User
 
     /**
      * @param int $numeroTel
+     *
      */
     public function setNumeroTel($numeroTel)
     {

@@ -23,3 +23,4 @@ ecosystemweb.rar
 src/EcoBundle/EcoBundle.rar
 app/config/config_dev.yml
 app/config/config.yml
+.idea/ecoSystem.iml

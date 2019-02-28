@@ -16,6 +16,7 @@ use EcoBundle\Entity\Reparateur;
 use EcoBundle\Entity\RespAsso;
 use EcoBundle\Entity\RespSoc;
 use EcoBundle\Entity\AnnonceRep;
+use EcoBundle\Entity\SignalAnnounceRep;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -270,4 +271,41 @@ class FrontRepController extends Controller
         }
 
     }
+
+
+    /**
+     * @Route("/signalerannounce/{id}", name="reparateur_signalrep")
+     * @Method({"GET", "POST"})
+     */
+    public function signalerCommentaireAction(Request $request, $id)
+    {
+        $signalisation = new SignalAnnounceRep();
+        $user          = $this->get('security.token_storage')->getToken()->getUser();
+        $em            = $this->getDoctrine()->getManager();
+
+        $announcerep      = $this->getDoctrine()->getRepository('EcoBundle:AnnonceRep')->find($id);
+
+
+        $libRadio = $request->get('radioLib');
+        $signalisation->setAnnounce($announcerep);
+        $signalisation->setCause($libRadio);
+        $signalisation->setSignaledBy($user);
+        $em->persist($signalisation);
+        $em->flush();
+
+        return $this->redirectToRoute('reparateur_shlista');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -68,6 +68,7 @@
                         </a>
                     </div>
                 </div>
+
                 {% block Panier %}{% endblock %}
                 <!-- END User Info-->
                 {#notification section dropdown#}
@@ -216,9 +217,6 @@
                     </li>
                     <li class=" {% if path('front_forum_index') == currentPath %}active{% endif %}">
                         <a href="{{ path('front_forum_index') }}"><span class="title">Forum</span></a>
-                    </li>
-                    <li class=" {% if path('show_commande') == currentPath %}active{% endif %}">
-                        <a href="{{ path('show_commande') }}"><span class="title">Commandes</span></a>
                     </li>
 
                     {#DAHSBOARD#}

@@ -28,9 +28,8 @@
 
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
  {% endblock %}
+
 {% block Panier %}
-
-
     {% if app.user %}
 
         <div class="dropdown">
@@ -47,8 +46,6 @@
             <div class="dropdown-menu notification-toggle" role="menu" aria-labelledby="notification-center">
 
                 <div class="notification-panel">
-
-
                     <div class="notification-body scrollable">
                         {% if liste|length > 0 %}
 
@@ -105,6 +102,7 @@
 
                         {% endif %}
                     </div>
+
                     <div class="notification-footer text-center">
                         <a href="{{ path('panier_show') }}" class="">Consulter Panier </a>
                         <a data-toggle="refresh" class="portlet-refresh text-black pull-right" href="#">
@@ -120,12 +118,7 @@
             </div>
         </div>
 
-
-
     {% endif %}
-
-
-
 {% endblock %}
 
 {% block body %}

@@ -126,7 +126,7 @@
 
                         <center>
                             <div class="test  input-effect marg">
-                                {{ form_widget(formAnnonce.description, { 'attr': {'class': 'effect-21','placeholder': 'Description'} }) }}
+                                {{ form_widget(formAnnonce.description, { 'attr': {'class': 'effect-21','placeholder': 'Description','size': '10'} }) }}
                                 <span class="focus-border">
             	<i></i>
                         </span>
@@ -213,6 +213,12 @@
                 </center>
                 {% endif %}
 
+                {% if app.user != value.utilisateur  %}
+                <a class="dropdown-item" data-toggle="modal" data-target="#s{{ value.id }}">
+                    <i class="fa fa-exclamation-triangle"></i> Signaler
+                </a>
+                {% endif %}
+
             </div>
             <!-- FIN  CARD VIEW -->
             <!-- Modal ANNONCE REP -->
@@ -248,7 +254,7 @@
                                 <center>
                                     <div class="test input-effect marg">
 
-                                        <input name="prix" type="number" class="effect-21" min="0" required
+                                        <input name="prix" type="number" class="effect-21" min="{{ value.lastprix+1 }}" required
                                                placeholder="Proposez votre prix !" id="prix">
                                         <span class="focus-border marg">
             	<i></i>
@@ -269,6 +275,33 @@
             </div>
 
             <!-- END MODAL ANNONCE REP-->
+            <!-- DEBUT  MODAL SIGNAL REP-->
+
+            <div class="modal fade" id="s{{ value.id }}" tabindex="-1"
+                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Signaler cette announce ! </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body"><br>
+                            <form action="{{ path('reparateur_signalrep', {'id': value.id}) }}"
+                                  id="s{{ value.id }}" method="get" name="formulario_login">
+                                <input type="radio" value="violence" name="radioLib" id="violence"><label for="violence">Violence</label><br>
+                                <input type="radio" value="arnaque" name="radioLib" id="arnaque"><label for="arnaque">arnaque</label><br>
+                                <input type="radio" value="harcelement" name="radioLib" id="harcelement"><label for="harcelement">Harcelement</label><br>
+                                <input type="radio" value="haine" name="radioLib" id="haine"><label for="haine">Discour insitant à la haine</label><br>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-success">Signaler</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MODAL SIGNAL REP-->
 
         {% endfor %}
     </div>
@@ -339,6 +372,8 @@
             });
 
         });
+
+
 
     </script>
 

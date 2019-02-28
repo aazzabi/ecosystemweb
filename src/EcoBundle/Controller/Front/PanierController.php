@@ -68,11 +68,13 @@ class PanierController extends Controller
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
 
 
-        return $this->render('@Eco/Panier/annonce.html.twig', array(
+        return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
             "annonces"=>$annnonce,'categories'=> $categories,
         ));
 
     }
+
+
     /**
      * Finds and displays a user entity.
      *
@@ -93,9 +95,9 @@ class PanierController extends Controller
                 $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
                 $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
                 $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
-
-                return $this->render('@Eco/Panier/annonce.html.twig', array(
-                    "annonces"=>$annnonce,'categories'=> $categories,'liste'=> $liste,
+                $lc = $em->getRepository('EcoBundle:LigneCommande')->findAll();
+                return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
+                    "annonces"=>$annnonce,"lc"=>$lc,'categories'=> $categories,'liste'=> $liste,
                 ));
 
             }
@@ -122,9 +124,9 @@ class PanierController extends Controller
             $em->flush();
 
             $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
-
-            return $this->render('@Eco/Panier/annonce.html.twig', array(
-                "annonces"=>$annnonce,'categories'=> $categories,'liste'=> $liste,
+            $lc = $em->getRepository('EcoBundle:LigneCommande')->findAll();
+            return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
+                "annonces"=>$annnonce,'categories'=> $categories,"lc"=>$lc,'liste'=> $liste,
             ));
 
         }
@@ -136,9 +138,9 @@ class PanierController extends Controller
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
             $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
             $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
-
-            return $this->render('@Eco/Panier/annonce.html.twig', array(
-                "annonces"=>$annnonce,'categories'=> $categories,'liste'=> $liste,
+            $lc = $em->getRepository('EcoBundle:LigneCommande')->findAll();
+            return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
+                "annonces"=>$annnonce,'categories'=> $categories,"lc"=>$lc,'liste'=> $liste,
             ));
 
         }
@@ -157,7 +159,7 @@ class PanierController extends Controller
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
         $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
 
-        return $this->render('@Eco/Panier/annonce.html.twig', array(
+        return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
             "annonces"=>$annnonce,'categories'=> $categories,'liste'=> $liste,
         ));
     }
@@ -169,11 +171,15 @@ class PanierController extends Controller
     public function supprimerAction($id)
     {
         $em=$this->getDoctrine()->getManager();
-        $L=$em->getRepository(AnnoncePanier::class)->find($id);
-
-        $em->remove($L);
-        $em->flush();
-
+        $annonce_panier = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
+        foreach ($annonce_panier as $p)
+        {
+            if($p->getId()==$id)
+            {
+                $em->remove($p);
+                $em->flush();
+            }
+        }
 
 
         $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();

@@ -1,17 +1,39 @@
-{% extends 'base.html.twig' %}
-
+{% extends 'default/dashboard.html.twig' %}
+{% block stylesheets %}
+    <style>
+        .page-container {
+            background-image: url('{{ asset('assets/img/background_livraison2.jpg') }}') !important;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            var panier = $('#lvr2').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+        });
+    </script>
+{% endblock %}
 {% block body %}
     <title><h1> Détails de la Livraison </h1> </title>
     <div class="tab-content" >
         <div class="tab-pane active" id="users" aria-expanded="true">
 
-            <table id="usersTab" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <table id="lvr2" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                    <th> Image </th>
-                    <th> Titre </th>
-                    <th> Description </th>
-                    <th> Prix Annonce  </th>
+                    <th style="color: white"> Image </th>
+                    <th style="color: white"> Titre </th>
+                    <th style="color: white"> Description </th>
+                    <th style="color: white"> Prix Annonce  </th>
                 </tr>
                 <tbody>
                 {% for a in annonces %}
@@ -19,10 +41,17 @@
                         {% if value.idCommande == tab.id_commande %}
                             {% if value.idAnnonce == a.id %}
                                 <tr>
-                                    <td> </td>
+                                    <td> {% if a.photo != '' %}
+                                            <img alt="User Pic" style="width:150px;" width="50" height="50"
+                                                 src="{{ asset('uploads/Annonce/photo/' ~ a.photo) }}"
+                                                 class="img-circle img-responsive">
+                                        {% else %}
+                                            <img alt="annonce_Pic" style="width:50px;" src="{{ asset('assets/img/NA.png') }}" width="50" height="50"
+                                                 id="profile-image1" class="img-circle img-responsive">
+                                        {% endif %} </td>
                                     <td>{{ a.titre}}</td>
                                     <td>{{ a.description }}</td>
-                                    <td>{{ a.prix }}</td>
+                                    <td> <h4>{{ a.prix }} DT</h4></td>
                                 </tr>
                             {% endif %}
                         {% endif %}

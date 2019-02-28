@@ -17,6 +17,15 @@
                 }
             });
         });
+        $(document).ready(function () {
+            var tableForum = $('#sigAnnonceRepTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+        });
     </script>
 {% endblock %}
 
@@ -40,6 +49,10 @@
                 <li class="nav-item">
                     <a href="#" data-toggle="tab" role="tab" data-target="#signalisationAnnonces" class=""
                        aria-expanded="false">Annonce</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" data-toggle="tab" role="tab" data-target="#signalisationAnnoncesRep" class=""
+                       aria-expanded="false">Announce Reparation</a>
                 </li>
             </ul>
             <div class="tab-content" >
@@ -98,6 +111,38 @@
                                 <td>
                                     <div class="btn-group btn-group-sm btn-group-horizontal">
                                         <a class="btn btn-danger" href="{{ path('da_signalisation_annonce_delete', { 'id': signal.id }) }}">
+                                            <i class="fa fa-trash"> </i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane active display" id="signalisationAnnoncesRep" aria-expanded="true">
+                    <table id="sigAnnonceRepTab" class="table display table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Cause</th>
+                            <th>Announce Reparation</th>
+                            <th>Par</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for signalisation in signalAnnoncesRep %}
+                            <tr>
+                                <td> {{ signalisation.cause }}</td>
+                                <td>
+                                    {#<a class="btn btn-danger" href="{{ path('du_forum_publication_show', { 'id': signalisation.commentaire.publication.id }) }}">#}
+                                    {{ signalisation.announce.titre }}
+                                    {#</a>#}
+                                </td>
+                                <td> {{ signalisation.signaledby }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm btn-group-horizontal">
+                                        <a class="btn btn-danger" href="{{ path('da_signalisation_annoncerep_delete', { 'id': signalisation.id }) }}">
                                             <i class="fa fa-trash"> </i>
                                         </a>
                                     </div>

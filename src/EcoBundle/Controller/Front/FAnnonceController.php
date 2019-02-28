@@ -26,20 +26,14 @@ class FAnnonceController extends Controller
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findAll();
+        $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
+        $lc = $em->getRepository('EcoBundle:LigneCommande')->findAll();
+
         $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
-        /**
-         * @var $paginator \Knp\Component\Pager\Paginator
-         */
-        $paginator    = $this->get('knp_paginator');
-        $anonnces = $paginator->paginate(
-            $annnonce,
-            $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 9)
-        );
         return $this->render
         ('@Eco/Front/Annonce/annonce.html.twig',
             array(
-            'annonces' => $anonnces, 'categories' => $categories, 'likes' => $likes,
+            'annonces' => $annnonce,'liste' => $liste,'lc' => $lc, 'categories' => $categories, 'likes' => $likes,
         ));
     }
 
@@ -92,18 +86,9 @@ class FAnnonceController extends Controller
         $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
         $annnonce = new Annonce();
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findByCategorie($cat);
-        /**
-         * @var $paginator \Knp\Component\Pager\Paginator
-         */
-        $paginator    = $this->get('knp_paginator');
-        $anonnce = $paginator->paginate(
-            $annnonce,
-            $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 9)
-        );
 
         return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
-            "annonces" => $anonnce, 'categories' => $categories,
+            "annonces" => $annnonce, 'categories' => $categories,
 
         ));
     }
@@ -142,31 +127,11 @@ class FAnnonceController extends Controller
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPlusRecent();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
-            /**
-             * @var $paginator \Knp\Component\Pager\Paginator
-             */
-            $paginator    = $this->get('knp_paginator');
-            $anonnce = $paginator->paginate(
-                $annonces,
-                $request->query->getInt('page', 1),
-                $request->query->getInt('limit', 9)
-            );
-
         } elseif ($val == 'PE') {
             $em = $this->getDoctrine()->getManager();
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixElv();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
-            /**
-             * @var $paginator \Knp\Component\Pager\Paginator
-             */
-            $paginator    = $this->get('knp_paginator');
-            $anonnce = $paginator->paginate(
-                $annonces,
-                $request->query->getInt('page', 1),
-                $request->query->getInt('limit', 9)
-            );
-
 
         } elseif ($val == 'PB') {
 
@@ -174,19 +139,10 @@ class FAnnonceController extends Controller
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixBas();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
-            /**
-             * @var $paginator \Knp\Component\Pager\Paginator
-             */
-            $paginator    = $this->get('knp_paginator');
-            $anonnce = $paginator->paginate(
-                $annonces,
-                $request->query->getInt('page', 1),
-                $request->query->getInt('limit', 9)
-            );
 
         }
         return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
-            "annonces" => $anonnce, 'categories' => $categories, 'likes' => $likes,
+            "annonces" => $annonces, 'categories' => $categories, 'likes' => $likes,
         ));
     }
     /**

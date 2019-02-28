@@ -173,7 +173,17 @@
                     <a href="{{ path ('du_forum_index') }}"> <span class="title">Forum</span></a>
                     <span class="{% if path('du_forum_index') == currentPath %}bg-success{% endif %} icon-thumbnail">Forum</span>
                 </li>
+                <li class="" style="padding: 10px 5px;">
+                    <a href="{{ path('show_commande') }}"><span class="title" style="width: 95%;">Commandes</span></a>
+                    <span class=" {% if path('show_commande') == currentPath %}bg-success{% endif %}  icon-thumbnail">cmd</span>
+                </li>
+
+                <li class="" style="padding: 10px 5px;">
+                    <a href="{{ path('show_livraison') }}"><span class="title" style="width: 95%;">Livraison</span></a>
+                    <span class=" {% if path('show_livraison') == currentPath %}bg-success{% endif %}  icon-thumbnail">Lvr</span>
+                </li>
             {% endif %}
+
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="" style="padding: 10px 5px;">
                     <a href="{{ path('da_groups_index') }}"><span class="title" style="width: 95%;">Groupes / Sociétés</span></a>

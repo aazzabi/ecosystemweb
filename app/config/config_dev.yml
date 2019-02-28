@@ -38,6 +38,7 @@ monolog:
         #    level: info
 
 swiftmailer:
+
     transport: gmail
     username: info.equipeecosystem@gmail.com
     password: 147852369+ecosystem

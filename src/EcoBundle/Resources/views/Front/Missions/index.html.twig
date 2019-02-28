@@ -33,6 +33,15 @@
                         &nbsp;Ajouter une mission
                     </i>
                 </a>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+
+                    <a href="{{ path('front_missions_Best') }}" class="btn btn-secondary">
+                        <i class="icon-star">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            &nbsp;Best
+                        </i>
+                    </a>
+                </button>
             </div>
             <div class="col-md-10 offset-md-1">
                 <br>
@@ -115,13 +124,9 @@
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         &nbsp;Ajouter une mission
                     </i>
-                    <a href="{{ path('front_missions_Best') }}" class="btn btn-secondary">
-                        <i class="icon-star">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            &nbsp;Best
-                        </i>
-                    </a>
                 </button>
+
+
             </div>
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">

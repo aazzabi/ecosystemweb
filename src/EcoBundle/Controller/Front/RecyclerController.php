@@ -319,8 +319,9 @@ class RecyclerController extends Controller
         // $em->persist($evenement);
         //   $em->persist($user);
         $em->flush();
-        return $this->redirectToRoute('front_missions_index');
         $this->addFlash("warning", "Vous avez annuler votre participation ! ");
+
+        return $this->redirectToRoute('front_missions_index');
 
     }
 

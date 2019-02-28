@@ -1,0 +1,90 @@
+{% extends './Default/dashboard.html.twig' %}
+{% block title %}
+    Liste des Missions et Points de Collectes
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery.min.js') }}"...></script>
+
+    <script>
+        $(document).ready(function () {
+            var users = $('#eventTab').DataTable({
+                "paging": true,
+                "stateSave": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json",
+                }
+            });
+
+          /*  $("#b5").click(
+                function()
+                { $('.trhideclass1').toggle();}
+            );
+
+            var rows = $('table.table table-striped table-bordered tr');
+
+            $('#bouton').click(function() {
+                var event = rows.filter('.event').toggle();
+               // rows.not( black ).hide();
+            });*/
+        });
+    </script>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><b>stats des points de collectes % à leur responsable</b></h1>
+                </div>
+
+                <div class="col-md-6 text-right">
+                    <br>
+                    <a href="{{ path('da_missions_index') }}" class="btn btn-default-focus">
+                        <i class="icon-plus">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            &nbsp;retour à la liste des missions
+                        </i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <body>
+    <div id="collectChart"></div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        {{ gc_draw(collectChart, 'collectChart') }}
+    </script>
+
+
+    <div class="col-md-6">
+        <h1><b>stats des missions % à leur catégories</b></h1>
+        <div id="table"></div>
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            {{ gc_draw(table, 'table') }}
+        </script>
+    </div>
+    <div class="col-md-6">
+        <h1><b>stats des missions % à leur localisation(lieu)</b></h1>
+        <div id="org"></div>
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            {{ gc_draw(org, 'org') }}
+        </script>
+    </div>
+    </body>
+
+
+
+{% endblock %}

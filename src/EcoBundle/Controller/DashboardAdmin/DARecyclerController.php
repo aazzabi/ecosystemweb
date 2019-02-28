@@ -9,6 +9,9 @@
 namespace EcoBundle\Controller\DashboardAdmin;
 
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\TableChart;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\OrgChart;
+
 use EcoBundle\Entity\CategorieMission;
 use EcoBundle\Entity\Missions;
 use EcoBundle\Entity\Group;
@@ -161,6 +164,7 @@ class DARecyclerController extends Controller
         $em = $this->getDoctrine()->getManager();
         $recys = $em->getRepository('EcoBundle:PtCollecte')->findAll();
         $evenement = $em->getRepository('EcoBundle:Missions')->findAll();
+        $categM = $em->getRepository('EcoBundle:CategorieMission')->findAll();
         $resps = $em->getRepository('EcoBundle:User')->findAll();
         $val = 0;
         $arr = [['Responsable', 'Nombre de  Points collectes'],];
@@ -177,11 +181,44 @@ class DARecyclerController extends Controller
             $arr
         );
 
+        $data =  [
+            ['Don', '3'],
+            ['Collecte de fonds', '2'],
+            ['Besoins', '1'],
+            ['Compagne de nettoyage', '3'],
+            ['Campagne de sensibilisation sur l\'environnement', '2'],
+            ['Collecte de fonds', '1'],
+        ];
 
-        return $this->render('@Eco/DashboardAdmin/Missions/indexEvent.html.twig', array(
+        $table = new TableChart();
+        $table->getData()->setArrayToDataTable($data);
+
+        $data2 =  [
+            ['Tunis', '2'],
+            ['Ariana', '1'],
+            ['Jendouba', '1'],
+            ['Bizerte', '1'],
+            ['Sidi Bouzid', '1'],
+            ['Sousse', '3'],
+            ['Gafsa',"1"],
+                ['Tozeur',"0"],
+                    ['Kébili',"0"],
+                        ['Tataouine',"0"],
+                            ['Médenine',"0"],
+
+        ];
+
+        $org = new OrgChart();
+        $org->getData()->setArrayToDataTable($data2);
+
+
+
+        return $this->render('@Eco/DashboardAdmin/Missions/indexStats.html.twig', array(
             'recys' => $recys,
             'evenement' => $evenement,
             'collectChart' => $collectChart,
+            'table' =>  $table,
+            'org' =>  $org,
         ));
     }
 

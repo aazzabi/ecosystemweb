@@ -12,6 +12,17 @@
     {% if app.user %}
         <div class="row">
             <div class="col-md-10 offset-md-1 text-right">
+                <div class="w-image text-center">
+                    <img width="1900" height="1080" src="{{ asset ('assets/files/mapmiss.jpg') }}"
+                         class="attachment-full size-full" alt=""
+                         sizes="(max-width: 678px) 100vw, 678px">
+                </div>
+
+<br>
+                <br>
+                <br>
+                <br>
+
                 <button class="btn btn-complete btn-cons " data-target="#collapseSearch" data-toggle="collapse"
                         href="collapseSearch" role="button"><i class="fa fa-filter" aria-hidden="true"></i> Appliquer un
                     filtre
@@ -174,7 +185,7 @@
 
                 {% set cardnb = "card" ~ i   %}
                 <pre>
-    {{ dump(cardnb) }}
+ {#{{ dump(cardnb) }}#}
 </pre>
                 <div class="card">
 
@@ -185,9 +196,9 @@
 
                         {% if evenement.cover != '' %}
                             <div class="front" style=" background-image:url('{{ asset('uploads/missions/cover/' ~ evenement.cover) }}');">
-{{ dump(evenement.cover) }}
+                                {#{{ dump(evenement.cover) }}#}
 
-                        {% endif %}
+                                {% endif %}
                         <div class="inner">
                                 <div class="row">
                                     <div class="col-md-8">

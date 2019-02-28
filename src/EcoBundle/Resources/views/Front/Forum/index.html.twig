@@ -84,6 +84,10 @@
                     data: {
                         "keyWord": keyWord
                     },
+                    error:function(response) {
+                        alert("err");
+                        $("#postContent").html(response);
+                    },
                     success:function(response) {
                         $("#postContent").html(response);
                     },
@@ -217,7 +221,9 @@
                         <div class="divline"></div>
                         <div class="blocktxt">
                             <ul class="cats" id="categss">
-                                <li><a href="{{ path('front_forum_index') }}">Toutes<span class="badge pull-right"></span></a></li>
+                                <li>
+                                    <a href="{{ path('front_forum_index') }}">Toutes<span class="badge pull-right"></span></a>
+                                </li>
                                 {% for categorie in categories %}
                                     <li><a href="{{ path('front_forum_categ_index', {'id' : categorie.id }) }}">{{ categorie.libelle }}<span class="badge pull-right">{{ categorie.publicationsForum | length }}</span></a></li>
                                 {% endfor %}

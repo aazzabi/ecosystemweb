@@ -71,7 +71,7 @@ class ForumController extends Controller
     }
     /**
      *
-     * @Route("/{id}", name="front_forum_categ_index")
+     * @Route("/by/{id}", name="front_forum_categ_index")
      * @Method("GET")
      */
     public function indexPubParCategorieAction(Request $request, $id)
@@ -98,7 +98,7 @@ class ForumController extends Controller
         $publications = $paginator->paginate(
             $publicationsC,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 7)
+            $request->query->getInt('limit', 5)
         );
 
         return $this->render(
@@ -150,7 +150,7 @@ class ForumController extends Controller
 
     /**
      *
-     * @Route("/new", name="front_forum_new")
+     * @Route("/pub/new", name="front_forum_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -368,7 +368,7 @@ class ForumController extends Controller
 
     /**
      *
-     * @Route("/recherche", name="front_forum_recherche")
+     * @Route("/recherchePublication", name="front_forum_recherche")
      * @Method({"GET", "POST"})
      */
     public function rechercheAction(Request $request)
@@ -393,34 +393,4 @@ class ForumController extends Controller
         return $response;
     }
 
-    /**
-     *
-     * @Route("/rechercheC", name="front_get_forum_categ_index")
-     * @Method({"GET", "POST"})
-     */
-    public function rechercheCategAction(Request $request)
-    {
-        $em      = $this->getDoctrine()->getManager();
-        $id = $request->get('id');
-        var_dump($id);die;
-        $categ  = $this->getDoctrine()
-                       ->getManager()
-                       ->getRepository('EcoBundle:CategoriePub')
-                       ->find($id);
-        $publications = $em->getRepository('EcoBundle:PublicationForum')->find(['categorie'=>$categ]);
-
-        $template = $this->render(
-            '@Eco/Front/Forum/publication.html.twig',
-            [
-                'publications' => $publications,
-            ]
-        )->getContent()
-        ;
-
-        $json     = json_encode($template);
-        $response = new Response($json, 200);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-    }
 }

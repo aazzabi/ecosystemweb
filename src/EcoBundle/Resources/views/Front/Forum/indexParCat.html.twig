@@ -85,7 +85,7 @@
                         "keyWord": keyWord
                     },
                     success:function(response) {
-                        $("#postContent").html(response);
+                        $("#postContentDeux").html(response);
                     },
                 });
             });
@@ -159,7 +159,7 @@
         <div class="container">
             <br>
             <div class="row">
-                <div id="postContent" class="col-lg-8 col-md-8">
+                <div id="postContentDeux" class="col-lg-8 col-md-8">
                     {% for publication in publications %}
                         <div class="post">
                             <div class="wrap-ut pull-left">

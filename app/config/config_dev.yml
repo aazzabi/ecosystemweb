@@ -38,9 +38,9 @@ monolog:
         #    level: info
 
 swiftmailer:
-    transport: gmail
-    username: arafet.azzabi@esprit.tn
-    password: 183JMT0449
+    transport: smtp
+    username: pidevmailer2019@gmail.com
+    password: azertY123
     encryption:	ssl
     auth_mode:	login
-    host:	~
+    host:   ~

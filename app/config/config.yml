@@ -86,8 +86,8 @@ fos_user:
     service:                               # this lines
         mailer: fos_user.mailer.twig_swift # this lines
     from_email:
-        address: "arafet.azzabi@esprit.tn"
-        sender_name: "Arafet Azzabi"
+        address: "pidevmailer2019@gmail.com"
+        sender_name: "Mehdi Mheni"
     registration:
         confirmation:
             enabled: true

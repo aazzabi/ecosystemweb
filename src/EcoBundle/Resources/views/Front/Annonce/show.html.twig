@@ -70,7 +70,9 @@
                                 <dd>{{ annonce.views }}</dd>
                             </dl>  <!-- item-property-hor .// -->
                             <hr>
+                            {% if app.user %}
                             {{ socialButtons() }}
+                            {% endif %}
                         </article>
                     </aside>
                 </div>

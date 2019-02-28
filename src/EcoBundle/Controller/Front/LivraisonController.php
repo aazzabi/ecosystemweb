@@ -60,35 +60,44 @@ class LivraisonController extends Controller
          $Livraison->setVilleLivraison($ville_u);
          $Livraison->setAdresseComplete($adresse_complete);
          $Livraison->setIdCommande($id_c);
+
 foreach ($livreurs as $l)
 {
-    if($l->getZone()==$ville_u)
-    {
-        if($l->getDisponibilite()=='Disponible')
+
+        if ($l->getZone() == $ville_u)
         {
-            $id_livreur=$l->getId();
+
+            if($l->getDisponibilite() == 'Disponible')
+            {
+                $id_livreur = $l->getId();
+
+            }
+            else
+            {
+                $dis=$l->getDisponibilite();
+                echo $dis;
+                echo "<script language=\"javascript\" class='foo'>alert(\"Veuillez nous excuser nous n'avons as de livreur Disponible pour le moment ,On va essayer de libérer un livreur \");</script>";
+                $em = $this->getDoctrine()->getManager();
+                $commandes = $em->getRepository('EcoBundle:Commande')->findAll();
+                return $this->render('@Eco/DashboardUser/page_index_commande.html.twig', array(
+                    'commandes' => $commandes
+                ));
+            }
+
         }
         else
-        {
-            echo "<script language=\"javascript\" class='foo'>alert(\"Veuillez nous excuser nous n'avons as de livreur Disponible pour le moment ,On va essayer de libérer un livreur \");</script>";
-            $em=$this->getDoctrine()->getManager();
-            $commandes = $em->getRepository('EcoBundle:Commande')->findAll();
-            return $this->render('@Eco/DashboardUser/page_index_commande.html.twig', array(
-                'commandes'=> $commandes
-            ));
-        }
+            {
+                echo "<script language=\"javascript\" class='foo'>alert(\"Veuillez nous excuser nous n'avons pas de livreur Disponible Dans votre Zone  pour le moment ,Réessayer plus tard\");</script>";
+                $em=$this->getDoctrine()->getManager();
 
-    }
-    else
-    {
-        echo "<script language=\"javascript\" class='foo'>alert(\"Veuillez nous excuser nous n'avons as de livreur Disponible Dans votre Zone  pour le moment ,Réessayer plus tard\");</script>";
-        $em=$this->getDoctrine()->getManager();
+                $commandes = $em->getRepository('EcoBundle:Commande')->findAll();
+                return $this->render('@Eco/DashboardUser/page_index_commande.html.twig', array(
+                    'commandes'=> $commandes
+                ));
 
-        $commandes = $em->getRepository('EcoBundle:Commande')->findAll();
-        return $this->render('@Eco/DashboardUser/page_index_commande.html.twig', array(
-            'commandes'=> $commandes
-        ));
-    }
+            }
+
+
 }
          $Livraison->setEtatLivraison('En cours');
          $Livraison->setDateLivraison($date_com->modify('+4 day'));

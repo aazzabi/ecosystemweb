@@ -60,7 +60,9 @@
                                 </td>
                                 <td>
                                     <a  href="{{ path('ligne_show2',{ 'id_c': value.id  }) }}"> Afficher les détails </a> </br>
+                                    {% if value.etatCommande=='En cours' %}
                                     <a  href="{{ path('annuler_commande2',{ 'id_c': value.id  }) }}">Annuler Commande </a>
+                                    {% endif %}
                                 </td>
                             </tr>
 

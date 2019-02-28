@@ -63,9 +63,11 @@
                             <td>
 
                                 <a  href="{{ path('ligne_show',{ 'id_c': value.id  }) }}">Afficher les détails </a> </br>
+                        {% if value.etatCommande=='En cours' %}
                                 <a  href="{{ path('annuler_commande',{ 'id_c': value.id  }) }}">Annuler Commande </a> </br>
-                                <a  href="{{ path('ajout_livraison',{ 'id_c': value.id ,'id_u': app.user.id,'nom_prop': app.user.nomPropriete,'rue_u': app.user.rue,'ville_u': app.user.ville}) }}" >Demander Livraison </a> </td>
 
+                                <a  href="{{ path('ajout_livraison',{ 'id_c': value.id ,'id_u': app.user.id,'nom_prop': app.user.nomPropriete,'rue_u': app.user.rue,'ville_u': app.user.ville}) }}" >Demander Livraison </a> </td>
+                            {% endif %}
                         </tr>
                         {% endif %}
                     {% endfor %}

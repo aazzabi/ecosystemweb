@@ -46,7 +46,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="$nom_propriete", type="string", length=255, nullable=true)
+     * @ORM\Column(name="nom_propriete", type="string", length=255, nullable=true)
      */
     private $nomPropriete;
     /**

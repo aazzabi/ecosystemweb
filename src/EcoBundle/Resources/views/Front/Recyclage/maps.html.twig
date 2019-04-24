@@ -1,28 +1,54 @@
-{% extends 'base.html.twig' %}
+{% extends '@Eco/front/Recyclage/index.html.twig' %}
 
     {% block stylesheets %}
-        <link href="{{ asset ('assets/css/Recyclage.css') }}" rel="stylesheet" type="text/css">
 
     {% endblock %}
 
     {% block body %}
+
+
         <style>
             #map {
-                width: 50%;
-                height: 400px;
+                width: 100%;
+                height: 850px;
                 background-color: grey;
             }
         </style>
 
         <div id="page" class="container-fluid m-t-10">
 
-            <div class="row">
-                <div id="map">
+            <div id="content">
+                <div class="main-content full-width no-sidebar">
+                    <section class="w-section w-full w-full-height" style="background-color: rgb(0, 0, 0); min-height: 730px;">
+                        <div class="section-background">
+                            <div class="bg-wrapper bg-image"
+                                 style="background-image:url('{{ asset('assets/files/bg.png') }}');background-position:center center"></div>
+                        </div>
+                        <div class="row w-align-middle w-row-flex">
+                            <div class="col col-12 text-center">
+                                <div class="col-inner">
+                                    <div class="w-image text-center">
+                                        <img width="1900" height="1080" src="{{ asset ('assets/files/ptcoll.jpg') }}"
+                                             class="attachment-full size-full" alt=""
+                                             sizes="(max-width: 678px) 100vw, 678px"></div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <center>
+                        <div class="vc_row-full-width">
+                            <div id="map">
+
+                            </div>
+                        </div>
 
                 </div>
             </div>
+        </section>
 
-        </div>
         {% for marker in markers %}
             <div class="modal" tabindex="-1" role="dialog" id="modalMap{{ marker.id }}">
                 <div class="modal-dialog" role="document">
@@ -48,7 +74,42 @@
                     </div>
                 </div>
             </div>
+            </center>
+
+
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
         {% endfor %}
+
+<br>
+        <br>
+        <br>
+
+
+
+
+
+        <link id="google_fonts_roboto_condensed300300italicregularitalic700700italic"
+              href="{{ asset ('assets/files/css(1).css') }}" rel="stylesheet" property="stylesheet" type="text/css" media="all">
+        <link id="google_fonts_roboto_slab100300regular700" href="{{ asset ('assets/files/css(2).css') }}" rel="stylesheet"
+              property="stylesheet" type="text/css" media="all">
+
+        <a id="toplink-button" href="{{ path('front_maps_index') }}" class="active" style="display: block;">
+<span class="border">
+<i class="gg-up"></i>
+</span>
+        </a>
     {% endblock %}
 
 {% block javascripts %}

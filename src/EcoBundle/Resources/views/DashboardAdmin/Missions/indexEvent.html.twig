@@ -52,6 +52,19 @@
                             &nbsp;Voir les catégories
                         </i>
                     </a>
+                    <br>
+                    <a href="{{ path('da_missionsStats_index') }}" class="btn btn-default-focus">
+                        <i class="icon-plus">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            &nbsp;Voir les statistiques
+                        </i>
+                    </a>
+                    <a href="{{ path('du_missions_index') }}" class="btn btn-default-focus">
+                        <i class="icon-plus">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            &nbsp;Voir les missions en DU
+                        </i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -117,11 +130,15 @@
                                style="width: 100% !important;">
                             <thead>
                             <tr>
-                                <th>Objectif</th>
-                                <th> matscollectes</th>
+                                <th>titre</th>
+                                <th> description</th>
+                                <th>lieu</th>
+                                <th>date</th>
                                 <th>dateLimite</th>
-                                <th>recompense</th>
-                                <th>Actions</th>
+                                <th>objectif</th>
+                                <th>atteint</th>
+                                <th>createdBy</th>
+
                             </tr>
                             </thead>
                             <tbody>

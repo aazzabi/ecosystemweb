@@ -297,26 +297,7 @@ class RecyclerController extends Controller
         return $this->redirectToRoute('front_missions_index');
 
     }
-    /**
-     * @Route("/recy", name="front_recyclageee")
-     * @Method("GET")
-     */
-    public function recAction(Request $request)
-    {
-//        $em = $this->getDoctrine()->getManager();
-//        $evenement = $em->getRepository('EcoBundle:Missions')->find($id);
-//        $user = $this->get('security.token_storage')->getToken()->getUser();
-//
-//        $evenement->addProfile($user);
-//        $user->addMissionsParticipes($evenement);
-//
-//        $em->persist($evenement);
-//        $em->persist($user);
-//        $em->flush();
 
-        return $this->render('@Eco/Front/Recyclage/indexxx.html.twig');
-
-    }
 
 
 
@@ -338,8 +319,9 @@ class RecyclerController extends Controller
         // $em->persist($evenement);
         //   $em->persist($user);
         $em->flush();
-        return $this->redirectToRoute('front_missions_index');
         $this->addFlash("warning", "Vous avez annuler votre participation ! ");
+
+        return $this->redirectToRoute('front_missions_index');
 
     }
 

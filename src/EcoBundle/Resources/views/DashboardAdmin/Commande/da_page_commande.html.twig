@@ -37,9 +37,8 @@
                     </tr>
                     <tbody>
                     {% for value in commandes %}
-
                             <tr>
-                                <td>{{ value.id}}</td>
+                                <td>{{ value.id }}</td>
                                 <td>{{ value.dateEmission|date}}</td>
                                 <td>{{ value.etatCommande }}
                                     {% if value.etatCommande=='En cours' %}
@@ -54,7 +53,7 @@
                                 <td>
                                     {% for u in users %}
                                         {% if value.idUtilisateur == u.id %}
-                                        {{ u.nom }} {{ u.prenom }}
+                                   {{ u.nom }} {{ u.prenom }}
                                         {%  endif %}
                                     {% endfor %}
                                 </td>

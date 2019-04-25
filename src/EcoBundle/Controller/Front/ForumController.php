@@ -17,6 +17,8 @@ use EcoBundle\Entity\RespAsso;
 use EcoBundle\Entity\RespSoc;
 use EcoBundle\Entity\SignalisationForumComm;
 use EcoBundle\Entity\User;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -24,6 +26,11 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  *
@@ -390,6 +397,75 @@ class ForumController extends Controller
         $response = new Response($json, 200);
         $response->headers->set('Content-Type', 'application/json');
 
+        return $response;
+    }
+
+    /**
+     *
+     * @Route("/allPublicationOld", name="all_publications_old")
+     * @Method("GET")
+     */
+    public function allOldAction()
+    {
+        $publications = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->find(2);
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+        $jsonContent = $serializer->serialize($publications, 'json');
+        return new $jsonContent;
+    }
+
+    /**
+     *
+     * @Route("/allPublication", name="all_publications")
+     * @Method("GET")
+     */
+    public function allAction()
+    {
+        $publications = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->find(2);
+        $normalizer = new JsonSerializableNormalizer();
+        $normalizer->setCircularReferenceLimit(1);
+//        $normalizer->setCircularReferenceHandler(function($object){
+//            return $object->getId();
+//        });
+        $serializer = new Serializer([$normalizer], [new JsonEncoder()]);
+
+        $json = $serializer->serialize($publications, 'json', [
+            'enable_max_depth' => false
+        ]);
+
+        return new Response($json);
+    }
+
+    /**
+     *
+     * @Route("/workshop", name="workshop")
+     * @Method("GET")
+     */
+    public  function workshopAction(){
+        $pubs = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formated = $serializer->normalize($pubs);
+        return new JsonResponse($formated);
+    }
+
+
+    /**
+     *
+     * @Route("/jms", name="jms")
+     * @Method("GET")
+     */
+    public  function jmsAction(){
+        $pubs = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findAll();
+        //$foo = array('champs 1 ' => 'variable 1 ', 'champs 2 ' => 'variable 2 ' );
+
+        $serializer = SerializerBuilder::create()->build();
+        SerializationContext::create()->enableMaxDepthChecks();
+        $data = $serializer->serialize($pubs, 'json');
+        var_dump("hey");die;
+
+        $response = new JsonResponse();
+        $response->setContent($data);
         return $response;
     }
 

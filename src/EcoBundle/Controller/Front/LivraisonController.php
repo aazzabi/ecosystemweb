@@ -35,6 +35,7 @@ class LivraisonController extends Controller
      */
     public function newAction($id_c,$id_u,$nom_prop,$rue_u,$ville_u)
      {
+         $x=0;
          $em =$this->getDoctrine()->getManager();
          $livreurs = $em->getRepository('EcoBundle:Livreur')->findAll();
         // $commandes = $em->getRepository('EcoBundle:Livreur')->findAll();
@@ -60,36 +61,34 @@ class LivraisonController extends Controller
          $Livraison->setVilleLivraison($ville_u);
          $Livraison->setAdresseComplete($adresse_complete);
          $Livraison->setIdCommande($id_c);
+
 foreach ($livreurs as $l)
 {
-    if($l->getZone()==$ville_u)
-    {
-        if($l->getDisponibilite()=='Disponible')
+        if ($l->getDisponibilite() == 'Disponible')
         {
-            $id_livreur=$l->getId();
-        }
-        else
-        {
-            echo "<script language=\"javascript\" class='foo'>alert(\"Veuillez nous excuser nous n'avons as de livreur Disponible pour le moment ,On va essayer de libérer un livreur \");</script>";
-            $em=$this->getDoctrine()->getManager();
-            $commandes = $em->getRepository('EcoBundle:Commande')->findAll();
-            return $this->render('@Eco/DashboardUser/page_index_commande.html.twig', array(
-                'commandes'=> $commandes
-            ));
+            if($l->getZone() == $ville_u)
+            {
+
+                $id_livreur = $l->getId();
+
+            }
+
         }
 
-    }
-    else
-    {
-        echo "<script language=\"javascript\" class='foo'>alert(\"Veuillez nous excuser nous n'avons as de livreur Disponible Dans votre Zone  pour le moment ,Réessayer plus tard\");</script>";
-        $em=$this->getDoctrine()->getManager();
 
-        $commandes = $em->getRepository('EcoBundle:Commande')->findAll();
-        return $this->render('@Eco/DashboardUser/page_index_commande.html.twig', array(
-            'commandes'=> $commandes
-        ));
-    }
 }
+/*
+if($x!=1)
+{
+    echo "<script language=\"javascript\" class='foo'>alert(\"Veuillez nous excuser nous avons un manqe d''effectif au niveau des livreurs ,Réessayer plus tard\");</script>";
+    $em = $this->getDoctrine()->getManager();
+    $commandes = $em->getRepository('EcoBundle:Commande')->findAll();
+    return $this->render('@Eco/DashboardUser/page_index_commande.html.twig', array(
+        'commandes' => $commandes
+    ));
+}
+*/
+
          $Livraison->setEtatLivraison('En cours');
          $Livraison->setDateLivraison($date_com->modify('+4 day'));
          $Livraison->setIdLivreur($id_livreur);

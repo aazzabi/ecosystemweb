@@ -12,3 +12,4 @@ fos_user_group:
 #users_index:
 #    path: /user/
 #    defaults: { _controller: EcoBundle:User:index }
+

@@ -266,7 +266,6 @@ class EvenementController extends Controller
        }
        return $this->redirectToRoute('front_evenements_index');
    }
-
     /**
      * @Route("/evenementNP", name="front_evenements_noparticiper")
      * @Method("GET")
@@ -336,5 +335,6 @@ class EvenementController extends Controller
         return $this->render('@Eco/Front/Evenement/indexBest.html.twig',array("events"=>$events));
 
     }
+
 
 }

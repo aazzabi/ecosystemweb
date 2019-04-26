@@ -36,7 +36,7 @@ class CategorieAnnonce
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="annonce")
+     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="categorie")
      * @ORM\JoinColumn(name="annonce_id", referencedColumnName="id")
      */
     private $annonces;

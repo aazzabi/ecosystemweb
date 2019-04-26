@@ -8,20 +8,13 @@
 
 namespace EcoBundle\Controller\Front;
 
-use EcoBundle\Entity\CategoriePub;
 use EcoBundle\Entity\CommentairePublication;
-use EcoBundle\Entity\Livreur;
 use EcoBundle\Entity\PublicationForum;
-use EcoBundle\Entity\Reparateur;
-use EcoBundle\Entity\RespAsso;
-use EcoBundle\Entity\RespSoc;
 use EcoBundle\Entity\SignalisationForumComm;
-use EcoBundle\Entity\User;
 use JMS\Serializer\SerializationContext;
-use JMS\Serializer\SerializerBuilder;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -449,23 +442,26 @@ class ForumController extends Controller
         return new JsonResponse($formated);
     }
 
-
     /**
-     *
      * @Route("/jms", name="jms")
      * @Method("GET")
      */
-    public  function jmsAction(){
-        $pubs = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findAll();
-        //$foo = array('champs 1 ' => 'variable 1 ', 'champs 2 ' => 'variable 2 ' );
+    public function jmsAction()
+    {
+        $pubs = $this->getDoctrine()->getManager()
+                     ->getRepository(PublicationForum::class)
+                     ->findAll();
 
-        $serializer = SerializerBuilder::create()->build();
-        SerializationContext::create()->enableMaxDepthChecks();
-        $data = $serializer->serialize($pubs, 'json');
-        var_dump("hey");die;
+        $serializer = $this->get('jms_serializer');
 
-        $response = new JsonResponse();
-        $response->setContent($data);
+        $response = new Response(
+            $serializer->serialize(
+                $pubs,
+                'json'
+            )
+        );
+        $response->headers->set('Content-Type', 'application/json');
+
         return $response;
     }
 

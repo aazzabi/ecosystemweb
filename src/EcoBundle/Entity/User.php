@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="user")
  * @Vich\Uploadable
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
@@ -89,7 +90,7 @@ class User extends BaseUser
     private $photoUpdatedAt;
     /**
      *
-     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="User")
+     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="user")
      */
     private $myAnnonces;
 

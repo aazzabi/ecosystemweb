@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block body %}
+    <title>{% block title %}RECYCLAGE{% endblock %}</title>
 
     <br>
     {% if app.user %}
@@ -48,7 +49,7 @@
                 <div class="collapse col-md-12" id="collapseSearch">
                     <form id="form-project" method="GET" role="form" autocomplete="off" novalidate="novalidate">
                         <div class="card card-body col-md-12" style="padding: 20px; width: 100%">
-                            <h5 class="m-t-10">Filtrer selon:</h5>
+                            <h5 class="m-t-10">Recherche Avancée: </h5>
                             <div class="form-group-attached">
                                 <div class="row clearfix">
                                     {#Disponibilité#}
@@ -72,8 +73,20 @@
                                     <div class="col-sm-2">
                                         <div class="form-group form-group-default">
                                             <label>Lieu </label>
-                                            <input type="text" class="form-control" name="lieu" id="lieu"
-                                                   value="{{ app.session.get('lieu') }}">
+                                             <select class="form-control" name="lieu" id="lieu"><option value="">Aucune région</option><option value="Tunis">Tunis</option>
+                                            <option value="Ariana">Ariana</option>
+                                            <option value="Manouba">Manouba</option>
+                                            <option value="Bizerte">Bizerte</option>
+                                            <option value="Béja">Béja</option>
+                                            <option value="Jendouba">Jendouba</option>
+                                            <option value="Manouba">Manouba</option>
+                                            <option value="Kef">Kef</option>
+                                            <option value="Siliana">Siliana</option>
+                                            <option value="Kasserine">Kasserine</option>
+                                            <option value="Gafsa">Gafsa</option>
+                                            <option value="Tozeur">Tozeur</option>
+                                                </select>
+                                                   {#value="{{ app.session.get('lieu') }}">#}
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
@@ -87,10 +100,10 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
 
-                                        <form class="m-t-5" role="form">
-                                            <div class="form-group form-group-default form-group-default-select2">
+                                        <form class="m-t-10" role="form">
+                                            <div class="form-group form-group-default-select2">
                                                 <label> Mots clés :</label>
                                                 <select class=" full-width" data-init-plugin="select2" multiple>
                                                     <option value="Nettoyage">Nettoyage</option>

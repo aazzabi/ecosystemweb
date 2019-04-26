@@ -63,6 +63,8 @@ class LivreurController extends Controller
     {
         $em=$this->getDoctrine()->getManager();
         $livraison = $em->getRepository('EcoBundle:Livraison')->findAll();
+        $ligne = $em->getRepository('EcoBundle:LigneCommande')->findAll();
+        $annonce = $em->getRepository('EcoBundle:Annonce')->findAll();
         $commandes = $em->getRepository('EcoBundle:Commande')->findAll();
         $livreur = $em->getRepository('EcoBundle:Livreur')->findAll();
         foreach ($livraison as $livraison)
@@ -78,6 +80,22 @@ class LivreurController extends Controller
                     {
                         $c->setEtatCommande('Effectué');
                         $em->flush();
+                        foreach ($ligne as $l)
+                        {
+                            if($l->getIdCommande()==$id_com)
+                            {
+                                $id_a=$l->getIdAnnonce();
+                                foreach ($annonce as $a)
+                                {
+                                    if($a->getId()==$id_a)
+                                    {
+                                        $em->remove($a);
+                                        $em->flush();
+                                    }
+                                }
+                            }
+                        }
+
                     }
                 }
             }

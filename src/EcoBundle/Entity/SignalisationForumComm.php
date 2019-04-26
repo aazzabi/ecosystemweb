@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * SignalisationCommPub
  *
- * @ORM\Table(name="signalisationForumComm")
+ * @ORM\Table(name="signalisationforumcomm")
  * @ORM\Entity(repositoryClass="EcoBundle\Repository\SignalisationRepository")
  */
 class SignalisationForumComm

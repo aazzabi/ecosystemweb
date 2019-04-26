@@ -5,6 +5,7 @@ namespace EcoBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 
 /**
@@ -56,7 +57,7 @@ class PublicationForum
      *
      * @ORM\ManyToOne(targetEntity="CategoriePub")
      * @ORM\JoinColumn(nullable=true, referencedColumnName="id", onDelete="CASCADE")
-     *
+     * @JMS\MaxDepth(2)
      */
     private $categorie;
 
@@ -65,7 +66,7 @@ class PublicationForum
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=true, referencedColumnName="id", onDelete="CASCADE")
-     *
+     * @JMS\MaxDepth(2)
      */
     private $publicationCreatedBy;
 

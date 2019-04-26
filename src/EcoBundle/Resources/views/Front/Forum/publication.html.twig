@@ -34,8 +34,7 @@
                 </div>
             </div>
             {% set difference = date(publication.publicationCreatedAt).diff(date())  %}
-
-            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
+            <div class="views"><i class="fa fa-eye"></i>  {{ publication.nbrVues }} </div>
             {% if difference.days == 0  %}
                 <div class="time"><i class="fa fa-clock-o"></i> Aujourd'hui</div>
             {% elseif difference.days == 1 %}

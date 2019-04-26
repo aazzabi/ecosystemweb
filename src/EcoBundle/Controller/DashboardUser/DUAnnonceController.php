@@ -26,11 +26,8 @@ class DUAnnonceController extends Controller
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
-        //$annonces = $user->getMyAnnonces();
-//        $em = $this->getDoctrine()->getManager();
         $annonces = $em->getRepository('EcoBundle:Annonce')->findByUser($user);
 
-        //var_dump($annonces);die;
 
         return $this->render('@Eco/DashboardUser/Annonce/index.html.twig', array(
             'useer' => $user,

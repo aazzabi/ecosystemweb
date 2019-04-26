@@ -8,22 +8,22 @@
 
 namespace EcoBundle\Controller\Front;
 
-use EcoBundle\Entity\CategoriePub;
 use EcoBundle\Entity\CommentairePublication;
-use EcoBundle\Entity\Livreur;
 use EcoBundle\Entity\PublicationForum;
-use EcoBundle\Entity\Reparateur;
-use EcoBundle\Entity\RespAsso;
-use EcoBundle\Entity\RespSoc;
 use EcoBundle\Entity\SignalisationForumComm;
-use EcoBundle\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  *
@@ -57,7 +57,7 @@ class ForumController extends Controller
         $publications = $paginator->paginate(
             $publicationsPubliee,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 7)
+            $request->query->getInt('limit', 5)
         );
 
         return $this->render(
@@ -66,6 +66,47 @@ class ForumController extends Controller
                 'categories'            => $categoriesPub,
                 'publications'          => $publications,
                 'publicationsArchivees' => $publicationsArchivee,
+            ]
+        );
+    }
+    /**
+     *
+     * @Route("/by/{id}", name="front_forum_categ_index")
+     * @Method("GET")
+     */
+    public function indexPubParCategorieAction(Request $request, $id)
+    {
+        $categoriesPub        = $this->getDoctrine()->getManager()->getRepository('EcoBundle:CategoriePub')->findAll();
+        $categ  = $this->getDoctrine()
+                                     ->getManager()
+                                     ->getRepository('EcoBundle:CategoriePub')
+                                     ->find($id);
+        $publicationsC  = $this->getDoctrine()
+                                     ->getManager()
+                                     ->getRepository('EcoBundle:PublicationForum')
+                                     ->findBy(['categorie'=> $categ]);
+
+        $publicationsArchivee = $this->getDoctrine()
+                                     ->getManager()
+                                     ->getRepository('EcoBundle:PublicationForum')
+                                     ->findFivePublicationArchivee()
+        ;
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator    = $this->get('knp_paginator');
+        $publications = $paginator->paginate(
+            $publicationsC,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 5)
+        );
+
+        return $this->render(
+            '@Eco/Front/Forum/indexParCat.html.twig',
+            [
+                'publicationsArchivees' => $publicationsArchivee,
+                'categories'            => $categoriesPub,
+                'publications'          => $publications,
             ]
         );
     }
@@ -109,7 +150,7 @@ class ForumController extends Controller
 
     /**
      *
-     * @Route("/new", name="front_forum_new")
+     * @Route("/pub/new", name="front_forum_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -327,7 +368,7 @@ class ForumController extends Controller
 
     /**
      *
-     * @Route("/recherche", name="front_forum_recherche")
+     * @Route("/recherchePublication", name="front_forum_recherche")
      * @Method({"GET", "POST"})
      */
     public function rechercheAction(Request $request)
@@ -350,5 +391,54 @@ class ForumController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    /**
+     *
+     * @Route("/allPublicationOld", name="all_publications_old")
+     * @Method("GET")
+     */
+    public function allOldAction()
+    {
+        $publications = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->find(2);
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+        $jsonContent = $serializer->serialize($publications, 'json');
+        return new $jsonContent;
+    }
+
+    /**
+     *
+     * @Route("/allPublication", name="all_publications")
+     * @Method("GET")
+     */
+    public function allAction()
+    {
+        $publications = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->find(2);
+        $normalizer = new JsonSerializableNormalizer();
+        $normalizer->setCircularReferenceLimit(1);
+//        $normalizer->setCircularReferenceHandler(function($object){
+//            return $object->getId();
+//        });
+        $serializer = new Serializer([$normalizer], [new JsonEncoder()]);
+
+        $json = $serializer->serialize($publications, 'json', [
+            'enable_max_depth' => false
+        ]);
+
+        return new Response($json);
+    }
+
+    /**
+     *
+     * @Route("/workshop", name="workshop")
+     * @Method("GET")
+     */
+    public  function workshopAction(){
+        $pubs = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formated = $serializer->normalize($pubs);
+        return new JsonResponse($formated);
     }
 }

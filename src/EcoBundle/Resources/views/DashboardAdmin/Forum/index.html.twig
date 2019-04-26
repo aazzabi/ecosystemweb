@@ -148,6 +148,7 @@
                                 <th>Libellé</th>
                                 <th>Description</th>
                                 <th>Domaine</th>
+                                <th>Nombre de publications</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -158,6 +159,7 @@
                                     <td>{{ categorie.libelle }}</td>
                                     <td>{{ categorie.description }}</td>
                                     <td>{{ categorie.domaine }}</td>
+                                    <td>{{ categorie.publicationsForum | length }}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm btn-group-horizontal">
                                             <a class="btn btn-secondary" href="{{ path('da_forum_edit', { 'id': categorie.id }) }}"

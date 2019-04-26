@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="user")
  * @Vich\Uploadable
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
@@ -46,7 +47,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="$nom_propriete", type="string", length=255, nullable=true)
+     * @ORM\Column(name="nom_propriete", type="string", length=255, nullable=true)
      */
     private $nomPropriete;
     /**
@@ -61,86 +62,6 @@ class User extends BaseUser
      * @ORM\Column(name="ville", type="string", length=255 , nullable=true)
      */
     private $ville;
-
-
-    /**
-     * @return string
-     */
-    public function getNomPropriete()
-    {
-        return $this->nomPropriete;
-    }
-
-    /**
-     * @param string $nomPropriete
-     */
-    public function setNomPropriete($nomPropriete)
-    {
-        $this->nomPropriete = $nomPropriete;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRue()
-    {
-        return $this->rue;
-    }
-
-    /**
-     * @param string $rue
-     */
-    public function setRue($rue)
-    {
-        $this->rue = $rue;
-    }
-
-    /**
-     * @return string
-     */
-    public function getVille()
-    {
-        return $this->ville;
-    }
-
-    /**
-     * @param string $ville
-     */
-    public function setVille($ville)
-    {
-        $this->ville = $ville;
-    }
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="numtel", type="string",length=8,nullable=true )
-     * @Assert\Length(
-     *      min = 8,
-     *      max = 8,
-     *      minMessage = "Le numéro de téléphone doit se composer de deux chiffre",
-     *      maxMessage = "Le numéro de téléphone doit se composer de deux chiffre",
-     * )
-     */
-    private $numtel;
-
-    /**
-
-    /**
-     * @return string
-     */
-    public function getNumtel()
-    {
-        return $this->numtel;
-    }
-
-    /**
-     * @param int $numtel
-     */
-    public function setNumtel($numtel)
-    {
-        $this->numtel = $numtel;
-    }
 
     /**
      * @var array
@@ -169,7 +90,7 @@ class User extends BaseUser
     private $photoUpdatedAt;
     /**
      *
-     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="User")
+     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="user")
      */
     private $myAnnonces;
 
@@ -226,6 +147,99 @@ class User extends BaseUser
     private $missionsParticipes;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="numtel", type="string",length=8,nullable=true )
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      minMessage = "Le numéro de téléphone doit se composer de deux chiffre",
+     *      maxMessage = "Le numéro de téléphone doit se composer de deux chiffre",
+     * )
+     */
+    private $numtel;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->photoUpdatedAt = new \DateTime('now');
+        $this->enabled = true;
+        $this->roles = array();
+        $this->eventsCrees = new ArrayCollection();
+        $this->missionsCrees = new ArrayCollection();
+        $this->eventsParticipes = new ArrayCollection();
+        $this->missionsParticipes = new ArrayCollection();
+        $this->myAnnonces = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function getNomPropriete()
+    {
+        return $this->nomPropriete;
+    }
+
+    /**
+     * @param string $nomPropriete
+     */
+    public function setNomPropriete($nomPropriete)
+    {
+        $this->nomPropriete = $nomPropriete;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRue()
+    {
+        return $this->rue;
+    }
+
+    /**
+     * @param string $rue
+     */
+    public function setRue($rue)
+    {
+        $this->rue = $rue;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * @param string $ville
+     */
+    public function setVille($ville)
+    {
+        $this->ville = $ville;
+    }
+
+    /**
+
+    /**
+     * @return string
+     */
+    public function getNumtel()
+    {
+        return $this->numtel;
+    }
+
+    /**
+     * @param int $numtel
+     */
+    public function setNumtel($numtel)
+    {
+        $this->numtel = $numtel;
+    }
+
+    /**
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getMissionsParticipes()
@@ -241,18 +255,6 @@ class User extends BaseUser
         $this->missionsParticipes = $missionsParticipes;
     }
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->photoUpdatedAt = new \DateTime('now');
-        $this->enabled = true;
-        $this->roles = array();
-        $this->eventsCrees = new ArrayCollection();
-        $this->missionsCrees = new ArrayCollection();
-        $this->eventsParticipes = new ArrayCollection();
-        $this->missionsParticipes = new ArrayCollection();
-        $this->myAnnonces = new ArrayCollection();
-    }
 
     public function addMyAnnonce(Annonce $annonce)
     {

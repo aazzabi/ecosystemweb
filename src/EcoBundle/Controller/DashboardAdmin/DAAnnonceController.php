@@ -10,9 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Ob\HighchartsBundle\Highcharts\Highchart;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  *
@@ -36,6 +39,17 @@ class DAAnnonceController extends Controller
             'annonce' => $annonce,
             'categorieAnnonce' => $categorieAnnonce,
         ));
+    }
+    /**
+     * @Route("/allanonces", name="da_json")
+     * @Method("GET")
+     */
+    public function allAction()
+    {
+        $task = $this->getDoctrine()->getManager()->getRepository(Annonce::class)->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formated=$serializer->normalize($task);
+        return new  JsonResponse($formated);
     }
 
     /**

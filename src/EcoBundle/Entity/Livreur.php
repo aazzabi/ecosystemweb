@@ -90,28 +90,21 @@ class Livreur extends User
     }
 
     /**
-     * Set zone
-     *
-     * @param string $zone
-     *
-     * @return Livreur
-     */
-    public function setZone($zone)
-    {
-        $this->zone = $zone;
-
-        return $this;
-    }
-
-    /**
-     * Get zone
-     *
      * @return string
      */
     public function getZone()
     {
         return $this->zone;
     }
+
+    /**
+     * @param string $zone
+     */
+    public function setZone($zone)
+    {
+        $this->zone = $zone;
+    }
+
 
     /**
      * Set disponibilite

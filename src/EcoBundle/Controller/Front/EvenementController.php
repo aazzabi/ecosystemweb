@@ -325,6 +325,72 @@ class EvenementController extends Controller
     }
 
     /**
+     * @Route("/evenement/oui/ajax", name="front_event_participer_ajax")
+     * @Method({"GET", "POST"})
+     */
+    public function participerAjaxAction(Request $request)
+    {
+        $id        = $request->get('id');
+        $em        = $this->getDoctrine()->getManager();
+        $evenement = $em->getRepository('EcoBundle:Evenement')->find($id);
+        $user      = $this->get('security.token_storage')->getToken()->getUser();
+        $user->addEventsParticipes($evenement);
+        $evenement->addPartcipants($user);
+        $em->persist($evenement);
+        $em->persist($user);
+        $em->flush();
+
+        $events = $em->getRepository('EcoBundle:Evenement')->findAll();
+        $template = $this->render(
+            '@Eco/Front/Evenement/allEvents.html.twig',
+            [
+                'evenements' => $events,
+            ]
+        )->getContent()
+        ;
+
+        $json     = json_encode($template);
+        $response = new Response($json, 200);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+
+    /**
+     * @Route("/evenement/no/ajax/", name="front_event_no_participer_ajax")
+     * @Method("GET")
+     */
+    public function noParticiperAjaxAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->removeEventsParticipes($evenement);
+        $evenement->removeParticipants($user);
+        $em->persist($evenement);
+        $em->persist($user);
+        $em->flush();
+
+        $events = $em->getRepository('EcoBundle:Evenement')->findAll();
+
+        $template = $this->render(
+            '@Eco/Front/Evenement/allEvents.html.twig',
+            [
+                'evenements' => $events,
+            ]
+        )->getContent();
+
+        $json     = json_encode($template);
+        $response = new Response($json, 200);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+    /**
      * @Route("/evenementBest", name="front_evenements_Best")
      * @Method("GET")
      */

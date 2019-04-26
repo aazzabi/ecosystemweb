@@ -193,9 +193,9 @@
     <br>
 
 
-    <div class="row" id="eventsContent">
+    <div class="row" id="eventsContent" style="padding-left: 200px">
         {% for  evenement in evenements %}
-            <div class="col-sm-4 offset-md-1">
+            <div class="col-sm-5">
                 <ul class="event-list">
                     <li>
                         <time datetime="2014-07-31 1600">
@@ -251,15 +251,18 @@
                                             <div class="via">via {{ evenement.createdBy }}</div>
                                         </div>
                                         {% if app.user %}
-                                            <div class="col-sm-3">
-                                                <button id="participer" type="submit" value="{{ evenement.id}}"
-                                                        class="confirmer{{ evenement.id }} btn participer btn-sm btn-info">
-                                                    <i class="fa fa-smile-o" aria-hidden="true"></i>Je participe!
-                                                </button>
-                                                <button id="annuleParticiper" type="submit" value="{{ evenement.id}}"
-                                                        class="annuler{{ evenement.id }} btn annuleParticiper btn-sm btn-info">
-                                                    <i class="fa fa-thumbs-down" aria-hidden="true"></i>Je participe plus
-                                                </button>
+                                            <div class="col-md-7 text-right">
+                                                {% if app.user in evenement.participants %}
+                                                    <button id="annuleParticiper" type="submit" value="{{ evenement.id}}"
+                                                            class="annuler{{ evenement.id }} btn annuleParticiper btn-sm btn-info">
+                                                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>Je participe plus
+                                                    </button>
+                                                {% else %}
+                                                    <button id="participer" type="submit" value="{{ evenement.id}}"
+                                                            class="confirmer{{ evenement.id }} btn participer btn-sm btn-info">
+                                                        <i class="fa fa-smile-o" aria-hidden="true"></i>Je participe!
+                                                    </button>
+                                                {% endif %}
                                             </div>
                                         {% endif %}
                                     </div>
@@ -275,51 +278,86 @@
 
 {% endblock %}
 {% block javascripts %}
-    <script type="text/javascript">
-        $(function () {
-            $('#datePicker').datetimepicker();
-        });
+    {#<script type="text/javascript">#}
+        {#$(function () {#}
+            {#$('#datePicker').datetimepicker();#}
+        {#});#}
 
+        {#$(".participer").click(function () {#}
+            {#var id = $(this).val();#}
+
+           {#// alert(id);#}
+            {#$.ajax({#}
+                {#dataType: "json",#}
+                {#url: "{{ path("front_evenements_participer") }}",#}
+                {#data: {#}
+                    {#"id": id#}
+                {#},#}
+                {#error: function(response){#}
+                    {#$(".confirmer"+id).hide();#}
+                    {#$(".annuler"+id).show();#}
+                    {#//  alert(".annuler"+id);#}
+                {#},#}
+                {#success: function(response){#}
+                    {#$(".confirmer"+id).hide();#}
+                    {#$(".annuler"+id).show();#}
+                {#}});#}
+        {#});#}
+
+        {#$(".annuleParticiper").click(function () {#}
+            {#var id = $(this).val();#}
+
+            {#$.ajax({#}
+                {#dataType: "json",#}
+                {#url: "{{ path("front_evenements_noparticiper") }}",#}
+                {#data: {#}
+                    {#"id": id#}
+                {#},#}
+                {#error: function(response){#}
+                    {#$(".annuler"+id).hide();#}
+                    {#$(".confirmer"+id).show();#}
+                {#},#}
+                {#success: function(response){#}
+                    {#$(".annuler"+id).hide();#}
+                    {#$(".confirmer"+id).show();#}
+                {#}});#}
+        {#});#}
+    {#</script>#}
+    <script type="text/javascript">
         $(".participer").click(function () {
             var id = $(this).val();
-
-           // alert(id);
             $.ajax({
                 dataType: "json",
-                url: "{{ path("front_evenements_participer") }}",
+                url: "{{ path("front_event_participer_ajax") }}",
                 data: {
                     "id": id
                 },
                 error: function(response){
-                    $(".confirmer"+id).hide();
-                    $(".annuler"+id).show();
-                    //  alert(".annuler"+id);
+                    $("#eventsContent").html(response);
                 },
                 success: function(response){
-                    $(".confirmer"+id).hide();
-                    $(".annuler"+id).show();
+                    $("#eventsContent").html(response);
                 }});
         });
 
         $(".annuleParticiper").click(function () {
             var id = $(this).val();
-
             $.ajax({
                 dataType: "json",
-                url: "{{ path("front_evenements_noparticiper") }}",
+                url: "{{ path("front_event_no_participer_ajax") }}",
                 data: {
                     "id": id
                 },
                 error: function(response){
-                    $(".annuler"+id).hide();
-                    $(".confirmer"+id).show();
+                    $("#eventsContent").html(response);
                 },
                 success: function(response){
-                    $(".annuler"+id).hide();
-                    $(".confirmer"+id).show();
+                    $("#eventsContent").html(response);
                 }});
         });
+
     </script>
+
     <script src="{{ asset('assets/js/jquery.js') }}" type="text/javascript"></script>
 {% endblock %}
 

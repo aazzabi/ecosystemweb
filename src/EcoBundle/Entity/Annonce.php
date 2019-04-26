@@ -88,7 +88,7 @@ class Annonce
     /**
      *
      * @ORM\ManyToOne(targetEntity="CategorieAnnonce", inversedBy="annonces")
-     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id"))
+     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id"   )
      */
     private $categorie;
 

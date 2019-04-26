@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints as Assert;  
 
 
 
@@ -169,7 +169,7 @@ class User extends BaseUser
     private $photoUpdatedAt;
     /**
      *
-     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="User")
+     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="user")
      */
     private $myAnnonces;
 

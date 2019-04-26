@@ -27,7 +27,7 @@ class Group extends BaseGroup
     /**
      * @var User
      *
-     * @ORM\OneToMany(targetEntity="User", mappedBy="Group")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="group")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
      */

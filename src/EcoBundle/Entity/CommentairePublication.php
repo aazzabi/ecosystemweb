@@ -2,6 +2,7 @@
 
 namespace EcoBundle\Entity;
 
+use BlogBundle\Entity\PublicationForum;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

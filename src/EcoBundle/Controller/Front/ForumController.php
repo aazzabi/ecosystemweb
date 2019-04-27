@@ -441,28 +441,4 @@ class ForumController extends Controller
         $formated = $serializer->normalize($pubs);
         return new JsonResponse($formated);
     }
-
-    /**
-     * @Route("/jms", name="jms")
-     * @Method("GET")
-     */
-    public function jmsAction()
-    {
-        $pubs = $this->getDoctrine()->getManager()
-                     ->getRepository(PublicationForum::class)
-                     ->findAll();
-
-        $serializer = $this->get('jms_serializer');
-
-        $response = new Response(
-            $serializer->serialize(
-                $pubs,
-                'json'
-            )
-        );
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-    }
-
 }

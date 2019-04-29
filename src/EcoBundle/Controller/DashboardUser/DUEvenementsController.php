@@ -86,7 +86,7 @@ class DUEvenementsController extends Controller
         $form->handleRequest($request);
         $evenement->setCreatedBy($user);
         $evenement->setNbVues(0);
-        $user->addEventsCrees($evenement);
+//        $user->addEventsCrees($evenement);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($evenement);

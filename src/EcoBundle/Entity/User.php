@@ -88,11 +88,6 @@ class User extends BaseUser
      * @var \DateTime
      */
     private $photoUpdatedAt;
-    /**
-     *
-     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="user")
-     */
-    private $myAnnonces;
 
     /**
      * @var string
@@ -113,24 +108,24 @@ class User extends BaseUser
      */
     private $group;
 
-    /**
-     *
-     * var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="createdBy", cascade={"remove"})
-     *
-     */
-    private $eventsCrees;
+//    /**
+//     *
+//     * var \Doctrine\Common\Collections\Collection
+//     *
+//     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="createdBy", cascade={"remove"})
+//     *
+//     */
+//    private $eventsCrees;
 
-
-    /**
-     *
-     * var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="Missions", mappedBy="createdBy")
-     *
-     */
-    private $missionsCrees;
+//
+//    /**
+//     *
+//     * var \Doctrine\Common\Collections\Collection
+//     *
+//     * @ORM\OneToMany(targetEntity="Missions", mappedBy="createdBy")
+//     *
+//     */
+//    private $missionsCrees;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -166,11 +161,10 @@ class User extends BaseUser
         $this->photoUpdatedAt = new \DateTime('now');
         $this->enabled = true;
         $this->roles = array();
-        $this->eventsCrees = new ArrayCollection();
-        $this->missionsCrees = new ArrayCollection();
+//        $this->eventsCrees = new ArrayCollection();
+//        $this->missionsCrees = new ArrayCollection();
         $this->eventsParticipes = new ArrayCollection();
         $this->missionsParticipes = new ArrayCollection();
-        $this->myAnnonces = new ArrayCollection();
     }
 
     /**
@@ -253,18 +247,6 @@ class User extends BaseUser
     public function setMissionsParticipes($missionsParticipes)
     {
         $this->missionsParticipes = $missionsParticipes;
-    }
-
-
-    public function addMyAnnonce(Annonce $annonce)
-    {
-        $this->myAnnonces[] = $annonce;
-        return $this;
-    }
-
-    public function removeMyAnnonce(Annonce $annonce)
-    {
-        $this->myAnnonces->removeElement($annonce);
     }
 
     /**
@@ -468,21 +450,21 @@ class User extends BaseUser
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEventsCrees()
-    {
-        return $this->eventsCrees;
-    }
-
-    /**
-     * @param mixed $eventsCrees
-     */
-    public function setEventsCrees($eventsCrees)
-    {
-        $this->eventsCrees = $eventsCrees;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getEventsCrees()
+//    {
+//        return $this->eventsCrees;
+//    }
+//
+//    /**
+//     * @param mixed $eventsCrees
+//     */
+//    public function setEventsCrees($eventsCrees)
+//    {
+//        $this->eventsCrees = $eventsCrees;
+//    }
 
     /**
      * @return \Doctrine\Common\Collections\Collection
@@ -501,39 +483,28 @@ class User extends BaseUser
     }
 
 
-    /**
-     *
-     * @param \EcoBundle\Entity\Evenement $e
-     *
-     * @return User
-     */
-    public function addEventsCrees(Evenement $e)
-    {
-        $this->eventsCrees[] = $e;
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Evenement $e
+//     *
+//     * @return User
+//     */
+//    public function addEventsCrees(Evenement $e)
+//    {
+//        $this->eventsCrees[] = $e;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Evenement $eventsCrees
+//     */
+//    public function removeEventsCrees(Evenement $e)
+//    {
+//        $this->eventsCrees->removeElement($e);
+//    }
 
-        return $this;
-    }
-
-    /**
-     *
-     * @param \EcoBundle\Entity\Evenement $eventsCrees
-     */
-    public function removeEventsCrees(Evenement $e)
-    {
-        $this->eventsCrees->removeElement($e);
-    }
-    public function getMyAnnonces()
-    {
-        return $this->myAnnonces;
-    }
-
-    /**
-     * @param mixed $myAnnonces
-     */
-    public function setMyAnnonces($myAnnonces)
-    {
-        $this->myAnnonces = $myAnnonces;
-    }
     /**
      *
      * @param \EcoBundle\Entity\Evenement $e
@@ -556,42 +527,42 @@ class User extends BaseUser
         $this->eventsParticipes->removeElement($e);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMissionsCrees()
-    {
-        return $this->missionsCrees;
-    }
-
-    /**
-     * @param mixed $missionsCrees
-     */
-    public function setMissionsCrees($missionsCrees)
-    {
-        $this->missionsCrees = $missionsCrees;
-    }
-    /**
-     *
-     * @param \EcoBundle\Entity\Missions $m
-     *
-     * @return User
-     */
-    public function addMissionsCrees(Missions $e)
-    {
-        $this->missionsCrees[] = $e;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @param \EcoBundle\Entity\Missions $m
-     */
-    public function removeMissionsCrees(Missions $m)
-    {
-        $this->missionsCrees->removeElement($m);
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getMissionsCrees()
+//    {
+//        return $this->missionsCrees;
+//    }
+//
+//    /**
+//     * @param mixed $missionsCrees
+//     */
+//    public function setMissionsCrees($missionsCrees)
+//    {
+//        $this->missionsCrees = $missionsCrees;
+//    }
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Missions $m
+//     *
+//     * @return User
+//     */
+//    public function addMissionsCrees(Missions $e)
+//    {
+//        $this->missionsCrees[] = $e;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Missions $m
+//     */
+//    public function removeMissionsCrees(Missions $m)
+//    {
+//        $this->missionsCrees->removeElement($m);
+//    }
     /**
      *
      * @param \EcoBundle\Entity\Missions $e

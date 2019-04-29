@@ -7,6 +7,7 @@
  */
 
 namespace EcoBundle\Controller\Front;
+use EcoBundle\Controller\API\EvenementAPIController;
 use EcoBundle\Entity\CategorieEvts;
 use EcoBundle\Entity\Group;
 use EcoBundle\Entity\Livreur;
@@ -24,6 +25,10 @@ use Symfony\Component\HttpFoundation\Response;
 use EcoBundle\Entity\Evenement;
 use EcoBunde\Form\rechercheEventType;
 
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  *
  * @Route("/front")
@@ -45,7 +50,7 @@ class EvenementController extends Controller
         $search['categorie'] = $request->get('categorie', null);
         $search['lieu'] = $request->get('lieu', null);
         $date = $request->get('date', null);
-        $search['date'] = date('Y-m-d', strtotime($date));
+        $search['date'] = date('Y-M-D', strtotime($date));
 //        var_dump($search);die;
 
 //        var_dump($search);die;
@@ -256,7 +261,7 @@ class EvenementController extends Controller
            $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
            $user = $this->get('security.token_storage')->getToken()->getUser();
            $evenement->addParticipant($user);
-           $user->addEventsParticipes($evenement);
+//           $user->addEventsParticipes($evenement);
            $em->persist($evenement);
            $em->persist($user);
            $em->flush();
@@ -333,7 +338,7 @@ class EvenementController extends Controller
         $em        = $this->getDoctrine()->getManager();
         $evenement = $em->getRepository('EcoBundle:Evenement')->find($id);
         $user      = $this->get('security.token_storage')->getToken()->getUser();
-        $user->addEventsParticipes($evenement);
+//        $user->addEventsParticipes($evenement);
         $evenement->addPartcipants($user);
         $em->persist($evenement);
         $em->persist($user);
@@ -367,7 +372,7 @@ class EvenementController extends Controller
         $em = $this->getDoctrine()->getManager();
         $evenement =  $em->getRepository('EcoBundle:Evenement')->find($id);
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $user->removeEventsParticipes($evenement);
+//        $user->removeEventsParticipes($evenement);
         $evenement->removeParticipants($user);
         $em->persist($evenement);
         $em->persist($user);
@@ -402,5 +407,86 @@ class EvenementController extends Controller
 
     }
 
+
+
+    /**
+     * @Route("/jmsevent", name="jms")
+     * @Method({"GET", "POST"})
+     */
+    public function jmsEventAction()
+    {
+       $event = $this->getDoctrine()->getManager()
+             ->getRepository('EcoBundle:Evenement')->findAll();
+       $serializer = new Serializer([new DateTimeNormalizer('d-M-Y'),new ObjectNormalizer()]);
+       $formatted = $serializer->normalize($event);
+       return new JsonResponse($formatted);
+
+
+//       $events = $this->getDoctrine()->getManager()
+//            ->getRepository(Evenement::class)
+//            ->findAll();
+//
+//
+//
+//        $serializer = $this->get('jms_serializer');
+//
+//        $response = new Response($serializer->serialize($events, 'json'));
+//        $response->headers->set('Content-Type', 'application/json');
+//
+//        return $response;
+
+
+    }
+
+    /**
+     * @Route("/jmsoneevent/{id}", name="jmsone")
+     * @Method({"GET", "POST"})
+     */
+    public function jmsEventShowAction($id)
+    {
+
+       // $deleteForm = $this->createDeleteForm($evenement);
+        $event = $this->getDoctrine()->getManager()
+            ->getRepository(Evenement::class)
+            ->find($id);
+
+        $serializer = $this->get('jms_serializer');
+
+        $response = new Response($serializer->serialize($event, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+
+    }
+
+    /**
+     * @Route("/jmsaddevent/{id}", name="jmsadd")
+     * @Method({"GET", "POST"})
+     */
+    public function newApiAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $event = new Evenement();
+        $event->setTitre($request->get('titre'));
+        $event->setDescription($request->get('description'));
+        $event->setLieu($request->get('lieu'));
+
+        $categorie = $em->getRepository(CategorieEvts::class)->find($request->get('categorie'));
+        $user = $em->getRepository(User::class)->find($request->get('createdBy'));
+
+        $event->setCategorie($categorie);
+        $event->setCreatedBy($user);
+
+        $em->persist($event);
+        $em->flush();
+
+        $serializer = $this->get('jms_serializer');
+        $response = new Response($serializer->serialize($event, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
 
 }

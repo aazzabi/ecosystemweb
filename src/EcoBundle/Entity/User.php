@@ -126,13 +126,13 @@ class User extends BaseUser
 //     *
 //     */
 //    private $missionsCrees;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Evenement", mappedBy="participants")
-     */
-    private $eventsParticipes;
+//
+//    /**
+//     * @var \Doctrine\Common\Collections\Collection
+//     *
+//     * @ORM\ManyToMany(targetEntity="Evenement", mappedBy="participants")
+//     */
+//    private $eventsParticipes;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -163,7 +163,7 @@ class User extends BaseUser
         $this->roles = array();
 //        $this->eventsCrees = new ArrayCollection();
 //        $this->missionsCrees = new ArrayCollection();
-        $this->eventsParticipes = new ArrayCollection();
+//        $this->eventsParticipes = new ArrayCollection();
         $this->missionsParticipes = new ArrayCollection();
     }
 
@@ -466,21 +466,21 @@ class User extends BaseUser
 //        $this->eventsCrees = $eventsCrees;
 //    }
 
-    /**
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEventsParticipes()
-    {
-        return $this->eventsParticipes;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\Collection $eventsParticipes
-     */
-    public function setEventsParticipes($eventsParticipes)
-    {
-        $this->eventsParticipes = $eventsParticipes;
-    }
+//    /**
+//     * @return \Doctrine\Common\Collections\Collection
+//     */
+//    public function getEventsParticipes()
+//    {
+//        return $this->eventsParticipes;
+//    }
+//
+//    /**
+//     * @param \Doctrine\Common\Collections\Collection $eventsParticipes
+//     */
+//    public function setEventsParticipes($eventsParticipes)
+//    {
+//        $this->eventsParticipes = $eventsParticipes;
+//    }
 
 
 //    /**
@@ -505,27 +505,27 @@ class User extends BaseUser
 //        $this->eventsCrees->removeElement($e);
 //    }
 
-    /**
-     *
-     * @param \EcoBundle\Entity\Evenement $e
-     *
-     * @return User
-     */
-    public function addEventsParticipes(Evenement $e)
-    {
-        $this->eventsParticipes[] = $e;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @param \EcoBundle\Entity\Evenement $eventsParticipes
-     */
-    public function removeEventsParticipes(Evenement $e)
-    {
-        $this->eventsParticipes->removeElement($e);
-    }
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Evenement $e
+//     *
+//     * @return User
+//     */
+//    public function addEventsParticipes(Evenement $e)
+//    {
+//        $this->eventsParticipes[] = $e;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Evenement $eventsParticipes
+//     */
+//    public function removeEventsParticipes(Evenement $e)
+//    {
+//        $this->eventsParticipes->removeElement($e);
+//    }
 
 //    /**
 //     * @return mixed

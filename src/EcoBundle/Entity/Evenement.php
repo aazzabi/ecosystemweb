@@ -97,7 +97,7 @@ class Evenement
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="eventsParticipes")
+     * @ORM\ManyToMany(targetEntity="User")
      * @ORM\JoinTable(name="evenement_user",
      *   joinColumns={
      *     @ORM\JoinColumn(name="evenement_id", referencedColumnName="id", onDelete="CASCADE")

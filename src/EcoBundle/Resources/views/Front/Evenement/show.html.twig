@@ -17,7 +17,7 @@
         <div class="jumbotron">
             <div class="cover-photo text-center"  style="background-image:url('{{ asset('uploads/evt/cover/' ~ evenement.cover) }}'); background-size: 100% 200%"><br>
                 <h1 class="display-3 ">Bienvenue </h1>
-                <p>Voici un bref description sur notre prochain evenement {{ evenement.titre }}, on espére vous
+                <p>Voici une brève description sur notre prochain evenement {{ evenement.titre }}, on espére vous
                     accueilir parmi nous </p>
             </div>
         </div>
@@ -25,7 +25,7 @@
         <div class="jumbotron">
             <div class="cover-photo text-center"><br>
                 <h1 class="display-3 ">Bienvenue </h1>
-                <p>Voici un bref description sur notre prochain evenement {{ evenement.titre }}, on espére vous
+                <p>Voici une brève description sur notre prochain evenement {{ evenement.titre }}, on espére vous
                     accueilir parmi nous </p>
             </div>
         </div>
@@ -65,7 +65,7 @@
                     {% if evenement.createdBy.group %}
                         <h5><b>Groupe :</b>{{ evenement.createdBy.group.nom }}</h5>
                     {% endif %}
-                    <h5><b>Prenom :</b>{{ evenement.createdBy.email }}</h5><br>
+                    <h5><b>Email :</b>{{ evenement.createdBy.email }}</h5><br>
                 </div>
             </div>
         </div>

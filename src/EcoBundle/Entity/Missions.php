@@ -108,7 +108,7 @@ class Missions
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="eventsParticipes")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="missionsParticipes")
      * @ORM\JoinTable(name="mission_user",
      *   joinColumns={
      *     @ORM\JoinColumn(name="mission_id", referencedColumnName="id")

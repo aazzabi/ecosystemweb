@@ -3,6 +3,7 @@
 namespace EcoBundle\Controller\Front;
 
 use EcoBundle\Entity\Annonce;
+use EcoBundle\Entity\CategorieAnnonce;
 use EcoBundle\Entity\SignalAnnonce;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -205,6 +206,7 @@ class FAnnonceController extends Controller
 
             return $response;
     }
+
 
 
 }

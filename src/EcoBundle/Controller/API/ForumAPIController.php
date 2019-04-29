@@ -41,7 +41,6 @@ class ForumAPIController extends Controller
         $pubs = $this->getDoctrine()->getManager()
                      ->getRepository(PublicationForum::class)
                      ->findAll();
-//        dump($pubs);die;
         $serializer = $this->get('jms_serializer');
 
         $response = new Response($serializer->serialize($pubs, 'json'));
@@ -52,17 +51,37 @@ class ForumAPIController extends Controller
 
     /**
      * @Route("/publication/{id}", name="forum_api_show")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
     public function showApiAction($id)
     {
         $pubs = $this->getDoctrine()->getManager()
-                     ->getRepository(Group::class)
+                     ->getRepository(PublicationForum::class)
                      ->find($id);
 
         $serializer = $this->get('jms_serializer');
 
         $response = new Response($serializer->serialize($pubs, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/publication/delete/{id}", name="forum_api_delete")
+     * @Method("GET")
+     */
+    public function deleteApiAction($id)
+    {
+        $publication = $this->getDoctrine()->getManager()
+                     ->getRepository(PublicationForum::class)
+                     ->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($publication);
+        $em->flush();
+        $serializer = $this->get('jms_serializer');
+
+        $response = new Response($serializer->serialize($publication, 'json'));
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;

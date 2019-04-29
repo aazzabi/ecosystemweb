@@ -80,7 +80,7 @@ class Evenement
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="eventsCrees")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=true)
      *
      */

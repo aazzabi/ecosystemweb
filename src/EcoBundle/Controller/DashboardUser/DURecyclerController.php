@@ -73,7 +73,7 @@ class DURecyclerController extends Controller
         $missions->setAtteint(0);
 
 
-        $user->addMissionsCrees($missions);
+//        $user->addMissionsCrees($missions);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($missions);

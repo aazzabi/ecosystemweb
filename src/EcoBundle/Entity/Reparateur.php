@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Reparateur
  *
- * @ORM\Table(name="Reparateur")
+ * @ORM\Table(name="reparateur")
  * @ORM\Entity(repositoryClass="EcoBundle\Repository\ReparateurRepository")
  */
 class Reparateur extends  User

@@ -5,6 +5,7 @@ namespace EcoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 
 /**
@@ -36,8 +37,9 @@ class CategorieAnnonce
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="annonce")
+     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="categorie")
      * @ORM\JoinColumn(name="annonce_id", referencedColumnName="id")
+     * @JMS\MaxDepth(2)
      */
     private $annonces;
 

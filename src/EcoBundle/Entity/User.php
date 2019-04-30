@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="user")
  * @Vich\Uploadable
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
@@ -62,6 +63,109 @@ class User extends BaseUser
      */
     private $ville;
 
+    /**
+     * @var array
+     */
+    protected $roles;
+
+    /**
+     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="photo")
+     *
+     * @var File
+     */
+    private $userPhoto;
+
+    /**
+     * @ORM\Column(name="photo", type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $photo;
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $photoUpdatedAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prenom", type="string", length=150, nullable=false)
+     *
+     * @Assert\NotBlank
+     */
+    private $prenom;
+
+    /**
+     * @var Group
+     *
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $group;
+
+//    /**
+//     *
+//     * var \Doctrine\Common\Collections\Collection
+//     *
+//     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="createdBy", cascade={"remove"})
+//     *
+//     */
+//    private $eventsCrees;
+
+//
+//    /**
+//     *
+//     * var \Doctrine\Common\Collections\Collection
+//     *
+//     * @ORM\OneToMany(targetEntity="Missions", mappedBy="createdBy")
+//     *
+//     */
+//    private $missionsCrees;
+//
+//    /**
+//     * @var \Doctrine\Common\Collections\Collection
+//     *
+//     * @ORM\ManyToMany(targetEntity="Evenement", mappedBy="participants")
+//     */
+//    private $eventsParticipes;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Missions", mappedBy="participants")
+     */
+    private $missionsParticipes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numtel", type="string",length=8,nullable=true )
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      minMessage = "Le numéro de téléphone doit se composer de deux chiffre",
+     *      maxMessage = "Le numéro de téléphone doit se composer de deux chiffre",
+     * )
+     */
+    private $numtel;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->photoUpdatedAt = new \DateTime('now');
+        $this->enabled = true;
+        $this->roles = array();
+//        $this->eventsCrees = new ArrayCollection();
+//        $this->missionsCrees = new ArrayCollection();
+//        $this->eventsParticipes = new ArrayCollection();
+        $this->missionsParticipes = new ArrayCollection();
+    }
 
     /**
      * @return string
@@ -112,19 +216,6 @@ class User extends BaseUser
     }
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="numtel", type="string",length=8,nullable=true )
-     * @Assert\Length(
-     *      min = 8,
-     *      max = 8,
-     *      minMessage = "Le numéro de téléphone doit se composer de deux chiffre",
-     *      maxMessage = "Le numéro de téléphone doit se composer de deux chiffre",
-     * )
-     */
-    private $numtel;
-
-    /**
 
     /**
      * @return string
@@ -143,89 +234,6 @@ class User extends BaseUser
     }
 
     /**
-     * @var array
-     */
-    protected $roles;
-
-    /**
-     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="photo")
-     *
-     * @var File
-     */
-    private $userPhoto;
-
-    /**
-     * @ORM\Column(name="photo", type="string", length=255, nullable=true)
-     *
-     * @var string
-     */
-    private $photo;
-
-    /**
-     * @ORM\Column(type="datetime",nullable=true)
-     *
-     * @var \DateTime
-     */
-    private $photoUpdatedAt;
-    /**
-     *
-     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="User")
-     */
-    private $myAnnonces;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="prenom", type="string", length=150, nullable=false)
-     *
-     * @Assert\NotBlank
-     */
-    private $prenom;
-
-    /**
-     * @var Group
-     *
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE")
-     * })
-     */
-    private $group;
-
-    /**
-     *
-     * var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="Evenement", mappedBy="createdBy", cascade={"remove"})
-     *
-     */
-    private $eventsCrees;
-
-
-    /**
-     *
-     * var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="Missions", mappedBy="createdBy")
-     *
-     */
-    private $missionsCrees;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Evenement", mappedBy="participants")
-     */
-    private $eventsParticipes;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Missions", mappedBy="participants")
-     */
-    private $missionsParticipes;
-
-    /**
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getMissionsParticipes()
@@ -239,30 +247,6 @@ class User extends BaseUser
     public function setMissionsParticipes($missionsParticipes)
     {
         $this->missionsParticipes = $missionsParticipes;
-    }
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->photoUpdatedAt = new \DateTime('now');
-        $this->enabled = true;
-        $this->roles = array();
-        $this->eventsCrees = new ArrayCollection();
-        $this->missionsCrees = new ArrayCollection();
-        $this->eventsParticipes = new ArrayCollection();
-        $this->missionsParticipes = new ArrayCollection();
-        $this->myAnnonces = new ArrayCollection();
-    }
-
-    public function addMyAnnonce(Annonce $annonce)
-    {
-        $this->myAnnonces[] = $annonce;
-        return $this;
-    }
-
-    public function removeMyAnnonce(Annonce $annonce)
-    {
-        $this->myAnnonces->removeElement($annonce);
     }
 
     /**
@@ -466,130 +450,119 @@ class User extends BaseUser
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEventsCrees()
-    {
-        return $this->eventsCrees;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getEventsCrees()
+//    {
+//        return $this->eventsCrees;
+//    }
+//
+//    /**
+//     * @param mixed $eventsCrees
+//     */
+//    public function setEventsCrees($eventsCrees)
+//    {
+//        $this->eventsCrees = $eventsCrees;
+//    }
 
-    /**
-     * @param mixed $eventsCrees
-     */
-    public function setEventsCrees($eventsCrees)
-    {
-        $this->eventsCrees = $eventsCrees;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEventsParticipes()
-    {
-        return $this->eventsParticipes;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\Collection $eventsParticipes
-     */
-    public function setEventsParticipes($eventsParticipes)
-    {
-        $this->eventsParticipes = $eventsParticipes;
-    }
+//    /**
+//     * @return \Doctrine\Common\Collections\Collection
+//     */
+//    public function getEventsParticipes()
+//    {
+//        return $this->eventsParticipes;
+//    }
+//
+//    /**
+//     * @param \Doctrine\Common\Collections\Collection $eventsParticipes
+//     */
+//    public function setEventsParticipes($eventsParticipes)
+//    {
+//        $this->eventsParticipes = $eventsParticipes;
+//    }
 
 
-    /**
-     *
-     * @param \EcoBundle\Entity\Evenement $e
-     *
-     * @return User
-     */
-    public function addEventsCrees(Evenement $e)
-    {
-        $this->eventsCrees[] = $e;
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Evenement $e
+//     *
+//     * @return User
+//     */
+//    public function addEventsCrees(Evenement $e)
+//    {
+//        $this->eventsCrees[] = $e;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Evenement $eventsCrees
+//     */
+//    public function removeEventsCrees(Evenement $e)
+//    {
+//        $this->eventsCrees->removeElement($e);
+//    }
 
-        return $this;
-    }
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Evenement $e
+//     *
+//     * @return User
+//     */
+//    public function addEventsParticipes(Evenement $e)
+//    {
+//        $this->eventsParticipes[] = $e;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Evenement $eventsParticipes
+//     */
+//    public function removeEventsParticipes(Evenement $e)
+//    {
+//        $this->eventsParticipes->removeElement($e);
+//    }
 
-    /**
-     *
-     * @param \EcoBundle\Entity\Evenement $eventsCrees
-     */
-    public function removeEventsCrees(Evenement $e)
-    {
-        $this->eventsCrees->removeElement($e);
-    }
-    public function getMyAnnonces()
-    {
-        return $this->myAnnonces;
-    }
-
-    /**
-     * @param mixed $myAnnonces
-     */
-    public function setMyAnnonces($myAnnonces)
-    {
-        $this->myAnnonces = $myAnnonces;
-    }
-    /**
-     *
-     * @param \EcoBundle\Entity\Evenement $e
-     *
-     * @return User
-     */
-    public function addEventsParticipes(Evenement $e)
-    {
-        $this->eventsParticipes[] = $e;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @param \EcoBundle\Entity\Evenement $eventsParticipes
-     */
-    public function removeEventsParticipes(Evenement $e)
-    {
-        $this->eventsParticipes->removeElement($e);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMissionsCrees()
-    {
-        return $this->missionsCrees;
-    }
-
-    /**
-     * @param mixed $missionsCrees
-     */
-    public function setMissionsCrees($missionsCrees)
-    {
-        $this->missionsCrees = $missionsCrees;
-    }
-    /**
-     *
-     * @param \EcoBundle\Entity\Missions $m
-     *
-     * @return User
-     */
-    public function addMissionsCrees(Missions $e)
-    {
-        $this->missionsCrees[] = $e;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @param \EcoBundle\Entity\Missions $m
-     */
-    public function removeMissionsCrees(Missions $m)
-    {
-        $this->missionsCrees->removeElement($m);
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getMissionsCrees()
+//    {
+//        return $this->missionsCrees;
+//    }
+//
+//    /**
+//     * @param mixed $missionsCrees
+//     */
+//    public function setMissionsCrees($missionsCrees)
+//    {
+//        $this->missionsCrees = $missionsCrees;
+//    }
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Missions $m
+//     *
+//     * @return User
+//     */
+//    public function addMissionsCrees(Missions $e)
+//    {
+//        $this->missionsCrees[] = $e;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     *
+//     * @param \EcoBundle\Entity\Missions $m
+//     */
+//    public function removeMissionsCrees(Missions $m)
+//    {
+//        $this->missionsCrees->removeElement($m);
+//    }
     /**
      *
      * @param \EcoBundle\Entity\Missions $e

@@ -34,8 +34,7 @@ class DAEvenementsController extends Controller
      * @Method("GET")
      */
     public function indexAction()
-    {
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+    {        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous n'êtes pas autorisés à accéder à cette page!", Response::HTTP_FORBIDDEN);
         }
         $em = $this->getDoctrine()->getManager();

@@ -94,7 +94,7 @@ class Annonce
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="myAnnonces")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

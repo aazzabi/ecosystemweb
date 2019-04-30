@@ -53,6 +53,7 @@ class DAAnnonceController extends Controller
         $formated = $serialize->normalize($task);
         return new JsonResponse($formated);
     }
+
     /**
      * Creates a new Categorie et annonce entity.
      *

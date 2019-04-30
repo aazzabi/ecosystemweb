@@ -51,30 +51,27 @@
                                 <td>{{ value.prixTotal }}</td>
 
                                 <td>
-                                    {% for u in users %}
-                                        {% if value.idUtilisateur == u.id %}
-                                   {{ u.nom }} {{ u.prenom }}
-                                        {%  endif %}
-                                    {% endfor %}
-                                </td>
-                                <td>
-                                    <a  href="{{ path('ligne_show2',{ 'id_c': value.id  }) }}"> Afficher les détails </a> </br>
-                                    {% if value.etatCommande=='En cours' %}
-                                    <a  href="{{ path('annuler_commande2',{ 'id_c': value.id  }) }}">Annuler Commande </a>
-                                    {% endif %}
-                                </td>
-                            </tr>
+                                    {{ value.CommandePassedBy.nom }} {{ value.CommandePassedBy.prenom }}
 
-                    {% endfor %}
-                    </tbody>
-                </table>
+         </td>
+         <td>
+             <a  href="{{ path('ligne_show2',{ 'id_c': value.id  }) }}"> Afficher les détails </a> </br>
+             {% if value.etatCommande=='En cours' %}
+             <a  href="{{ path('annuler_commande2',{ 'id_c': value.id  }) }}">Annuler Commande </a>
+             {% endif %}
+         </td>
+     </tr>
 
-            </div>
-        </div>
+{% endfor %}
+</tbody>
+</table>
+
+</div>
+</div>
 
 
-    {% else %}
-        <h1> Pas de commandes  </h1>
-    {% endif %}
+{% else %}
+<h1> Pas de commandes  </h1>
+{% endif %}
 
 {% endblock %}

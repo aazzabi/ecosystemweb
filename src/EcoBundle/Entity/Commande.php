@@ -49,6 +49,30 @@ class Commande
      */
     private $prixTotal;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $CommandePassedBy;
+
+    /**
+     * @return User
+     */
+    public function getCommandePassedBy()
+    {
+        return $this->CommandePassedBy;
+    }
+
+    /**
+     * @param User $CommandePassedBy
+     */
+    public function setCommandePassedBy($CommandePassedBy)
+    {
+        $this->CommandePassedBy = $CommandePassedBy;
+    }
+
 
 
     /**

@@ -52,12 +52,15 @@ class LivraisonController extends Controller
                  ));
              }
          }
+         $user = $this->get('security.token_storage')->getToken()->getUser();
 
          $cm = $em->getRepository('EcoBundle:Commande')->find($id_c);
          $date_com=$cm->getDateEmission();
          $Livraison=new Livraison();
          $adresse_complete=$nom_prop." ".$rue_u." ".$ville_u;
-         $Livraison->setIdUtilisateur($id_u);
+
+         $Livraison->setLivraisonPassedBy($user);
+         $Livraison->setIdUtilisateur($user->getId());
          $Livraison->setVilleLivraison($ville_u);
          $Livraison->setAdresseComplete($adresse_complete);
          $Livraison->setIdCommande($id_c);

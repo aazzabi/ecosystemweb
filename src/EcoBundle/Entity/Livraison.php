@@ -61,6 +61,32 @@ class Livraison
      */
     private $ville_livraison;
 
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $LivraisonPassedBy;
+
+    /**
+     * @return User
+     */
+    public function getLivraisonPassedBy()
+    {
+        return $this->LivraisonPassedBy;
+    }
+
+    /**
+     * @param User $LivraisonPassedBy
+     */
+    public function setLivraisonPassedBy($LivraisonPassedBy)
+    {
+        $this->LivraisonPassedBy = $LivraisonPassedBy;
+    }
+
+
     /**
      * @return string
      */

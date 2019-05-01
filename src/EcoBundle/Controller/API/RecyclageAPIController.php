@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 /**
  *
  * @Route("/host/mobile")
@@ -41,47 +43,195 @@ class RecyclageAPIController extends Controller
         return new JsonResponse($formatted);
     }
     /**
-     * @Route("/afficheAllHost", name="host_api_show")
+     * @Route("/afficheAllHost", name="hosts_api_show")
      * @Method({"GET", "POST"})
      */
     public function allHostsAction()
     {
-        $task = $this->getDoctrine()->getManager()
+        $tasks = $this->getDoctrine()->getManager()
             ->getRepository(Host::class)
             ->findAll();
-        $serializer = new Serializer([new ObjectNormalizer()]);
-        $formatted = $serializer->normalize($task);
-        return new JsonResponse($formatted);
+
+        $serializer = $this->get('jms_serializer');
+
+        $response = new Response($serializer->serialize($tasks, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
 
     }
-//
-//    public function allHostRatingsAction()
+    /**
+     * @Route("/afficheAllHostRating", name="hostrating_api_show")
+     * @Method({"GET", "POST"})
+     */
+    public function allHostRatingsAction()
+    {
+        $tasks = $this->getDoctrine()->getManager()
+            ->getRepository('EcoBundle:Hostrating')
+            ->findAll();
+
+        $serializer = $this->get('jms_serializer');
+
+        $response = new Response($serializer->serialize($tasks, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+    }
+    /**
+     * @Route("/afficheAllHostParticipant", name="hostparticipant_api_show")
+     * @Method({"GET", "POST"})
+     */
+    public function allHostParticipantsAction()
+    {
+        $tasks = $this->getDoctrine()->getManager()
+            ->getRepository('EcoBundle:Hostparticipation')
+            ->findAll();
+
+        $serializer = $this->get('jms_serializer');
+
+        $response = new Response($serializer->serialize($tasks, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+    }
+    //-----------------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * @Route("/addHost/{Name}/{Places}/{DateStart}/{DateEnd}/{Localisation}/{Participants}", name="addhost_api_show")
+     * @Method({"GET", "POST"})
+     */
+    public function addHostAction($Name, $Places, $DateStart, $DateEnd, $Localisation, $OwnerID, $Participants,Request $request)
+    {   $em = $this->getDoctrine()->getEntityManager();
+        $Host = new Host();
+        $Host->setOwner($Name);
+        $Host->setAvailableplaces($Places);
+        $Host->setTotalplaces($Places);
+        $Host->setDatestart(new \DateTime ($DateStart));
+        $Host->setDateend(new \DateTime ($DateEnd));
+       // $Host->setOwnerid($OwnerID);
+       $OwnerID = null;
+        $Participants = null;
+        //$Host->setParticipants($Participants);
+        $Host->setLocalisation($Localisation);
+
+
+        $em->persist($Host);
+        $em->flush();
+
+        return new JsonResponse("ok");
+    }
+
+    /**
+     * @Route("/DisplayHost/{id}", name="host_api_show")
+     * @Method({"GET", "POST"})
+     */
+    public function getHostAction($id)
+    {
+        $host = $this->getDoctrine()->getManager()
+            ->getRepository(Host::class)
+            ->find($id);
+
+        $serializer = $this->get('jms_serializer');
+
+        $response = new Response($serializer->serialize($host, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/ModifyHost/{id}/{owner}/{DateStart}/{DateEnd}/{Localisation}", name="host_api_modify")
+     * @Method({"GET", "POST"})
+     */
+    public function ModifyHostAction($id, $Name, $DateStart, $DateEnd, $Localisation,Request $request){
+        $Host = $this->getDoctrine()->getRepository('EcoBundle:Host')->findOneBy(array('id' => $id));
+        dump($Host);
+        $Host->setOwner($Name);
+        $Host->setDatestart(new \DateTime ($DateStart));
+        $Host->setDateend(new \DateTime ($DateEnd));
+        $Host->setLocalisation($Localisation);
+        $this->getDoctrine()->getManager()->flush();
+        return new JsonResponse("ok");
+    }
+
+    /**
+     * @Route("/DeleteHost/{id}", name="host_api_delete")
+     * @Method({"GET", "POST"})
+     */
+    public function DeleteHostAction($id){
+        $host = $this->getDoctrine()->getManager()
+            ->getRepository(Host::class)
+            ->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($host);
+        $em->flush();
+        $serializer = $this->get('jms_serializer');
+
+        $response = new Response($serializer->serialize($host, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+
+
+
+//    public function deleteApiAction($id)
 //    {
-//        $tasks = $this->getDoctrine()->getManager()
-//            ->getRepository('EcoBundle:Hostrating')
-//            ->findAll();
+//        $host = $this->getDoctrine()->getManager()
+//            ->getRepository(Host::class)
+//            ->find($id);
+//        $em = $this->getDoctrine()->getManager();
+//        $em->remove($host);
+//        $em->flush();
+//        $serializer = $this->get('jms_serializer');
 //
-//        $serializer = new Serializer([new ObjectNormalizer()]);
-//        $formatted = $serializer->normalize($tasks);
-//        return new JsonResponse($formatted);
+//        $response = new Response($serializer->serialize($host, 'json'));
+//        $response->headers->set('Content-Type', 'application/json');
 //
+//        return $response;
 //    }
 //
-//    public function allHostParticipantsAction()
+//    /**
+//     * @Route("/new", name="host_api_new")
+//     * @Method({"GET", "POST"})
+//     */
+//    public function newApiAction(Request $request)
 //    {
-//        $tasks = $this->getDoctrine()->getManager()
-//            ->getRepository('EcoBundle:Hostparticipation')
-//            ->findAll();
+//        $em = $this->getDoctrine()->getManager();
 //
-//        $serializer = new Serializer([new ObjectNormalizer()]);
-//        $formatted = $serializer->normalize($tasks);
-//        return new JsonResponse($formatted);
+//        $host = new Host();
 //
+//        $host->setTitre($request->get('titre'));
+//        $host->setDescription($request->get('description'));
+//
+//        $categorie = $em->getRepository(CategoriePub::class)->find($request->get('categorie'));
+//        $user = $em->getRepository(User::class)->find($request->get('publicationCreatedBy'));
+//
+//        $host->setCategorie($categorie);
+//        $host->setPublicationCreatedBy($user);
+//
+//        $em->persist($host);
+//        $em->flush();
+//
+//        $serializer = $this->get('jms_serializer');
+//        $response = new Response($serializer->serialize($host, 'json'));
+//        $response->headers->set('Content-Type', 'application/json');
+//
+//        return $response;
 //    }
 //
 //
-//
-//
+////
+////
 //
 //
 //

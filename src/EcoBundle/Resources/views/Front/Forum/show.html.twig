@@ -240,32 +240,32 @@
                                         {% if app.user in commentaire.dislikers %}
                                             <button id="like" type="submit" value="{{ commentaire.id}}" style="background:transparent; border: 0px;"
                                                     class="like btn up btn-tag-light btn-tag-rounded m-r-10 float-right">
-                                                <i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="likes{{commentaire.id}}">{{ commentaire.likes }}</span>
+                                                <i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="likes{{commentaire.id}}">{{ commentaire.likers | length }}</span>
                                             </button>
                                             <button disabled id="" type="submit" value="" style="background:transparent; border: 0px;"
                                                     class="dislike btn down btn-tag-light btn-tag-rounded m-r-10 float-right">
                                                 <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                                                <span class="dislikes{{commentaire.id}}">{{ commentaire.dislikes }}</span>
+                                                <span class="dislikes{{commentaire.id}}">{{ commentaire.dislikers | length}}</span>
                                             </button>
                                         {% elseif app.user in commentaire.likers %}
                                             <button disabled type="submit" style="background:transparent; border: 0px;"
                                                     class="like btn up btn-tag-light btn-tag-rounded m-r-10 float-right">
-                                                <i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="likes{{commentaire.id}}">{{ commentaire.likes }}</span>
+                                                <i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="likes{{commentaire.id}}">{{ commentaire.likers | length }}</span>
                                             </button>
                                             <button id="dislike" type="submit" value="{{ commentaire.id}}" style="background:transparent; border: 0px;"
                                                     class="dislike btn down btn-tag-light btn-tag-rounded m-r-10 float-right">
                                                 <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                                                <span class="dislikes{{commentaire.id}}">{{ commentaire.dislikes }}</span>
+                                                <span class="dislikes{{commentaire.id}}">{{ commentaire.dislikers | length }}</span>
                                             </button>
                                         {% else %}
                                         <button id="like" type="submit" value="{{ commentaire.id}}" style="background:transparent; border: 0px;"
                                                 class="like btn up btn-tag-light btn-tag-rounded m-r-10 float-right">
-                                            <i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="likes{{commentaire.id}}">{{ commentaire.likes }}</span>
+                                            <i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="likes{{commentaire.id}}">{{ commentaire.likers | length }}</span>
                                         </button>
                                         <button id="dislike" type="submit" value="{{ commentaire.id}}" style="background:transparent; border: 0px;"
                                                 class="dislike btn down btn-tag-light btn-tag-rounded m-r-10 float-right">
                                             <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                                            <span class="dislikes{{commentaire.id}}">{{ commentaire.dislikes }}</span>
+                                            <span class="dislikes{{commentaire.id}}">{{ commentaire.dislikers | length }}</span>
                                         </button>
                                         {% endif %}
                                     </div>

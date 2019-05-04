@@ -1,41 +1,75 @@
 <script>
-        $(document).ready(function(){
-            $(".dislike").click(function () {
-            var id = $(this).val();
-            alert(id);
-            $.ajax({
-                dataType: "json",
-                url     : "{{ path("front_forum_add_disliker_comment") }}",
-                data    : {
-                    "id": id
-                },
-                error   : function (response) {
-                    $("#allComments").html(response);
-                },
-                success : function (response) {
-                    $("#allComments").html(response);
-                }
-            });
-        });
-        $(".like").click(function () {
-            var id = $(this).val();
-            alert(id);
-            $.ajax({
-                dataType: "json",
-                url     : "{{ path("front_forum_add_liker_comment") }}",
-                data    : {
-                    "id": id
-                },
-                error   : function (response) {
-                    $("#allComments").html(response);
-                },
-                success : function (response) {
-                    $("#allComments").html(response);
-                }
-            });
+    // $(document).ready(function () {
+    function showMyImage(fileInput) {
+        var files = fileInput.files;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var imageType = /image.*/;
+            if (!file.type.match(imageType)) {
+                continue;
+            }
+            var img=document.getElementById("thumbnil");
+            img.file = file;
+            var reader = new FileReader();
+            reader.onload = (function(aImg) {
+                return function(e) {
+                    aImg.src = e.target.result;
+                };
+            })(img);
+            reader.readAsDataURL(file);
+        }
+        alert("hey");
+
+    }
+</script>
+<script src="{{ asset('assets/js/jquery.js') }}" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+        $(".dislike").click(function () {
+        var id = $(this).val();
+        $.ajax({
+            dataType: "json",
+            url     : "{{ path("front_forum_add_disliker_comment") }}",
+            data    : {
+                "id": id
+            },
+            error   : function (response) {
+                $("#allComments").html(response);
+            },
+            success : function (response) {
+                $("#allComments").html(response);
+            }
         });
     });
+    $(".like").click(function () {
+        var id = $(this).val();
+        $.ajax({
+            dataType: "json",
+            url     : "{{ path("front_forum_add_liker_comment") }}",
+            data    : {
+                "id": id
+            },
+            error   : function (response) {
+                $("#allComments").html(response);
+            },
+            success : function (response) {
+                $("#allComments").html(response);
+            }
+        });
+    });
+});
 </script>
+<link href="{{ asset ('assets/css/commentPage.css') }}" rel="stylesheet" type="text/css"/>
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forum/style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forum/custom.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forum/settings.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forum/sliderNormalize.css') }}">
+<style>
+    .linkedinButton  {
+        margin-top: -20px;
+    }
+</style>
 <ol class="breadcrumb breadcrumb-alt" style="background-color: white ;margin: 0px -30px; padding-left: 40px;">
     <li class="breadcrumb-item"><a href="#">Publication Forum</a></li>
     {% if  publication.categorie != '' %}
@@ -84,9 +118,6 @@
         <div class="row">
             {{ publication.description | raw }}
         </div>
-        {#<div class="row">#}
-        {#<b> Etat : </b> &nbsp;{{ publication.etat }}#}
-        {#</div>#}
         <br>
         <div class="postinfobot">
             <div class="pull-left">
@@ -172,17 +203,6 @@
                         </div>
                         <div class="postinfobot">
                             {% if app.user %}
-                                {#<div class="likeblock pull-left btn-group" style="padding-top: 10px">#}
-                                {#<button id="like" type="submit" value="{{ commentaire.id}}" style="background:transparent; border: 0px;"#}
-                                {#class="like btn up btn-tag-light btn-tag-rounded m-r-10 float-right">#}
-                                {#<i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="likes{{commentaire.id}}">{{ commentaire.likes }}</span>#}
-                                {#</button>#}
-                                {#<button id="dislike" type="submit" value="{{ commentaire.id}}" style="background:transparent; border: 0px;"#}
-                                {#class="dislike btn down btn-tag-light btn-tag-rounded m-r-10 float-right">#}
-                                {#<i class="fa fa-thumbs-down" aria-hidden="true"></i>#}
-                                {#<span class="dislikes{{commentaire.id}}">{{ commentaire.dislikes }}</span>#}
-                                {#</button>#}
-                                {#</div>#}
                                 <div class="likeblock pull-left btn-group" style="padding-top: 10px">
                                     {% if app.user in commentaire.dislikers %}
                                         <button id="like" type="submit" value="{{ commentaire.id}}" style="background:transparent; border: 0px;"

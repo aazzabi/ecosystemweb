@@ -32,7 +32,6 @@
         $(document).ready(function(){
             $(".dislike").click(function () {
                 var id = $(this).val();
-                alert(id);
                 $.ajax({
                     dataType: "json",
                     url: "{{ path("front_forum_add_disliker_comment") }}",
@@ -48,7 +47,6 @@
             });
             $(".like").click(function () {
                 var id = $(this).val();
-                alert(id);
                 $.ajax({
                     dataType: "json",
                     url: "{{ path("front_forum_add_liker_comment") }}",

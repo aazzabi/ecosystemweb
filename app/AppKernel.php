@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Nomaya\SocialBundle\NomayaSocialBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new FOS\CKEditorBundle\FOSCKEditorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

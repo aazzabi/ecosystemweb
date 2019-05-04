@@ -162,7 +162,7 @@
                 </div>
             {% endif %}
             <div class="row">
-                {{ publication.description }}
+                {{ publication.description | raw }}
             </div>
             {#<div class="row">#}
                 {#<b> Etat : </b> &nbsp;{{ publication.etat }}#}

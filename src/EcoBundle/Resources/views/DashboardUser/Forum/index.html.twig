@@ -105,7 +105,7 @@
                                     <td>{{ publication.id }}</td>
                                     <td>{{ publication.publicationCreatedAt | date('d/m/20y') }}</td>
                                     <td>{{ publication.titre }}</td>
-                                    <td id="descriptionCell">{{ publication.description }}</td>
+                                    <td id="descriptionCell">{{ publication.description | raw }}</td>
                                     <td>{{ publication.etat }}</td>
                                     <td>{{ publication.publicationCreatedBy }}</td>
                                     <td>{{ publication.commentaires | length }}</td>

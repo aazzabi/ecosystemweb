@@ -1,0 +1,315 @@
+<script>
+        $(document).ready(function(){
+            $(".dislike").click(function () {
+            var id = $(this).val();
+            alert(id);
+            $.ajax({
+                dataType: "json",
+                url     : "{{ path("front_forum_add_disliker_comment") }}",
+                data    : {
+                    "id": id
+                },
+                error   : function (response) {
+                    $("#allComments").html(response);
+                },
+                success : function (response) {
+                    $("#allComments").html(response);
+                }
+            });
+        });
+        $(".like").click(function () {
+            var id = $(this).val();
+            alert(id);
+            $.ajax({
+                dataType: "json",
+                url     : "{{ path("front_forum_add_liker_comment") }}",
+                data    : {
+                    "id": id
+                },
+                error   : function (response) {
+                    $("#allComments").html(response);
+                },
+                success : function (response) {
+                    $("#allComments").html(response);
+                }
+            });
+        });
+    });
+</script>
+<ol class="breadcrumb breadcrumb-alt" style="background-color: white ;margin: 0px -30px; padding-left: 40px;">
+    <li class="breadcrumb-item"><a href="#">Publication Forum</a></li>
+    {% if  publication.categorie != '' %}
+        <li class="breadcrumb-item active">{{ publication.categorie }}</li>
+    {% endif %}
+</ol>
+
+<div class="container">
+    {% if app.user and app.user.id == publication.publicationCreatedBy.id %}
+        <div class="row">
+            <div class="col-md-6 offset-md-6 text-right">
+                <br>
+                <button type="button" class="btn btn-danger btn_lg" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-times" aria-hidden="true"></i> Supprimer
+                </button>
+                {% if  publication.etat != 'archivé' %}
+                    <a class="btn btn-success"
+                       href="{{ path('front_forum_publication_archive', { 'id': publication.id }) }}">
+                        <i class="fa fa-archive" aria-hidden="true"></i> Archiver </a>
+                {% else %}
+                    <a class="btn btn-success"
+                       href="{{ path('front_forum_publication_desarchive', { 'id': publication.id }) }}">
+                        <i class="fa fa-archive" aria-hidden="true"></i> Désarchiver </a>
+                {% endif %}
+                <a class="btn btn-primary" href="{{ path('front_forum_edit', {'id' : publication.id }) }}">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editer
+                </a>
+                <a class="btn btn-secondary" href="{{ path('front_forum_index') }}">
+                    <i class="fa fa-undo" aria-hidden="true"></i> Retour à la liste
+                </a>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="jumbotron" style="background-color: #f9f9f9; padding-bottom: 10px">
+        <div class="row">
+            <h1>
+                <b>{{ publication.titre }} </b>
+            </h1>
+        </div>
+        {% if  publication.categorie != '' %}
+            <div class="row">
+                <b> <span class="tag label label-info">{{ publication.categorie }}</span></b>
+            </div>
+        {% endif %}
+        <div class="row">
+            {{ publication.description | raw }}
+        </div>
+        {#<div class="row">#}
+        {#<b> Etat : </b> &nbsp;{{ publication.etat }}#}
+        {#</div>#}
+        <br>
+        <div class="postinfobot">
+            <div class="pull-left">
+                <i class="fa fa-clock-o"></i> Posté le
+                : {{ publication.publicationCreatedAt | date("d/M/y", "Europe/Paris") }}
+            </div>
+            <div class="btn-group pull-right">
+                {{ socialButtons( { 'facebook': {'locale':'fr_FR', 'send':true}} ) }}
+            </div>
+        </div>
+    </div>
+    {% for commentaire in publication.commentaires %}
+        <div class="post card card-transparent">
+            <div class="card-block no-padding">
+                <div id="card-advance" class="card card-default">
+                    <div class="card-header  ">
+                        <div class="card-title">Commentaire #{{ commentaire.id }}
+                        </div>
+                        <div class="card-controls">
+                            <div class="btn-group">
+                                {% if app.user %}
+                                    <button id="btnGroupDrop1" type="button"
+                                            class="btn btn-link" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false"><i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+                                        {% if app.user.id == publication.publicationCreatedBy.id  and publication.etat == 'publié' %}
+                                            <a class="dropdown-item"
+                                               href="{{ path('front_forum_publication_archive', { 'id': publication.id }) }}">
+                                                <i class="fa fa-check-circle" style="color: green;"></i>Archiver </a>
+                                        {% endif %}
+                                        {% if commentaire.commentedBy %}
+                                            {% if  app.user and app.user.id == commentaire.commentedBy.id %}
+                                                <a class="dropdown-item"
+                                                   href="{{ path('front_forum_commentaire_delete', { 'id': commentaire.id }) }}">
+                                                    <i class="fa fa-trash"></i> Effacer</a>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if app.user != commentaire.commentedBy %}
+                                            <a class="dropdown-item" data-toggle="modal"
+                                               data-target="#{{ commentaire.id }}">
+                                                <i class="fa fa-exclamation-triangle"></i> Signaler
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-block">
+                        <div class="topwrap">
+                            <div class="userinfo pull-left">
+                                {% if commentaire.commentedBy %}
+                                    <div class="avatar">
+                                        {% if commentaire.commentedBy.photo != '' %}
+                                            <img alt="User Pic" width="55" height="55"
+                                                 src="{{ asset('uploads/user/photo/' ~ commentaire.commentedBy.photo) }}">
+                                        {% else %}
+                                            <div class="avatar">
+                                                <img alt="User Pic" width="55" height="55"
+                                                     src="{{ asset('assets/img/profile.png') }}">
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% else %}
+                                    <div class="avatar">
+                                        <img alt="User Pic" width="55" height="55"
+                                             src="{{ asset('assets/img/profile.png') }}">
+                                        UNKNOWN
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="posttext pull-left">
+                                <p>{{ commentaire.description }}</p>
+                            </div>
+                            {% if  commentaire.photo != '' %}
+                                <img alt="User Pic" style="height: 100% !important;width: 300px !important;"
+                                     src="{{ asset('uploads/publication/commentaire/pieceJointe/' ~ commentaire.photo) }}"
+                                     class="img-circle img-responsive">
+                            {% endif %}
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="postinfobot">
+                            {% if app.user %}
+                                {#<div class="likeblock pull-left btn-group" style="padding-top: 10px">#}
+                                {#<button id="like" type="submit" value="{{ commentaire.id}}" style="background:transparent; border: 0px;"#}
+                                {#class="like btn up btn-tag-light btn-tag-rounded m-r-10 float-right">#}
+                                {#<i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="likes{{commentaire.id}}">{{ commentaire.likes }}</span>#}
+                                {#</button>#}
+                                {#<button id="dislike" type="submit" value="{{ commentaire.id}}" style="background:transparent; border: 0px;"#}
+                                {#class="dislike btn down btn-tag-light btn-tag-rounded m-r-10 float-right">#}
+                                {#<i class="fa fa-thumbs-down" aria-hidden="true"></i>#}
+                                {#<span class="dislikes{{commentaire.id}}">{{ commentaire.dislikes }}</span>#}
+                                {#</button>#}
+                                {#</div>#}
+                                <div class="likeblock pull-left btn-group" style="padding-top: 10px">
+                                    {% if app.user in commentaire.dislikers %}
+                                        <button id="like" type="submit" value="{{ commentaire.id}}" style="background:transparent; border: 0px;"
+                                                class="like btn up btn-tag-light btn-tag-rounded m-r-10 float-right">
+                                            <i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="likes{{commentaire.id}}">{{ commentaire.likes }}</span>
+                                        </button>
+                                        <button disabled id="" type="submit" value="" style="background:transparent; border: 0px;"
+                                                class="dislike btn down btn-tag-light btn-tag-rounded m-r-10 float-right">
+                                            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                            <span class="dislikes{{commentaire.id}}">{{ commentaire.dislikes }}</span>
+                                        </button>
+                                    {% elseif app.user in commentaire.likers %}
+                                        <button disabled type="submit" style="background:transparent; border: 0px;"
+                                                class="like btn up btn-tag-light btn-tag-rounded m-r-10 float-right">
+                                            <i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="likes{{commentaire.id}}">{{ commentaire.likes }}</span>
+                                        </button>
+                                        <button id="dislike" type="submit" value="{{ commentaire.id}}" style="background:transparent; border: 0px;"
+                                                class="dislike btn down btn-tag-light btn-tag-rounded m-r-10 float-right">
+                                            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                            <span class="dislikes{{commentaire.id}}">{{ commentaire.dislikes }}</span>
+                                        </button>
+                                    {% else %}
+                                        <button id="like" type="submit" value="{{ commentaire.id }}"
+                                                style="background:transparent; border: 0px;"
+                                                class="like btn up btn-tag-light btn-tag-rounded m-r-10 float-right">
+                                            <i class="fa fa-thumbs-up" aria-hidden="true"></i><span
+                                                    class="likes{{ commentaire.id }}">{{ commentaire.likes }}</span>
+                                        </button>
+                                        <button id="dislike" type="submit" value="{{ commentaire.id }}"
+                                                style="background:transparent; border: 0px;"
+                                                class="dislike btn down btn-tag-light btn-tag-rounded m-r-10 float-right">
+                                            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                            <span class="dislikes{{ commentaire.id }}">{{ commentaire.dislikes }}</span>
+                                        </button>
+                                    {% endif %}
+                                </div>
+
+                            {% else %}
+                                <div class="likeblock pull-left btn-group" style="padding-top: 10px">
+                                    <button id="" type="submit" value="" style="background:transparent; border: 0px;"
+                                            class=" btn btn-tag-light btn-tag-rounded m-r-10 float-right">
+                                        <i class="fa fa-thumbs-up" aria-hidden="true" style="color: #0084ff"></i>
+                                        <span class="">{{ commentaire.likes }}</span>
+                                    </button>
+                                    <button id="" type="" value="" style="background:transparent; border: 0px;"
+                                            class="btn btn-tag-light btn-tag-rounded m-r-10 float-right">
+                                        <i class="fa fa-thumbs-down" aria-hidden="true" style="color: #f94816"></i>
+                                        <span class="">{{ commentaire.dislikes }}</span>
+                                    </button>
+                                </div>
+                            {% endif %}
+                            <div class="posted pull-left" style="padding-left: 50px">
+                                <i class="fa fa-clock-o"></i> Commenté le
+                                : {{ commentaire.commentedAt | date("d/m/Y", "Europe/Paris") }}</div>
+                            <div class="posted pull-right text-right">
+                                {% if  app.user and (app.user.id == publication.publicationCreatedBy.id) and (publication.etat == "publié") %}
+                                    <a href="{{ path('front_forum_publication_archive', { 'id': publication.id }) }}">
+                                        <h4>Résolu ?</h4></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for commentaire in publication.commentaires %}
+        <div class="modal fade" id="{{ commentaire.id }}" tabindex="-1"
+             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Signaler ce commentaire !! </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"><br>
+                        <form action="{{ path('front_forum_signaler_commentaire', {'id': commentaire.id}) }}"
+                              id="{{ commentaire.id }}" method="get" name="formulario_login">
+                            <input type="radio" value="violence" name="radioLib" id="violence"><label for="violence">Violence</label><br>
+                            <input type="radio" value="arnaque" name="radioLib" id="arnaque"><label for="arnaque">arnaque</label><br>
+                            <input type="radio" value="harcelement" name="radioLib" id="harcelement"><label
+                                    for="harcelement">Harcelement</label><br>
+                            <input type="radio" value="haine" name="radioLib" id="haine"><label for="haine">Discour
+                                insitant à la haine</label><br>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-success">Signaler</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% if publication.etat == "publié" %}
+        {{ form_start(commentaireForm) }}
+        {% include '@Eco/Front/Forum/newCommentaire.html.twig' %}<br>
+        {{ form_end(commentaireForm) }}
+    {% endif %}
+
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"
+                    id="exampleModalLabel"> Supprimer
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Voulez-vous vraiement supprimer ce profile ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-secondary"
+                        data-dismiss="modal"> Annuler
+                </button>
+                <a class="btn btn-danger"
+                   href="{{ path('front_forum_publication_delete', { 'id': publication.id }) }}"> Supprimer</a>
+            </div>
+        </div>
+    </div>
+</div>

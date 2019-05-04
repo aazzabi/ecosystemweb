@@ -430,15 +430,90 @@ class ForumController extends Controller
         return new Response($json);
     }
 
+
     /**
      *
-     * @Route("/workshop", name="workshop")
-     * @Method("GET")
+     * @Route("/adddisliker/new", name="front_forum_add_disliker_comment")
+     * @Method({"GET", "POST"})
      */
-    public  function workshopAction(){
-        $pubs = $this->getDoctrine()->getManager()->getRepository('EcoBundle:PublicationForum')->findAll();
-        $serializer = new Serializer([new ObjectNormalizer()]);
-        $formated = $serializer->normalize($pubs);
-        return new JsonResponse($formated);
+    public function addDislikerAction(Request $request)
+    {
+        $id               = $request->get('id');
+        $em               = $this->getDoctrine()->getManager();
+        $user          = $this->get('security.token_storage')->getToken()->getUser();
+        $commentaire      = $em->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $commentaire->addDisliker($user);
+        $commentaire->removeLiker($user);
+        $publicationForum = $commentaire->getPublication();
+        $commentaire->setDislikes($commentaire->getdislikes() + 1);
+        $em->persist($commentaire);
+        $em->flush();
+
+        $commentaireForm = $this->createForm('EcoBundle\Form\CommentairePublicationType', $commentaire);
+        $commentaireForm->handleRequest($request);
+        if ($commentaireForm->isSubmitted() && $commentaireForm->isValid()) {
+            $em->persist($commentaire);
+            $em->flush();
+
+            return $this->redirectToRoute('front_forum_show', ['id' => $publicationForum->getId()]);
+        }
+
+        $template = $this->render(
+            '@Eco/Front/Forum/showAfterLikeDislike.html.twig',
+            [
+                'commentaireForm' => $commentaireForm->createView(),
+                'publication'     => $publicationForum,
+            ]
+        )->getContent();
+
+        $json     = json_encode($template);
+        $response = new Response($json, 200);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
     }
+    /**
+     *
+     * @Route("/addliker/new", name="front_forum_add_liker_comment")
+     * @Method({"GET", "POST"})
+     */
+    public function addLikerAction(Request $request)
+    {
+        $id               = $request->get('id');
+        $em               = $this->getDoctrine()->getManager();
+        $user          = $this->get('security.token_storage')->getToken()->getUser();
+        $commentaire      = $em->getRepository('EcoBundle:CommentairePublication')->find($id);
+        $commentaire->addLiker($user);
+        $commentaire->removeDisliker($user);
+        $publicationForum = $commentaire->getPublication();
+        $commentaire->setDislikes($commentaire->getLikes() + 1);
+        $em->persist($commentaire);
+        $em->flush();
+
+        $commentaireForm = $this->createForm('EcoBundle\Form\CommentairePublicationType', $commentaire);
+        $commentaireForm->handleRequest($request);
+        if ($commentaireForm->isSubmitted() && $commentaireForm->isValid()) {
+            $em->persist($commentaire);
+            $em->flush();
+
+            return $this->redirectToRoute('front_forum_show', ['id' => $publicationForum->getId()]);
+        }
+
+        $template = $this->render(
+            '@Eco/Front/Forum/showAfterLikeDislike.html.twig',
+            [
+                'commentaireForm' => $commentaireForm->createView(),
+                'publication'     => $publicationForum,
+            ]
+        )->getContent();
+
+        $json     = json_encode($template);
+        $response = new Response($json, 200);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+    }
+
 }

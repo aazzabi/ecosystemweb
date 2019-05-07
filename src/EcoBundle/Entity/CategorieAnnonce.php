@@ -35,13 +35,13 @@ class CategorieAnnonce
      */
     private $libelle;
 
-    /**
-     * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="categorie")
-     * @ORM\JoinColumn(name="annonce_id", referencedColumnName="id")
-     * @JMS\MaxDepth(2)
-     */
-    private $annonces;
+//    /**
+//     * One product has many features. This is the inverse side.
+//     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="categorie")
+//     * @ORM\JoinColumn(name="annonce_id", referencedColumnName="id")
+//     * @JMS\MaxDepth(2)
+//     */
+//    private $annonces;
 
     public function __construct() {
 
@@ -99,20 +99,20 @@ class CategorieAnnonce
         return  $this->getLibelle();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAnnonces()
-    {
-        return $this->annonces;
-    }
-
-    /**
-     * @param mixed $annonces
-     */
-    public function setAnnonces($annonces)
-    {
-        $this->annonces = $annonces;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getAnnonces()
+//    {
+//        return $this->annonces;
+//    }
+//
+//    /**
+//     * @param mixed $annonces
+//     */
+//    public function setAnnonces($annonces)
+//    {
+//        $this->annonces = $annonces;
+//    }
 }
 

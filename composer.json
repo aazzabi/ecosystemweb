@@ -24,6 +24,7 @@
         "jms/serializer-bundle": "^2.4",
         "knplabs/knp-paginator-bundle": "^2.8",
         "knplabs/knp-snappy-bundle": "^1.4",
+        "misteio/cloudinary-bundle": "^0.2.0",
         "nomaya/social-bundle": "dev-master",
         "ob/highcharts-bundle": "^1.6",
         "sensio/distribution-bundle": "^5.0.19",

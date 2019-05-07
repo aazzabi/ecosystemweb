@@ -76,6 +76,16 @@ class Annonce
     private $prix;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="note", type="float")
+     *
+     * @Assert\NotNull
+     *
+     */
+    private $note;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="region", type="string", length=255)
@@ -87,7 +97,7 @@ class Annonce
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="CategorieAnnonce", inversedBy="annonces")
+     * @ORM\ManyToOne(targetEntity="CategorieAnnonce")
      * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id"   )
      */
     private $categorie;
@@ -443,5 +453,22 @@ class Annonce
     {
         $this->views = $views;
     }
+
+    /**
+     * @return float
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param float $note
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+    }
+
 }
 

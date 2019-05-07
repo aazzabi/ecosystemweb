@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Vresh\TwilioBundle\VreshTwilioBundle(),
             new EcoBundle\EcoBundle(),
+            new Misteio\CloudinaryBundle\MisteioCloudinaryBundle(),
             new CMEN\GoogleChartsBundle\CMENGoogleChartsBundle(),
             new Ob\HighchartsBundle\ObHighchartsBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),

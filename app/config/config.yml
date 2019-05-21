@@ -9,6 +9,11 @@ imports:
 parameters:
     locale: en
 
+
+misteio_cloudinary:
+    cloud_name: ecosysteme
+    api_key: 799223361672131
+    secret_key: pMVlqSrLI5DpttkXN_gTLoPqRYU
 framework:
     #esi: ~
     translator: { fallbacks: ['%locale%'] }

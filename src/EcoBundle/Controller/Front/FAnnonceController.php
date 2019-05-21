@@ -3,6 +3,7 @@
 namespace EcoBundle\Controller\Front;
 
 use EcoBundle\Entity\Annonce;
+use EcoBundle\Entity\CategorieAnnonce;
 use EcoBundle\Entity\SignalAnnonce;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -84,11 +85,13 @@ class FAnnonceController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
+        $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
+        $lc = $em->getRepository('EcoBundle:LigneCommande')->findAll();
         $annnonce = new Annonce();
         $annnonce = $em->getRepository('EcoBundle:Annonce')->findByCategorie($cat);
 
         return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
-            "annonces" => $annnonce, 'categories' => $categories,
+            "annonces" => $annnonce, 'categories' => $categories,'liste' => $liste,'lc' => $lc
 
         ));
     }
@@ -125,11 +128,15 @@ class FAnnonceController extends Controller
         if ($val == 'PR') {
             $em = $this->getDoctrine()->getManager();
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
+            $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
+            $lc = $em->getRepository('EcoBundle:LigneCommande')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPlusRecent();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
         } elseif ($val == 'PE') {
             $em = $this->getDoctrine()->getManager();
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
+            $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
+            $lc = $em->getRepository('EcoBundle:LigneCommande')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixElv();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
 
@@ -137,12 +144,14 @@ class FAnnonceController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $categories = $em->getRepository('EcoBundle:CategorieAnnonce')->findAll();
+            $liste = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
+            $lc = $em->getRepository('EcoBundle:LigneCommande')->findAll();
             $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixBas();
             $likes = $em->getRepository('EcoBundle:Annonce')->likeAnnonce();
 
         }
         return $this->render('@Eco/Front/Annonce/annonce.html.twig', array(
-            "annonces" => $annonces, 'categories' => $categories, 'likes' => $likes,
+            "annonces" => $annonces, 'categories' => $categories, 'likes' => $likes,'liste' => $liste,'lc' => $lc
         ));
     }
     /**
@@ -197,6 +206,7 @@ class FAnnonceController extends Controller
 
             return $response;
     }
+
 
 
 }

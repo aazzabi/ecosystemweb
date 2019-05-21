@@ -2,6 +2,7 @@
 
 namespace EcoBundle\Form;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +18,7 @@ class PublicationForumType extends AbstractType
         $builder
             ->add('titre')
             ->add('categorie')
-            ->add('description', TextareaType::class, array(
+            ->add('description', CKEditorType::class, array(
                 'attr' => array(
                     'class' => 'publicationDescription'
                 )

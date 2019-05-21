@@ -22,11 +22,13 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Vresh\TwilioBundle\VreshTwilioBundle(),
             new EcoBundle\EcoBundle(),
+            new Misteio\CloudinaryBundle\MisteioCloudinaryBundle(),
             new CMEN\GoogleChartsBundle\CMENGoogleChartsBundle(),
             new Ob\HighchartsBundle\ObHighchartsBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Nomaya\SocialBundle\NomayaSocialBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new FOS\CKEditorBundle\FOSCKEditorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

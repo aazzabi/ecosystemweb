@@ -4,10 +4,9 @@ namespace EcoBundle\Controller\API;
 
 use EcoBundle\Entity\Annonce;
 use EcoBundle\Entity\CategorieAnnonce;
-<<<<<<< HEAD
-=======
+
 use EcoBundle\Entity\SignalAnnonce;
->>>>>>> 6d32a1c9a736356bfea711cd69299e5a26dc0baa
+
 use EcoBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -91,10 +90,9 @@ class AnnonceApiController extends Controller
         $annonce->setRegion($request->get('region'));
         $annonce->setLikes(0);
         $annonce->setViews(0);
-<<<<<<< HEAD
-=======
+
         $annonce->setNote(0);
->>>>>>> 6d32a1c9a736356bfea711cd69299e5a26dc0baa
+
         $annonce->setPhoto($request->get('photo'));
         $categorie = $em->getRepository(CategorieAnnonce::class)->find($request->get('categorie'));
         $user = $em->getRepository(User::class)->find($request->get('user'));
@@ -104,8 +102,7 @@ class AnnonceApiController extends Controller
         $em->persist($annonce);
         $em->flush();
 
-<<<<<<< HEAD
-=======
+
             $serializer = new Serializer([new ObjectNormalizer()]);
             $formatted = $serializer->normalize($annonce);
             return new JsonResponse($formatted);
@@ -180,13 +177,11 @@ class AnnonceApiController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($annonce);
         $em->flush();
->>>>>>> 6d32a1c9a736356bfea711cd69299e5a26dc0baa
         $serializer = new Serializer([new ObjectNormalizer()]);
         $formatted = $serializer->normalize($annonce);
         return new JsonResponse($formatted);
     }
-<<<<<<< HEAD
-=======
+
 
     /**
      * Finds and displays a user entity.
@@ -294,7 +289,4 @@ class AnnonceApiController extends Controller
 
     }
 
-
-
->>>>>>> 6d32a1c9a736356bfea711cd69299e5a26dc0baa
 }

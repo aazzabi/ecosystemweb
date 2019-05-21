@@ -184,7 +184,7 @@
                                 </div>
                                 <div class="posttext pull-left">
                                     <a href="{{ path('front_forum_show', {'id' : publication.id }) }}"><h3 class="title" style="font-weight: 500;" >{{ publication.titre }}</h3></a>
-                                    <p id="description">{{ publication.description }}</p>
+                                    <p id="description">{{ publication.description | raw }}</p>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>

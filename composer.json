@@ -19,6 +19,7 @@
         "cmen/google-charts-bundle": "^2.2",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
+        "friendsofsymfony/ckeditor-bundle": "^1.2",
         "friendsofsymfony/user-bundle": "~2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "^2.4",
@@ -60,7 +61,7 @@
     },
     "config": {
         "platform": {
-            "php": "5.5.9"
+            "php": "5.6"
         },
         "sort-packages": true
     },

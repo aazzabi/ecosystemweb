@@ -61,6 +61,30 @@ class Livraison
      */
     private $ville_livraison;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code_livraison", type="string",length=255)
+     */
+    private $code_livraison;
+
+    /**
+     * @return string
+     */
+    public function getCodeLivraison()
+    {
+        return $this->code_livraison;
+    }
+
+    /**
+     * @param string $code_livraison
+     */
+    public function setCodeLivraison($code_livraison)
+    {
+        $this->code_livraison = $code_livraison;
+    }
+
+
 
     /**
      * @var User
@@ -246,15 +270,7 @@ class Livraison
     }
 
 
-    /**
-     * Get dateFin
-     *
-     * @return \DateTime
-     */
-    public function getDateFin()
-    {
-        return $this->dateFin;
-    }
+
 
 
 }

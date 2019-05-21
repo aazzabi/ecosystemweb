@@ -4,6 +4,10 @@ namespace EcoBundle\Controller\API;
 
 use EcoBundle\Entity\Annonce;
 use EcoBundle\Entity\CategorieAnnonce;
+<<<<<<< HEAD
+=======
+use EcoBundle\Entity\SignalAnnonce;
+>>>>>>> 6d32a1c9a736356bfea711cd69299e5a26dc0baa
 use EcoBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -87,6 +91,10 @@ class AnnonceApiController extends Controller
         $annonce->setRegion($request->get('region'));
         $annonce->setLikes(0);
         $annonce->setViews(0);
+<<<<<<< HEAD
+=======
+        $annonce->setNote(0);
+>>>>>>> 6d32a1c9a736356bfea711cd69299e5a26dc0baa
         $annonce->setPhoto($request->get('photo'));
         $categorie = $em->getRepository(CategorieAnnonce::class)->find($request->get('categorie'));
         $user = $em->getRepository(User::class)->find($request->get('user'));
@@ -96,8 +104,197 @@ class AnnonceApiController extends Controller
         $em->persist($annonce);
         $em->flush();
 
+<<<<<<< HEAD
+=======
+            $serializer = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serializer->normalize($annonce);
+            return new JsonResponse($formatted);
+    }
+
+    /**
+     * @Route("/categorie/{cat}", name="json_cat_annopnce")
+     */
+    public function RecherchCategorieAction($cat)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $annnonce = new Annonce();
+        $annnonce = $em->getRepository('EcoBundle:Annonce')->findBycategorie($cat);
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($annnonce);
+        return new JsonResponse($formatted);
+    }
+
+    /**
+     *
+     * @Route("/snAnnonce",name="signalAnnonce_json")                                                                                                                                                                                            ")
+     * @Method({"GET", "POST"})
+     */
+    public function SignalAction(Request $request)
+    {
+
+        $signal = new SignalAnnonce();
+        $em = $this->getDoctrine()->getManager();
+        $annonce = $em->getRepository('EcoBundle:Annonce')->find($request->get('idAnnonce'));
+        $user = $em->getRepository(User::class)->find($request->get('user'));
+        $libRadio = $request->get('description');
+        $signal->setDescription($libRadio);
+        $signal->setAnnonce($annonce);
+        $signal->setUser($user);
+        $em->persist($signal);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($signal);
+        return new JsonResponse($formatted);
+    }
+
+
+    /**
+     *
+     * @Route("/signalAnnonce", name="signal_json")                                                                                                                                                                                             ")
+     * @Method({"GET", "POST"})
+     */
+    public function getCountSigna()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $signales = array();
+        $RAW_QUERY = 'SELECT *,COUNT(*) as counts FROM signal_annonce GROUP BY annonce_id';
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
+        $signales = $statement->fetchAll();
+        //dump($signales);exit();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($signales);
+        return new JsonResponse($formatted);
+    }
+
+    /**
+     * Deletes a annonce entity.
+     *
+     * @Route("/delete/{id}", name="json_dellet_annonce")
+     * @Method({"GET", "DELETE"})
+     */
+    public function deleteAnnonceAction($id)
+    {
+        $annonce = $this->getDoctrine()->getRepository('EcoBundle:Annonce')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($annonce);
+        $em->flush();
+>>>>>>> 6d32a1c9a736356bfea711cd69299e5a26dc0baa
         $serializer = new Serializer([new ObjectNormalizer()]);
         $formatted = $serializer->normalize($annonce);
         return new JsonResponse($formatted);
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Finds and displays a user entity.
+     *
+     * @Route("/viwes/{id}", name="f_json_viwe")
+     * @Method({"GET", "POST"})
+     */
+    public function setViweAction($id)
+    {
+        $annonce = $this->getDoctrine()->getRepository('EcoBundle:Annonce')->find($id);
+        $annonce->setViews($annonce->getViews()+1);
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($annonce);
+        return new JsonResponse($formatted);
+    }
+
+    /**
+     * Creates a new Categorie et annonce entity.
+     *
+     * @Route("/likes/{id}", name="json_like_annonce")
+     * @Method({"GET", "POST"})
+     */
+    public function newJaimeAction($id)
+    {
+            $em = $this->getDoctrine()->getManager();
+            $annonce = $em->getRepository('EcoBundle:Annonce')->find($id);
+            $annonce->setLikes($annonce->getLikes() + 1);
+            $em->flush();
+            $serializer = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serializer->normalize($annonce);
+            return new JsonResponse($formatted);
+    }
+    /**
+     * Creates a new Categorie et annonce entity.
+     *
+     * @Route("/notes/{id}/{note}", name="json_like_annonce")
+     * @Method({"GET", "POST"})
+     */
+    public function updateNoteAction($id,$note)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $annonce = $em->getRepository('EcoBundle:Annonce')->find($id);
+        if($annonce->getNote() ==0)
+        {
+            $annonce->setNote(($annonce->getNote()+$note));
+        }else
+        {
+            $annonce->setNote(($annonce->getNote()+$note)/2);
+        }
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($annonce);
+        return new JsonResponse($formatted);
+    }
+
+    /**
+     * @Route("/trier/{val}", name="trier_json")
+     *
+     */
+    public function TrierAction(Request $request)
+    {
+
+        $val = $request->get('val');
+        //dump($val);exit();
+        if ($val == 'PR') {
+            $em = $this->getDoctrine()->getManager();
+
+            $annonces = $em->getRepository('EcoBundle:Annonce')->trierPlusRecent();
+            $serializer = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serializer->normalize($annonces);
+            return new JsonResponse($formatted);
+        } elseif ($val == 'PE') {
+            $em = $this->getDoctrine()->getManager();
+            $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixElv();
+            $serializer = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serializer->normalize($annonces);
+            return new JsonResponse($formatted);
+        } elseif ($val == 'PB') {
+
+            $em = $this->getDoctrine()->getManager();
+            $annonces = $em->getRepository('EcoBundle:Annonce')->trierPrixBas();
+            $serializer = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serializer->normalize($annonces);
+            return new JsonResponse($formatted);
+        }
+    }
+
+    /**
+     *
+     * @Route("/recherche", name="json_recher")
+     * @Method({"GET", "POST"})
+     */
+    public function rechercheAction(Request $request)
+    {
+        $keyWord = $request->get('keyWord');
+        // dump($keyWord);
+
+            $annonce = $this->getDoctrine()->getRepository('EcoBundle:Annonce')->RechercheTitreAnnonce($keyWord);
+            $serializer = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serializer->normalize($annonce);
+            return new JsonResponse($formatted);
+
+
+    }
+
+
+
+>>>>>>> 6d32a1c9a736356bfea711cd69299e5a26dc0baa
 }

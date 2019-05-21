@@ -2,8 +2,11 @@
 
 namespace EcoBundle\Entity;
 
+<<<<<<< HEAD
 use Doctrine\Common\Collections\ArrayCollection;
 use EcoBundle\Entity\PublicationForum;
+=======
+>>>>>>> 6d32a1c9a736356bfea711cd69299e5a26dc0baa
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

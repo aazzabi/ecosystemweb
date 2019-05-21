@@ -20,10 +20,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-right" style="margin: 20px 0px;padding: 0">
+                {% if app.user %}
                 <a href="#" class="btn btn-outline-primary text-uppercase">
                     <i class="fas fa-shopping-cart"></i> Add to cart </a>
                 <a href="{{ path('pdf',{ 'id': annonce.id }) }}" class="btn btn-outline-primary text-uppercase">
                     <i class="fa fa-file-pdf-o"></i> PDF </a>
+                {% endif %}
                 <a href="{{ path('f_annonce_index') }}" class="btn btn-success">
                     <i class="fa fa-undo" aria-hidden="true"></i> Retourner à la page d'annonce
                 </a>
@@ -68,7 +70,9 @@
                                 <dd>{{ annonce.views }}</dd>
                             </dl>  <!-- item-property-hor .// -->
                             <hr>
+                            {% if app.user %}
                             {{ socialButtons() }}
+                            {% endif %}
                         </article>
                     </aside>
                 </div>

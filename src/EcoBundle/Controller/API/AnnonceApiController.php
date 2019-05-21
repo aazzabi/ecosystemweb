@@ -143,7 +143,7 @@ class AnnonceApiController extends Controller
 
     /**
      *
-     * @Route("/cxxxxxx", name="signal_json")                                                                                                                                                                                             ")
+     * @Route("/signalAnnonce", name="signal_json")                                                                                                                                                                                             ")
      * @Method({"GET", "POST"})
      */
     public function getCountSigna()

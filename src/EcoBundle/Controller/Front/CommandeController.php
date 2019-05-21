@@ -41,12 +41,14 @@ class CommandeController extends Controller
         $em =$this->getDoctrine()->getManager();
 
          $liste_panier = $em->getRepository('EcoBundle:AnnoncePanier')->findAll();
-        $users = $em->getRepository('EcoBundle:User')->findAll();
-        $livreurs = $em->getRepository('EcoBundle:Livreur')->findAll();
+
          $commande=new Commande();
          $etat="En cours";
          $date_auj=new \DateTime('now');
-         $commande->setIdUtilisateur($id_u);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $commande->setCommandePassedBy($user);
+        $id_u=$user->getId();
+        $commande->setIdUtilisateur($id_u);
          $commande->setPrixTotal($prix_total);
         $commande->setDateEmission($date_auj);
          $commande->setEtatCommande($etat);

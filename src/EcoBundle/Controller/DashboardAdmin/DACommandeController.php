@@ -36,9 +36,9 @@ class DACommandeController extends Controller
     {
         $em=$this->getDoctrine()->getManager();
         $commandes = $em->getRepository('EcoBundle:Commande')->findAll();
-        $users = $em->getRepository('EcoBundle:User')->findAll();
+
         return $this->render('@Eco/DashboardAdmin/Commande/da_page_commande.html.twig', array(
-            'commandes'=> $commandes,'users'=> $users
+            'commandes'=> $commandes
         ));
     }
     /**

@@ -41,15 +41,17 @@ class DAAnnonceController extends Controller
         ));
     }
     /**
-     * @Route("/allanonces", name="da_json")
-     * @Method("GET")
+     * Creates a new Categorie et annonce entity.
+     *
+     * @Route("/getAll", name="json_annonce")
+     * @Method({"GET", "POST"})
      */
-    public function allAction()
+    public function getAllAction()
     {
         $task = $this->getDoctrine()->getManager()->getRepository(Annonce::class)->findAll();
-        $serializer = new Serializer([new ObjectNormalizer()]);
-        $formated=$serializer->normalize($task);
-        return new  JsonResponse($formated);
+        $serialize = new Serializer([new ObjectNormalizer()]);
+        $formated = $serialize->normalize($task);
+        return new JsonResponse($formated);
     }
 
     /**

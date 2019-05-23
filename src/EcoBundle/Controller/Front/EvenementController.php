@@ -272,6 +272,76 @@ class EvenementController extends Controller
        return $this->redirectToRoute('front_evenements_index');
    }
     /**
+     * @Route("/joinMobile/user/{idUser}/event/{idEv}", name="joinMobile")
+     * @Method({"GET", "POST"})
+     */
+    public function participerMobileAction(Request $request, $idUser, $idEv)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $event =  $em->getRepository('EcoBundle:Evenement')->find($idEv);
+        $user =  $em->getRepository('EcoBundle:User')->find($idUser);
+        $event->addParticipant($user);
+
+        $em->persist($user);
+        $em->persist($event);
+        $em->flush();
+
+        $serializer = $this->get('jms_serializer');
+
+        $response = new Response($serializer->serialize($event, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+    }
+
+    /**
+     * @Route("/verifjoinMobile/user/{idUser}/event/{idEv}", name="verifjoinMobile")
+     * @Method({"GET", "POST"})
+     */
+    public function VerifparticiperMobileAction(Request $request, $idUser, $idEv)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $event =  $em->getRepository('EcoBundle:Evenement')->find($idEv);
+        $user =  $em->getRepository('EcoBundle:User')->find($idUser);
+        if($event->getParticipants()->contains($user))
+        {
+           $response=true;
+        }
+
+ else {  $response=false; }
+        $serializer = $this->get('jms_serializer');
+
+        $response = new Response($serializer->serialize($response, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+    }
+
+    /**
+     * @Route("/nojoinMobile/user/{idUser}/event/{idEv}", name="nojoinMobile")
+     * @Method({"GET", "POST"})
+     */
+    public function noParticiperMobileAction(Request $request, $idUser, $idEv)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $event =  $em->getRepository('EcoBundle:Evenement')->find($idEv);
+        $user =  $em->getRepository('EcoBundle:User')->find($idUser);
+        $event->removeParticipants($user);
+
+        $em->persist($user);
+        $em->persist($event);
+        $em->flush();
+
+        $serializer = $this->get('jms_serializer');
+
+        $response = new Response($serializer->serialize($event, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+    /**
      * @Route("/evenementNP", name="front_evenements_noparticiper")
      * @Method("GET")
      */
@@ -417,23 +487,40 @@ class EvenementController extends Controller
     {
        $event = $this->getDoctrine()->getManager()
              ->getRepository('EcoBundle:Evenement')->findAll();
-       $serializer = new Serializer([new DateTimeNormalizer('d-M-Y'),new ObjectNormalizer()]);
+       $serializer = new Serializer([new ObjectNormalizer()]);
        $formatted = $serializer->normalize($event);
        return new JsonResponse($formatted);
 
 
-//       $events = $this->getDoctrine()->getManager()
-//            ->getRepository(Evenement::class)
-//            ->findAll();
-//
-//
-//
-//        $serializer = $this->get('jms_serializer');
-//
-//        $response = new Response($serializer->serialize($events, 'json'));
-//        $response->headers->set('Content-Type', 'application/json');
-//
-//        return $response;
+    }
+
+    /**
+     * @Route("/jmseventCat/cat/{idCat}", name="jmsCat")
+     * @Method({"GET", "POST"})
+     */
+    public function jmsEventParCatAction(Request $request,$idCat)
+    {
+        //$e=new Evenement();
+        $event = $this->getDoctrine()->getManager()
+            ->getRepository('EcoBundle:Evenement')->findByCategorie($idCat);
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($event);
+        return new JsonResponse($formatted);
+
+
+    }
+
+    /**
+     * @Route("/Categorieevent", name="catevent")
+     * @Method({"GET", "POST"})
+     */
+    public function CategoriEventMobileAction()
+    {
+        $cat = $this->getDoctrine()->getManager()
+            ->getRepository('EcoBundle:CategorieEvts')->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($cat);
+        return new JsonResponse($formatted);
 
 
     }
@@ -487,6 +574,24 @@ class EvenementController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    /**
+     * @Route("/nbvuesevent/{id}", name="nbvuesevent")
+     * @Method({"GET", "POST"})
+     */
+    public function nbVuesMobileAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository('EcoBundle:Evenement')->find($id);
+        $event->setNbVues($event->getNbVues() + 1);
+        $em=$this->getDoctrine()->getManager();
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($event);
+        return new JsonResponse($formatted);
+
+
     }
 
 }

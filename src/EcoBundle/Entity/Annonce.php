@@ -78,9 +78,7 @@ class Annonce
     /**
      * @var float
      *
-     * @ORM\Column(name="note", type="float")
-     *
-     * @Assert\NotNull
+     * @ORM\Column(name="note", type="float", nullable=true)
      *
      */
     private $note;

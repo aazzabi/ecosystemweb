@@ -252,17 +252,6 @@ class AnnonceRep
 
 
 
-
-    /**
-     * Get note
-     *
-     * @return int
-     */
-    public function getNote()
-    {
-        return $this->note;
-    }
-
     /**
      * @return File
      */

@@ -11,6 +11,7 @@ namespace EcoBundle\Controller\API;
 use EcoBundle\Entity\CategoriePub;
 use EcoBundle\Entity\Group;
 use EcoBundle\Entity\PublicationForum;
+use EcoBundle\Entity\Reparateur;
 use EcoBundle\Entity\User;
 use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -40,6 +41,20 @@ class UserAPIController extends Controller
         $user = $em->getRepository('EcoBundle:User')->findOneBy(array('id' => $id));
         $serializer = new Serializer([new ObjectNormalizer()]);
         return new JsonResponse($serializer->normalize($user));
+    }
+
+    /**
+     * @Route("/getttrep", name="user_api_gettoutrep")
+     * @Method({"GET", "POST"})
+     */
+    public function getTtRepAction(Request $request){
+        $task = $this->getDoctrine()->getManager()
+            ->getRepository(Reparateur::class)
+            ->findAll();
+
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($task);
+        return new JsonResponse($formatted);
     }
 
     /**

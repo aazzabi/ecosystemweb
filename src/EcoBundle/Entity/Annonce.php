@@ -102,12 +102,12 @@ class Annonce
      */
     private $categorie;
 
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $user;
+//    /**
+//     *
+//     * @ORM\ManyToOne(targetEntity="User", inversedBy="myAnnonces")
+//     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+//     */
+//    private $user;
 
     /**
      * @var string

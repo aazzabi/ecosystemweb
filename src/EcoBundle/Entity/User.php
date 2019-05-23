@@ -134,14 +134,12 @@ class User extends BaseUser
 //     */
 //    private $eventsParticipes;
 
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Missions", mappedBy="participants")
-     */
-    private $missionsParticipes;
-
+//    /**
+//     * @var \Doctrine\Common\Collections\Collection
+//     *
+//     * @ORM\ManyToMany(targetEntity="Missions", mappedBy="participants")
+//     */
+//    private $missionsParticipes;
 
     /**
      * @var string
@@ -166,11 +164,7 @@ class User extends BaseUser
 //        $this->eventsCrees = new ArrayCollection();
 //        $this->missionsCrees = new ArrayCollection();
 //        $this->eventsParticipes = new ArrayCollection();
-<<<<<<< HEAD
    //     $this->missionsParticipes = new ArrayCollection();
-=======
-        $this->missionsParticipes = new ArrayCollection();
->>>>>>> 32df4894ed17cd3a84d773def9ae31987adc0179
     }
 
     /**
@@ -239,7 +233,6 @@ class User extends BaseUser
         $this->numtel = $numtel;
     }
 
-<<<<<<< HEAD
 //    /**
 //     * @return \Doctrine\Common\Collections\Collection
 //     */
@@ -255,23 +248,6 @@ class User extends BaseUser
 //    {
 //        $this->missionsParticipes = $missionsParticipes;
 //    }
-=======
-    /**
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMissionsParticipes()
-    {
-        return $this->missionsParticipes;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\Collection $missionsParticipes
-     */
-    public function setMissionsParticipes($missionsParticipes)
-    {
-        $this->missionsParticipes = $missionsParticipes;
-    }
->>>>>>> 32df4894ed17cd3a84d773def9ae31987adc0179
 
     /**
      * @return mixed
@@ -587,7 +563,7 @@ class User extends BaseUser
 //    {
 //        $this->missionsCrees->removeElement($m);
 //    }
-<<<<<<< HEAD
+
 //    /**
 //     *
 //     * @param \EcoBundle\Entity\Missions $e
@@ -609,27 +585,4 @@ class User extends BaseUser
 //    {
 //        $this->missionsParticipes->removeElement($e);
 //    }
-=======
-    /**
-     *
-     * @param \EcoBundle\Entity\Missions $e
-     *
-     * @return User
-     */
-    public function addMissionsParticipes(Missions $e)
-    {
-        $this->missionsParticipes[] = $e;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @param \EcoBundle\Entity\Missions $missionsParticipes
-     */
-    public function removeMissionsParticipes(Missions $e)
-    {
-        $this->missionsParticipes->removeElement($e);
-    }
->>>>>>> 32df4894ed17cd3a84d773def9ae31987adc0179
 }

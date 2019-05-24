@@ -287,7 +287,7 @@ class RecyclerController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $evenement->addProfile($user);
-        $user->addMissionsParticipes($evenement);
+        //$user->addMissionsParticipes($evenement);
 
         $em->persist($evenement);
         $em->persist($user);
@@ -314,7 +314,7 @@ class RecyclerController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $evenement->removeProfile($user);
-        $user->removeMissionsParticipes($evenement);
+        //$user->removeMissionsParticipes($evenement);
 
         // $em->persist($evenement);
         //   $em->persist($user);

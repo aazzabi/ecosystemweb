@@ -429,11 +429,7 @@ class PanierApiController extends Controller
         {
             if ($l->getDisponibilite() == 'Disponible')
             {
-
-
                 $id_liv = $l->getId();
-
-
             }
 
         }

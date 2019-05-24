@@ -3,6 +3,7 @@
 parameters:
     #parameter_name: value
     annoncerep_photo : '%kernel.project_dir%/web/uploads/annoncerep/photos'
+    annonce_photo : '%kernel.project_dir%/web/uploads/Annonce/photo'
 
 services:
     # default configuration for services in *this* file

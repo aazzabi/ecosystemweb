@@ -83,29 +83,43 @@ class AnnonceApiController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $annonce = new Annonce();
-        $annonce->setTitre($request->get('titre'));
-        $annonce->setDescription($request->get('description'));
-        $annonce->setPrix($request->get('prix'));
+        $idUtilisateur  = $request->get('user');
+        $user = $em->getRepository(User::class)->find($idUtilisateur);
+
+        $titre = $request->get('titre');
+        $description = $request->get('description');
+        $categorie = $request->get('categorie');
+        $categorie = $em->getRepository(CategorieAnnonce::class)->find($categorie);
+        $prix = $request->get("prix");
+        $region = $request->get('region');
+        if ($request->files->get("photoannonce") != null) {
+            $file = $request->files->get("photoannonce");
+            $fileName = $file->getClientOriginalName();
+            $file->move(
+                $this->getParameter('annonce_photo'),
+                $fileName
+            );
+            $file = $request->files->get("photoannonce");
+        }
+
+        $annonce->setTitre($titre);
+        $annonce->setDescription($description);
+        $annonce->setPrix($prix);
         $annonce->setEtat('Disponible');
-        $annonce->setRegion($request->get('region'));
+        $annonce->setRegion($region);
         $annonce->setLikes(0);
         $annonce->setViews(0);
-
         $annonce->setNote(0);
-
-        $annonce->setPhoto($request->get('photo'));
-        $categorie = $em->getRepository(CategorieAnnonce::class)->find($request->get('categorie'));
-        $user = $em->getRepository(User::class)->find($request->get('user'));
+        $annonce->setPhoto(urldecode($fileName));
         $annonce->setCategorie($categorie);
         $annonce->setUser($user);
 
         $em->persist($annonce);
         $em->flush();
 
-
-            $serializer = new Serializer([new ObjectNormalizer()]);
-            $formatted = $serializer->normalize($annonce);
-            return new JsonResponse($formatted);
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($annonce);
+        return new JsonResponse($formatted);
     }
 
     /**
@@ -219,7 +233,7 @@ class AnnonceApiController extends Controller
     /**
      * Creates a new Categorie et annonce entity.
      *
-     * @Route("/notes/{id}/{note}", name="json_like_annonce")
+     * @Route("/notes/{id}/{note}", name="json_notes_annonce")
      * @Method({"GET", "POST"})
      */
     public function updateNoteAction($id,$note)

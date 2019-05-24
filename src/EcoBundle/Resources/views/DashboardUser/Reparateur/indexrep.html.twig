@@ -100,7 +100,16 @@
 
                                 <tr>
                                 <td>{{ value.id }}</td>
-                                <td></td>
+                                <td>
+                                    {% if value.photo != '' %}
+                                        <img alt="User Pic" style="width:150px;"
+                                             src="{{ asset('uploads/annoncerep/photos/' ~ value.photo) }}"
+                                             class="img-circle img-responsive">
+                                    {% else %}
+                                        <img alt="annonce_Pic" style="width:50px;" src="{{ asset('assets/img/NA.png') }}"
+                                             id="profile-image1" class="img-circle img-responsive">
+                                    {% endif %}
+                                </td>
                                 <td>{{ value.titre }}</td>
                                 <td id="descriptionCell">{{ value.description }}</td>
                                 <td>{{ value.datepublication|date("m/d/Y") }}</td>

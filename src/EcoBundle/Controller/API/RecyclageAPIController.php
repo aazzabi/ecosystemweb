@@ -5,6 +5,7 @@ namespace EcoBundle\Controller\API;
 
 
 use EcoBundle\Entity\Host;
+use EcoBundle\Entity\Hostrating;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -105,7 +106,7 @@ class RecyclageAPIController extends Controller
     //-----------------------------------------------------------------------------------------------------------------
 
     /**
-     * @Route("/addHost/{Name}/{Places}/{DateStart}/{DateEnd}/{Localisation}/{Participants}", name="addhost_api_show")
+     * @Route("/addHost/{Name}/{Places}/{DateStart}/{DateEnd}/{Localisation}/{OwnerID}/{Participants}", name="addhost_api_show")
      * @Method({"GET", "POST"})
      */
     public function addHostAction($Name, $Places, $DateStart, $DateEnd, $Localisation, $OwnerID, $Participants,Request $request)
@@ -116,17 +117,20 @@ class RecyclageAPIController extends Controller
         $Host->setTotalplaces($Places);
         $Host->setDatestart(new \DateTime ($DateStart));
         $Host->setDateend(new \DateTime ($DateEnd));
-       // $Host->setOwnerid($OwnerID);
-       $OwnerID = null;
-        $Participants = null;
-        //$Host->setParticipants($Participants);
+        $Host->setOwnerid($OwnerID);
+        $Host->setParticipants($Participants);
         $Host->setLocalisation($Localisation);
 
-
+        dump($Host);
         $em->persist($Host);
         $em->flush();
+    dump($Host);
+        $serializer = $this->get('jms_serializer');
+        $response = new Response($serializer->serialize($Host, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
 
-        return new JsonResponse("ok");
+        return $response;
+       // return new JsonResponse("ok");
     }
 
     /**
@@ -146,18 +150,38 @@ class RecyclageAPIController extends Controller
 
         return $response;
     }
-
     /**
-     * @Route("/ModifyHost/{id}/{owner}/{DateStart}/{DateEnd}/{Localisation}", name="host_api_modify")
+     * @Route("/DisplayHostRating/{HostId}", name="hostR_api_show")
      * @Method({"GET", "POST"})
      */
-    public function ModifyHostAction($id, $Name, $DateStart, $DateEnd, $Localisation,Request $request){
+    public function getHostRatingAction($HostId)
+    {
+        $host = $this->getDoctrine()->getManager()
+            ->getRepository(Hostrating::class)
+            ->find($HostId);
+
+        $serializer = $this->get('jms_serializer');
+
+        $response = new Response($serializer->serialize($host, 'json'));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+    /**
+     * @Route("/ModifyHost/{Name}/{Places}/{DateStart}/{DateEnd}/{Localisation}/{OwnerID}/{Participants}", name="host_api_modify")
+     * @Method({"GET", "POST"})
+     */
+    public function ModifyHostAction($id, $Name, $DateStart, $DateEnd, $Localisation,$OwnerID,$Participants, Request $request){
         $Host = $this->getDoctrine()->getRepository('EcoBundle:Host')->findOneBy(array('id' => $id));
         dump($Host);
         $Host->setOwner($Name);
         $Host->setDatestart(new \DateTime ($DateStart));
         $Host->setDateend(new \DateTime ($DateEnd));
         $Host->setLocalisation($Localisation);
+        $Host->setOwnerid($OwnerID);
+        $Host->setParticipants($Participants);
+        $Host->setLocalisation($Localisation);
+
         $this->getDoctrine()->getManager()->flush();
         return new JsonResponse("ok");
     }
@@ -184,85 +208,6 @@ class RecyclageAPIController extends Controller
 
 
 
-//    public function deleteApiAction($id)
-//    {
-//        $host = $this->getDoctrine()->getManager()
-//            ->getRepository(Host::class)
-//            ->find($id);
-//        $em = $this->getDoctrine()->getManager();
-//        $em->remove($host);
-//        $em->flush();
-//        $serializer = $this->get('jms_serializer');
-//
-//        $response = new Response($serializer->serialize($host, 'json'));
-//        $response->headers->set('Content-Type', 'application/json');
-//
-//        return $response;
-//    }
-//
-//    /**
-//     * @Route("/new", name="host_api_new")
-//     * @Method({"GET", "POST"})
-//     */
-//    public function newApiAction(Request $request)
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $host = new Host();
-//
-//        $host->setTitre($request->get('titre'));
-//        $host->setDescription($request->get('description'));
-//
-//        $categorie = $em->getRepository(CategoriePub::class)->find($request->get('categorie'));
-//        $user = $em->getRepository(User::class)->find($request->get('publicationCreatedBy'));
-//
-//        $host->setCategorie($categorie);
-//        $host->setPublicationCreatedBy($user);
-//
-//        $em->persist($host);
-//        $em->flush();
-//
-//        $serializer = $this->get('jms_serializer');
-//        $response = new Response($serializer->serialize($host, 'json'));
-//        $response->headers->set('Content-Type', 'application/json');
-//
-//        return $response;
-//    }
-//
-//
-////
-////
-//
-//
-//
-
-//    public function allRestoAction()
-//    { $tasks = $this->getDoctrine()->getManager()
-//        ->getRepository('GuideBundle:Divertissement')
-//        ->findAll();
-//
-//        $serializer = new Serializer([new ObjectNormalizer()]);
-//        $formatted = $serializer->normalize($tasks);
-//        return new JsonResponse($formatted);
-//    }
-//    public function ApprouverCovoiturageAction($id,$iduser,$nbplace,$name,Request $request)
-//    {   $em = $this->getDoctrine()->getEntityManager();
-//        $objet = $em->getRepository(Covoiturage::class)->findOneBy(array('id'=>$id));
-//        $v = new Passager();
-//        $v->setIdConv($id);
-//        $v->setIduser($iduser);
-//        $v->setNbPlace($nbplace);
-//        $v->setnameuser($name);
-//        $objet->setnbPlaceRestantes($objet->getnbPlaceRestantes() - $request->get("nbplace"));
-//
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $em->persist($v);
-//        $em->persist($objet);
-//        $em->flush();
-//
-//        return new JsonResponse("ok");
-
-//}
 
 
 
